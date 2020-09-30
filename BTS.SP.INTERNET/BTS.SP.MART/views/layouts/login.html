@@ -1,0 +1,23 @@
+﻿<div class="container login-page">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <div class="account-wall">
+                <h1 class="text-center login-title">HỆ THỐNG SIÊU THỊ TẬP ĐOÀN DABACO VIỆT NAM</h1>
+                <img class="profile-img" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png?sz=120" alt="">
+                <form class="form-signin" ng-enter="login()">
+                    <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập" ng-model="user.username" required autofocus>
+                    <br />
+                    <input type="password" class="form-control" name="password" placeholder="Mật khẩu" ng-model="user.password" required>
+                    <br />
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">
+                        Đăng nhập
+                    </button>
+                </form>
+                <div class="msg-err">
+                    <span>{{msg}}</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

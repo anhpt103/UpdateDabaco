@@ -145,6 +145,9 @@ namespace BTS.API.SERVICE.MD
             public string ItemCode { get; set; }
             public string MaKho { get; set; }
             public bool WithGiaVon { get; set; }
+            public string GiaMua { get; set; }
+            public string GiaMuaChuaVat { get; set; }
+            public string TenNhaCungCap { get; set; }
             public string DefaultOrder
             {
                 get

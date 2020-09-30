@@ -600,15 +600,10 @@ namespace BTS.SP.API.Api.MD
             }
             return Ok(result);
         }
-        /// <summary>
-        /// Query entity
-        /// POST
-        /// </summary>
-        /// <param name="jsonData">complex data : jsonData.filtered & jsonData.paged</param>
-        /// <returns></returns>
+
         [Route("PostQuery")]
         [CustomAuthorize(Method = "XEM", State = "merchandise")]
-        public async Task<IHttpActionResult> PostQuery(JObject jsonData)
+        public IHttpActionResult PostQuery(JObject jsonData)
         {
             PagedObj<MdMerchandiseVm.Dto> paged = new PagedObj<MdMerchandiseVm.Dto>();
             TransferObj<PagedObj<MdMerchandiseVm.Dto>> result = new TransferObj<PagedObj<MdMerchandiseVm.Dto>>();
@@ -622,92 +617,7 @@ namespace BTS.SP.API.Api.MD
             catch (Exception e)
             {
                 result.Status = false;
-            }
-            string maKho = "";
-            List<InventoryExpImp> xntItems = null;
-            QueryBuilder query = new QueryBuilder
-            {
-                Take = paged.ItemsPerPage,
-                Skip = paged.FromItem - 1
-            };
-            if (filtered.AdvanceData.WithGiaVon) maKho = filtered.AdvanceData.MaKho;
-            // Sử dụng khi tính lọc giá vốn theo kho
-            ProcedureService<MdMerchandiseVm.Dto> service = new ProcedureService<MdMerchandiseVm.Dto>();
-            IQueryFilter filterSQl = service.FilterSQL<MdMerchandiseVm.SearchProcedure>(filtered, query);
-            if (string.IsNullOrEmpty(filtered.OrderBy))
-            {
-                filtered.OrderBy = "MAVATTU";
-                filtered.OrderType = "DESC";
-            }
-            string queryStr = filterSQl != null ? string.Format(" AND {0} ", filterSQl.ToString()) : "";
-            queryStr = string.Format(" AND MACHA IS NULL {0} ORDER BY {1} {2}", queryStr, filtered.OrderBy, filtered.OrderType);
-            //var orderStr = string.Format(" ORDER BY {0} {1}", filtered.OrderBy, filtered.OrderType);
-            PagedObj<MdMerchandiseVm.Dto> temp = ProcedureCollection.QueryPageMerchandise(new ERPContext(), paged, filtered.Summary, queryStr, unitCode);
-            //New Version
-            //var temp = ProcedureCollection.QueryPageMerchandise(new BTS.API.ENTITY.ERPContext(), paged, filtered.Summary, queryStr, orderStr, unitCode);
-            if (filtered.AdvanceData.WithGiaVon)
-            {
-                List<string> merchandiseCodes = temp.Data.Select(x => x.MaHang).ToList();
-                String joinMerchandise = String.Join(",", merchandiseCodes);
-                xntItems = ProcedureCollection.GetCostOfGoodsSoldByMerchandises(unitCode, maKho, joinMerchandise);
-                if (xntItems.Count == 0)
-                {
-                    result.Message = "Chưa khởi tạo kỳ kế toán";
-                }
-            }
-            try
-            {
-                result.Data = temp;
-                result.Data.Data.ForEach(x =>
-                {
-                    decimal soTon = 0;
-                    if (filtered.AdvanceData.WithGiaVon)
-                    {
-                        InventoryExpImp xntItem = xntItems.FirstOrDefault(u => u.Code == x.MaHang);
-                        if (xntItem != null)
-                        {
-                            decimal.TryParse(xntItem.ClosingValue.ToString(), out soTon);
-                            x.SoLuongTon = soTon;
-                            x.GiaVon = xntItem.CostOfCapital;
-                            x.GiaVonVat = x.GiaVon * (1 + x.TyLeVatVao / 100);
-                        }
-                    }
-                    MdPackaging baoBi = _service.UnitOfWork.Repository<MdPackaging>().DbSet.FirstOrDefault(u => u.MaBaoBi == x.MaBaoBi);
-                    if (baoBi != null)
-                    {
-                        x.LuongBao = baoBi.SoLuong;
-                    }
-                });
-                result.Status = true;
-                if (result.Data.Data.Count == 0)
-                {
-                    result.Status = true;
-                    result.Message = "Không tìm thấy dữ liệu";
-                }
-                return Ok(result);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-        }
-
-        [Route("PostSelectDataQuery")]
-        [CustomAuthorize(Method = "XEM", State = "merchandise")]
-        public IHttpActionResult PostSelectDataQuery(JObject jsonData)
-        {
-            PagedObj<MdMerchandiseVm.Dto> paged = new PagedObj<MdMerchandiseVm.Dto>();
-            TransferObj<PagedObj<MdMerchandiseVm.Dto>> result = new TransferObj<PagedObj<MdMerchandiseVm.Dto>>();
-            dynamic postData = ((dynamic)jsonData);
-            FilterObj<MdMerchandiseVm.SearchProcedure> filtered = ((JObject)postData.filtered).ToObject<FilterObj<MdMerchandiseVm.SearchProcedure>>();
-            string unitCode = _service.GetCurrentUnitCode();
-            try
-            {
-                paged = ((JObject)postData.paged).ToObject<PagedObj<MdMerchandiseVm.Dto>>();
-            }
-            catch (Exception e)
-            {
-                result.Status = false;
+                WriteLogs.LogError(e);
             }
             string _parentUnitCode = _service.GetParentUnitCode();
             string maKho = "";
@@ -718,9 +628,9 @@ namespace BTS.SP.API.Api.MD
                 Skip = paged.FromItem - 1
             };
             if (filtered.AdvanceData.WithGiaVon) maKho = filtered.AdvanceData.MaKho;
-            // Sử dụng khi tính lọc giá vốn theo kho
+
             ProcedureService<MdMerchandiseVm.Dto> service = new ProcedureService<MdMerchandiseVm.Dto>();
-            IQueryFilter filterSQl = service.FilterSQL<MdMerchandiseVm.SearchProcedure>(filtered, query);
+            IQueryFilter filterSQl = service.FilterSQL(filtered, query);
             if (string.IsNullOrEmpty(filtered.OrderBy))
             {
                 filtered.OrderBy = "MAVATTU";
@@ -728,14 +638,41 @@ namespace BTS.SP.API.Api.MD
             }
             string queryStr = filterSQl != null ? string.Format(" AND {0} ", filterSQl.ToString()) : "";
             queryStr = string.Format(" AND MACHA IS NULL {0} ORDER BY {1} {2}", queryStr, filtered.OrderBy, filtered.OrderType);
-            //var orderStr = string.Format(" ORDER BY {0} {1}", filtered.OrderBy, filtered.OrderType);
+
+            if (!string.IsNullOrEmpty(filtered.AdvanceData.TenNhaCungCap))
+            {
+                filtered.OrderBy = "TENNHACUNGCAP";
+                filtered.OrderType = "ASC";
+
+                queryStr = filterSQl != null ? string.Format(" AND {0} ", filterSQl.ToString()) : "";
+                queryStr = string.Format(" AND LOWER(TENNHACUNGCAP) LIKE '%{0}%' ORDER BY {1} {2}", filtered.AdvanceData.TenNhaCungCap.ToLower(), filtered.OrderBy, filtered.OrderType);
+            }
+
+            if (!string.IsNullOrEmpty(filtered.AdvanceData.GiaMua))
+            {
+                filtered.OrderBy = "GIAMUAVAT";
+                filtered.OrderType = "ASC";
+
+                decimal.TryParse(filtered.AdvanceData.GiaMua, out decimal giaMuaVat);
+                queryStr = filterSQl != null ? string.Format(" AND {0} ", filterSQl.ToString()) : "";
+                queryStr = string.Format(" AND GIAMUAVAT = {0} ORDER BY {1} {2}", giaMuaVat, filtered.OrderBy, filtered.OrderType);
+            }
+
+            if (!string.IsNullOrEmpty(filtered.AdvanceData.GiaMuaChuaVat))
+            {
+
+                filtered.OrderBy = "GIAMUA";
+                filtered.OrderType = "ASC";
+
+                decimal.TryParse(filtered.AdvanceData.GiaMuaChuaVat, out decimal giaMuaChuaVat);
+                queryStr = filterSQl != null ? string.Format(" AND {0} ", filterSQl.ToString()) : "";
+                queryStr = string.Format(" AND GIAMUA = {0} ORDER BY {1} {2}", giaMuaChuaVat, filtered.OrderBy, filtered.OrderType);
+            }
             PagedObj<MdMerchandiseVm.Dto> temp = ProcedureCollection.QueryPageMerchandise(new ERPContext(), paged, filtered.Summary, queryStr, unitCode);
-            //New Version
-            //var temp = ProcedureCollection.QueryPageMerchandise(new BTS.API.ENTITY.ERPContext(), paged, filtered.Summary, queryStr, orderStr, unitCode);
             if (filtered.AdvanceData.WithGiaVon)
             {
                 List<string> merchandiseCodes = temp.Data.Select(x => x.MaHang).ToList();
-                string joinMerchandise = String.Join(",", merchandiseCodes);
+                string joinMerchandise = string.Join(",", merchandiseCodes);
                 xntItems = ProcedureCollection.GetCostOfGoodsSoldByMerchandises(unitCode, maKho, joinMerchandise);
             }
             try
@@ -769,9 +706,10 @@ namespace BTS.SP.API.Api.MD
                 }
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return InternalServerError();
+                WriteLogs.LogError(ex);
+                return Ok(ex.Message);
             }
         }
 

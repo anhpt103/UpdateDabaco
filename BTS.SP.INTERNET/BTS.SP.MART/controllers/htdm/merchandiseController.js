@@ -108,9 +108,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             postQuery: function (data) {
                 return $http.post(serviceUrl + '/PostQuery', data);
             },
-            postSelectDataQuery: function (data) {
-                return $http.post(serviceUrl + '/PostSelectDataQuery', data);
-            },
             postSelectDataQueryAndPromotion: function (data) {
                 return $http.post(serviceUrl + '/PostSelectDataQueryAndPromotion', data);
             },
@@ -334,7 +331,19 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             },
             {
                 value: 'maKhachHang',
-                text: 'Mã NCC'
+                text: 'Mã nhà cung cấp'
+            },
+            {
+                value: 'tenNhaCungCap',
+                text: 'Tên nhà cung cấp'
+            },
+            {
+                value: 'giaMua',
+                text: 'Giá mua VAT'
+            },
+            {
+                value: 'giaMuaChuaVat',
+                text: 'Giá mua chưa VAT'
             },
             {
                 value: 'giaBanLeVat',
@@ -429,9 +438,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
                     });
-                } else {
-                    $scope.taxs = tempDataService.tempData('taxs');
-                }
+                } else $scope.taxs = tempDataService.tempData('taxs');
             }
 
             function loadDonViTinh() {
@@ -558,7 +565,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
                 $scope.paged.data = [];
                 postdata.filtered.advanceData.withGiaVon = true;
-                service.postSelectDataQuery(postdata).then(function (successRes) {
+                service.postQuery(postdata).then(function (successRes) {
                     if (successRes && successRes.status === 200 && successRes.data && successRes.data.status) {
                         $scope.isLoading = false;
                         $scope.data = successRes.data.data.data;
@@ -2556,7 +2563,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.listSelectedData = service.getSelectData();
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                service.postSelectDataQuery(postdata).then(function (successRes) {
+                service.postQuery(postdata).then(function (successRes) {
                     if (successRes && successRes.status === 200 && successRes.data && successRes.data.status) {
                         $scope.isLoading = false;
                         $scope.data = successRes.data.data.data;
@@ -6057,7 +6064,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.listSelectedData = serviceSelectData.getSelectData();
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                service.postSelectDataQuery(postdata).then(function (response) {
+                service.postQuery(postdata).then(function (response) {
                     $scope.isLoading = false;
                     if (response && response.status === 200 && response.data.status && response.data.data && response.data.data.data.length > 0) {
                         $scope.data = response.data.data.data;

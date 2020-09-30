@@ -153,10 +153,10 @@ namespace BTS.API.SERVICE.NV
                 return result;
             }
         }
-        
+
         //Phạm Tuấn Anh
         //Procerdure lấy dữ liệu bán lẻ trên Web BÓ hàng
-        public static MdMerchandiseVm.DataBoHang GetDataBoHang(ERPContext ctx, string maBo,string unitCode)//, string maDonVi = "")
+        public static MdMerchandiseVm.DataBoHang GetDataBoHang(ERPContext ctx, string maBo, string unitCode)//, string maDonVi = "")
         {
             MdMerchandiseVm.DataBoHang result = new MdMerchandiseVm.DataBoHang();
             List<MdMerchandiseVm.DataBoHang> resultData = new List<MdMerchandiseVm.DataBoHang>();
@@ -165,10 +165,10 @@ namespace BTS.API.SERVICE.NV
                 var strQuery = @"SELECT A.MABOHANG AS MaBoHang,A.TENBOHANG AS TenBoHang,B.TONGLE AS ThanhTienBoHang,A.UNITCODE,A.TRANGTHAI 
                                 FROM DMBOHANG A INNER JOIN DMBOHANGCHITIET B 
                                 ON A.MABOHANG = B.MABOHANG 
-                                AND A.MABOHANG = '" + maBo + "' AND A.TRANGTHAI = 10 AND A.UNITCODE = '"+ unitCode + "' GROUP BY A.MABOHANG,A.TENBOHANG,B.TONGLE,A.UNITCODE,A.TRANGTHAI ";
+                                AND A.MABOHANG = '" + maBo + "' AND A.TRANGTHAI = 10 AND A.UNITCODE = '" + unitCode + "' GROUP BY A.MABOHANG,A.TENBOHANG,B.TONGLE,A.UNITCODE,A.TRANGTHAI ";
                 var data = ctx.Database.SqlQuery<MdMerchandiseVm.DataBoHang>(strQuery);
                 resultData = data.ToList();
-                if(resultData.Count > 0)
+                if (resultData.Count > 0)
                 {
                     result.MaBoHang = resultData[0].MaBoHang;
                     result.TenBoHang = resultData[0].TenBoHang;
@@ -181,13 +181,13 @@ namespace BTS.API.SERVICE.NV
                                             B.SOLUONG AS SoLuong, B.TONGLE AS DONGIA,(C.GIABANLEVAT*B.SOLUONG - B.DONGIA*B.SOLUONG) AS TienHangKhuyenMai
                                             ,A.UNITCODE,A.TRANGTHAI FROM DMBOHANG A INNER JOIN DMBOHANGCHITIET B ON A.MABOHANG = B.MABOHANG INNER JOIN V_VATTU_GIABAN C ON B.MAHANG = C.MAVATTU
                                             AND A.MABOHANG = '" + result.MaBoHang + "'";
-                    
+
 
                     var dataBoHangChiTiet = ctx.Database.SqlQuery<MdMerchandiseVm.DtoAndPromotion>(strQueryBoHang);
                     result.ListMaHang = dataBoHangChiTiet.ToList();
                     if (result.ListMaHang.Count == 0) return null;
                 }
-               
+
             }
             catch
             {
@@ -203,10 +203,10 @@ namespace BTS.API.SERVICE.NV
             IQueryable<MdMerchandiseVm.DtoAndPromotion> result = null;
             try
             {
-                
+
                 var strQuery = "";
                 //if (strKy.Length == (int)TypeSearchMerchandise.MaHang || strKy.Length == (int)TypeSearchMerchandise.MaHangCon)
-                if (strKy.Length == (int)TypeSearchMerchandise.Barcode )//|| strKy.Length == (int)TypeSearchMerchandise.MaHangCon)
+                if (strKy.Length == (int)TypeSearchMerchandise.Barcode)//|| strKy.Length == (int)TypeSearchMerchandise.MaHangCon)
                 {
                     strQuery = @"SELECT * FROM V_VATTU_GIABAN WHERE BARCODE LIKE '%;" + strKy + ";%' AND TRANGTHAI = 10";
                 }
@@ -338,7 +338,7 @@ namespace BTS.API.SERVICE.NV
                     try
                     {
                         var pMaDonVi = new OracleParameter("P_MADONVI", OracleDbType.NVarchar2, maDonVi, ParameterDirection.Input);
-                        var pStrKey = new OracleParameter("STR_KEY", OracleDbType.NVarchar2,strKey, ParameterDirection.Input);
+                        var pStrKey = new OracleParameter("STR_KEY", OracleDbType.NVarchar2, strKey, ParameterDirection.Input);
                         var pReturnData = new OracleParameter("RETURN_DATA", OracleDbType.RefCursor, ParameterDirection.Output);
                         var str = "BEGIN TBNETERP.SEARCH_CUSTOMER(:P_MADONVI,:STR_KEY, :RETURN_DATA); END;";
                         ctx.Database.ExecuteSqlCommand(str, pMaDonVi, pStrKey, pReturnData);
@@ -359,7 +359,7 @@ namespace BTS.API.SERVICE.NV
                             var isNgayCapThe = DateTime.TryParse(reader["NGAYCAPTHE"].ToString(), out ngayCapThe);
                             var item = new MdCustomerVm.CustomerDto()
                             {
-                                
+
                                 Id = reader["ID"].ToString(),
                                 MaKH = reader["MAKH"].ToString(),
                                 TenKH = reader["TENKH"].ToString(),
@@ -901,7 +901,7 @@ namespace BTS.API.SERVICE.NV
                         var pFromDate = new OracleParameter("pFromDate", OracleDbType.Date, fromDate.Date, ParameterDirection.Input);
                         var outRef = new OracleParameter("outRef", OracleDbType.RefCursor, ParameterDirection.Output);
                         var str = "BEGIN TBNETERP.XUATBAN.BAOCAO_DCX_TONGHOP(:pKy, :pGroupBy, :pPThucXuat, :pUnitUserCode, :pTaxCode, :pWareHouseCode, :pMerchandiseTypeCode, :pMerchandiseGroupCode,:pMerchandiseCode, :pNhaCungCapCode, :pCustomerCode, :pUnitCode, :pFromDate, :pToDate, :outRef); END;";
-                        ctx.Database.ExecuteSqlCommand(str, pKy, pGroupBy, pPThucXuat, pUnitUserCode,pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode,pCustomerCode, pUnitCode, pFromDate, pToDate, outRef);
+                        ctx.Database.ExecuteSqlCommand(str, pKy, pGroupBy, pPThucXuat, pUnitUserCode, pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode, pCustomerCode, pUnitCode, pFromDate, pToDate, outRef);
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
@@ -1789,7 +1789,7 @@ namespace BTS.API.SERVICE.NV
             }
 
         }
-        public static List<NvGiaoDichQuayVm.ObjectReport> XBTongHop(string ky,string groupBy,string unitUserCodes, string taxCodes, string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes, string customerCodes, string xuatXuCodes, string unitCode, DateTime fromDate, DateTime toDate,int isPay)
+        public static List<NvGiaoDichQuayVm.ObjectReport> XBTongHop(string ky, string groupBy, string unitUserCodes, string taxCodes, string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes, string customerCodes, string xuatXuCodes, string unitCode, DateTime fromDate, DateTime toDate, int isPay)
         {
             List<NvGiaoDichQuayVm.ObjectReport> result = new List<NvGiaoDichQuayVm.ObjectReport>();
             using (var ctx = new ERPContext())
@@ -1824,7 +1824,7 @@ namespace BTS.API.SERVICE.NV
                         var outRef = new OracleParameter("outRef", OracleDbType.RefCursor, ParameterDirection.Output);
                         var pIsPay = new OracleParameter("pIsPay", OracleDbType.NVarchar2, isPay.ToString(), ParameterDirection.Input);
                         var str = "BEGIN TBNETERP.XUATBAN.BAOCAO_XBAN_TONGHOP(:pKy, :pGroupBy,:pUnitUserCode,:pTaxCode, :pWareHouseCode, :pMerchandiseTypeCode, :pMerchandiseGroupCode,:pMerchandiseCode, :pNhaCungCapCode,:pCustomerCode, :pXuatXuCode,:pUnitCode, :pFromDate, :pToDate,:pIsPay,:outRef); END;";
-                        ctx.Database.ExecuteSqlCommand(str, pKy, pGroupBy,pUnitUserCode,pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode,pCustomerCode,pXuatXuCode, pUnitCode, pFromDate, pToDate,pIsPay,outRef);
+                        ctx.Database.ExecuteSqlCommand(str, pKy, pGroupBy, pUnitUserCode, pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode, pCustomerCode, pXuatXuCode, pUnitCode, pFromDate, pToDate, pIsPay, outRef);
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
@@ -1866,7 +1866,7 @@ namespace BTS.API.SERVICE.NV
                 }
             }
         }
-        public static List<NvGiaoDichQuayVm.ObjectReportCha> XBChiTiet(string ky, string groupBy,string unitUserCodes,string taxCodes, string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes, string customerCodes,string xuatXuCodes, string unitCode, DateTime fromDate, DateTime toDate, int isPay)
+        public static List<NvGiaoDichQuayVm.ObjectReportCha> XBChiTiet(string ky, string groupBy, string unitUserCodes, string taxCodes, string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes, string customerCodes, string xuatXuCodes, string unitCode, DateTime fromDate, DateTime toDate, int isPay)
         {
             List<NvGiaoDichQuayVm.ObjectReportCha> result = new List<NvGiaoDichQuayVm.ObjectReportCha>();
             List<NvGiaoDichQuayVm.ObjectReportCon> resultDetail = new List<NvGiaoDichQuayVm.ObjectReportCon>();
@@ -1902,7 +1902,7 @@ namespace BTS.API.SERVICE.NV
                         var pIsPay = new OracleParameter("pIsPay", OracleDbType.NVarchar2, isPay.ToString(), ParameterDirection.Input);
                         var outRef = new OracleParameter("outRef", OracleDbType.RefCursor, ParameterDirection.Output);
                         var str = "BEGIN TBNETERP.XUATBAN.BAOCAO_XBAN_CHITIET(:pKy, :pGroupBy, :pUnitUserCode, :pTaxCode, :pWareHouseCode, :pMerchandiseTypeCode, :pMerchandiseGroupCode,:pMerchandiseCode, :pNhaCungCapCode, :pCustomerCode,:pXuatXuCode, :pUnitCode, :pFromDate, :pToDate, :pIsPay, :outRef); END;";
-                        ctx.Database.ExecuteSqlCommand(str,pKy, pGroupBy,pUnitUserCode,pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode,pCustomerCode, pXuatXuCode, pUnitCode, pFromDate, pToDate,pIsPay, outRef);
+                        ctx.Database.ExecuteSqlCommand(str, pKy, pGroupBy, pUnitUserCode, pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode, pCustomerCode, pXuatXuCode, pUnitCode, pFromDate, pToDate, pIsPay, outRef);
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
@@ -1924,7 +1924,7 @@ namespace BTS.API.SERVICE.NV
                                 MaCha = reader["MaCha"].ToString(),
                                 MaDonVi = reader["MADONVIXUAT"].ToString(),
                                 TenCha = reader["TenCha"].ToString(),
-                                NgayGiaoDich = isNgayGiaoDich?ngayGiaoDich:new DateTime(0001,01,01),
+                                NgayGiaoDich = isNgayGiaoDich ? ngayGiaoDich : new DateTime(0001, 01, 01),
                                 SoLuongBan = isSoLuongBan ? soLuongBan : 0,
                                 Von = isVon ? von : 0,
                                 TienThue = isTienThue ? tienThue : 0,
@@ -1936,7 +1936,7 @@ namespace BTS.API.SERVICE.NV
                             };
                             resultDetail.Add(detailsitem);
                         }
-                        var temp = resultDetail.GroupBy(x => new { x.MaDonVi, x.MaCha }).OrderBy(x=>x.Key.MaDonVi).ToList();
+                        var temp = resultDetail.GroupBy(x => new { x.MaDonVi, x.MaCha }).OrderBy(x => x.Key.MaDonVi).ToList();
                         List<NvGiaoDichQuayVm.ObjectReportCha> listCha = new List<NvGiaoDichQuayVm.ObjectReportCha>();
                         temp.ForEach(x =>
                         {
@@ -2065,7 +2065,7 @@ namespace BTS.API.SERVICE.NV
         /// <param name="fromDate">Từ ngày</param>
         /// <param name="toDate">Đến ngày</param>
         /// <returns>Danh sách ObjectReport</returns>
-        public static List<NvGiaoDichQuayVm.ObjectReport> XKTongHop(string ky, string groupBy, string pThucXuat,string unitUserCodes,string taxCodes, string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes, string customerCodes, string unitCode, DateTime fromDate, DateTime toDate)
+        public static List<NvGiaoDichQuayVm.ObjectReport> XKTongHop(string ky, string groupBy, string pThucXuat, string unitUserCodes, string taxCodes, string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes, string customerCodes, string unitCode, DateTime fromDate, DateTime toDate)
         {
             List<NvGiaoDichQuayVm.ObjectReport> result = new List<NvGiaoDichQuayVm.ObjectReport>();
             using (var ctx = new ERPContext())
@@ -2098,7 +2098,7 @@ namespace BTS.API.SERVICE.NV
                         var pFromDate = new OracleParameter("pFromDate", OracleDbType.Date, fromDate.Date, ParameterDirection.Input);
                         var outRef = new OracleParameter("outRef", OracleDbType.RefCursor, ParameterDirection.Output);
                         var str = "BEGIN TBNETERP.XUATBAN.BAOCAO_XKHAC_TONGHOP(:pKy, :pGroupBy, :pPThucXuat,:pUnitUserCode,:pTaxCode, :pWareHouseCode, :pMerchandiseTypeCode, :pMerchandiseGroupCode,:pMerchandiseCode, :pNhaCungCapCode,:pCustomerCode,:pUnitCode, :pFromDate, :pToDate, :outRef); END;";
-                        ctx.Database.ExecuteSqlCommand(str, pKy, pGroupBy,pPThucXuat, pUnitUserCode,pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode, pCustomerCode, pUnitCode, pFromDate, pToDate, outRef);
+                        ctx.Database.ExecuteSqlCommand(str, pKy, pGroupBy, pPThucXuat, pUnitUserCode, pTaxCode, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCode, pCustomerCode, pUnitCode, pFromDate, pToDate, outRef);
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
@@ -2276,7 +2276,7 @@ namespace BTS.API.SERVICE.NV
                         var pFromDate = new OracleParameter("pFromDate", OracleDbType.Date, fromDate.Date, ParameterDirection.Input);
                         var outRef = new OracleParameter("outRef", OracleDbType.RefCursor, ParameterDirection.Output);
                         var str = "BEGIN TBNETERP.GIAODICHQUAY.BAOCAO_QUAYGD_TONGHOP(:pGroupBy,:pWareHouseCode, :pMerchandiseTypeCode, :pMerchandiseGroupCode,:pMerchandiseCode, :pNhaCungCapCodes, :pXuatXuCodes, :pUnitCode, :pFromDate, :pToDate, :outRef); END;";
-                        ctx.Database.ExecuteSqlCommand(str, pGroupBy, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCodes,pXuatXuCodes, pUnitCode, pFromDate, pToDate, outRef);
+                        ctx.Database.ExecuteSqlCommand(str, pGroupBy, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCodes, pXuatXuCodes, pUnitCode, pFromDate, pToDate, outRef);
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
@@ -2323,7 +2323,7 @@ namespace BTS.API.SERVICE.NV
                 }
             }
         }
-        public static List<NvGiaoDichQuayVm.ObjectReportCha> GDQChiTiet(string groupBy,string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes,string xuatXuCodes, string unitCode, DateTime fromDate, DateTime toDate)
+        public static List<NvGiaoDichQuayVm.ObjectReportCha> GDQChiTiet(string groupBy, string wareHouseCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string merchandiseCodes, string nhaCungCapCodes, string xuatXuCodes, string unitCode, DateTime fromDate, DateTime toDate)
         {
             List<NvGiaoDichQuayVm.ObjectReportCha> result = new List<NvGiaoDichQuayVm.ObjectReportCha>();
             List<NvGiaoDichQuayVm.ObjectReportCon> resultDetail = new List<NvGiaoDichQuayVm.ObjectReportCon>();
@@ -2351,12 +2351,12 @@ namespace BTS.API.SERVICE.NV
                         var pUnitCode = new OracleParameter("pUnitCode", OracleDbType.NVarchar2, unitCode, ParameterDirection.Input);
                         var outRef = new OracleParameter("outRef", OracleDbType.RefCursor, ParameterDirection.Output);
                         var str = "BEGIN TBNETERP.GIAODICHQUAY.BAOCAO_QUAYGD_CHITIET(:pGroupBy, :pWareHouseCode, :pMerchandiseTypeCode, :pMerchandiseGroupCode,:pMerchandiseCode, :pNhaCungCapCodes,:pXuatXuCodes, :pUnitCode, :pFromDate, :pToDate, :outRef); END;";
-                        ctx.Database.ExecuteSqlCommand(str, pGroupBy,pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCodes,pXuatXuCodes, pUnitCode, pFromDate, pToDate, outRef);
+                        ctx.Database.ExecuteSqlCommand(str, pGroupBy, pWareHouseCode, pMerchandiseTypeCode, pMerchandiseGroupCode, pMerchandiseCode, pNhaCungCapCodes, pXuatXuCodes, pUnitCode, pFromDate, pToDate, outRef);
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
                             DateTime ngayGiaoDich;
-                            decimal soLuongBan, vonChuaVat, von, tongBan, tienKhuyenMai, laiBanLe, tienThue, doanhThu,tienChietKhau;
+                            decimal soLuongBan, vonChuaVat, von, tongBan, tienKhuyenMai, laiBanLe, tienThue, doanhThu, tienChietKhau;
                             var isSoLuongBan = decimal.TryParse(reader["SOLUONGBAN"].ToString(), out soLuongBan);
                             var isVonChuaVat = decimal.TryParse(reader["VONCHUAVAT"].ToString(), out vonChuaVat);
                             var isVon = decimal.TryParse(reader["VON"].ToString(), out von);
@@ -2389,7 +2389,7 @@ namespace BTS.API.SERVICE.NV
                             resultDetail.Add(item);
                         }
                         //resultDetail.RemoveAll(x => x.MaCha == null || x.MaDonVi == null);
-                        var temp = resultDetail.GroupBy(x => new { x.MaDonVi, x.MaCha}).ToList();
+                        var temp = resultDetail.GroupBy(x => new { x.MaDonVi, x.MaCha }).ToList();
                         List<NvGiaoDichQuayVm.ObjectReportCha> listCha = new List<NvGiaoDichQuayVm.ObjectReportCha>();
                         for (int j = 0; j < temp.Count; j++)
                         {
@@ -2519,7 +2519,7 @@ namespace BTS.API.SERVICE.NV
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
-                            decimal soLuongBan, vonChuaVat, von, tongBan, tienKhuyenMai, laiBanLe, tienThue, doanhThu,tienChietKhau;
+                            decimal soLuongBan, vonChuaVat, von, tongBan, tienKhuyenMai, laiBanLe, tienThue, doanhThu, tienChietKhau;
                             var isSoLuongBan = decimal.TryParse(reader["SOLUONGBAN"].ToString(), out soLuongBan);
                             var isVonChuaVat = decimal.TryParse(reader["VONCHUAVAT"].ToString(), out vonChuaVat);
                             var isVon = decimal.TryParse(reader["VON"].ToString(), out von);
@@ -2604,7 +2604,7 @@ namespace BTS.API.SERVICE.NV
 
         }
 
-        public static IQueryable<NvGiaoDichQuayVm.ReportExcel> DuLieuGiaoDichQuayTheoDieuKien(DateTime tuNgay, DateTime denNgay, string maDonVi ,ERPContext ctx)
+        public static IQueryable<NvGiaoDichQuayVm.ReportExcel> DuLieuGiaoDichQuayTheoDieuKien(DateTime tuNgay, DateTime denNgay, string maDonVi, ERPContext ctx)
         {
             IQueryable<NvGiaoDichQuayVm.ReportExcel> result = null;
             try
@@ -2747,7 +2747,7 @@ namespace BTS.API.SERVICE.NV
                         {
                             decimal XBANLEQUAY_SL, XBANLEQUAY_GT, XBANLETL_SL, XBANLETL_GT, NMUA_SL, NMUA_GT, NHAPKIEMKE_SL, NHAPKIEMKE_GT, XUATKIEMKE_SL, XUATKIEMKE_GT, NHAPCHUYENKHO_SL, NHAPCHUYENKHO_GT,
                             NHAPSTTHANHVIEN_SL, NHAPSTTHANHVIEN_GT, XUATCHUYENKHO_SL, XBANLE_SL, XBANLE_GT, NHAPDIEUCHINH_SL, NHAPDIEUCHINH_GT, NHAPHANGAM_SL, NHAPHANGAM_GT;
-                            decimal XUATHUYHH_SL, XUATHUYHH_GT, XUATHUY_SL, XUATHUY_GT, XUATTRANCC_SL, XUATTRANCC_GT, XUATDC_SL, XUATDC_GT, NHAPBANTL_SL, NHAPBANTL_GT, 
+                            decimal XUATHUYHH_SL, XUATHUYHH_GT, XUATHUY_SL, XUATHUY_GT, XUATTRANCC_SL, XUATTRANCC_GT, XUATDC_SL, XUATDC_GT, NHAPBANTL_SL, NHAPBANTL_GT,
                             TONDAUKY_SL, TONCUOIKY_GT, TONDAUKY_GT, TONCUOIKY_SL, XUATCHUYENKHO_GT, XUATSTTHANHVIEN_SL, XUATSTTHANHVIEN_GT, XBANBUON_SL, XBANBUON_GT;
                             var isXBANLEQUAY_SL = decimal.TryParse(reader["XBANLEQUAY_SL"].ToString(), out XBANLEQUAY_SL);
                             var isXBANLEQUAY_GT = decimal.TryParse(reader["XBANLEQUAY_GT"].ToString(), out XBANLEQUAY_GT);
@@ -2790,7 +2790,8 @@ namespace BTS.API.SERVICE.NV
                             var isTONCUOIKY_SL = decimal.TryParse(reader["TONCUOIKY_SL"].ToString(), out TONCUOIKY_SL);
                             var isTONCUOIKY_GT = decimal.TryParse(reader["TONCUOIKY_GT"].ToString(), out TONCUOIKY_GT);
 
-                            var item = new InventoryDetailItem() {
+                            var item = new InventoryDetailItem()
+                            {
                                 Ma = reader["MA"].ToString(),
                                 Ten = reader["TEN"].ToString(),
                                 XBanLeQuay_Sl = isXBANLEQUAY_SL ? XBANLEQUAY_SL : 0,
@@ -2834,7 +2835,7 @@ namespace BTS.API.SERVICE.NV
                                 XBanBuon_Sl = isXBANBUON_SL ? XBANBUON_SL : 0,
                                 XBanBuon_Gt = isXBANBUON_GT ? XBANBUON_GT : 0,
                             };
-                                                     
+
                             result.Add(item);
                         }
                         dbContextTransaction.Commit();
@@ -2876,7 +2877,7 @@ namespace BTS.API.SERVICE.NV
                         var str = "BEGIN TBNETERP.BAOCAO_XNTNEW_CHITIET(:pGroupBy,:pWareHouse, :pMaLoai, :pMaNhom,:pMaVatTu,:pMaKhachHang, :pUnitCode, :pTuNgay, :pDenNgay, :xntCollection); END;";
                         ctx.Database.ExecuteSqlCommand(str, pGroupBy, pWareHouse, pMaLoai, pMaNhom, pMaVatTu, pMaKhachHang, pUnitCode, pTuNgay, pDenNgay, xntCollection);
                         OracleDataReader reader = ((OracleRefCursor)xntCollection.Value).GetDataReader();
-                        
+
                         while (reader.Read())
                         {
                             decimal XBANLEQUAY_SL, XBANLEQUAY_GT, XBANLETL_SL, XBANLETL_GT, NMUA_SL, NMUA_GT, NHAPKIEMKE_SL, NHAPKIEMKE_GT, XUATKIEMKE_SL, XUATKIEMKE_GT, NHAPCHUYENKHO_SL, NHAPCHUYENKHO_GT,
@@ -2979,7 +2980,7 @@ namespace BTS.API.SERVICE.NV
                         {
                             InventoryDetailItemCha itemCha = new InventoryDetailItemCha();
                             itemCha.Ma = x.Key;
-                            foreach(InventoryDetailItem y in lstItem)
+                            foreach (InventoryDetailItem y in lstItem)
                             {
                                 if (y.MaCha == x.Key)
                                 {
@@ -3050,7 +3051,7 @@ namespace BTS.API.SERVICE.NV
                         if (data.Count > 0)
                         {
                             var group = data.GroupBy(x => x.MaDonVi).ToList();
-                            foreach(var item in group)
+                            foreach (var item in group)
                             {
                                 InventoryExpImpLevel2 obj = new InventoryExpImpLevel2();
                                 obj.Ma = item.Key;
@@ -3193,16 +3194,16 @@ namespace BTS.API.SERVICE.NV
                             var isGiaTriThieu = decimal.TryParse(reader["GIATRITHIEU"].ToString(), out giaTriThieu);
                             var item = new NvKiemKeVm.ObjectReport()
                             {
-                                
+
                                 Ma = reader["Ma"].ToString(),
                                 Ten = reader["Ten"].ToString(),
                                 GiaVon = isGiaVon ? giaVon : 0,
-                                SoLuongTonMay = isSoLuongTonMay? soLuongTonMay:0,
-                                SoLuongKiemKe = isSoLuongKiemKe? soluongKiemKe:0,
-                                SoLuongThua = isSoLuongThua?soLuongThua:0,
-                                GiaTriThua = isGiaTriThua?giaTriThua:0,
-                                SoLuongThieu = isSoLuongThieu?soLuongThieu:0,
-                                GiaTriThieu = isGiaTriThieu?giaTriThieu:0
+                                SoLuongTonMay = isSoLuongTonMay ? soLuongTonMay : 0,
+                                SoLuongKiemKe = isSoLuongKiemKe ? soluongKiemKe : 0,
+                                SoLuongThua = isSoLuongThua ? soLuongThua : 0,
+                                GiaTriThua = isGiaTriThua ? giaTriThua : 0,
+                                SoLuongThieu = isSoLuongThieu ? soLuongThieu : 0,
+                                GiaTriThieu = isGiaTriThieu ? giaTriThieu : 0
                             };
                             result.Add(item);
                         }
@@ -3322,7 +3323,7 @@ namespace BTS.API.SERVICE.NV
                 }
                 else if (strKy.Length == (int)TypeSearchMerchandise.MaCan)
                 {
-                    strQuery = @"SELECT * FROM V_VATTU_GIABAN WHERE ITEMCODE = '"+ strKy + "' AND MADONVI = '" + maDonVi + "'";
+                    strQuery = @"SELECT * FROM V_VATTU_GIABAN WHERE ITEMCODE = '" + strKy + "' AND MADONVI = '" + maDonVi + "'";
                 }
                 else
                 {
@@ -3421,8 +3422,8 @@ namespace BTS.API.SERVICE.NV
             return result;
 
         }
-        
-        public static List<NvPhieuDatHangVm.DtoDetail> Get_Data_DatHang_NhaCungCap(string nhaCungCapCodes, string merchandiseTypeCodes, string merchandiseGroupCodes,string wareHouseCode, DateTime fromDate, DateTime toDate, DateTime ngayChungTu, string unitCode, MdMerchandiseVm.FilterQuantity filterQuantity)
+
+        public static List<NvPhieuDatHangVm.DtoDetail> Get_Data_DatHang_NhaCungCap(string nhaCungCapCodes, string merchandiseTypeCodes, string merchandiseGroupCodes, string wareHouseCode, DateTime fromDate, DateTime toDate, DateTime ngayChungTu, string unitCode, MdMerchandiseVm.FilterQuantity filterQuantity)
         {
             List<NvPhieuDatHangVm.DtoDetail> result = new List<NvPhieuDatHangVm.DtoDetail>();
             using (var ctx = new ERPContext())
@@ -3516,7 +3517,7 @@ namespace BTS.API.SERVICE.NV
 
                         var outRef = new OracleParameter("outRef", OracleDbType.RefCursor, ParameterDirection.Output);
                         var str = "BEGIN TBNETERP.NVPHIEU.DATHANG_PHATSINH_XNT_BYDATE(:pMerchandiseTypeCode, :pMerchandiseGroupCode, :pCustomerCode, :pUnitCode,:pFromDate, :pToDate, :outRef); END;";
-                        ctx.Database.ExecuteSqlCommand(str,  pMerchandiseTypeCode, pMerchandiseGroupCode, pCustomerCode, pUnitCode, pFromDate, pToDate, outRef);
+                        ctx.Database.ExecuteSqlCommand(str, pMerchandiseTypeCode, pMerchandiseGroupCode, pCustomerCode, pUnitCode, pFromDate, pToDate, outRef);
                         OracleDataReader reader = ((OracleRefCursor)outRef.Value).GetDataReader();
                         while (reader.Read())
                         {
@@ -3643,7 +3644,7 @@ namespace BTS.API.SERVICE.NV
                 string tablleName = curentDate.GetTableName();
                 using (var ctx = new ERPContext())
                 {
-                    string checkExist = string.Format("SELECT TABLE_NAME FROM DBA_TABLES where TABLE_NAME = '{0}'" ,tablleName);
+                    string checkExist = string.Format("SELECT TABLE_NAME FROM DBA_TABLES where TABLE_NAME = '{0}'", tablleName);
                     List<InventoryExpImp> exist = ctx.Database.SqlQuery<InventoryExpImp>(checkExist).ToList();
                     if (exist.Count > 0)
                     {
@@ -3651,16 +3652,16 @@ namespace BTS.API.SERVICE.NV
                         if (!string.IsNullOrEmpty(wareHouseCode))
                         {
                             queryStr =
-                                string.Format(  
+                                string.Format(
 
-                                    "SELECT SUM(NVL(a.TONDAUKYSL,0)) AS OpeningBalanceQuantity, SUM(NVL(a.TONDAUKYGT,0)) as OpeningBalanceValue, SUM(NVL(a.NHAPSL,0)) as IncreaseQuantity, SUM(NVL(a.NHAPGT,0)) as IncreaseValue,a.MAVATTU AS CODE, NVL(a.GIAVON,0) AS CostOfCapital, NVL(a.TONCUOIKYSL,0) AS ClosingQuantity, NVL(a.NHAPSL,0) AS IncreaseQuantity, NVL(a.XUATSL,0) AS DecreaseQuantity FROM {0} a  WHERE a.MAVATTU = '{3}'  AND a.UNITCODE = '{1}' AND a.MAKHO = '{2}' GROUP BY a.MAVATTU,a.GIAVON,a.TONCUOIKYSL,a.NHAPSL,a.XUATSL",tablleName, unitCode, wareHouseCode, merchandiseCode.ToUpper());
+                                    "SELECT SUM(NVL(a.TONDAUKYSL,0)) AS OpeningBalanceQuantity, SUM(NVL(a.TONDAUKYGT,0)) as OpeningBalanceValue, SUM(NVL(a.NHAPSL,0)) as IncreaseQuantity, SUM(NVL(a.NHAPGT,0)) as IncreaseValue,a.MAVATTU AS CODE, NVL(a.GIAVON,0) AS CostOfCapital, NVL(a.TONCUOIKYSL,0) AS ClosingQuantity, NVL(a.NHAPSL,0) AS IncreaseQuantity, NVL(a.XUATSL,0) AS DecreaseQuantity FROM {0} a  WHERE a.MAVATTU = '{3}'  AND a.UNITCODE = '{1}' AND a.MAKHO = '{2}' GROUP BY a.MAVATTU,a.GIAVON,a.TONCUOIKYSL,a.NHAPSL,a.XUATSL", tablleName, unitCode, wareHouseCode, merchandiseCode.ToUpper());
                         }
                         else
                         {
                             string MaKhoBanLe = unitCode + "-K2";
                             queryStr =
                                 string.Format(
-                                    "SELECT SUM(NVL(a.TONDAUKYSL,0)) AS OpeningBalanceQuantity, SUM(NVL(a.TONDAUKYGT,0)) as OpeningBalanceValue, SUM(NVL(a.NHAPSL,0)) as IncreaseQuantity, SUM(NVL(a.NHAPGT,0)) as IncreaseValue,a.MAVATTU AS CODE, NVL(a.GIAVON,0) AS CostOfCapital, NVL(a.TONCUOIKYSL,0) AS ClosingQuantity, NVL(a.NHAPSL,0) AS IncreaseQuantity, NVL(a.XUATSL,0) AS DecreaseQuantity FROM {0} a WHERE a.MAVATTU = '{1}'  AND a.UNITCODE = '{2}' AND MAKHO = '{3}' GROUP BY a.MAVATTU,a.GIAVON,a.TONCUOIKYSL,a.NHAPSL,a.XUATSL",tablleName, merchandiseCode.ToUpper(),unitCode,MaKhoBanLe);
+                                    "SELECT SUM(NVL(a.TONDAUKYSL,0)) AS OpeningBalanceQuantity, SUM(NVL(a.TONDAUKYGT,0)) as OpeningBalanceValue, SUM(NVL(a.NHAPSL,0)) as IncreaseQuantity, SUM(NVL(a.NHAPGT,0)) as IncreaseValue,a.MAVATTU AS CODE, NVL(a.GIAVON,0) AS CostOfCapital, NVL(a.TONCUOIKYSL,0) AS ClosingQuantity, NVL(a.NHAPSL,0) AS IncreaseQuantity, NVL(a.XUATSL,0) AS DecreaseQuantity FROM {0} a WHERE a.MAVATTU = '{1}'  AND a.UNITCODE = '{2}' AND MAKHO = '{3}' GROUP BY a.MAVATTU,a.GIAVON,a.TONCUOIKYSL,a.NHAPSL,a.XUATSL", tablleName, merchandiseCode.ToUpper(), unitCode, MaKhoBanLe);
                         }
                         try
                         {
@@ -3674,10 +3675,10 @@ namespace BTS.API.SERVICE.NV
                         }
                         catch (Exception ex)
                         {
-                            
+
                             result = new InventoryExpImp();
                             result.Status = false;
-                            result.Message = "Lỗi: "+ ex;
+                            result.Message = "Lỗi: " + ex;
                         }
                     }
                     else
@@ -3702,7 +3703,7 @@ namespace BTS.API.SERVICE.NV
             using (var ctx = new ERPContext())
             {
                 string MaKhoBanLe = unitCode + "-K2";
-                var queryStr = string.Format("SELECT SUM(a.TONDAUKYSL) AS OpeningBalanceQuantity, SUM(a.TONDAUKYGT) as OpeningBalanceValue, SUM(a.NHAPSL) as IncreaseQuantity, SUM(a.NHAPGT) as IncreaseValue,a.MAVATTU AS CODE, a.GIAVON AS CostOfCapital FROM {0} a  WHERE a.MAVATTU = '{1}'  AND a.UNITCODE = '{2}' AND a.MAKHO = '{3}' GROUP BY a.MAVATTU,a.GIAVON", tableName, merchandiseCode.ToUpper(),unitCode, MaKhoBanLe);
+                var queryStr = string.Format("SELECT SUM(a.TONDAUKYSL) AS OpeningBalanceQuantity, SUM(a.TONDAUKYGT) as OpeningBalanceValue, SUM(a.NHAPSL) as IncreaseQuantity, SUM(a.NHAPGT) as IncreaseValue,a.MAVATTU AS CODE, a.GIAVON AS CostOfCapital FROM {0} a  WHERE a.MAVATTU = '{1}'  AND a.UNITCODE = '{2}' AND a.MAKHO = '{3}' GROUP BY a.MAVATTU,a.GIAVON", tableName, merchandiseCode.ToUpper(), unitCode, MaKhoBanLe);
                 try
                 {
                     var data = ctx.Database.SqlQuery<InventoryExpImp>(queryStr);
@@ -3821,7 +3822,7 @@ namespace BTS.API.SERVICE.NV
                     {
                         return null;
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -3832,14 +3833,14 @@ namespace BTS.API.SERVICE.NV
             return result;
         }
 
-        public static List<MdMerchandiseVm.DataXNT> GetDataInventoryByCondition(string unitCode, string wareHouseCode, string merchandiseCodes, string kyKeToan,string _ParentUnitCode)
+        public static List<MdMerchandiseVm.DataXNT> GetDataInventoryByCondition(string unitCode, string wareHouseCode, string merchandiseCodes, string kyKeToan, string _ParentUnitCode)
         {
             using (var ctx = new ERPContext())
             {
-                var queryStr = string.Format("SELECT A.TYLEVATRA AS TyLeVATRa,A.TYLEVATVAO AS TyLeVATVao, NVL(B.GIAVON, 0) AS GiaVon FROM V_VATTU_GIABAN A LEFT JOIN {0} B ON A.MAVATTU = B.MAVATTU WHERE B.MAKHO = '{1}' AND A.MAVATTU = '{2}' AND A.UNITCODE LIKE '"+ _ParentUnitCode + "%'", kyKeToan, wareHouseCode, merchandiseCodes, _ParentUnitCode);
+                var queryStr = string.Format("SELECT A.TYLEVATRA AS TyLeVATRa,A.TYLEVATVAO AS TyLeVATVao, NVL(B.GIAVON, 0) AS GiaVon FROM V_VATTU_GIABAN A LEFT JOIN {0} B ON A.MAVATTU = B.MAVATTU WHERE B.MAKHO = '{1}' AND A.MAVATTU = '{2}' AND A.UNITCODE LIKE '" + _ParentUnitCode + "%'", kyKeToan, wareHouseCode, merchandiseCodes, _ParentUnitCode);
                 try
                 {
-                    var data = ctx.Database.SqlQuery<MdMerchandiseVm.DataXNT>(queryStr).ToList(); 
+                    var data = ctx.Database.SqlQuery<MdMerchandiseVm.DataXNT>(queryStr).ToList();
                     return data;
                 }
                 catch (Exception e)

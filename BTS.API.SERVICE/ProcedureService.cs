@@ -13,7 +13,7 @@ namespace BTS.API.SERVICE
     public class ProcedureService<TEntity> : RepositoryProcedure<TEntity> where TEntity : class
     {
         public virtual ResultObj<PagedObj<TEntity>> Filter<TSearch>(
-    FilterObj<TSearch> filtered , IQueryable<TEntity> dataInit,
+    FilterObj<TSearch> filtered, IQueryable<TEntity> dataInit,
     IQueryBuilder query = null)
     where TSearch : IDataSearch
         {
@@ -29,53 +29,53 @@ namespace BTS.API.SERVICE
                 advanceData.LoadGeneralParam(filtered.Summary);
             }
             var filters = advanceData.GetFilters();
-                if (filters.Count > 0)
+            if (filters.Count > 0)
+            {
+                var newQuery = new QueryFilterLinQ
                 {
-                    var newQuery = new QueryFilterLinQ
-                    {
-                        Method = filtered.IsAdvance ? FilterMethod.And : FilterMethod.Or,
-                        SubFilters = filters,
-                    };
-                    if (query.Filter == null)
-                    {
-                        query.Filter = newQuery;
-                    }
-                    else
-                    {
-                        query.Filter.MergeFilter(newQuery);
-                    }
-                }
-                var quickFilters = advanceData.GetQuickFilters();
-                if (quickFilters != null && quickFilters.Any())
+                    Method = filtered.IsAdvance ? FilterMethod.And : FilterMethod.Or,
+                    SubFilters = filters,
+                };
+                if (query.Filter == null)
                 {
-                    var newQuery = new QueryFilterLinQ
-                    {
-                        Method = FilterMethod.And,
-                        SubFilters = quickFilters,
-                    };
-                    if (query.Filter == null)
-                    {
-                        query.Filter = newQuery;
-                    }
-                    else
-                    {
-                        query.Filter.MergeFilter(newQuery);
-                    }
+                    query.Filter = newQuery;
                 }
-                // load order 
-                if (!string.IsNullOrEmpty(filtered.OrderBy))
+                else
                 {
-                    query.OrderBy(new QueryOrder
-                    {
-                        Field = filtered.OrderBy,
-                        MethodName = filtered.OrderType
-                    });
+                    query.Filter.MergeFilter(newQuery);
                 }
-                // at lease one order for paging
-                if (query.Orders.Count == 0)
+            }
+            var quickFilters = advanceData.GetQuickFilters();
+            if (quickFilters != null && quickFilters.Any())
+            {
+                var newQuery = new QueryFilterLinQ
                 {
-                    query.OrderBy(new QueryOrder { Field = advanceData.DefaultOrder });
+                    Method = FilterMethod.And,
+                    SubFilters = quickFilters,
+                };
+                if (query.Filter == null)
+                {
+                    query.Filter = newQuery;
                 }
+                else
+                {
+                    query.Filter.MergeFilter(newQuery);
+                }
+            }
+            // load order 
+            if (!string.IsNullOrEmpty(filtered.OrderBy))
+            {
+                query.OrderBy(new QueryOrder
+                {
+                    Field = filtered.OrderBy,
+                    MethodName = filtered.OrderType
+                });
+            }
+            // at lease one order for paging
+            if (query.Orders.Count == 0)
+            {
+                query.OrderBy(new QueryOrder { Field = advanceData.DefaultOrder });
+            }
 
             // query
             var result = new ResultObj<PagedObj<TEntity>>();
@@ -93,7 +93,7 @@ namespace BTS.API.SERVICE
         }
 
         public virtual IQueryFilter FilterSQL<TSearch>(
-FilterObj<TSearch> filtered, 
+FilterObj<TSearch> filtered,
 IQueryBuilder query = null)
 where TSearch : IDataSearch
         {

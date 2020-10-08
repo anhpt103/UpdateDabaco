@@ -16,6 +16,7 @@ define(['angular', '/BTS.SP.MART/controllers/auth/AuthController.js'], function 
 
         var interceptorServiceFactory = {};
         var _request = function (request) {
+            $("body").addClass("loading");
             request.headers = request.headers || {};
             var currentUser = userService.GetCurrentUser();
             if (currentUser != null) {
@@ -38,17 +39,19 @@ define(['angular', '/BTS.SP.MART/controllers/auth/AuthController.js'], function 
                     }
                 });
             }
+            $("body").removeClass("loading");
             return res;
         }
         var _requestError = function (request) {
+            $("body").removeClass("loading");
             return request
         }
         var _responseError = function (rejection) {
             if (rejection.status === 401) {
                 console.log('AccessDenied :', rejection);
                 $state.go('login');
-            } else {
             }
+            $("body").removeClass("loading");
             return $q.reject(rejection);
         }
         interceptorServiceFactory.request = _request;

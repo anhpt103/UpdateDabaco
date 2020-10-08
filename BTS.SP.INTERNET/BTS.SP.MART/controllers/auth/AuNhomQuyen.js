@@ -3,7 +3,7 @@
 * View: BTS.SP.MART/views/htdm/AuNhomQuyen
 * Menu: Danh mục-> Danh mục nhóm quyền
 */
-define(['ui-bootstrap', 'controllers/auth/AuNhomQuyenChucNang'], function () {
+define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuNhomQuyenChucNang.js'], function () {
     'use strict';
     var app = angular.module('AuNhomQuyenModule', ['ui.bootstrap', 'AuNhomQuyenChucNangModule']);
     app.factory('AuNhomQuyenService', ['$http', 'configService', function ($http, configService) {
@@ -224,7 +224,7 @@ define(['ui-bootstrap', 'controllers/auth/AuNhomQuyenChucNang'], function () {
 
         }]);
     /* controller Create */
-    app.controller('AuNhomQuyenCreateCtrl', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log','ngNotify','toaster',
+    app.controller('AuNhomQuyenCreateCtrl', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'toaster',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, toaster) {
             $scope.config = {
                 label: angular.copy(configService.label)
@@ -251,7 +251,7 @@ define(['ui-bootstrap', 'controllers/auth/AuNhomQuyenChucNang'], function () {
         }]);
 
     /* controller Create */
-    app.controller('AuNhomQuyenEditCtrl', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify','toaster',
+    app.controller('AuNhomQuyenEditCtrl', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'toaster',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, toaster) {
             $scope.config = {
                 label: angular.copy(configService.label)
@@ -277,7 +277,7 @@ define(['ui-bootstrap', 'controllers/auth/AuNhomQuyenChucNang'], function () {
             };
         }]);
     /* controller delete */
-    app.controller('AuNhomQuyenDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify','toaster',
+    app.controller('AuNhomQuyenDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'toaster',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, toaster) {
             $scope.config = angular.copy(configService);
             $scope.isLoading = false;
@@ -291,9 +291,9 @@ define(['ui-bootstrap', 'controllers/auth/AuNhomQuyenChucNang'], function () {
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.cancel = function () {
                 $uibModalInstance.close();

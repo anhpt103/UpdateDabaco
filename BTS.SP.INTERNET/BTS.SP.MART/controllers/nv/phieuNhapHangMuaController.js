@@ -6,9 +6,10 @@
 * Entity: BTS.API.ENTITY -> NV - > NvNhapHangMua.cs
 * Menu: Nghiệp vụ-> Nhập hàng mua
 */
-define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS.SP.MART/controllers/htdm/periodController.js', '/BTS.SP.MART/controllers/htdm/merchandiseController.js', '/BTS.SP.MART/controllers/htdm/customerController.js', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController.js', '/BTS.SP.MART/controllers/htdm/nhomVatTuController.js', '/BTS.SP.MART/controllers/htdm/supplierController.js', '/BTS.SP.MART/controllers/htdm/wareHouseController.js', '/BTS.SP.MART/controllers/htdm/packagingController.js', '/BTS.SP.MART/controllers/htdm/taxController.js', '/BTS.SP.MART/controllers/htdm/donViTinhController.js', 'controllers/nv/phieuDieuChuyenNoiBoController', 'controllers/nv/nvCongNoNCCController'], function () {
+define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS.SP.MART/controllers/htdm/periodController.js', '/BTS.SP.MART/controllers/htdm/merchandiseController.js', '/BTS.SP.MART/controllers/htdm/customerController.js', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController.js', '/BTS.SP.MART/controllers/htdm/nhomVatTuController.js', '/BTS.SP.MART/controllers/htdm/supplierController.js', '/BTS.SP.MART/controllers/htdm/wareHouseController.js', '/BTS.SP.MART/controllers/htdm/packagingController.js', '/BTS.SP.MART/controllers/htdm/taxController.js', '/BTS.SP.MART/controllers/htdm/donViTinhController.js', '/BTS.SP.MART/controllers/nv/phieuDieuChuyenNoiBoController.js', '/BTS.SP.MART/controllers/nv/nvCongNoNCCController.js'], function () {
     'use strict';
     var app = angular.module('phieuNhapHangMuaModule', ['ui.bootstrap', 'authModule', 'periodModule', 'merchandiseModule', 'customerModule', 'merchandiseTypeModule', 'nhomVatTuModule', 'supplierModule', 'wareHouseModule', 'packagingModule', 'taxModule', 'donViTinhModule', 'phieuDieuChuyenNoiBoModule', 'nvCongNoNCCModule']);
+    debugger
     app.factory('phieuNhapHangMuaService', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/NV/NhapHangMua';
         var rootUrl = configService.apiServiceBaseUri;
@@ -362,8 +363,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     }]);
     /* controller list */
     app.controller('phieuNhapHangMuaController', [
-        '$scope', '$location', '$http', 'configService', 'phieuNhapHangMuaService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh) {
+        '$scope', 'configService', 'phieuNhapHangMuaService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService',
+        function ($scope, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh) {
             $scope.openClosingOut = false;
             //check có mở khóa sổ không
             function checkUnClosingOut() {
@@ -2189,7 +2190,5 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $uibModalInstance.close();
             };
         }]);
-
-
     return app;
 });

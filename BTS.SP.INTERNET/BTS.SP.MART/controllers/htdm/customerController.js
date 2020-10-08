@@ -6,7 +6,7 @@
 * Entity: BTS.API.ENTITY -> Md - > Mdcustomer.cs
 * Menu: Danh mục-> Danh mục khách hàng
 */
-define(['ui-bootstrap', 'controllers/htdm/hangKhController', '/BTS.SP.MART/controllers/auth/AuthController.js'], function () {
+define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/BTS.SP.MART/controllers/auth/AuthController.js'], function () {
     'use strict';
     var app = angular.module('customerModule', ['ui.bootstrap', 'hangKhModule', 'authModule']);
     app.factory('customerService', ['$http', 'configService', function ($http, configService) {

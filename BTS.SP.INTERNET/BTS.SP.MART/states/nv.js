@@ -1,7 +1,9 @@
 ﻿define([
 ], function () {
-    var layoutUrl = "/BTS.SP.MART/views/nv/";
-    var controlUrl = "/BTS.SP.MART/controllers/nv/";
+    var rootUrl = 'http://' + window.location.hostname + ':' + window.location.port;
+
+    var layoutUrl = rootUrl + "/BTS.SP.MART/views/nv/";
+    var controlUrl = rootUrl + "/BTS.SP.MART/controllers/nv/";
     var states = [
         {
             name: 'phieuNhapHangMua',

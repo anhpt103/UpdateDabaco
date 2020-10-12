@@ -16,7 +16,6 @@ define([
     'angular-sanitize',
     'angular-cache',
     'ui-bootstrap',
-    'loading-bar',
     'smartTable',
     'ngTable',
     'ngNotify',
@@ -41,7 +40,7 @@ define([
     'angular-md5',
 ], function (jquery, jqueryui, angular, stateHtdm, stateNv, stateBaoCao, stateAuth) {
     'use strict';
-    var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'angular-loading-bar', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'ui.tree', 'dynamicNumber', 'toaster', 'ui.grid', 'cp.ngConfirm', 'angularFileUpload', 'ngFileUpload', 'ngTagsInput', 'ngCkeditor', 'ngMaterial', 'ngAria', 'angular-md5']);
+    var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'ui.tree', 'dynamicNumber', 'toaster', 'ui.grid', 'cp.ngConfirm', 'angularFileUpload', 'ngFileUpload', 'ngTagsInput', 'ngCkeditor', 'ngMaterial', 'ngAria', 'angular-md5']);
     app.run(['ngTableDefaults', 'ngNotify', function (ngTableDefaults, ngNotify) {
         ngTableDefaults.params.count = 5;
         ngTableDefaults.settings.counts = [];
@@ -306,12 +305,8 @@ define([
         };
     });
 
-    app.config(['$httpProvider', 'CacheFactoryProvider', 'cfpLoadingBarProvider', 'localStorageServiceProvider', function ($httpProvider, CacheFactoryProvider, cfpLoadingBarProvider, localStorageServiceProvider) {
+    app.config(['$httpProvider', 'CacheFactoryProvider', 'localStorageServiceProvider', function ($httpProvider, CacheFactoryProvider, localStorageServiceProvider) {
         $httpProvider.interceptors.push('interceptorService');
-
-        cfpLoadingBarProvider.includeSpinner = true;
-        cfpLoadingBarProvider.includeBar = true;
-
         localStorageServiceProvider.setStorageType('cookie').setPrefix('ss');
 
         angular.extend(CacheFactoryProvider.defaults, {
@@ -395,8 +390,8 @@ define([
         return result;
     }]);
 
-    app.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $locationProvider) {
+    app.config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider',
+        function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             $ocLazyLoadProvider.config({
                 jsLoader: requirejs,
                 loadedModules: ['app'],

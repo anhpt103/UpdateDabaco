@@ -1,7 +1,9 @@
 ﻿define([
 ], function () {
-    var layoutUrl = "/BTS.SP.MART/views/htdm/";
-    var controlUrl = "/BTS.SP.MART/controllers/htdm/";
+    var rootUrl = 'http://' + window.location.hostname + ':' + window.location.port;
+
+    var layoutUrl = rootUrl + "/BTS.SP.MART/views/htdm/";
+    var controlUrl = rootUrl + "/BTS.SP.MART/controllers/htdm/";
     var states = [
         // Danh mục bó hàng
         {

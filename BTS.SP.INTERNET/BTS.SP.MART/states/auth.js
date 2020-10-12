@@ -1,20 +1,22 @@
 ﻿define([
 ], function () {
-    var layoutUrl = "/BTS.SP.MART/views/auth/";
-    var controlUrl = "/BTS.SP.MART/controllers/auth/";
+    var rootUrl = 'http://' + window.location.hostname + ':' + window.location.port;
+
+    var layoutUrl = rootUrl + "/BTS.SP.MART/views/auth/";
+    var controlUrl = rootUrl + "/BTS.SP.MART/controllers/auth/";
     var states = [
         {
             name: 'auNguoiDung',
             url: '/auNguoiDung',
-        	parent: 'layout',
-        	abstract: false,
-        	views: {
-        		'viewMain@root': {
-        		    templateUrl: layoutUrl + "/AuNguoiDung/index.html",
-        		    controller: "AuNguoiDungViewCtrl as ctrl"
-        		}
-        	},
-        	moduleUrl: controlUrl + "AuNguoiDung.js"
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "/AuNguoiDung/index.html",
+                    controller: "AuNguoiDungViewCtrl as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "AuNguoiDung.js"
         },
         {
             name: 'auGroup',
@@ -55,19 +57,19 @@
             },
             moduleUrl: controlUrl + "AuMenu.js"
         },
-         {
-             name: 'auDonVi',
-             url: '/auDonVi',
-             parent: 'layout',
-             abstract: false,
-             views: {
-                 'viewMain@root': {
-                     templateUrl: layoutUrl + "/AuDonVi/index.html",
-                     controller: "AuDonVi_ctrl as ctrl"
-                 }
-             },
-             moduleUrl: controlUrl + "AuDonVi.js"
-         }
+        {
+            name: 'auDonVi',
+            url: '/auDonVi',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "/AuDonVi/index.html",
+                    controller: "AuDonVi_ctrl as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "AuDonVi.js"
+        }
     ];
     return states;
 });

@@ -1,10 +1,7 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
         <h4 class="modal-title" ng-if="openClosingOut" style="color: red;">Cảnh báo đang mở khóa sổ ! Hãy khóa sổ lại ngay sau khi thao tác xong để bảo đảm tính đúng đắn cửa dữ liệu</h4>
-        <div class="button-close" ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -147,7 +144,7 @@
                             <span ng-show="sortType == 'noiDung' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
-                    <th class="column-title">
+                    <th class="column-title" style=" width: 30em;">
                         <a class="title" href="" ng-click="sortType = 'maNhaCungCap'; sortReverse = !sortReverse">
                             Nhà cung cấp
                             <span ng-show="sortType == 'maNhaCungCap' && !sortReverse" class="fa fa-caret-down"></span>
@@ -168,14 +165,14 @@
                             <span ng-show="sortType == 'thanhTienSauVat' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
-                    <th class="column-title">
+                    <th class="column-title" style=" width: 15em;">
                         <a class="title" href="" ng-click="sortType = 'trangThai'; sortReverse = !sortReverse">
                             Trạng thái
                             <span ng-show="sortType == 'trangThai' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'trangThai' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
-                    <td style="width: 130px;">
+                    <td style=" width: 15em;">
                 </tr>
             </thead>
             <tbody>
@@ -193,13 +190,13 @@
                     <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
                     <td ng-class="item.trangThai == 10 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}} ({{item.trangThaiThanhToan == 10 ? 'Đã thanh toán' : 'Chưa thanh toán'}})</td>
                     <td>
-                        <a ng-if="accessList.view" class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
-                        <a ng-if="accessList.edit" ng-show="item.trangThai != 10 || item.isShow" class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top" title="Sửa phiếu"></a><span ng-if="item.trangThai != 10">&nbsp;&nbsp;&nbsp;</span>
-                        <a ng-if="accessList.view" ui-sref="reportPhieuNhapHangMua({id: item.id})" class="glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="In phiếu"></a>&nbsp;&nbsp;&nbsp;
-                        <a ng-if="accessList.view" ng-show="item.trangThai === 10 || item.isShow" class="glyphicon glyphicon-barcode" ng-click="printItem(item)" data-toggle="tooltip" data-placement="top" title="In tem"></a>&nbsp;&nbsp;&nbsp;
-                        <a ng-if="accessList.view" ng-show="item.trangThai === 10 || item.isShow" class="fa fa-tablet" ng-click="printItemShelves(item)" data-toggle="tooltip" data-placement="top" title="In tem kệ"></a>&nbsp;&nbsp;&nbsp;
-                        <a ng-if="accessList.approve" class="glyphicon glyphicon-transfer" ng-show="item.trangThai === 10 || item.isShow" data-toggle="tooltip" ng-click="tranferFrom(item)" data-placement="top" title="Điều chuyển"></a>&nbsp;&nbsp;&nbsp;
-                        <a ng-if="accessList.delete" class="glyphicon glyphicon-trash" ng-show="item.trangThai != 10 || item.isShow" ng-click="deleteItem($event, item)" data-toggle="tooltip" data-placement="top" title="Xóa"></a> &nbsp;&nbsp;&nbsp;
+                        <a style="float:left; margin-right: 1rem;" ng-if="accessList.view" class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
+                        <a style="float:left; margin-right: 1rem;" ng-if="accessList.edit" ng-show="item.trangThai != 10 || item.isShow" class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top" title="Sửa phiếu"></a><span ng-if="item.trangThai != 10">&nbsp;&nbsp;&nbsp;</span>
+                        <a style="float:left; margin-right: 1rem;" ng-if="accessList.view" ui-sref="reportPhieuNhapHangMua({id: item.id})" class="glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="In phiếu"></a>&nbsp;&nbsp;&nbsp;
+                        <a style="float:left; margin-right: 1rem;" ng-if="accessList.view" ng-show="item.trangThai === 10 || item.isShow" class="glyphicon glyphicon-barcode" ng-click="printItem(item)" data-toggle="tooltip" data-placement="top" title="In tem"></a>&nbsp;&nbsp;&nbsp;
+                        <a style="float:left; margin-right: 1rem;" ng-if="accessList.view" ng-show="item.trangThai === 10 || item.isShow" class="fa fa-tablet" ng-click="printItemShelves(item)" data-toggle="tooltip" data-placement="top" title="In tem kệ"></a>&nbsp;&nbsp;&nbsp;
+                        <a style="float:left; margin-right: 1rem;" ng-if="accessList.approve" class="glyphicon glyphicon-transfer" ng-show="item.trangThai === 10 || item.isShow" data-toggle="tooltip" ng-click="tranferFrom(item)" data-placement="top" title="Điều chuyển"></a>&nbsp;&nbsp;&nbsp;
+                        <a style="float:left; margin-right: 1rem;" ng-if="accessList.delete" class="glyphicon glyphicon-trash" ng-show="item.trangThai != 10 || item.isShow" ng-click="deleteItem($event, item)" data-toggle="tooltip" data-placement="top" title="Xóa"></a> &nbsp;&nbsp;&nbsp;
 
                     </td>
                 </tr>

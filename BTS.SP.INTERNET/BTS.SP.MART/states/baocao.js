@@ -1,7 +1,9 @@
 ﻿define([
 ], function () {
-    var layoutUrl = "/BTS.SP.MART/views/baocao/";
-    var controlUrl = "/BTS.SP.MART/controllers/baocao/";
+    var rootUrl = 'http://' + window.location.hostname + ':' + window.location.port;
+
+    var layoutUrl = rootUrl + "/BTS.SP.MART/views/baocao/";
+    var controlUrl = rootUrl + "/BTS.SP.MART/controllers/baocao/";
     var controlUrlCustomerCare = "/BTS.SP.MART/controllers/baocao/CustomerCare/";
     var states = [
         {
@@ -43,45 +45,45 @@
             },
             moduleUrl: controlUrl + "acCongNoController.js"
         },
-		{
-		    name: 'baoCaoXuatBan',
-		    url: '/baoCaoXuatBan',
-		    parent: 'layout',
-		    abstract: false,
-		    views: {
-		        'viewMain@root': {
-		            templateUrl: layoutUrl + "/AcXuatBan/index.html",
-		            controller: "acXuatBanController as ctrl"
-		        }
-		    },
-		    moduleUrl: controlUrl + "acXuatBanController.js"
-		},
-		{
-		    name: 'baoCaoNhapMua',
-		    url: '/baoCaoNhapMua',
-		    parent: 'layout',
-		    abstract: false,
-		    views: {
-		        'viewMain@root': {
-		            templateUrl: layoutUrl + "/AcNhapMua/index.html",
-		            controller: "acNhapMuaController as ctrl"
-		        }
-		    },
-		    moduleUrl: controlUrl + "acNhapMuaController.js"
-		},
-		{
-		    name: 'baoCaoKiemKe',
-		    url: '/baoCaoKiemKe',
-		    parent: 'layout',
-		    abstract: false,
-		    views: {
-		        'viewMain@root': {
-		            templateUrl: layoutUrl + "/AcKiemKe/index.html",
-		            controller: "acKiemKeController as ctrl"
-		        }
-		    },
-		    moduleUrl: controlUrl + "acKiemKeController.js"
-		},
+        {
+            name: 'baoCaoXuatBan',
+            url: '/baoCaoXuatBan',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "/AcXuatBan/index.html",
+                    controller: "acXuatBanController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "acXuatBanController.js"
+        },
+        {
+            name: 'baoCaoNhapMua',
+            url: '/baoCaoNhapMua',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "/AcNhapMua/index.html",
+                    controller: "acNhapMuaController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "acNhapMuaController.js"
+        },
+        {
+            name: 'baoCaoKiemKe',
+            url: '/baoCaoKiemKe',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "/AcKiemKe/index.html",
+                    controller: "acKiemKeController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "acKiemKeController.js"
+        },
         // chăm sóc khách hàng
         {
             name: 'beChangedCardCustomer',
@@ -481,32 +483,32 @@
             },
             moduleUrl: controlUrl + "inventoryController.js"
         },
-		{
-		    name: 'baoCaoXuatBan',
-		    url: '/baoCaoXuatBan',
-		    parent: 'layout',
-		    abstract: false,
-		    views: {
-		        'viewMain@root': {
-		            templateUrl: layoutUrl + "/AcXuatBan/index.html",
-		            controller: "acXuatBanController as ctrl"
-		        }
-		    },
-		    moduleUrl: controlUrl + "acXuatBanController.js"
-		},
-		{
-		    name: 'baoCaoNhapMua',
-		    url: '/baoCaoNhapMua',
-		    parent: 'layout',
-		    abstract: false,
-		    views: {
-		        'viewMain@root': {
-		            templateUrl: layoutUrl + "/AcNhapMua/index.html",
-		            controller: "acNhapMuaController as ctrl"
-		        }
-		    },
-		    moduleUrl: controlUrl + "acNhapMuaController.js"
-		},
+        {
+            name: 'baoCaoXuatBan',
+            url: '/baoCaoXuatBan',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "/AcXuatBan/index.html",
+                    controller: "acXuatBanController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "acXuatBanController.js"
+        },
+        {
+            name: 'baoCaoNhapMua',
+            url: '/baoCaoNhapMua',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "/AcNhapMua/index.html",
+                    controller: "acNhapMuaController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "acNhapMuaController.js"
+        },
         // chăm sóc khách hàng
         {
             name: 'beChangedCardCustomer',

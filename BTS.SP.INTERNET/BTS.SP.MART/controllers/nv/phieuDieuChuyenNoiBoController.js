@@ -755,6 +755,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     templateUrl: configService.buildUrl('nv/NvPhieuDieuChuyenNoiBo', 'add'),
                     controller: 'phieuDieuChuyenNoiBoCreateController',
                     windowClass: 'app-modal-window',
+                    backdrop: 'static',
                     resolve: {
                         objectFilter: function () {
                             return {};
@@ -1570,6 +1571,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                                 body: 'Cộng gộp thành công !',
                                 timeout: 1000
                             });
+                            $scope.newItem = {};
+                            document.getElementById('mahang').focus();
                         }
                         $scope.statusChange = true;
                     }
@@ -1586,7 +1589,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         return;
                     }
                 }
-                if (!$scope.newItem.soLuong || $scope.newItem.soLuong < 1 || $scope.newItem.soLuong > $scope.newItem.soLuongTonXuat) {
+                if ($scope.newItem && (!$scope.newItem.soLuong || $scope.newItem.soLuong < 1 || $scope.newItem.soLuong > $scope.newItem.soLuongTonXuat)) {
                     focus('soluong');
                     document.getElementById('soluong').focus();
                     toaster.pop({
@@ -2249,6 +2252,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 });
             }
+
             $scope.addRow = function () {
                 if ($scope.target.dataDetails) {
                     checkExistMaHang($scope.newItem)

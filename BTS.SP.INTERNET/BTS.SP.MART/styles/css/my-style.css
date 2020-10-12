@@ -200,9 +200,11 @@ body {
     -moz-transform: scale(1);
     -ms-transform: scale(1);
     transform: scale(1);
-    -webkit-transform: translate3d(0, -300px, 0);
-    transform: translate3d(0, -300px, 0);
     opacity: 1;
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .modal-body .nav > li > a {
@@ -308,9 +310,8 @@ table .glyphicon, table .glyphicon:visited {
 }
 
 .button-close {
-    position: fixed;
-    right: 1em;
-    top: 4em;
+    position: absolute;
+    right: 5px;
 }
 
 .x-close {
@@ -1297,7 +1298,7 @@ div.modal-backdrop.fade.in {
 .fa.fa-times-circle {
     color: red;
     text-shadow: 1px 1px 1px #ccc;
-    font-size: 2.4em;
+    font-size: 1em;
 }
 
 #page-footer {
@@ -1445,4 +1446,17 @@ div.infoboard {
 
 .panel-heading {
     padding: 5px 15px;
+}
+
+.panel-footer {
+    height: 4rem;
+    padding: 0;
+}
+
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: .5rem 1rem;
+    border-radius: 0px;
+    float: right;
 }

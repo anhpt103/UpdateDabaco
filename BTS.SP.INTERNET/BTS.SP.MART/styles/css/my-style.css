@@ -13,9 +13,27 @@
     padding-left: 0px;
 }
 
-.account-wall {
-    padding: 1px 0px 20px 0px !important;
+@media only screen and (min-width: 400px) and (max-width: 600px) {
+    .account-wall {
+        padding: 1px 0px 20px 0px !important;
+        transform: translate(0%, 0%);
+    }
 }
+
+@media only screen and (min-width: 601px) and (max-width: 767px) {
+    .account-wall {
+        padding: 1px 0px 20px 0px !important;
+        transform: translate(0%, 0%);
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .account-wall {
+        padding: 1px 0px 20px 0px !important;
+        transform: translate(55%, 0%);
+    }
+}
+
 
 h3.panel-title {
     font-size: 18px;

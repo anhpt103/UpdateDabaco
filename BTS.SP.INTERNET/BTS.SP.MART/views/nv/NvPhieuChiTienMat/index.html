@@ -1,9 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -43,7 +40,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="">Ngày chứng từ</label>
-                    <div >
+                    <div>
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.ngay" placeholder="{{config.dateFormat}}"
                                    uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayCT" />
@@ -82,7 +79,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
     <div class="panel-body">
         <table class="table table-striped table-hover no-margin-vertical">
             <thead>
@@ -142,7 +139,7 @@
                     <td>
                         <a class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
                         <a ng-show="item.trangThai != 10" class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top" title="Sửa phiếu"></a><span ng-if="item.trangThai != 10">&nbsp;&nbsp;&nbsp;</span>
-                        <a ui-sref="reportPhieuChiTienMat({id: item.id})" class="glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="In phiếu"></a> &nbsp;&nbsp;&nbsp; 
+                        <a ui-sref="reportPhieuChiTienMat({id: item.id})" class="glyphicon glyphicon-print" data-toggle="tooltip" data-placement="top" title="In phiếu"></a> &nbsp;&nbsp;&nbsp;
                     </td>
                 </tr>
 

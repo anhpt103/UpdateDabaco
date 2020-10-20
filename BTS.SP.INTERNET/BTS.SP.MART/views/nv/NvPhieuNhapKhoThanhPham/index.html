@@ -1,9 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -43,7 +40,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="">Ngày chứng từ</label>
-                    <div >
+                    <div>
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.ngayCT" placeholder="{{config.dateFormat}}"
                                    uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayCT" />
@@ -82,12 +79,12 @@
                     <th class="column-title">#</th>
                     <th class="column-title">
                         <a class="title" href="" ng-click="sortType = 'maChungTu'; sortReverse = !sortReverse">
-                           Mã chứng từ
+                            Mã chứng từ
                             <span ng-show="sortType == 'maChungTu' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'maChungTu' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
-                   
+
                     <th class="column-title">
                         <a class="title" href="" ng-click="sortType = 'ngayCT'; sortReverse = !sortReverse">
                             Ngày xuất
@@ -132,7 +129,7 @@
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
                     <td>{{$index + 1}}</td>
-                    <td>{{item.maChungTu}}</td>               
+                    <td>{{item.maChungTu}}</td>
                     <td>{{item.ngayCT | date : "dd/MM/yyyy"}}</td>
                     <td>{{item.noiDung}}</td>
                     <td>{{displayHepler(item.maKhoNhap, 'wareHouses')}}</td>

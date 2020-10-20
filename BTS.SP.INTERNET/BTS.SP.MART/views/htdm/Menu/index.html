@@ -1,14 +1,11 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <button prevent-default class="btn btn-primary" title="create new item."ng-if="accessList.add" ng-click="create()"><i class="fa fa-plus"></i>&ensp;{{config.label.btnCreate}}</button>
+                <button prevent-default class="btn btn-primary" title="create new item." ng-if="accessList.add" ng-click="create()"><i class="fa fa-plus"></i>&ensp;{{config.label.btnCreate}}</button>
             </div>
             <div class="col-lg-6">
                 <div class="input-group">
@@ -80,7 +77,7 @@
                     </td>
                 </tr>
                 <tr ng-show="isLoading">
-                <td colspan="8"><my-loading></my-loading></td>
+                    <td colspan="8"><my-loading></my-loading></td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
                     <td>{{$index + 1}}</td>

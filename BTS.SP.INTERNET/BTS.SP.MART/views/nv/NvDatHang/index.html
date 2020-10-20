@@ -1,9 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -45,7 +42,7 @@
                     <div>
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.tuNgay" placeholder="{{config.dateFormat}}"
-                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_tuNgay" datepicker-localdate/>
+                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_tuNgay" datepicker-localdate />
                             <div class="button-calender" ng-click="_tuNgay = !_tuNgay; config.delegateEvent($event);">
                             </div>
                         </div>
@@ -58,7 +55,7 @@
                     <div>
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.denNgay" placeholder="{{config.dateFormat}}"
-                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_denNgay" datepicker-localdate/>
+                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_denNgay" datepicker-localdate />
                             <div class="button-calender" ng-click="_denNgay = !_denNgay; config.delegateEvent($event);">
                             </div>
                         </div>
@@ -150,19 +147,20 @@
                     <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
                     <td>{{item.nguoiLap}}</td>
                     <td ng-class="item.trangThaiTt == 1? 'is-approval':'not-approval-yet'">{{item.trangThaiTt | statusThanhToan }}</td>
-                    <td ng-class="item.trangThai ==1 ? 'not-approval-yet' : 
-                        item.trangThai == 2 ? 'is-approval' :  
-                        item.trangThai == 3 ? 'is-approval' :  
-                        item.trangThai == 4 ? 'is-approval' :  
-                        item.trangThai == 5 ? 'is-approval' :  
-                        item.trangThai == 6 ? 'not-approval-yet' :  
-                        item.trangThai == 7 ? 'is-approval' :  
-                        item.trangThai == 8 ? 'is-approval' :  
-                        item.trangThai == 9 ? 'is-approval' :  
-                        item.trangThai == 10 ? 'not-approval-yet' :  
-                        item.trangThai ==11 ? 'is-approval' : 
-                        'not-approval-yet'"
-                        >{{item.trangThai | statusDathang}}</td>
+                    <td ng-class="item.trangThai ==1 ? 'not-approval-yet' :
+                        item.trangThai == 2 ? 'is-approval' :
+                        item.trangThai == 3 ? 'is-approval' :
+                        item.trangThai == 4 ? 'is-approval' :
+                        item.trangThai == 5 ? 'is-approval' :
+                        item.trangThai == 6 ? 'not-approval-yet' :
+                        item.trangThai == 7 ? 'is-approval' :
+                        item.trangThai == 8 ? 'is-approval' :
+                        item.trangThai == 9 ? 'is-approval' :
+                        item.trangThai == 10 ? 'not-approval-yet' :
+                        item.trangThai ==11 ? 'is-approval' :
+                        'not-approval-yet'">
+                        {{item.trangThai | statusDathang}}
+                    </td>
                     <td>
                         <a class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
                         <a ng-show="item.trangThai> 0" class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top"

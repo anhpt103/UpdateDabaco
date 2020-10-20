@@ -1,9 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -42,14 +39,14 @@
                         </a>
                     </th>
                     <th class="column-title">
-                        <a   class="title" href="" ng-click="sortType = 'loai'; sortReverse = !sortReverse">
+                        <a class="title" href="" ng-click="sortType = 'loai'; sortReverse = !sortReverse">
                             Loại
                             <span ng-show="sortType == 'loai' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'loai' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
                     <th class="column-title">
-                        <a   class="title" href="" ng-click="sortType = 'trangThai'; sortReverse = !sortReverse">
+                        <a class="title" href="" ng-click="sortType = 'trangThai'; sortReverse = !sortReverse">
                             Trạng thái
                             <span ng-show="sortType == 'trangThai' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'trangThai' && sortReverse" class="fa fa-caret-up"></span>
@@ -77,7 +74,7 @@
                     <td class="table-control btn-group">
                         <a ng-if="accessList.view" class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
                         <a ng-if="accessList.edit" class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top" title="Sửa"></a> &nbsp;&nbsp;&nbsp;
-                        <a ng-if="accessList.delete"class="glyphicon glyphicon-trash" ng-click="deleteItem($event, item)" data-toggle="tooltip" data-placement="top" title="Xóa"></a> &nbsp;&nbsp;&nbsp;
+                        <a ng-if="accessList.delete" class="glyphicon glyphicon-trash" ng-click="deleteItem($event, item)" data-toggle="tooltip" data-placement="top" title="Xóa"></a> &nbsp;&nbsp;&nbsp;
                     </td>
                 </tr>
             </tbody>

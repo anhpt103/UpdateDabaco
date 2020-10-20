@@ -1,9 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -36,7 +33,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="">Từ ngày chứng từ</label>
-                    <div >
+                    <div>
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.tuNgay" placeholder="{{config.dateFormat}}"
                                    uib-datepicker-popup="{{config.dateFormat}}" is-open="_tuNgay" />
@@ -49,7 +46,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="">Đến ngày chứng từ</label>
-                    <div >
+                    <div>
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.denNgay" placeholder="{{config.dateFormat}}"
                                    uib-datepicker-popup="{{config.dateFormat}}" is-open="_denNgay" />
@@ -158,8 +155,9 @@
                     <td>{{item.ngayCT | date : "dd/MM/yyyy"}}</td>
                     <td>{{item.noiDung}}</td>
                     <td>{{displayHepler(item.maKhachHang, 'customers')}}</td>
-                    <td>{{displayHepler(item.maKhoXuat, 'wareHouses')}}</td>      
+                    <td>{{displayHepler(item.maKhoXuat, 'wareHouses')}}</td>
                     <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
+                    uV
                     <!--<td ng-class="item.trangThai == 10 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}}</td>-->
                     <td>
                         <a class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;

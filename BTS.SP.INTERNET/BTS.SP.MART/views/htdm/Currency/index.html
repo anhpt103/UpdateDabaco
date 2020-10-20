@@ -1,9 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close"  ng-click="goHome()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -53,25 +50,25 @@
                 </tr>
             </thead>
             <tbody>
-            <tr ng-show="data==NULL ||data.length<=0">
-                <td colspan="5" style="background-color: #e2e2e2;">
-                    <p>Không có dữ liệu</p>
-                </td>
-            </tr>
-            <tr ng-show="isLoading">
-                <td colspan="5"><my-loading></my-loading></td>
-            </tr>
-            <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
-                <td>{{$index + 1}}</td>
-                <td>{{item.maNgoaiTe}}</td>
-                <td>{{item.tenNgoaiTe}}</td>
-                <td>{{item.trangThai | status}}</td>
-                <td class="table-control btn-group">
-                    <a class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
-                    <a class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top" title="Sửa"></a> &nbsp;&nbsp;&nbsp;
-                    <a class="glyphicon glyphicon-trash" ng-click="deleteItem($event, item)" data-toggle="tooltip" data-placement="top" title="Xóa"></a> &nbsp;&nbsp;&nbsp;
-                </td>
-            </tr>
+                <tr ng-show="data==NULL ||data.length<=0">
+                    <td colspan="5" style="background-color: #e2e2e2;">
+                        <p>Không có dữ liệu</p>
+                    </td>
+                </tr>
+                <tr ng-show="isLoading">
+                    <td colspan="5"><my-loading></my-loading></td>
+                </tr>
+                <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
+                    <td>{{$index + 1}}</td>
+                    <td>{{item.maNgoaiTe}}</td>
+                    <td>{{item.tenNgoaiTe}}</td>
+                    <td>{{item.trangThai | status}}</td>
+                    <td class="table-control btn-group">
+                        <a class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
+                        <a class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top" title="Sửa"></a> &nbsp;&nbsp;&nbsp;
+                        <a class="glyphicon glyphicon-trash" ng-click="deleteItem($event, item)" data-toggle="tooltip" data-placement="top" title="Xóa"></a> &nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

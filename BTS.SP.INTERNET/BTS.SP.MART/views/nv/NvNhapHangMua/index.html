@@ -1,7 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
         <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <h4 class="modal-title" ng-if="openClosingOut" style="color: red;">Cảnh báo đang mở khóa sổ ! Hãy khóa sổ lại ngay sau khi thao tác xong để bảo đảm tính đúng đắn cửa dữ liệu</h4>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -23,6 +22,7 @@
                         </button>
                         <button class="btn btn-default" prevent-default title="refresh page" ng-click="refresh()"><span class="fa fa-retweet"></span>&ensp;{{config.label.btnRefresh}}</button>
                         <button class="btn btn-default" prevent-default title="go home" ng-click="goHome()"><span class="fa fa-undo"></span>&ensp;{{config.label.btnBack}}</button>
+                        .b
                         <!--<button class="btn btn-default" prevent-default title="In danh sách" ng-click="exportExcel(option)"><span class="fa fa-print"></span>&ensp;{{config.label.btnPrintList}}</button>-->
                     </div>
                 </div>

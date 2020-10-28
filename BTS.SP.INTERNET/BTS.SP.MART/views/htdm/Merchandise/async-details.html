@@ -15,9 +15,6 @@
 <div>
     <div class="modal-header">
         <h3 class="modal-title">{{title()}} {{lbl.lblCreate}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
     </div>
     <div class="modal-body">
         <form role="form" name="_form">
@@ -34,11 +31,11 @@
                         </div>
                         <div class="col-lg-3">
                             <label style="color: blue;">Gõ barcode và enter</label>
-                            <input style="font-weight: bold;color:  black;" type="text" class="form-control" placeholder="Gõ barcode và enter" ng-model="target.newBarcode" disabled=""/>
+                            <input style="font-weight: bold;color:  black;" type="text" class="form-control" placeholder="Gõ barcode và enter" ng-model="target.newBarcode" disabled="" />
                         </div>
                         <div class="col-lg-3">
                             <label style="color: blue;">DS Barcode</label>
-                            <input style="font-weight: bold;color:  black;" type="text" class="form-control" ng-model="target.barcode" disabled=""/>
+                            <input style="font-weight: bold;color:  black;" type="text" class="form-control" ng-model="target.barcode" disabled="" />
                         </div>
                     </div>
                     <div class="row form-group" style="padding-bottom:20px;">
@@ -116,7 +113,7 @@
                         <div class="col-lg-6">
                             <label style="color: blue;">VAT vào</label>
                             <span style="color: red">(*)</span>
-                            <select style="font-weight: bold;color:  black;" class="form-control" ng-model="target.maVatVao"  ng-options="opt.value as opt.text for opt in tempData('taxsRoot')" required></select>
+                            <select style="font-weight: bold;color:  black;" class="form-control" ng-model="target.maVatVao" ng-options="opt.value as opt.text for opt in tempData('taxsRoot')" required></select>
                         </div>
                     </div>
                     <div class="row form-group" style="padding-bottom:10px;">
@@ -126,14 +123,14 @@
                         </div>
                         <div class="col-lg-6">
                             <label style="color: blue;">Giá mua có vat</label>
-                            <input style="font-weight: bold;color:  black; text-align:right;" class="form-control" ng-model="target.giaMuaVat"  awnum="number" />
+                            <input style="font-weight: bold;color:  black; text-align:right;" class="form-control" ng-model="target.giaMuaVat" awnum="number" />
                         </div>
                     </div>
 
                     <div class="row form-group" style="padding-bottom:10px;">
                         <div class="col-lg-6">
                             <label style="color: blue;">Tỷ lệ lãi lẻ</label>
-                            <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.tyLeLaiLe"  awnum="number" />
+                            <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.tyLeLaiLe" awnum="number" />
                         </div>
                         <div class="col-lg-6">
                             <label style="color: blue;">Giá bán lẻ</label>
@@ -154,7 +151,7 @@
                         <div class="col-lg-6">
                             <label style="color: blue;">VAT ra</label>
                             <span style="color: red">(*)</span>
-                            <select style="font-weight: bold;color:  black;" class="form-control" ng-model="target.maVatRa"  ng-options="opt.value as opt.text for opt in tempData('taxsRoot')" required></select>
+                            <select style="font-weight: bold;color:  black;" class="form-control" ng-model="target.maVatRa" ng-options="opt.value as opt.text for opt in tempData('taxsRoot')" required></select>
                         </div>
                     </div>
                     <div class="row form-group" style="padding-bottom:10px;">
@@ -164,7 +161,7 @@
                         </div>
                         <div class="col-lg-6">
                             <label style="color: blue;">Giá bán buôn Vat</label>
-                            <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanBuonVat"  awnum="number" />
+                            <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanBuonVat" awnum="number" />
                         </div>
                     </div>
                     <!--End giá bán-->

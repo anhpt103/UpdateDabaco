@@ -582,7 +582,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.create = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    size: 'md',
                     templateUrl: configService.buildUrl('nv/NvXuatBan', 'add'),
                     controller: 'phieuXuatBanCreateController',
                     windowClass: 'app-modal-window',
@@ -822,11 +821,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             }, true);
             $rootScope.$on('$locationChangeStart',
-            function (event, next, current) {
-                if ($scope.tagsCustomers) {
-                    $scope.tagsCustomers.clear();
-                }
-            });
+                function (event, next, current) {
+                    if ($scope.tagsCustomers) {
+                        $scope.tagsCustomers.clear();
+                    }
+                });
             $scope.tranferFrom = function (item) {
                 var modalInstance = $uibModal.open({
                     templateUrl: configService.buildUrl('nv/NvPhieuDieuChuyenNoiBo', 'add'),
@@ -1375,9 +1374,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.saveAndPrint = function () {
                 service.post($scope.target).then(function (successRes) {
@@ -1393,9 +1392,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.createWareHouse = function (target, name) {
                 var modalInstance = $uibModal.open({

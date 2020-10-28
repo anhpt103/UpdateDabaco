@@ -1,9 +1,6 @@
 ﻿<div>
     <div class="modal-header" style="padding: 5px 5px">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="modal-body">
         <form role="form" name="_form">
@@ -63,33 +60,33 @@
                 <tr ng-if="isLoading">
                     <td colspan="8"><my-loading></my-loading></td>
                 </tr>
-            <tr ng-repeat="item in data track by $index">
-                <td style="text-align: center;">{{$index + 1}}</td>
-                <td>
-                    <input type="text" style="width: 100%;" name="_maHang" ng-model="item.maHang" ng-blur="selectedMaHang(item.maHang)" disabled/>
-                </td>
-                <td>
-                    {{item.tenHang}}
-                </td>
-                <td>
-                    <input type="text" style="text-align: right; width: 100%" ng-model="item.soLuong" ng-change="" awnum="number" disabled>
-                </td>
-                <td>
-                    <input type="text" style="text-align: right; width: 100%" ng-model="item.donGia" ng-change="" awnum="number" disabled>
-                </td>
+                <tr ng-repeat="item in data track by $index">
+                    <td style="text-align: center;">{{$index + 1}}</td>
+                    <td>
+                        <input type="text" style="width: 100%;" name="_maHang" ng-model="item.maHang" ng-blur="selectedMaHang(item.maHang)" disabled />
+                    </td>
+                    <td>
+                        {{item.tenHang}}
+                    </td>
+                    <td>
+                        <input type="text" style="text-align: right; width: 100%" ng-model="item.soLuong" ng-change="" awnum="number" disabled>
+                    </td>
+                    <td>
+                        <input type="text" style="text-align: right; width: 100%" ng-model="item.donGia" ng-change="" awnum="number" disabled>
+                    </td>
 
-                <td>
-                    <input type="text" style="text-align: right; width: 100%" ng-model="item.tyLeCKLe" ng-change="" awnum="number" disabled>
-                </td>
-                <td>
-                    <input type="text" style="text-align: right; width: 100%" ng-model="item.tongBanLe" awnum="number" disabled>
-                </td>
-                <td style="white-space: nowrap" class="text-center">
-                    <button prevent-default type="button" style="height: 20px; line-height: 2px; background: rgba(255, 213, 93, 0.61);" ng-click="removeItem($index)" class="btn btn-default btn-sm">
-                        Xóa
-                    </button>
-                </td>
-            </tr>
+                    <td>
+                        <input type="text" style="text-align: right; width: 100%" ng-model="item.tyLeCKLe" ng-change="" awnum="number" disabled>
+                    </td>
+                    <td>
+                        <input type="text" style="text-align: right; width: 100%" ng-model="item.tongBanLe" awnum="number" disabled>
+                    </td>
+                    <td style="white-space: nowrap" class="text-center">
+                        <button prevent-default type="button" style="height: 20px; line-height: 2px; background: rgba(255, 213, 93, 0.61);" ng-click="removeItem($index)" class="btn btn-default btn-sm">
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
                 <tr>
                     <td style="width:20%" colspan="5"></td>
                     <td nowrap style="text-align:right;"><label>Tổng tiền:</label></td>

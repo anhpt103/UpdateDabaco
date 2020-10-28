@@ -1,16 +1,13 @@
 ﻿<div>
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle" ></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="modal-body">
         <form role="form">
             <div class="row form-group">
                 <div class="col-lg-6">
                     <label>Tiêu đề</label><span style="color: red"> (1*)</span>
-                    <input type="text" class="form-control" ng-model="target.title"  maxlength="50" disabled>
+                    <input type="text" class="form-control" ng-model="target.title" maxlength="50" disabled>
                 </div>
                 <div class="col-lg-6">
                     <label>Menu ID Cha</label><span style="color: red"> (2*)</span>

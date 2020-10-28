@@ -1,9 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle" ></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
@@ -23,7 +20,7 @@
             <thead>
                 <tr class="headings">
                     <th class="column-title">#</th>
-                    <th class="column-title col-md-1"><input  type="checkbox" ng-model="all" ng-click="doCheck()"></th>
+                    <th class="column-title col-md-1"><input type="checkbox" ng-model="all" ng-click="doCheck()"></th>
                     <th class="column-title">
                         <a class="title" href="#" ng-click="sortType = 'tenDVT'; sortReverse = !sortReverse">
                             Tên ĐVT

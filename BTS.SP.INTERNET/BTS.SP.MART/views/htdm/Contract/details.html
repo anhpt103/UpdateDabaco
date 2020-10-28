@@ -1,9 +1,6 @@
 ﻿<div>
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="modal-body">
         <uib-tabset active="active">
@@ -24,9 +21,9 @@
                         <label>Ngày ký</label><span style="color: red"> (3*)</span>
                         <div class="add-input-zone">
                             <input class="form-control" type="text" ng-model="target.ngayKy" placeholder="{{config.dateFormat}}"
-                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayKy" datepicker-localdate disabled/>  
-                            </div>
+                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayKy" datepicker-localdate disabled />
                         </div>
+                    </div>
                     <div class="col-md-4">
                         <label>Giá trị hợp đồng</label><span style="color: red"> (4*)</span>
                         <input format-number-input="number" class="form-control" style="text-align:right;" ng-model="target.giaTriHD" disabled>
@@ -40,11 +37,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label>Người liên hệ  </label><span style="color: red">(6)</span>
-                        <input type="text" class="form-control" ng-model="target.nguoiLienHe" disabled/>
+                        <input type="text" class="form-control" ng-model="target.nguoiLienHe" disabled />
                     </div>
                     <div class="col-md-8">
                         <label>Địa chỉ</label><span style="color: red">(7)</span>
-                        <input type="text" class="form-control" ng-model="target.diaChi" disabled/>
+                        <input type="text" class="form-control" ng-model="target.diaChi" disabled />
                     </div>
                 </div>
                 <div class="row">
@@ -54,7 +51,7 @@
                     </div>
                     <div class="col-md-4">
                         <label>Người thực hiện</label><span style="color: red">(9)</span>
-                        <input type="text" class="form-control" ng-model="target.nguoiThucHien" disabled/>
+                        <input type="text" class="form-control" ng-model="target.nguoiThucHien" disabled />
                     </div>
                     <div class="col-md-4">
                         <label>Tình trạng HĐ</label><span style="color: red"> (10*)</span>
@@ -66,18 +63,18 @@
                         <label>Ngày thanh lý</label><span style="color: red"> (11*)</span>
                         <div class="add-input-zone">
                             <input class="form-control" type="text" ng-model="target.ngayThanhLy" placeholder="{{config.dateFormat}}"
-                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayThanhLy" datepicker-localdate disabled/>                        
-                            </div>
+                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayThanhLy" datepicker-localdate disabled />
                         </div>
+                    </div>
                     <div class="col-md-8">
                         <label>Nội dung chi tiết</label><span style="color: red">(12)</span>
-                        <input type="text" class="form-control" ng-model="target.lyDo" disabled/>
+                        <input type="text" class="form-control" ng-model="target.lyDo" disabled />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Điều khoản khác</label><span style="color: red">(13)</span>
-                        <input type="text" class="form-control" ng-model="target.dieuKhoanKhac" disabled/>
+                        <input type="text" class="form-control" ng-model="target.dieuKhoanKhac" disabled />
                     </div>
                 </div>
             </uib-tab>
@@ -125,7 +122,7 @@
                                 <input format-number-input="number" style="text-align:center; width:100%" ng-model="item.soLuong" disabled>
                             </td>
                             <td>
-                                <input format-number-input="number" style="text-align:right; width:100%" ng-model="item.donGia" disabled/>
+                                <input format-number-input="number" style="text-align:right; width:100%" ng-model="item.donGia" disabled />
                             </td>
                             <td>
                                 <div style="text-align:right; width:100%" disabled>

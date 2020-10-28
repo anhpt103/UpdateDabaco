@@ -148,6 +148,7 @@ define(['ui-bootstrap'], function () {
             $scope.update = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/MerchandiseType', 'update'),
                     controller: 'merchandiseTypeEditController',
                     resolve: {
@@ -169,6 +170,7 @@ define(['ui-bootstrap'], function () {
                     backdrop: 'static',
                     templateUrl: configService.buildUrl('htdm/MerchandiseType', 'details'),
                     controller: 'merchandiseTypeDetailsController',
+                    size: 'md',
                     resolve: {
                         targetData: function () {
                             return target;
@@ -319,9 +321,9 @@ define(['ui-bootstrap'], function () {
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.cancel = function () {
                 $uibModalInstance.close();

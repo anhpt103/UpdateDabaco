@@ -1,10 +1,7 @@
 ﻿<form></form><!-- KHông hiểu sao để thế này thì nó mới không bị lỗi T_T_T-->
 <div>
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="modal-body" ng-form name="_form">
         <div class="form-group">
@@ -24,7 +21,7 @@
                     <div class="md-4-style-input">
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="target.ngayCT" placeholder="{{config.dateFormat}}"
-                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayct" disabled datepicker-localdate/>
+                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayct" disabled datepicker-localdate />
                         </div>
                     </div>
                 </div>
@@ -34,7 +31,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="md-style-label-input">
-                        Lệnh điều động 
+                        Lệnh điều động
                     </div>
                     <div class="md-4-style-input">
                         <input class="input-border-form" focus="true" name="_lenhDieuDong" type="text" ng-model="target.lenhDieuDong" disabled>
@@ -42,12 +39,12 @@
                 </div>
                 <div class="col-md-4">
                     <div class="md-style-label-input">
-                        Ngày tháng 
+                        Ngày tháng
                     </div>
                     <div class="md-4-style-input">
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="target.ngayDieuDong" placeholder="{{config.dateFormat}}"
-                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayDieuDong" disabled datepicker-localdate/>
+                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayDieuDong" disabled datepicker-localdate />
                         </div>
                     </div>
                 </div>
@@ -57,7 +54,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="md-style-label-input">
-                        Lý do 
+                        Lý do
                     </div>
                     <div class="md-12-style-input">
                         <textarea class="input-border-form" style="width:100%;" ng-model="target.noiDung" rows="1" disabled></textarea>
@@ -69,7 +66,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="md-style-label-input">
-                        Người vận chuyển 
+                        Người vận chuyển
                     </div>
                     <div class="md-4-style-input">
                         <input class="input-border-form" name="_nguoiVanChuyen" type="text" ng-model="target.nguoiVanChuyen" disabled>
@@ -95,7 +92,7 @@
                         <input class="input-border-form" name="_khoNhap" type="text" ng-model="target.maKhoNhapTemp" typeahead-editable="false" typeahead-on-select="target.maKhoNhap = $item.value" uib-typeahead="opt as opt.text for opt in  khoNhaps | filter:$viewValue | limitTo: 5" disabled>
                     </div>
                 </div>
-              
+
                 <div class="col-md-4">
                     <div class="md-style-label-input">
                         Đơn vị xuất
@@ -162,7 +159,7 @@
                     </td>
                     <td><input style="text-align:center; width:100%" ng-model="item.soLuongTon" disabled></td>
                     <td>
-                        <input format-number-input="number" style="text-align:right; width:100%" ng-model="item.donGia" disabled/>
+                        <input format-number-input="number" style="text-align:right; width:100%" ng-model="item.donGia" disabled />
                     </td>
                     <td>
                         <div style="text-align:right; width:100%" disabled>

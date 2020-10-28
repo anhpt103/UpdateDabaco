@@ -10,9 +10,6 @@
 <div>
     <div class="modal-header">
         <h3 class="modal-title">{{title()}}  {{lbl.lblCreate}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
     </div>
     <div class="modal-body">
         <form role="form" name="_form">
@@ -29,40 +26,40 @@
                         </div>
                         <div class="col-lg-2">
                             <label>&nbsp;</label>
-                            <input disabled  type="text" class="form-control" placeholder="Gõ barcode và enter" ng-model="target.newBarcode" ng-enter="addBarCode(target)">
+                            <input disabled type="text" class="form-control" placeholder="Gõ barcode và enter" ng-model="target.newBarcode" ng-enter="addBarCode(target)">
                         </div>
                         <div class="col-lg-2">
                             <label>DS Barcode</label>
-                            <input disabled  type="text" class="form-control" ng-model="target.barcode">
+                            <input disabled type="text" class="form-control" ng-model="target.barcode">
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-lg-2">
                             <label>Mã hàng hóa/vật tư</label><span style="color: red"> (1*)</span>
-                            <input disabled  type="text" class="form-control" ng-model="target.maVatTu" name="_maVatTu" maxlength="50" required>
+                            <input disabled type="text" class="form-control" ng-model="target.maVatTu" name="_maVatTu" maxlength="50" required>
                             <span style="color:red" ng-show="_form._maVatTu.$dirty && _form._maVatTu.$invalid">
                                 <span ng-show="_form._maVatTu.$error.required">Không được để trống</span>
                             </span>
                         </div>
                         <div class="col-lg-2">
                             <label for="can-dien-tu">Mã cân</label>
-                            <input disabled  id="can-dien-tu" type="checkbox" ng-checked="target.itemCode != null" ng-model="target.isCanDienTu" ng-change="robot.changeCanDienTu(target)" name="_candientu">
-                            <input disabled  type="text" class="form-control" ng-model="target.itemCode" name="_itemCode" maxlength="50">
+                            <input disabled id="can-dien-tu" type="checkbox" ng-checked="target.itemCode != null" ng-model="target.isCanDienTu" ng-change="robot.changeCanDienTu(target)" name="_candientu">
+                            <input disabled type="text" class="form-control" ng-model="target.itemCode" name="_itemCode" maxlength="50">
                         </div>
                         <div class="col-lg-4">
                             <label>Tên hàng hóa/vật tư</label>
-                            <input disabled  type="text" class="form-control" ng-model="target.tenHang" name="_tenHang" maxlength="300" required>
+                            <input disabled type="text" class="form-control" ng-model="target.tenHang" name="_tenHang" maxlength="300" required>
                             <span style="color:red" ng-show="_form._tenHang.$dirty && _form._tenHang.$invalid">
                                 <span ng-show="_form._tenHang.$error.required">Không được để trống</span>
                             </span>
                         </div>
                         <div class="col-lg-2">
                             <label>Mã khác</label>
-                            <input disabled  type="text" class="form-control" ng-model="target.maKhac">
+                            <input disabled type="text" class="form-control" ng-model="target.maKhac">
                         </div>
                         <div class="col-lg-2">
                             <label>Tên viết tắt</label>
-                            <input disabled  type="text" class="form-control" ng-model="target.tenVietTat">
+                            <input disabled type="text" class="form-control" ng-model="target.tenVietTat">
                         </div>
 
                     </div>
@@ -100,7 +97,7 @@
                     <div class="row form-group">
                         <div class="col-lg-2">
                             <label>Quy cách</label>
-                            <input disabled  class="form-control" ng-model="searchMaBaoBi" />
+                            <input disabled class="form-control" ng-model="searchMaBaoBi" />
                         </div>
                         <div class="col-lg-2">
                             <label>Mã bao bì</label>
@@ -208,13 +205,13 @@
                             <div class="col-md-6">
                                 <label>
                                     <span style="padding-right:10px;">Hình ảnh</span>
-                                    
+
                                 </label>
                             </div>
                             <div class="col-md-6">
                                 <label>
                                     <span style="padding-right:10px;">Avatar</span>
-                                    
+
                                 </label>
                             </div>
                         </div>

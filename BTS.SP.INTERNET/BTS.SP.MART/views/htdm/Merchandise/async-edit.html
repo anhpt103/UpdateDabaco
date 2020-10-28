@@ -13,25 +13,20 @@
     }
 </style>
 <script>
-	$(document).on("keypress", ".TabOnEnter" , function(e)
-  {
-    //Only do something when the user presses enter
-    if( e.keyCode ==  13 )
-    {
-       var nextElement = $('[tabindex="' + (this.tabIndex+1)  + '"]');
-        if (nextElement.length)
-            nextElement.focus();
-        else
-            $('[tabindex="1"]').focus();
-    }
-  });
+    $(document).on("keypress", ".TabOnEnter", function (e) {
+        //Only do something when the user presses enter
+        if (e.keyCode == 13) {
+            var nextElement = $('[tabindex="' + (this.tabIndex + 1) + '"]');
+            if (nextElement.length)
+                nextElement.focus();
+            else
+                $('[tabindex="1"]').focus();
+        }
+    });
 </script>
 <div>
     <div class="modal-header">
         <h3 class="modal-title">{{title()}} {{lbl.lblCreate}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
     </div>
     <div class="modal-body">
         <form role="form" name="_form">
@@ -100,7 +95,7 @@
                                     <span style="color: red;font-weight: bold;"> (3*)</span>
                                     <input style="font-weight: bold;color:  black;" class="form-control" name="_maKhachHang" type="text" ng-model="target.maKhachHang" typeahead-editable="false"
                                            uib-typeahead="opt.value as opt.text for opt in tempData('suppliersRoot') | filter:$viewValue | limitTo:5"
-                                           typeahead-input-formatter="displayHepler($model, 'suppliersRoot')" required/>
+                                           typeahead-input-formatter="displayHepler($model, 'suppliersRoot')" required />
                                 </div>
                                 <div class="col-lg-3">
                                     <label style="color: blue;">Đơn vị tính</label>
@@ -146,32 +141,32 @@
                             <div class="row form-group" style="padding-bottom:10px;">
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Giá mua</label>
-                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaMua" ng-change="robot.changeGiaMua(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaMua" ng-change="robot.changeGiaMua(target)" awnum="number" readonly="" />
                                 </div>
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Giá mua có vat</label>
-                                    <input style="font-weight: bold;color:  black; text-align:right;" class="form-control" ng-model="target.giaMuaVat" ng-change="robot.changeGiaMuaVat(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black; text-align:right;" class="form-control" ng-model="target.giaMuaVat" ng-change="robot.changeGiaMuaVat(target)" awnum="number" readonly="" />
                                 </div>
                             </div>
 
                             <div class="row form-group" style="padding-bottom:10px;">
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Tỷ lệ lãi lẻ</label>
-                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.tyLeLaiLe" ng-change="robot.changeTyLeLaiLe(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.tyLeLaiLe" ng-change="robot.changeTyLeLaiLe(target)" awnum="number" readonly="" />
                                 </div>
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Giá bán lẻ</label>
-                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanLe" ng-change="robot.changeGiaBanLe(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanLe" ng-change="robot.changeGiaBanLe(target)" awnum="number" readonly="" />
                                 </div>
                             </div>
                             <div class="row form-group" style="padding-bottom:10px;">
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Tỷ lệ lãi buôn</label>
-                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.tyLeLaiBuon" ng-change="robot.changeTyLeLaiBuon(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.tyLeLaiBuon" ng-change="robot.changeTyLeLaiBuon(target)" awnum="number" readonly="" />
                                 </div>
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Giá bán buôn</label>
-                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanBuon" ng-change="robot.changeGiaBanBuon(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanBuon" ng-change="robot.changeGiaBanBuon(target)" awnum="number" readonly="" />
                                 </div>
                             </div>
                             <div class="row form-group" style="padding-bottom:10px;">
@@ -184,11 +179,11 @@
                             <div class="row form-group" style="padding-bottom:10px;">
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Giá bán lẻ Vat</label>
-                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanLeVat" ng-change="robot.changGiaBanLeVat(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanLeVat" ng-change="robot.changGiaBanLeVat(target)" awnum="number" readonly="" />
                                 </div>
                                 <div class="col-lg-6">
                                     <label style="color: blue;">Giá bán buôn Vat</label>
-                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanBuonVat" ng-change="robot.changeGiaBanBuonVat(target)" awnum="number" readonly=""/>
+                                    <input style="font-weight: bold;color:  black;text-align:right;" class="form-control" type="text" ng-model="target.giaBanBuonVat" ng-change="robot.changeGiaBanBuonVat(target)" awnum="number" readonly="" />
                                 </div>
                             </div>
                         </div>

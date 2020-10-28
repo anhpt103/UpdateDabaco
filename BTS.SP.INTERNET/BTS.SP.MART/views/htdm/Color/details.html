@@ -1,9 +1,6 @@
 ﻿<div>
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close"  ng-click="cancel()">
-            <i class="fa fa-times-circle" ></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="modal-body">
         <form role="form">
@@ -16,18 +13,18 @@
                 </div>
                 <div class="col-lg-6">
                     <label>Tên màu</label>
-                    <input type="text" class="form-control" ng-model="target.tenColor" name="_tenDVT" disabled>            
+                    <input type="text" class="form-control" ng-model="target.tenColor" name="_tenDVT" disabled>
                 </div>
             </div>
             <div class="row form-group">
-                
+
                 <div class="col-lg-12">
                     <label>Trạng thái</label>
                     <select class="form-control" ng-model="target.trangThai" ng-options="opt.value as opt.text for opt in tempData('status')" disabled></select>
                 </div>
 
             </div>
-           
+
         </form>
     </div>
     <div class="modal-footer">

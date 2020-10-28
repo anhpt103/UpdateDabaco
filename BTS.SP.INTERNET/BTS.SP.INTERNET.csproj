@@ -1194,11 +1194,14 @@
     <Content Include="BTS.SP.MART\utils\ui-grid\ui-grid.min.css" />
     <Content Include="BTS.SP.MART\utils\ui-grid\ui-grid.min.js" />
     <Content Include="BTS.SP.MART\utils\ui-grid\ui-grid.svg" />
+    <Content Include="BTS.SP.MART\views\htdm\BoHang\printItemBoHang.html" />
+    <Content Include="BTS.SP.MART\views\htdm\BoHang\selectData.html" />
     <Content Include="BTS.SP.MART\views\htdm\Customer\async-add.html" />
     <Content Include="BTS.SP.MART\views\htdm\Customer\async-compare.html" />
     <Content Include="BTS.SP.MART\views\htdm\Customer\async-details.html" />
     <Content Include="BTS.SP.MART\views\htdm\Customer\async-edit.html" />
     <Content Include="BTS.SP.MART\views\htdm\Customer\async-index.html" />
+    <Content Include="BTS.SP.MART\views\htdm\Merchandise\utility.html" />
     <Content Include="BTS.SP.MART\views\htdm\Period\updatePrice.html" />
     <Content Include="BTS.SP.MART\views\htdm\Supplier\async-compare.html" />
     <Content Include="BTS.SP.MART\views\nv\NvXuatBan\selectData.html" />

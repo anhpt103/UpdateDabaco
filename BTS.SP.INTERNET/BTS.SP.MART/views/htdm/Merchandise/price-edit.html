@@ -4,7 +4,7 @@
         minWidth: 300
     });
     $('.modal-dialog').draggable();
-    $('#priceUpdate').on('show.bs.modal', function() {
+    $('#priceUpdate').on('show.bs.modal', function () {
         $(this).find('.modal-body').css({
             'max-height': '100%'
         });
@@ -18,10 +18,7 @@
 </style>
 <div id="priceUpdate">
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="modal-body">
         <form role="form" name="_form">

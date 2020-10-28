@@ -2,10 +2,7 @@
 <div>
     <div>
         <div class="modal-header">
-          <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-            <div class="button-close" ng-click="cancel()">
-                <i class="fa fa-times-circle"></i>
-            </div>
+            <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
         </div>
         <div class="modal-body" ng-form name="_form">
             <div class="form-group">
@@ -108,9 +105,6 @@
                         </thead>
 
                         <tbody ng-form name="_formDetail">
-                            <tr ng-if="isLoading">
-                                <td colspan="15"><my-loading></my-loading></td>
-                            </tr>
                             <tr ng-repeat="item in data track by $index">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>

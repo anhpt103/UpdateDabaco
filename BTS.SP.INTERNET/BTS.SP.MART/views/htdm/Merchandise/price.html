@@ -1,21 +1,18 @@
 ﻿<script>
-	$('.modal-body').resizable({
-    minHeight: 300,
-    minWidth: 300
-	});
-	$('.modal-dialog').draggable();
-	$('#priceModal').on('show.bs.modal', function () {
-		$(this).find('.modal-body').css({
-			'max-height':'100%'
-		});
-	});
+    $('.modal-body').resizable({
+        minHeight: 300,
+        minWidth: 300
+    });
+    $('.modal-dialog').draggable();
+    $('#priceModal').on('show.bs.modal', function () {
+        $(this).find('.modal-body').css({
+            'max-height': '100%'
+        });
+    });
 </script>
 <div id="priceModal">
     <div class="modal-header">
         <h3 class="modal-title">{{title()}}  {{lbl.lblCreate}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
     </div>
     <div class="modal-body">
         <form role="form" name="_form">

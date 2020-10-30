@@ -26,8 +26,7 @@ define([
     'services/configService',
     'services/tempDataService',
     'filters/common',
-    'kendo',
-    'telerikReportViewer',
+    'kendo.all.min',
     'toaster',
     'ui-grid',
     'fileUpload',
@@ -37,6 +36,7 @@ define([
     'ngMaterial',
     'ngAria',
     'angular-md5',
+    'telerikReportViewer'
 ], function (jquery, jqueryui, angular, stateHtdm, stateNv, stateBaoCao, stateAuth) {
     'use strict';
     var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'ui.tree', 'dynamicNumber', 'toaster', 'ui.grid', 'cp.ngConfirm', 'angularFileUpload', 'ngFileUpload', 'ngTagsInput', 'ngCkeditor', 'ngMaterial', 'ngAria', 'angular-md5']);
@@ -211,6 +211,7 @@ define([
             }
         };
     });
+    /*Report Telerik*/
     app.directive('report', ['configService', function (configService) {
         return {
             restrict: 'EA',
@@ -229,6 +230,7 @@ define([
                     $(document).ready(function () {
                         $("#reportViewer1").telerik_ReportViewer({
                             error: function (e, args) {
+
                                 alert('Error from report directive:' + args);
                             },
                             reportSource: {
@@ -236,7 +238,7 @@ define([
                                 parameters: objpara,
 
                             },
-                            serviceUrl: configService.rootUrlWebApi + "/reports",
+                            serviceUrl: configService.rootUrlWebApi + "/Reports",
                             scaleMode: 'SPECIFIC',
                             scale: 1.0,
                             viewMode: 'PRINT_PREVIEW',
@@ -244,10 +246,10 @@ define([
 
                             },
                             renderingBegin: function () {
-                                console.log("renderingBegin");
+                                $("body").addClass("loading");
                             },
                             renderingEnd: function () {
-                                console.log("renderingEnd");
+                                $("body").removeClass("loading");
                             }
                         });
                     });
@@ -271,6 +273,7 @@ define([
             }
         }
     }]);
+    /*End Report Telerik*/
     app.directive('preventDefault', function () {
         return function (scope, element, attrs) {
             angular.element(element).bind('click', function (event) {

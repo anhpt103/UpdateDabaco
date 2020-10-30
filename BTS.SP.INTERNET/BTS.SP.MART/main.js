@@ -1,10 +1,13 @@
 require.config({
     base: '/',
     paths: {
+        'domReady': 'utils/require/2.3.6/domReady',
+        'r': 'utils/require/2.3.6/r',
+        'angular': 'lib/angular.min',
         'jquery': 'utils/kendo/2020.2.617/js/jquery.min',
         'jquery-ui': 'utils/jquery-ui/jquery-ui.min',
+        'angularStorage': 'lib/angular-local-storage.min',
         'bootstrap': 'lib/bootstrap.min',
-        'angular': 'lib/angular.min',
         'angular-animate': 'lib/angular-animate.min',
         'angular-resource': 'lib/angular-resource.min',
         'angular-filter': 'lib/angular-filter.min',
@@ -12,14 +15,13 @@ require.config({
         'angular-cache': 'lib/angular-cache.min',
         'ocLazyLoad': 'lib/ocLazyLoad.require',
         'uiRouter': 'lib/angular-ui-router.min',
-        'angularStorage': 'lib/angular-local-storage.min',
         'ui-bootstrap': 'lib/ui-bootstrap-tpls-1.3.3',
         'smartTable': 'utils/smart-table.min',
         'ngTable': 'utils/ng-table.min',
         'ngNotify': 'utils/ng-notify/ng-notify.min',
         'ui.tree': 'lib/angular-ui-tree.min',
         'dynamic-number': 'utils/dynamic-number.min',
-        'kendo': 'utils/kendo/2020.2.617/js/kendo.all.min',
+        'kendo.all.min': 'utils/kendo/2020.2.617/js/kendo.all.min',
         'telerikReportViewer': 'utils/telerik/js/telerikReportViewer-14.0.20.115.min',
         'toaster': 'utils/toaster/toaster.min',
         'ui-grid': 'utils/ui-grid/ui-grid.min',
@@ -35,17 +37,19 @@ require.config({
         'adapt-strap': 'utils/adapt-strap/adapt-strap',
         'chart-js': 'utils/angular-chart/Chart.min',
         'angular-chart': 'utils/angular-chart/angular-chart.min',
+        'bootstrapper': 'bootstrapper',
     },
     shim: {
+        'angular': {
+            deps: ['jquery', 'jquery-ui'],
+            exports: 'angular'
+        },
         'jquery': {
             exports: '$'
         },
         'jquery-ui': ['jquery'],
+        'angularStorage': ['angular'],
         'bootstrap': ['jquery'],
-        'angular': {
-            deps: ['jquery', 'bootstrap'],
-            exports: 'angular'
-        },
         'ocLazyLoad': ['angular'],
         'uiRouter': ['angular'],
         'angular-animate': ['angular'],
@@ -53,14 +57,13 @@ require.config({
         'angular-filter': ['angular'],
         'angular-cache': ['angular'],
         'angular-sanitize': ['angular'],
-        'angularStorage': ['angular'],
         'ui-bootstrap': ['angular'],
         'smartTable': ['angular'],
         'ngTable': ['angular'],
         'ngNotify': ['angular'],
         'ui.tree': ['angular'],
         'dynamic-number': ['angular'],
-        'kendo': ['jquery', 'angular'],
+        'kendo.all.min': ['angular'],
         'telerikReportViewer': ['jquery', 'angular'],
         'toaster': ['angular'],
         'ui-grid': ['angular'],
@@ -76,12 +79,13 @@ require.config({
         'adapt-strap': ['angular'],
         'chart-js': ['angular'],
         'angular-chart': ['chart-js'],
+        'bootstrapper': {
+            deps: [
+                'angular',
+                'app'
+            ]
+        },
     },
     waitSeconds: 0,
-    urlArgs: 'bust=' + new Date().getTime()
-});
-
-// Start the main app logic.
-require(['app'], function (app) {
-    angular.bootstrap(document.body, ['myApp']);
+    deps: ['bootstrapper']
 });

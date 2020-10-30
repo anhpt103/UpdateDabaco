@@ -76,22 +76,4 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6D7CADE-DCE1-4694-BDE5-5CE06E86DB06}
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://projectdabaco.visualstudio.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = BTS.API.ENTITY\\BTS.API.ENTITY.csproj
-		SccProjectName1 = BTS.API.ENTITY
-		SccLocalPath1 = BTS.API.ENTITY
-		SccProjectUniqueName2 = BTS.API.SERVICE\\BTS.API.SERVICE.csproj
-		SccProjectName2 = BTS.API.SERVICE
-		SccLocalPath2 = BTS.API.SERVICE
-		SccProjectUniqueName3 = BTS.SP.API\\BTS.SP.API.csproj
-		SccProjectName3 = BTS.SP.API
-		SccLocalPath3 = BTS.SP.API
-		SccProjectUniqueName4 = BTS.SP.INTERNET\\BTS.SP.INTERNET.csproj
-		SccProjectName4 = BTS.SP.INTERNET
-		SccLocalPath4 = BTS.SP.INTERNET
-	EndGlobalSection
 EndGlobal

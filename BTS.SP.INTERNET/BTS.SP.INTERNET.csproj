@@ -94,6 +94,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BTS.SP.MART\bootstrapper.js" />
     <Content Include="BTS.SP.MART\controllers\auth\AuDonVi.js" />
     <Content Include="BTS.SP.MART\controllers\auth\AuMenu.js" />
     <Content Include="BTS.SP.MART\controllers\auth\AuNguoiDung.js" />
@@ -1201,15 +1202,20 @@
     <Content Include="BTS.SP.MART\utils\ng-table.min.js" />
     <Content Include="BTS.SP.MART\utils\ng-tags-input\ng-tags-input.min.css" />
     <Content Include="BTS.SP.MART\utils\ng-tags-input\ng-tags-input.min.js" />
+    <Content Include="BTS.SP.MART\utils\require\2.3.6\domReady.js" />
+    <Content Include="BTS.SP.MART\utils\require\2.3.6\r.js" />
+    <Content Include="BTS.SP.MART\utils\require\2.3.6\require.js" />
     <Content Include="BTS.SP.MART\utils\smart-table.min.js" />
     <Content Include="BTS.SP.MART\utils\socket.io\socket.io.js" />
     <Content Include="BTS.SP.MART\utils\telerik\js\kendo.all.min.js" />
+    <Content Include="BTS.SP.MART\utils\telerik\js\telerikReportViewer-14.0.20.115.js" />
     <Content Include="BTS.SP.MART\utils\telerik\js\telerikReportViewer-14.0.20.115.min.js" />
     <Content Include="BTS.SP.MART\utils\telerik\js\telerikReportViewer.kendo-14.0.20.115.min.js" />
     <Content Include="BTS.SP.MART\utils\telerik\styles\blueopal\loading.gif" />
     <Content Include="BTS.SP.MART\utils\telerik\styles\blueopal\sprite.png" />
     <Content Include="BTS.SP.MART\utils\telerik\styles\kendo.blueopal.min.css" />
     <Content Include="BTS.SP.MART\utils\telerik\styles\kendo.common.min.css" />
+    <Content Include="BTS.SP.MART\utils\telerik\styles\telerikReportViewer.css" />
     <Content Include="BTS.SP.MART\utils\toaster\toaster.min.css" />
     <Content Include="BTS.SP.MART\utils\toaster\toaster.min.js" />
     <Content Include="BTS.SP.MART\utils\tree\template-li.html" />

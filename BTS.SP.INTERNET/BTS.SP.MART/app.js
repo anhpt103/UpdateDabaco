@@ -28,7 +28,6 @@ define([
     'filters/common',
     'kendo',
     'telerikReportViewer',
-    'telerikReportViewer_kendo',
     'toaster',
     'ui-grid',
     'fileUpload',

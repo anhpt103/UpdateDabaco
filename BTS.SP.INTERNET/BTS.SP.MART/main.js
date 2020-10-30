@@ -1,7 +1,7 @@
 require.config({
     base: '/',
     paths: {
-        'jquery': 'lib/jquery.min',
+        'jquery': 'utils/kendo/2020.2.617/js/jquery.min',
         'jquery-ui': 'utils/jquery-ui/jquery-ui.min',
         'bootstrap': 'lib/bootstrap.min',
         'angular': 'lib/angular.min',
@@ -19,9 +19,8 @@ require.config({
         'ngNotify': 'utils/ng-notify/ng-notify.min',
         'ui.tree': 'lib/angular-ui-tree.min',
         'dynamic-number': 'utils/dynamic-number.min',
-        'kendo': 'utils/telerik/js/kendo.all.min',
-        'telerikReportViewer': 'utils/telerik/js/telerikReportViewer-11.0.17.118.min',
-        'telerikReportViewer_kendo': 'utils/telerik/js/telerikReportViewer.kendo-11.0.17.118.min',
+        'kendo': 'utils/kendo/2020.2.617/js/kendo.all.min',
+        'telerikReportViewer': 'utils/telerik/js/telerikReportViewer-14.0.20.115.min',
         'toaster': 'utils/toaster/toaster.min',
         'ui-grid': 'utils/ui-grid/ui-grid.min',
         'angular-confirm': 'utils/angular-confirm/angular-confirm.min',
@@ -63,7 +62,6 @@ require.config({
         'dynamic-number': ['angular'],
         'kendo': ['jquery', 'angular'],
         'telerikReportViewer': ['jquery', 'angular'],
-        'telerikReportViewer_kendo': ['jquery', 'angular'],
         'toaster': ['angular'],
         'ui-grid': ['angular'],
         'angular-confirm': ['angular'],

@@ -2929,7 +2929,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             }
 
             $scope.exportToExcel = function () {
+                console.log($scope.target.dataDetails);
                 service.writeDataToExcel($scope.target.dataDetails).then(function (response) {
+                    console.log(response);
                     if (response.status) {
                         ngNotify.set("Thành công", { type: 'success' });
                         $window.location = $scope.hrefTem;

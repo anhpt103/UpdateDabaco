@@ -178,8 +178,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             postApproval: function (data) {
                 return $http.post(serviceUrl + '/PostApproval', data);
             },
-            postItemInventoryByCode: function (data, callback) {
-                return $http.post(rootUrl + '/api/Md/Merchandise/PostItemInventoryByCode', data).success(callback);
+            postItemInventoryByCode: function (data) {
+                return $http.post(rootUrl + '/api/Md/Merchandise/PostItemInventoryByCode', data);
             },
             getReport: function (id) {
                 return $http.get(serviceUrl + '/GetReport/' + id);
@@ -187,8 +187,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             getReportReceive: function (id, callback) {
                 $http.get(serviceUrl + '/GetReportReceive/' + id).success(callback);
             },
-            getNewInstance: function (callback) {
-                $http.get(serviceUrl + '/GetNewInstance').success(callback);
+            getNewInstance: function () {
+                return $http.get(serviceUrl + '/GetNewInstance');
             },
             getNewReciveInstance: function (callback) {
                 $http.get(serviceUrl + '/GetNewReciveInstance').success(callback);
@@ -199,11 +199,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             getDetails: function (id) {
                 return $http.get(serviceUrl + '/GetDetails/' + id);
             },
-            getCurrentUser: function (callback) {
-                $http.get(rootUrl + '/api/Authorize/AuNguoiDung/GetCurrentUser').success(callback);
+            getCurrentUser: function () {
+                return $http.get(rootUrl + '/api/Authorize/AuNguoiDung/GetCurrentUser');
             },
-            getWareHouseByUnit: function (maDonVi, callback) {
-                $http.get(rootUrl + '/api/Md/WareHouse/GetByUnit/' + maDonVi).success(callback);
+            getWareHouseByUnit: function (maDonVi) {
+                return $http.get(rootUrl + '/api/Md/WareHouse/GetByUnit/' + maDonVi);
             },
             getWareHouseByCode: function (code, callback) {
                 $http.get(rootUrl + '/api/Md/WareHouse/GetByCode/' + code).success(callback);
@@ -1406,7 +1406,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 });
                 service.getNewInstanceFrom(maChungTu, function (response) {
-                    console.log(response);
                     $scope.target = response;
                     if ($scope.target.vat != null) {
                         serviceTax.getTaxByCode($scope.target.vat).then(function (response) {
@@ -1494,8 +1493,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     getNew(maChungTu);
                 } else {
                     $scope.checkExistPhieu = false;
-                    service.getNewInstance(function (response) {
-                        $scope.target = response;
+                    service.getNewInstance().then(function (response) {
+                        $scope.target = response.data;
                         servicePeriod.getKyKeToan().then(function (response) {
                             if (response && response.status == 200 && response.data) {
                                 targetObj = angular.copy(response.data);
@@ -1602,18 +1601,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
 
                 if ($scope.newItem.validateCode === $scope.newItem.maHang) {
-                    service.postItemInventoryByCode({ code: $scope.newItem.maHang, wareHouseCode: $scope.target.maKhoXuat }, function (response) {
-                        $scope.newItem.soLuongTon = response.closingQuantity;
+                    service.postItemInventoryByCode({ code: $scope.newItem.maHang, wareHouseCode: $scope.target.maKhoXuat }).then(function (response) {
+                        $scope.newItem.soLuongTon = response.data.closingQuantity;
                         if (!angular.isUndefined($scope.newItem.maHang)) {
                             $scope.target.dataDetails.push($scope.newItem);
                         }
-                        $scope.pageChanged();
-                        $scope.newItem = {};
-                        focus('mahang');
-                        document.getElementById('mahang').focus();
-                    }).error(function (response) {
-                        console.log('lỗi');
-                        $scope.target.dataDetails.push($scope.newItem);
                         $scope.pageChanged();
                         $scope.newItem = {};
                         focus('mahang');
@@ -1673,9 +1665,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
             $scope.getWareHouseImportByUnit = function () {
                 if ($scope.target.maDonViNhan) {
-                    service.getWareHouseByUnit($scope.target.maDonViNhan, function (response) {
+                    service.getWareHouseByUnit($scope.target.maDonViNhan).then(function (response) {
                         if (response && response.length > 0)
-                            $scope.khoNhaps = response;
+                            $scope.khoNhaps = response.data;
                     });
                 };
             }
@@ -1821,7 +1813,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         $scope.target.dataDetails.clear();
                         $scope.isListItemNull = true;
                         service.getNewInstance().then(function (response) {
-                            var expectData = response;
+                            var expectData = response.data;
                             tempData.maChungTu = expectData.maChungTu;
                             tempData.ngay = expectData.ngay;
                             $scope.target = tempData;
@@ -1993,9 +1985,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 });
             }, true);
+
             $scope.pageChanged = function () {
                 var currentPage = $scope.paged.currentPage;
                 var itemsPerPage = $scope.paged.itemsPerPage;
+                console.log();
                 $scope.paged.totalItems = $scope.target.dataDetails.length;
                 $scope.data = [];
                 if ($scope.target.dataDetails) {
@@ -2267,16 +2261,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     return;
                 }
                 if ($scope.newItem.validateCode == $scope.newItem.maHang) {
-                    service.postItemInventoryByCode({ code: $scope.newItem.maHang, wareHouseCode: $scope.target.maKhoXuat }, function (response) {
-                        $scope.newItem.soLuongTon = response.closingQuantity;
+                    service.postItemInventoryByCode({ code: $scope.newItem.maHang, wareHouseCode: $scope.target.maKhoXuat }).then(function (response) {
+                        $scope.newItem.soLuongTon = response.data.closingQuantity;
                         console.log('thành công');
-                        $scope.target.dataDetails.push($scope.newItem);
-                        $scope.pageChanged();
-                        $scope.newItem = {};
-                        focus('mahang');
-                        document.getElementById('mahang').focus();
-                    }).error(function (response) {
-                        console.log('lỗi');
                         $scope.target.dataDetails.push($scope.newItem);
                         $scope.pageChanged();
                         $scope.newItem = {};
@@ -2639,7 +2626,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
             $scope.getWareHouseImportByUnit = function () {
                 if ($scope.target.maDonViNhan) {
-                    service.getWareHouseByUnit($scope.target.maDonViNhan, function (response) {
+                    service.getWareHouseByUnit($scope.target.maDonViNhan).then(function (response) {
                         $scope.khoNhaps = response;
                         var data = $filter('filter')($scope.khoNhaps, { value: $scope.target.maKhoNhap }, true);
                         if (data && data.length == 1) {
@@ -2648,7 +2635,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     });
                 };
                 if ($scope.target.maDonViXuat) {
-                    service.getWareHouseByUnit($scope.target.maDonViXuat, function (response) {
+                    service.getWareHouseByUnit($scope.target.maDonViXuat).then(function (response) {
                         $scope.khoXuats = response;
                         var data = $filter('filter')($scope.khoXuats, { value: $scope.target.maKhoXuat }, true);
                         if (data && data.length == 1) {
@@ -2976,8 +2963,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
         }]);
 
-    app.controller('reportPhieuDieuChuyenNoiBoController', ['$scope', '$location', '$http', 'configService', 'phieuDieuChuyenNoiBoService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', 'taxService',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, serviceTax) {
+    app.controller('reportPhieuDieuChuyenNoiBoController', ['$scope', '$location', '$http', 'configService', 'phieuDieuChuyenNoiBoService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', 'taxService','$state',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, serviceTax, $state) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             $scope.robot = angular.copy(service.robot);
             $scope.tempData = tempDataService.tempData;

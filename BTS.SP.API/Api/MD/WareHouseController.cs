@@ -1,8 +1,10 @@
-﻿using BTS.API.ENTITY.Md;
+﻿using AutoMapper;
+using BTS.API.ENTITY.Md;
+using BTS.API.SERVICE.Authorize.Utils;
 using BTS.API.SERVICE.BuildQuery;
+using BTS.API.SERVICE.BuildQuery.Query.Types;
 using BTS.API.SERVICE.Helper;
 using BTS.API.SERVICE.MD;
-using BTS.API.SERVICE.Authorize.Utils;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -11,8 +13,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BTS.API.SERVICE.BuildQuery.Query.Types;
-using AutoMapper;
 
 namespace BTS.SP.API.Api.MD
 {
@@ -41,7 +41,7 @@ namespace BTS.SP.API.Api.MD
             result.Data = data.Where(x => x.UnitCode.StartsWith(maDonViCha)).Select(x => new ChoiceObj { Value = x.MaKho, Text = x.MaKho + "|" + x.TenKho, Description = x.TenKho, ExtendValue = x.ThongTinBoSung, Id = x.Id }).ToList();
             return Ok(result);
         }
-      
+
         [Route("GetByUnit/{maDonVi}")]
         [CustomAuthorize(Method = "XEM", State = "wareHouse")]
         public IHttpActionResult GetByUnit(string maDonVi)
@@ -76,13 +76,14 @@ namespace BTS.SP.API.Api.MD
                 return result;
             }
         }
+
         /// <summary>
         /// POST
         /// </summary>
         /// <returns></returns>
-        [Route("wareHouseCtl_GetSelectDataByUnitCode_page")]
+        [Route("PostDataWareHouse")]
         [CustomAuthorize(Method = "XEM", State = "wareHouse")]
-        public async Task<IHttpActionResult> wareHouseCtl_GetSelectDataByUnitCode_page(JObject jsonData)
+        public async Task<IHttpActionResult> PostDataWareHouse(JObject jsonData)
         {
             var result = new TransferObj();
             var postData = ((dynamic)jsonData);
@@ -95,9 +96,22 @@ namespace BTS.SP.API.Api.MD
                 Skip = paged.FromItem - 1,
                 Filter = new QueryFilterLinQ()
                 {
-                    Property = ClassHelper.GetProperty(() => new MdWareHouse().UnitCode),
-                    Method = FilterMethod.StartsWith,
-                    Value = _ParentUnitCode
+                    SubFilters = new List<IQueryFilter>()
+                    {
+                        new QueryFilterLinQ()
+                        {
+                            Property = ClassHelper.GetProperty(() => new MdWareHouse().UnitCode),
+                            Method = FilterMethod.StartsWith,
+                            Value = _ParentUnitCode
+                        },
+                        new QueryFilterLinQ()
+                        {
+                            Property = ClassHelper.GetProperty(() => new MdWareHouse().TenKho),
+                            Method = FilterMethod.Like,
+                            Value = filtered.Summary
+                        }
+                    },
+                    Method = FilterMethod.And
                 }
             };
             try
@@ -186,7 +200,7 @@ namespace BTS.SP.API.Api.MD
                 string MA_DM = _unitCode + "-K";
                 if (!instance.IsKhoBanLe && !instance.IsKhoKM)
                 {
-                    instance.MaKho =  _service.BuildCode_DM(MA_DM, _unitCode, true);
+                    instance.MaKho = _service.BuildCode_DM(MA_DM, _unitCode, true);
                 }
                 var wareHouse = Mapper.Map<MdWareHouseVm.Dto, MdWareHouse>(instance);
                 var item = _service.Insert(wareHouse);

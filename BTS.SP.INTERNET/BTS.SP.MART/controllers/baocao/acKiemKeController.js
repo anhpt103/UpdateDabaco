@@ -106,52 +106,52 @@
             $scope.target.moduleName = 'baoCaoDayDu';
             $scope.nameController = 'reportKiemKe';
             $scope.lstLoaiBaoCao = [
-				{
-				    value: 1,
-				    text: 'Báo cáo đầy đủ',
-				    name: 'baoCaoDayDu'
-				},
-				{
-				    value: 2,
-				    text: 'Báo cáo thừa',
-				    name: 'baoCaoThua'
-				},
-				{
-				    value: 3,
-				    text: 'Báo cáo thiếu',
-				    name: 'baoCaoThieu'
-				},
+                {
+                    value: 1,
+                    text: 'Báo cáo đầy đủ',
+                    name: 'baoCaoDayDu'
+                },
+                {
+                    value: 2,
+                    text: 'Báo cáo thừa',
+                    name: 'baoCaoThua'
+                },
+                {
+                    value: 3,
+                    text: 'Báo cáo thiếu',
+                    name: 'baoCaoThieu'
+                },
             ];
             var InventoryGroupBy = [
-				'MANHACUNGCAP',
-				'MAKHO',
-				'MALOAIVATTU',
-				'MANHOMVATTU',
-				'MAVATTU',
-				'PHIEU',
-				'MAGIAODICH',
-				'MAKHACHHANG',
-				'MALOAITHUE',
-				'MADONVI',
-				'MADONVIXUAT',
-				'MADONVINHAN',
-				'MAXUATXU',
+                'MANHACUNGCAP',
+                'MAKHO',
+                'MALOAIVATTU',
+                'MANHOMVATTU',
+                'MAVATTU',
+                'PHIEU',
+                'MAGIAODICH',
+                'MAKHACHHANG',
+                'MALOAITHUE',
+                'MADONVI',
+                'MADONVIXUAT',
+                'MADONVINHAN',
+                'MAXUATXU',
                 'MAKEHANG'
             ];
             var NameGroupBy = [
-				'Mã nhà cung cấp',
-				'Mã kho',
-				'Mã loại vật tư',
-				'Mã nhóm vật tư',
-				'Mã vật tư',
-				'Phiếu',
-				'Mã giao dịch',
-				'Mã khách hàng',
-				'Mã loại thuế',
-				'Mã đơn vị',
-				'Mã đơn vị xuất',
-				'Mã đơn vị nhận',
-				'Mã xuất xứ',
+                'Mã nhà cung cấp',
+                'Mã kho',
+                'Mã loại vật tư',
+                'Mã nhóm vật tư',
+                'Mã vật tư',
+                'Phiếu',
+                'Mã giao dịch',
+                'Mã khách hàng',
+                'Mã loại thuế',
+                'Mã đơn vị',
+                'Mã đơn vị xuất',
+                'Mã đơn vị nhận',
+                'Mã xuất xứ',
                 'Mã kệ hàng'
             ];
             $scope.target.TENBAOCAO = $scope.lstLoaiBaoCao[0].text;
@@ -162,30 +162,17 @@
                         $scope.unitUsers = response.data;
                     }
                 });
-                //service.getFromDate().then(function (response) {
-                //    if (response.status == 200) {
-                //        $scope.target.fromDate = new Date(response.data);
-                //        //getKyKeToan($scope.target);
-                //    }
-                //});
+
                 servicePeriod.getKyKeToan().then(function (response) {
                     if (response) {
                         $scope.target.fromDate = new Date(response.data.fromDate);
                     }
                 });
             };
-
             filterData();
-            function getKyKeToan(targetData) {
-                servicePeriod.getTableNameByDate(targetData).then(function (response) {
-                    if (response && response.status == 200 && response.data) {
-                        $scope.params.P_KY = response.data.data;
-                    }
-                });
-            }
 
             $scope.changeLBC = function (index) {
-                $scope.params.P_DKIENLOC = angular.uppercase($scope.lstLoaiBaoCao[index - 1].name);
+                $scope.params.P_DKIENLOC = $scope.lstLoaiBaoCao[index - 1].name ? $scope.lstLoaiBaoCao[index - 1].name.toUpperCase() : '';
                 $scope.target.moduleName = $scope.lstLoaiBaoCao[index - 1].name;
                 $scope.target.TENBAOCAO = $scope.lstLoaiBaoCao[index - 1].text;
             }
@@ -194,6 +181,7 @@
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -225,6 +213,7 @@
             $scope.selectMerchandiseType = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/MerchandiseType', 'selectData'),
                     controller: 'merchandiseTypeSelectDataController',
                     resolve: {
@@ -257,6 +246,7 @@
             $scope.selectMerchandise = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Merchandise', 'selectDataSimple'),
                     controller: 'merchandiseSimpleSelectDataController',
                     resolve: {
@@ -285,6 +275,7 @@
             $scope.selectMerchandiseGroup = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/NhomVatTu', 'selectData'),
                     controller: 'nhomVatTuSelectDataController',
                     resolve: {
@@ -316,6 +307,7 @@
             $scope.selectNhaCungCap = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Supplier', 'selectData'),
                     controller: 'supplierSelectDataController',
                     resolve: {
@@ -347,6 +339,7 @@
             $scope.selectCustomer = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Customer', 'selectData'),
                     controller: 'customerSelectDataController',
                     resolve: {
@@ -377,6 +370,7 @@
             $scope.selectUnitUser = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('auth/AuDonVi', 'selectData'),
                     controller: 'donViSelectDataController',
                     resolve: {
@@ -404,6 +398,7 @@
             $scope.selectShelves = function (inputShelves) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Shelves', 'selectData'),
                     controller: 'shelvesSelectDataController',
                     resolve: {

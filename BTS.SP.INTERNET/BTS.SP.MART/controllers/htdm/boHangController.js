@@ -963,6 +963,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.modeClickOneByOne = true;
             $scope.listSelectedData = [];
             $scope.title = function () { return 'Danh sách bó hàng'; };
+            $scope.all = false;
+
             function filterData() {
                 $scope.listSelectedData = serviceSelectData.getSelectData();
                 $scope.isLoading = true;
@@ -1004,6 +1006,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.setPage($scope.paged.currentPage);
             };
             $scope.doCheck = function (item) {
+                $scope.all = !$scope.all;
                 if (item) {
                     var isSelected = $scope.listSelectedData.some(function (element, index, array) {
                         return element.id == item.id;

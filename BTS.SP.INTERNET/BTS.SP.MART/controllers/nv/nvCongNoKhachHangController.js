@@ -121,8 +121,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('suppliers', successRes.data.data);
                             $scope.suppliers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -138,8 +136,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('customers', successRes.data.data);
                             $scope.customers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);

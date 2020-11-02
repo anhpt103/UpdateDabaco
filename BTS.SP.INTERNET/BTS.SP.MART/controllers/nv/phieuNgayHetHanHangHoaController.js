@@ -769,8 +769,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
         }]);
 
-    app.controller('reportPhieuNgayHetHanHangHoaController', ['$scope', '$location', '$http', 'configService', 'phieuNgayHetHanHangHoaService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window) {
+    app.controller('reportPhieuNgayHetHanHangHoaController', ['$scope', '$location', '$http', 'configService', 'phieuNgayHetHanHangHoaService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', '$state',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, $state) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             var id = $stateParams.id;
             $scope.target = {};

@@ -1,4 +1,11 @@
 ﻿using AutoMapper;
+using BTS.API.ENTITY.Authorize;
+using BTS.API.SERVICE.Authorize.AuNguoiDung;
+using BTS.API.SERVICE.Authorize.Utils;
+using BTS.API.SERVICE.BuildQuery;
+using BTS.API.SERVICE.BuildQuery.Query.Types;
+using BTS.API.SERVICE.Helper;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +13,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BTS.API.ENTITY.Authorize;
-using BTS.API.SERVICE.Authorize.AuNguoiDung;
-using BTS.API.SERVICE.BuildQuery;
-using BTS.API.SERVICE.Helper;
-using Newtonsoft.Json.Linq;
-using BTS.API.SERVICE.Authorize.Utils;
-using BTS.API.SERVICE.BuildQuery.Query.Types;
 
 namespace BTS.SP.API.Api.Authorize.AuNguoiDung
 {
@@ -165,6 +165,7 @@ namespace BTS.SP.API.Api.Authorize.AuNguoiDung
             }
             return Ok(result);
         }
+
         [Route("PostSelectData")]
         public async Task<IHttpActionResult> PostSelectData(JObject jsonData)
         {
@@ -180,18 +181,28 @@ namespace BTS.SP.API.Api.Authorize.AuNguoiDung
                 Skip = paged.FromItem - 1,
                 Filter = new QueryFilterLinQ()
                 {
-                    Property = ClassHelper.GetProperty(() => new AU_NGUOIDUNG().UnitCode),
-                    Method = FilterMethod.StartsWith,
-                    Value = maDonViCha
+                    SubFilters = new List<IQueryFilter>()
+                    {
+                        new QueryFilterLinQ()
+                        {
+                             Property = ClassHelper.GetProperty(() => new AU_NGUOIDUNG().UnitCode),
+                             Method = FilterMethod.StartsWith,
+                             Value = maDonViCha
+                        },
+                        new QueryFilterLinQ()
+                        {
+                            Property = ClassHelper.GetProperty(() => new AU_NGUOIDUNG().TenNhanVien),
+                            Method = FilterMethod.Like,
+                            Value = filtered.Summary
+                        }
+                    },
+                    Method = FilterMethod.And
                 }
             };
             try
             {
                 ResultObj<PagedObj<AU_NGUOIDUNG>> filterResult = _service.Filter(filtered, query);
-                if (!filterResult.WasSuccessful)
-                {
-                    return NotFound();
-                }
+                if (!filterResult.WasSuccessful) return NotFound();
 
                 result.Data = Mapper.Map<PagedObj<AU_NGUOIDUNG>, PagedObj<ChoiceObj>>
                     (filterResult.Value);
@@ -200,7 +211,7 @@ namespace BTS.SP.API.Api.Authorize.AuNguoiDung
             }
             catch (Exception ex)
             {
-                return InternalServerError();
+                return InternalServerError(ex);
             }
         }
         [HttpPost]

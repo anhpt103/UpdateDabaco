@@ -55,7 +55,33 @@
                 window.url.revokeObjectURL(url);
                 a.remove();
             }
-        }
+        };
+        // anhpt common function sử dụng cho filterData trong các controller ...SelectDataController
+        result.filterDataForSelectData = function (listData, listSelectedData) {
+            listSelectedData.forEach(function (item) {
+                let idx = listData.findIndex(record => record.id === item.id);
+                if (idx != - 1) listData[idx].selected = true;
+            })
+
+            // bỏ check 1 item thì bỏ tick all, ngược lại thì tick all
+            let flagCheckAll = listData.some(item => !item.selected);
+            if (flagCheckAll) return false;
+            else return true;
+        };
+
+        // anhpt common function sử dụng cho doCheck trong các controller ...SelectDataController
+        result.doCheckDataForSelectData = function (item, listData, scopeAll) {
+            if (item) {
+                let idx = listData.findIndex(record => record.id === item.id);
+                if (idx != - 1) listData[idx].selected = !listData[idx].selected;
+
+                // bỏ check 1 item thì bỏ tick all, ngược lại thì tick all
+                let flagCheckAll = listData.some(item => !item.selected);
+                if (flagCheckAll) return false;
+                else return true;
+            } else listData.forEach(item => item.selected = !scopeAll);
+        };
+
         var label = {
             lblMessage: 'Thông báo',
             lblNotifications: 'Thông báo',

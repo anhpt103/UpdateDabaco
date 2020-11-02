@@ -25,35 +25,35 @@
                 <tr class="headings">
                     <th class="column-title">#</th>
                     <th class="column-title">
-                        <a class="title" href="#" ng-click="sortType = 'maLoaiThue'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'maLoaiThue'; sortReverse = !sortReverse">
                             Mã loại thuế
                             <span ng-show="sortType == 'maLoaiThue' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'maLoaiThue' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
                     <th class="column-title">
-                        <a class="title" href="#" ng-click="sortType = 'LoaiThue'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'LoaiThue'; sortReverse = !sortReverse">
                             Loại thuế
                             <span ng-show="sortType == 'LoaiThue' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'LoaiThue' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
                     <th class="column-title">
-                        <a class="title" href="#" ng-click="sortType = 'taiKhoanKt'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'taiKhoanKt'; sortReverse = !sortReverse">
                             Tài Khoản Kế Toán
                             <span ng-show="sortType == 'taiKhoanKt' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'taiKhoanKt' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
                     <th class="column-title">
-                        <a class="title" href="#" ng-click="sortType = 'taiKhoanKt'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'taiKhoanKt'; sortReverse = !sortReverse">
                             Phần trăm
                             <span ng-show="sortType == 'TaxRate' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'TaxRate' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
                     <th class="column-title">
-                        <a class="title" href="#" ng-click="sortType = 'trangThai'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'trangThai'; sortReverse = !sortReverse">
                             Trạng thái
                             <span ng-show="sortType == 'trangThai' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'trangThai' && sortReverse" class="fa fa-caret-up"></span>
@@ -73,7 +73,7 @@
                     <td colspan="7"><my-loading></my-loading></td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse " ng-dblclick="details(item)">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.maLoaiThue}}</td>
                     <td>{{item.loaiThue}}</td>
                     <td>{{item.taiKhoanKt}}</td>

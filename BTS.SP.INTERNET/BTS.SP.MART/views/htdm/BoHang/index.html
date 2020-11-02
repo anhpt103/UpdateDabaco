@@ -61,7 +61,7 @@
                     <td colspan="5"><my-loading></my-loading></td>
                 </tr>
                 <tr ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)" style="width: 100%;">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.maBoHang}}</td>
                     <td>{{item.tenBoHang}}</td>
                     <td>{{item.ngayCT | date : dd/MM/yyyy}}</td>

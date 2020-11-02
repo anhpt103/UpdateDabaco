@@ -37,7 +37,7 @@
                                 Từ Ngày <span style="color:red"></span>
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
                                     <input class="input-border-form" type="text" ng-model="target.fromDate" placeholder="{{config.dateFormat}}"
                                            uib-datepicker-popup="{{config.dateFormat}}" is-open="_fromDate" datepicker-localdate />
                                     <div class="button-calender" ng-click="_fromDate = !_fromDate; config.delegateEvent($event);">
@@ -50,7 +50,7 @@
                                 Đến Ngày <span style="color:red"></span>
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
                                     <input class="input-border-form" type="text" ng-model="target.toDate" placeholder="{{config.dateFormat}}"
                                            uib-datepicker-popup="{{config.dateFormat}}" is-open="_toDate" datepicker-localdate />
                                     <div class="button-calender" ng-click="_toDate = !_toDate; config.delegateEvent($event);">
@@ -83,7 +83,7 @@
                                 Từ số tiền
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
 
                                     <input class="input-border-form" name="_giaTien" type="text" ng-model="target.fromMoney" />
                                 </div>
@@ -94,7 +94,7 @@
                                 Đến số tiền
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
 
                                     <input class="input-border-form" name="_giaTien" type="text" ng-model="target.toMoney" />
                                 </div>
@@ -121,7 +121,7 @@
                                     Thẻ tích điểm
                                 </div>
                                 <div class="md-4-style-input">
-                                    <div class="add-input-zone">
+                                    <div class="add-input-zone report">
 
                                         <input class="input-border-form" name="_giaTien" type="text" ng-model="target.maThe" />
                                     </div>
@@ -132,7 +132,7 @@
                                     Ngày hết hạn
                                 </div>
                                 <div class="md-4-style-input">
-                                    <div class="add-input-zone">
+                                    <div class="add-input-zone report">
                                         <input class="input-border-form" type="text" ng-model="target.ngayHetHan" placeholder="{{config.dateFormat}}"
                                                uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayHetHan" datepicker-localdate />
                                         <div class="button-calender" ng-click="_ngayHetHan = !_ngayHetHan; config.delegateEvent($event);">

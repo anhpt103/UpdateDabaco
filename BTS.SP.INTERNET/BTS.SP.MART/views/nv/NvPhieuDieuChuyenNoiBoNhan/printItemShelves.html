@@ -10,10 +10,8 @@
 <form></form><!-- KHông hiểu sao để thế này thì nó mới không bị lỗi T_T-->
 <div>
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
+
     </div>
     <div class="modal-body" ng-form name="_form">
         <div id="tableToExport">
@@ -44,17 +42,21 @@
                         <td class="text-right">{{item.giaBanLeVat | number}} VND</td><!-- gia le cos vat-->
                         <td class="text-center">{{dataHangHoa.maKhachHang}}</td><!-- nha cung cap-->
                         <td class="text-right">
-                            <div class="soLuong ng-binding" style="display: none; text-align: right">{{item.soLuong}}</div>
+                            <div class="soLuong ng-binding" style="display: none; text-align: right">{{item.soLuong}}
+                            </div>
                             <div class="md-4-style-input">
-                                <input class="input-border-form" type="number" style="text-align: right" ng-model="item.soLuong" maxlength="50">
+                                <input class="input-border-form" type="number" style="text-align: right"
+                                    ng-model="item.soLuong" maxlength="50">
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-right" colspan="7" style="font-weight: bold; padding-right: 100px;">Tổng số lượng</td>
+                        <td class="text-right" colspan="7" style="font-weight: bold; padding-right: 100px;">Tổng số
+                            lượng</td>
                         <td class="text-right">
                             <div class="md-4-style-input">
-                                <input class="input-border-form" type="number" style="text-align: right;font-weight: bold;" ng-value="sum()" maxlength="50">
+                                <input class="input-border-form" type="number"
+                                    style="text-align: right;font-weight: bold;" ng-value="sum()" maxlength="50">
                             </div>
                         </td>
                     </tr>
@@ -63,7 +65,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid || Loading" ng-click="exportToExcel()">Tải temp Excel</button>
-        <button prevent-default class="btn btn-default" ng-disabled="Loading" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid || Loading"
+            ng-click="exportToExcel()">Tải temp Excel</button>
+        <button prevent-default class="btn btn-default" ng-disabled="Loading" ng-click="cancel()"><i
+                class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </div>

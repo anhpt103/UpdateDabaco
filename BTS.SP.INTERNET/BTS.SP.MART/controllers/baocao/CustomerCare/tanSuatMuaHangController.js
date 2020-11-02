@@ -138,8 +138,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('suppliers', successRes.data.data);
                             $scope.suppliers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -155,8 +153,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('merchandiseTypes', successRes.data.data);
                             $scope.merchandiseTypes = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -172,8 +168,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('nhomVatTus', successRes.data.data);
                             $scope.nhomVatTus = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -189,8 +183,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('wareHouses', successRes.data.data);
                             $scope.wareHouses = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -206,8 +198,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('packagings', successRes.data.data);
                             $scope.packagings = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -223,8 +213,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('taxs', successRes.data.data);
                             $scope.taxs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -240,8 +228,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('donViTinhs', successRes.data.data);
                             $scope.donViTinhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -257,8 +243,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('customers', successRes.data.data);
                             $scope.customers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -369,6 +353,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandiseType = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/MerchandiseType', 'selectData'),
                     controller: 'merchandiseTypeSelectDataController',
                     resolve: {
@@ -401,6 +386,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandise = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Merchandise', 'selectDataSimple'),
                     controller: 'merchandiseSimpleSelectDataController',
                     resolve: {
@@ -434,6 +420,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandiseGroup = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/NhomVatTu', 'selectData'),
                     controller: 'nhomVatTuSelectDataController',
                     resolve: {

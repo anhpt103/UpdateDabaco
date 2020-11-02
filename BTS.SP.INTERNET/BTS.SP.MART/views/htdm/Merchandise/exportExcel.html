@@ -28,7 +28,7 @@
                         <input type="checkbox" ng-model="all" ng-click="doCheck()">
                     </th>
                     <th class="column-title" style="width:80%">
-                        <a class="title" href="#" ng-click="sortType = 'tenLoai'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'tenLoai'; sortReverse = !sortReverse">
                             Tên loại
                             <span ng-show="sortType == 'tenLoai' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'tenLoai' && sortReverse" class="fa fa-caret-up"></span>
@@ -43,7 +43,7 @@
                     </td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>
                         <input type="checkbox" ng-model="item.selected" ng-click="doCheck(item)">
                     </td>

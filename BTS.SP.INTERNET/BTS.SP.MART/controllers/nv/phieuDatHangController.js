@@ -404,8 +404,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('suppliers', successRes.data.data);
                             $scope.suppliers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -421,8 +419,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('merchandiseTypes', successRes.data.data);
                             $scope.merchandiseTypes = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -438,8 +434,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('nhomVatTus', successRes.data.data);
                             $scope.nhomVatTus = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -455,8 +449,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('wareHouses', successRes.data.data);
                             $scope.wareHouses = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -472,8 +464,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('packagings', successRes.data.data);
                             $scope.packagings = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -489,8 +479,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('taxs', successRes.data.data);
                             $scope.taxs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -506,8 +494,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('donViTinhs', successRes.data.data);
                             $scope.donViTinhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -712,7 +698,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.sum = function () {
                 var total = 0;
                 if ($scope.data) {
-                    angular.forEach($scope.data, function(v, k) {
+                    angular.forEach($scope.data, function (v, k) {
                         total = total + v.thanhTien;
                     });
                 }
@@ -774,7 +760,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }]);
 
     /* print Phieu Nhap Hang Mua Controller */ //log
-    app.controller('phieuDatHangParameterController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuDatHangService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify','$rootScope',
+    app.controller('phieuDatHangParameterController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuDatHangService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', '$rootScope',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, $rootScope) {
             $scope.robot = angular.copy(service.robot);
             $scope.paged = angular.copy(configService.pageDefault);
@@ -814,7 +800,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.tagDatHangs.splice(index, 1);
             }
             $scope.$watch('tagDatHangs', function (newValue, oldValue) {
-                var values = $scope.tagDatHangs.map(function(element) {
+                var values = $scope.tagDatHangs.map(function (element) {
                     return element.value;
                 });
                 $scope.target.tagDatHangs = values;
@@ -847,7 +833,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     $log.info('Modal dismissed at: ' + new Date());
                 });
             }
-         
+
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };
@@ -894,8 +880,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('suppliers', successRes.data.data);
                             $scope.suppliers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -911,8 +895,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('merchandiseTypes', successRes.data.data);
                             $scope.merchandiseTypes = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -928,8 +910,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('nhomVatTus', successRes.data.data);
                             $scope.nhomVatTus = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -945,8 +925,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('wareHouses', successRes.data.data);
                             $scope.wareHouses = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -961,8 +939,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('packagings', successRes.data.data);
                             $scope.packagings = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -978,8 +954,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('taxs', successRes.data.data);
                             $scope.taxs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -995,8 +969,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('donViTinhs', successRes.data.data);
                             $scope.donViTinhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -1134,7 +1106,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.target.dataDetails.splice(currentPageIndex, 1);
                 $scope.pageChanged();
             }
-            
+
             $scope.selectedkhachHang = function (item) {
                 $scope.target.maKhachHang = item.value;
                 service.getOrderByCustomer(item.value).then(function (response) {
@@ -1185,8 +1157,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 service.getDetailsContract(item.id, function (response) {
                     if (response && response.status == 200 && response.data) {
                         console.log('response.data:', response.data);
-                        
-                        angular.forEach(response.data.dataDetails, function(v, k) {
+
+                        angular.forEach(response.data.dataDetails, function (v, k) {
                             $scope.target.dataDetails.push(v);
                         });
                     }
@@ -1213,10 +1185,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 service.post($scope.target).then(function (successRes) {
                     if (successRes && successRes.status === 201 && successRes.data) {
                         ngNotify.set("Thêm mới thành công", { type: 'success' });
-                        
-                        
-                        
-                        
+
+
+
+
                         $uibModalInstance.close($scope.target);
                     } else {
                         console.log('addNew successRes', successRes);
@@ -1232,7 +1204,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 service.post($scope.target).then(function (successRes) {
                     if (successRes && successRes.status === 201 && successRes.data.status) {
                         ngNotify.set(successRes.data.message, { type: 'success' });
-                        
+
                         $scope.isListItemNull = true;
                         service.getNewInstance().then(function (response) {
                             if (response && response.status == 200 && response.data) {
@@ -1249,9 +1221,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.saveAndPrint = function () {
                 service.post($scope.target).then(function (successRes) {
@@ -1259,7 +1231,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set(successRes.data.message, { type: 'success' });
                         var url = $state.href('reportPhieuDatHang', { id: response.data.id });
                         window.open(url, 'Report Viewer');
-                        
+
                         $scope.isListItemNull = true;
                         $uibModalInstance.close($scope.target);
                     } else {
@@ -1267,9 +1239,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.createWareHouse = function (target, name) {
                 var modalInstance = $uibModal.open({
@@ -1343,10 +1315,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
 
             $scope.cancel = function () {
-                
-                
-                
-                
+
+
+
+
                 $uibModalInstance.dismiss('cancel');
             };
         }]);
@@ -1487,7 +1459,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.isLoading = true;
                 service.getOrderById(item.id).then(function (response) {
                     var donHang = response.data;
-                    
+
                     angular.forEach(donHang.dataDetails, function (v, k) {
                         $scope.target.dataDetails.push(v);
                     });
@@ -1501,9 +1473,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectedTkCo = function (item) {
                 $scope.target.tkCo = item.value;
             };
-            $scope.selectedMaHang = function(code) {
+            $scope.selectedMaHang = function (code) {
                 if (code) {
-                    service.getMerchandiseForNvByCode(code).then(function(response) {
+                    service.getMerchandiseForNvByCode(code).then(function (response) {
                         if (response && response.status == 200 && response.data && response.data.status) {
                             $scope.newItem = response.data.data;
                         } else {
@@ -1560,7 +1532,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 service.getDetailsContract(item.id, function (response) {
                     if (response && response.status == 200 && response.data) {
                         console.log('response.data:', response.data);
-                        
+
                         angular.forEach(response.data.dataDetails, function (v, k) {
                             $scope.target.dataDetails.push(v);
                         });
@@ -1607,7 +1579,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set(successRes.data.message, { type: 'success' });
                         var url = $state.href('reportPhieuDatHang', { id: successRes.data.data.id });
                         window.open(url, 'Report Viewer');
-                        
+
                         $uibModalInstance.close($scope.target);
                     } else {
                         console.log('update successRes', successRes);
@@ -1706,7 +1678,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.ClearContent = function () {
                 var inpKhachHang = $scope.target.maKhachHang;
                 if (inpKhachHang == null) {
-                    
+
                     $scope.target.maHd = "";
                     $scope.pageChanged();
                 }
@@ -1772,13 +1744,13 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 });
             };
             $scope.$watch('tagsGroups', function (newValue, oldValue) {
-                var values = $scope.tagsGroups.map(function(element) {
+                var values = $scope.tagsGroups.map(function (element) {
                     return element.value;
                 });
                 $scope.filtered.advanceData.maNhomVatTu = values.join();
             }, true);
             $scope.$watch('tagsTypes', function (newValue, oldValue) {
-                var values = $scope.tagsTypes.map(function(element) {
+                var values = $scope.tagsTypes.map(function (element) {
                     return element.value;
                 });
                 $scope.filtered.advanceData.maLoaiVatTu = values.join();
@@ -1814,10 +1786,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
             $scope.filterMerchandise = function () {
                 $scope.filtered.isAdvance = true;
-                service.postFilterMerchandise(JSON.stringify({ filtered: $scope.filtered }), function(response) {
+                service.postFilterMerchandise(JSON.stringify({ filtered: $scope.filtered }), function (response) {
                     if (response.status) {
-                        
-                        angular.forEach(response.data, function(v, k) {
+
+                        angular.forEach(response.data, function (v, k) {
                             v.soLuong = 0;
                             v.thanhTien = 0;
                             $scope.target.dataDetails.push(v);
@@ -1827,18 +1799,18 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 });
             }
             $scope.cancel = function () {
-                
-                
-                
-                
+
+
+
+
                 $uibModalInstance.close();
             };
         }]);
 
 
     /* controller Details */
-    app.controller('phieuDatHangDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuDatHangService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+    app.controller('phieuDatHangDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuDatHangService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', '$state',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, $state) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.tempData = tempDataService.tempData;
@@ -1848,7 +1820,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.sum = function () {
                 var total = 0;
                 if ($scope.target.dataDetails) {
-                    angular.forEach($scope.target.dataDetails, function(v, k) {
+                    angular.forEach($scope.target.dataDetails, function (v, k) {
                         total = total + v.thanhTien;
                     });
                 }
@@ -1931,8 +1903,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }]);
 
     /* report Phieu Nhap Hang Mua Controller */
-    app.controller('reportPhieuDatHangController', ['$scope', '$location', '$http', 'configService', 'phieuDatHangService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window) {
+    app.controller('reportPhieuDatHangController', ['$scope', '$location', '$http', 'configService', 'phieuDatHangService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', '$state',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, $state) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             $scope.robot = angular.copy(service.robot);
             var id = $stateParams.id;
@@ -2019,9 +1991,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             }
             function getDetail(callback) {
-                service.postMerger(filterObject, function(response) {
+                service.postMerger(filterObject, function (response) {
                     if (response && response.length > 0) {
-                        angular.forEach(response, function(v, k) {
+                        angular.forEach(response, function (v, k) {
                             $scope.target.dataDetails.push(v);
                         });
                     }
@@ -2068,7 +2040,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.isLoading = true;
                 service.getDetailsContract(item.id, function (response) {
                     if (response && response.status == 200 && response.data) {
-                        
+
                         angular.forEach(response.data.dataDetails, function (v, k) {
                             $scope.target.dataDetails.push(v);
                         });
@@ -2131,7 +2103,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.target.dataDetails.splice(currentPageIndex, 1);
                 $scope.pageChanged();
             }
-           
+
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };

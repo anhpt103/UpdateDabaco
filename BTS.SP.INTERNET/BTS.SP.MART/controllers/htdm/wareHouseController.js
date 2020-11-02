@@ -19,8 +19,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js'], func
             post: function (data) {
                 return $http.post(serviceUrl + '/Post', data);
             },
-            wareHouseCtl_GetSelectDataByUnitCode_page: function (data) {
-                return $http.post(serviceUrl + '/wareHouseCtl_GetSelectDataByUnitCode_page', data);
+            postDataWareHouse: function (data) {
+                return $http.post(serviceUrl + '/PostDataWareHouse', data);
             },
             getNewInstance: function (callback) {
                 return $http.get(serviceUrl + '/GetNewInstance');
@@ -333,9 +333,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js'], func
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.cancel = function () {
                 $uibModalInstance.close();
@@ -350,37 +350,32 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js'], func
             $scope.filtered = angular.copy(configService.filterDefault);
             $scope.filtered = angular.extend($scope.filtered, filterObject);
             angular.extend($scope.filtered, filterObject);
-            var lstTemp = [];
+            $scope.all = false;
+
             $scope.modeClickOneByOne = true;
             $scope.title = function () { return 'Danh sách kho hàng'; };
             $scope.selecteItem = function (item) {
                 $uibModalInstance.close(item);
             }
+
             $scope.isLoading = false;
-            $scope.sortType = 'maKho'; // set the default sort type
-            $scope.sortReverse = false;  // set the default sort order
+            $scope.sortType = 'maKho';
+            $scope.sortReverse = false;
+
             function filterData() {
                 $scope.listSelectedData = serviceSelectData.getSelectData();
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                service.wareHouseCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
+                service.postDataWareHouse(postdata).then(function (response) {
                     $scope.isLoading = false;
                     if (response.status) {
                         $scope.data = response.data.data.data;
-                        //console.log($scope.data);
-                        angular.forEach($scope.data, function (v, k) {
-                            var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                                if (!element) return false;
-                                return element.value == v.value;
-                            });
-                            if (isSelected) {
-                                $scope.data[k].selected = true;
-                            }
-                        });
+                        $scope.all = configService.filterDataForSelectData($scope.data, $scope.listSelectedData, $scope.all)
                         angular.extend($scope.paged, response.data.data);
                     }
                 });
             };
+
             filterData();
             $scope.setPage = function (pageNo) {
                 $scope.paged.currentPage = pageNo;
@@ -396,46 +391,18 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js'], func
             $scope.refresh = function () {
                 $scope.setPage($scope.paged.currentPage);
             };
+
             $scope.doCheck = function (item) {
-                if (item) {
-                    var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                        return element.id == item.id;
-                    });
-                    if (item.selected) {
-                        if (!isSelected) {
-                            $scope.listSelectedData.push(item);
-                        }
-                    } else {
-                        if (isSelected) {
-                            $scope.listSelectedData.splice(item, 1);
-                        }
-                    }
-                } else {
-                    angular.forEach($scope.data, function (v, k) {
-
-                        $scope.data[k].selected = $scope.all;
-                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                            if (!element) return false;
-                            return element.id == v.id;
-                        });
-
-                        if ($scope.all) {
-                            if (!isSelected) {
-                                $scope.listSelectedData.push($scope.data[k]);
-                            }
-                        } else {
-                            if (isSelected) {
-                                $scope.listSelectedData.splice($scope.data[k], 1);
-                            }
-                        }
-                    });
-                }
+                $scope.all = configService.doCheckDataForSelectData(item, $scope.data, $scope.all);
             };
+
             $scope.save = function () {
-                $uibModalInstance.close($scope.listSelectedData);
+                let result = $filter('filter')($scope.data, { selected: true }, true);
+                service.setSelectData(result);
+                $uibModalInstance.close(result);
             };
+
             $scope.cancel = function () {
-                service.setSelectData(lstTemp);
                 $uibModalInstance.close();
             };
         }]);
@@ -450,25 +417,18 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js'], func
             $scope.filtered = angular.extend($scope.filtered, filterObject);
             angular.extend($scope.filtered, filterObject);
             $scope.title = function () { return 'Danh sách kho hàng'; };
+            $scope.all = false;
+
             function filterData() {
                 $scope.listSelectedData = serviceSelectData.getSelectData();
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                service.wareHouseCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
+                service.postDataWareHouse(postdata).then(function (response) {
                     $scope.isLoading = false;
                     if (response.status) {
-                        $scope.data = response.data.data;
-                        //console.log($scope.data);
-                        angular.forEach($scope.data, function (v, k) {
-                            var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                                if (!element) return false;
-                                return element.value == v.value;
-                            });
-                            if (isSelected) {
-                                $scope.data[k].selected = true;
-                            }
-                        });
-                        angular.extend($scope.paged, response.data);
+                        $scope.data = response.data.data.data;
+                        $scope.all = configService.filterDataForSelectData($scope.data, $scope.listSelectedData, $scope.all)
+                        angular.extend($scope.paged, response.data.data);
                     }
                 });
             };
@@ -511,43 +471,15 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js'], func
             };
 
             $scope.doCheck = function (item) {
-                if (item) {
-                    var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                        return element.id == item.id;
-                    });
-                    if (item.selected) {
-                        if (!isSelected) {
-                            $scope.listSelectedData.push(item);
-                        }
-                    } else {
-                        if (isSelected) {
-                            $scope.listSelectedData.splice(item, 1);
-                        }
-                    }
-                } else {
-                    angular.forEach($scope.data, function (v, k) {
-
-                        $scope.data[k].selected = $scope.all;
-                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                            if (!element) return false;
-                            return element.id == v.id;
-                        });
-
-                        if ($scope.all) {
-                            if (!isSelected) {
-                                $scope.listSelectedData.push($scope.data[k]);
-                            }
-                        } else {
-                            if (isSelected) {
-                                $scope.listSelectedData.splice($scope.data[k], 1);
-                            }
-                        }
-                    });
-                }
-            }
-            $scope.save = function () {
-                $uibModalInstance.close($scope.listSelectedData);
+                $scope.all = configService.doCheckDataForSelectData(item, $scope.data, $scope.all);
             };
+
+            $scope.save = function () {
+                let result = $filter('filter')($scope.data, { selected: true }, true);
+                service.setSelectData(result);
+                $uibModalInstance.close(result);
+            };
+
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };

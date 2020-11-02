@@ -259,8 +259,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('customers', successRes.data.data);
                             $scope.customers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -276,8 +274,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('suppliers', successRes.data.data);
                             $scope.suppliers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -293,8 +289,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('merchandiseTypes', successRes.data.data);
                             $scope.merchandiseTypes = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -310,8 +304,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('nhomVatTus', successRes.data.data);
                             $scope.nhomVatTus = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -327,8 +319,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('wareHouses', successRes.data.data);
                             $scope.wareHouses = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -344,8 +334,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('packagings', successRes.data.data);
                             $scope.packagings = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -361,8 +349,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('taxs', successRes.data.data);
                             $scope.taxs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -378,8 +364,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('donViTinhs', successRes.data.data);
                             $scope.donViTinhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -556,6 +540,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandiseType = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/MerchandiseType', 'selectData'),
                     controller: 'merchandiseTypeSelectDataController',
                     resolve: {
@@ -588,6 +573,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandise = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Merchandise', 'selectDataSimple'),
                     controller: 'merchandiseSimpleSelectDataController',
                     resolve: {
@@ -621,6 +607,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandiseGroup = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/NhomVatTu', 'selectData'),
                     controller: 'nhomVatTuSelectDataController',
                     resolve: {
@@ -651,11 +638,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             }, true);
             $rootScope.$on('$locationChangeStart',
-            function (event, next, current) {
-                if ($scope.tagsCustomers) {
-                    $scope.tagsCustomers.clear();
-                }
-            });
+                function (event, next, current) {
+                    if ($scope.tagsCustomers) {
+                        $scope.tagsCustomers.clear();
+                    }
+                });
             $scope.tranferFrom = function (item) {
                 var modalInstance = $uibModal.open({
                     templateUrl: configService.buildUrl('nv/NvPhieuDieuChuyenNoiBo', 'add'),
@@ -760,527 +747,501 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }]);
     /* controller addNew */
     app.controller('phieuNhapHangBanTraLaiCreateController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', '$rootScope', 'userService', 'FileUploader', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', 'toaster', 'periodService', 'nvCongNoKhachHangService', 'phieuXuatBanService',
-    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, $rootScope, serviceAuthUser, FileUploader, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, toaster, servicePeriod, nvCongNoKhachHangService, phieuXuatBanService) {
-        var currentUser = serviceAuthUser.GetCurrentUser();
-        var unitCode = currentUser.unitCode;
-        var rootUrl = configService.apiServiceBaseUri;
-        var serviceUrl = rootUrl + '/api/Nv/NhapHangBanTraLai';
-        $scope.robot = angular.copy(service.robot);
-        $scope.config = angular.copy(configService);
-        $scope.paged = angular.copy(configService.pageDefault);
-        $scope.data = [];
-        $scope.newItem = {};
-        $scope.donHangs = [];
-        $scope.target = { dataDetails: [], dataClauseDetails: [] };
-        $scope.tkKtKhoNhap = "";
-        $scope.tyGia = 0;
-        $scope.isListItemNull = true;
-        $scope.tempData = tempDataService.tempData;
-        $scope.isLoading = false;
-        $scope.title = function () { return 'Phiếu nhập hàng bán trả lại'; };
-        $scope.displayHepler = function (paraValue, moduleName) {
-            var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
-            if (data && data.length === 1) {
-                return data[0].text;
-            } else {
-                return paraValue;
-            }
-        }
-        //load danh muc
-
-        function loadSupplier() {
-            if (!tempDataService.tempData('suppliers')) {
-                serviceSupplier.getAll_Supplier().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('suppliers', successRes.data.data);
-                        $scope.suppliers = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.suppliers = tempDataService.tempData('suppliers');
-            }
-        }
-
-        function loadMerchandiseType() {
-            if (!tempDataService.tempData('merchandiseTypes')) {
-                serviceMerchandiseType.getAll_MerchandiseType().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('merchandiseTypes', successRes.data.data);
-                        $scope.merchandiseTypes = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.merchandiseTypes = tempDataService.tempData('merchandiseTypes');
-            }
-        }
-
-        function loadNhomVatTu() {
-            if (!tempDataService.tempData('nhomVatTus')) {
-                serviceNhomVatTu.getAll_NhomVatTu().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('nhomVatTus', successRes.data.data);
-                        $scope.nhomVatTus = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.nhomVatTus = tempDataService.tempData('nhomVatTus');
-            }
-        }
-
-        function loadWareHouse() {
-            if (!tempDataService.tempData('wareHouses')) {
-                serviceWareHouse.getAll_WareHouse().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('wareHouses', successRes.data.data);
-                        $scope.wareHouses = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.wareHouses = tempDataService.tempData('wareHouses');
-            }
-        }
-        function loadPackagings() {
-            if (!tempDataService.tempData('packagings')) {
-                servicePackaging.getAll_Packaging().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('packagings', successRes.data.data);
-                        $scope.packagings = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.packagings = tempDataService.tempData('packagings');
-            }
-        }
-
-        function loadTax() {
-            if (!tempDataService.tempData('taxs')) {
-                serviceTax.getAll_Tax().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('taxs', successRes.data.data);
-                        $scope.taxs = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.taxs = tempDataService.tempData('taxs');
-            }
-        }
-
-        function loadDonViTinh() {
-            if (!tempDataService.tempData('donViTinhs')) {
-                serviceDonViTinh.getAll_DonViTinh().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('donViTinhs', successRes.data.data);
-                        $scope.donViTinhs = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.donViTinhs = tempDataService.tempData('donViTinhs');
-            }
-        }
-        //
-        function loadCustomer() {
-            if (!tempDataService.tempData('customers')) {
-                serviceCustomer.getAll_Customer().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('customers', successRes.data.data);
-                        $scope.customers = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.customers = tempDataService.tempData('customers');
-            }
-        }
-        loadSupplier();
-        loadMerchandiseType();
-        loadNhomVatTu();
-        loadWareHouse();
-        loadPackagings();
-        loadTax();
-        loadDonViTinh();
-        loadCustomer();
-        //end 
-
-
-        $scope.pageChanged = function () {
-            var currentPage = $scope.paged.currentPage;
-            var itemsPerPage = $scope.paged.itemsPerPage;
-            if ($scope.target && $scope.target.dataDetails) $scope.paged.totalItems = $scope.target.dataDetails.length;
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, $rootScope, serviceAuthUser, FileUploader, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, toaster, servicePeriod, nvCongNoKhachHangService, phieuXuatBanService) {
+            var currentUser = serviceAuthUser.GetCurrentUser();
+            var unitCode = currentUser.unitCode;
+            var rootUrl = configService.apiServiceBaseUri;
+            var serviceUrl = rootUrl + '/api/Nv/NhapHangBanTraLai';
+            $scope.robot = angular.copy(service.robot);
+            $scope.config = angular.copy(configService);
+            $scope.paged = angular.copy(configService.pageDefault);
             $scope.data = [];
-            if ($scope.target.dataDetails) {
-                for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
-                    $scope.data.push($scope.target.dataDetails[i]);
+            $scope.newItem = {};
+            $scope.donHangs = [];
+            $scope.target = { dataDetails: [], dataClauseDetails: [] };
+            $scope.tkKtKhoNhap = "";
+            $scope.tyGia = 0;
+            $scope.isListItemNull = true;
+            $scope.tempData = tempDataService.tempData;
+            $scope.isLoading = false;
+            $scope.title = function () { return 'Phiếu nhập hàng bán trả lại'; };
+            $scope.displayHepler = function (paraValue, moduleName) {
+                var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
+                if (data && data.length === 1) {
+                    return data[0].text;
+                } else {
+                    return paraValue;
                 }
             }
-        }
-        function filterData() {
-            $scope.isLoading = true;
-            service.getNewInstance().then(function (response) {
-                if (response && response.status == 200 && response.data) {
-                    $scope.target = response.data;
-                    servicePeriod.getKyKeToan().then(function (response) {
-                        if (response && response.status == 200 && response.data) {
-                            $scope.target.ngayCT = new Date(response.data.toDate);
-                        }
-                    });
-                    $scope.pageChanged();
-                    $scope.isLoading = false;
-                    $scope.$watch('target.vat', function (v, k) {
-                        if (!v) {
-                            $scope.target.tienVat = 0;
+            //load danh muc
+
+            function loadSupplier() {
+                if (!tempDataService.tempData('suppliers')) {
+                    serviceSupplier.getAll_Supplier().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('suppliers', successRes.data.data);
+                            $scope.suppliers = successRes.data.data;
                         } else {
-                            $scope.target.tienVat = $scope.robot.sumVat($scope.tyGia, $scope.target);
+                            console.log('successRes', successRes);
                         }
-                        $scope.target.thanhTienSauVat = $scope.target.thanhTienTruocVat + $scope.target.tienVat - $scope.target.tienChietKhau;
-                    });
-                    $scope.$watch('target.tienChietKhau', function (v, k) {
-                        $scope.target.thanhTienTruocVat = $scope.robot.sum($scope.target.dataDetails, 'thanhTien');
-                        $scope.target.tienVat = $scope.robot.sumVat($scope.tyGia, $scope.target);
-                        $scope.target.thanhTienSauVat = $scope.target.thanhTienTruocVat + $scope.target.tienVat - $scope.target.tienChietKhau;
-                    });
-                    $scope.$watch("target.dataDetails", function (newValue, oldValue) {
-                        if (!$scope.target.tienChietKhau) {
-                            $scope.target.tienChietKhau = 0;
-                        }
-                        $scope.target.thanhTienTruocVat = $scope.robot.sum($scope.target.dataDetails, 'thanhTien');
-                        $scope.target.tienVat = $scope.robot.sumVat($scope.tyGia, $scope.target);
-                        $scope.target.thanhTienSauVat = $scope.target.thanhTienTruocVat + $scope.target.tienVat - $scope.target.tienChietKhau;
-                    }, true);
-                }
-            });
-            service.getOrder().then(function (response) {
-                if (response && response.status == 200 && response.data) {
-                    $scope.donHangs = response.data;
-                }
-            });
-        };
-        filterData();
-        $scope.changeTongTien = function () {
-            $scope.pageChanged();
-        }
-        $scope.addRow = function () {
-            if (!$scope.newItem.soLuong || $scope.newItem.soLuong < 1) {
-                focus('soluong');
-                document.getElementById('soluong').focus();
-                return;
-            }
-            if (($scope.target.dataDetails.length != 0) && ($scope.newItem.tyLeVatVao != $scope.target.dataDetails[0].tyLeVatVao)) {
-                //load
-                toaster.pop('error', "Lỗi:", "Các mặt hàng phải cùng loại VAT" + $scope.target.dataDetails[0].tyLeVatVao + "%");
-                return;
-            }
-            if ($scope.newItem.validateCode == $scope.newItem.maHang) {
-                var exsist = $scope.target.dataDetails.some(function (element, index, array) {
-                    return $scope.newItem.maHang == element.maHang;
-                });
-                if (exsist) {
-                    toaster.pop('success', "Thông báo:", "Mã hàng này bạn đã nhập rồi. Cộng gộp");
-                    angular.forEach($scope.target.dataDetails, function (v, k) {
-                        if (v.maHang == $scope.newItem.maHang) {
-                            $scope.target.dataDetails[k].soLuong = parseInt($scope.newItem.soLuong) + parseInt($scope.target.dataDetails[k].soLuong);
-                            $scope.target.dataDetails[k].soLuongBao = parseInt($scope.newItem.soLuongBao) + parseInt($scope.target.dataDetails[k].soLuongBao);
-                            $scope.target.dataDetails[k].soLuongLe = parseInt($scope.newItem.soLuongLe) + parseInt($scope.target.dataDetails[k].soLuongLe);
-                            $scope.target.dataDetails[k].thanhTien = parseInt($scope.newItem.soLuong) * parseInt($scope.target.dataDetails[k].donGia);
-                            service.robot.changeSoLuongLe($scope.target.dataDetails[k], $scope.target);
-                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
                     });
                 } else {
-                    $scope.target.dataDetails.push($scope.newItem);
+                    $scope.suppliers = tempDataService.tempData('suppliers');
                 }
-                $scope.isListItemNull = false;
-            } else {
-                toaster.pop('error', "Lỗi:", "Mã hàng chưa đúng!");
             }
-            $scope.pageChanged();
-            $scope.newItem = {};
-            focus('mahang');
-            document.getElementById('mahang').focus();
-        };
 
-        $scope.addNewItem = function (strKey) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('htdm/Merchandise', 'selectData'),
-                controller: 'merchandiseSelectDataController',
-                windowClass: 'app-modal-window',
-                resolve: {
-                    serviceSelectData: function () {
-                        return serviceMerchandise;
-                    },
-                    filterObject: function () {
-                        return {
-                            summary: strKey
-                        };
+            function loadMerchandiseType() {
+                if (!tempDataService.tempData('merchandiseTypes')) {
+                    serviceMerchandiseType.getAll_MerchandiseType().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('merchandiseTypes', successRes.data.data);
+                            $scope.merchandiseTypes = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.merchandiseTypes = tempDataService.tempData('merchandiseTypes');
+                }
+            }
+
+            function loadNhomVatTu() {
+                if (!tempDataService.tempData('nhomVatTus')) {
+                    serviceNhomVatTu.getAll_NhomVatTu().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('nhomVatTus', successRes.data.data);
+                            $scope.nhomVatTus = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.nhomVatTus = tempDataService.tempData('nhomVatTus');
+                }
+            }
+
+            function loadWareHouse() {
+                if (!tempDataService.tempData('wareHouses')) {
+                    serviceWareHouse.getAll_WareHouse().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('wareHouses', successRes.data.data);
+                            $scope.wareHouses = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.wareHouses = tempDataService.tempData('wareHouses');
+                }
+            }
+            function loadPackagings() {
+                if (!tempDataService.tempData('packagings')) {
+                    servicePackaging.getAll_Packaging().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('packagings', successRes.data.data);
+                            $scope.packagings = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.packagings = tempDataService.tempData('packagings');
+                }
+            }
+
+            function loadTax() {
+                if (!tempDataService.tempData('taxs')) {
+                    serviceTax.getAll_Tax().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('taxs', successRes.data.data);
+                            $scope.taxs = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.taxs = tempDataService.tempData('taxs');
+                }
+            }
+
+            function loadDonViTinh() {
+                if (!tempDataService.tempData('donViTinhs')) {
+                    serviceDonViTinh.getAll_DonViTinh().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('donViTinhs', successRes.data.data);
+                            $scope.donViTinhs = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.donViTinhs = tempDataService.tempData('donViTinhs');
+                }
+            }
+            //
+            function loadCustomer() {
+                if (!tempDataService.tempData('customers')) {
+                    serviceCustomer.getAll_Customer().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('customers', successRes.data.data);
+                            $scope.customers = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.customers = tempDataService.tempData('customers');
+                }
+            }
+            loadSupplier();
+            loadMerchandiseType();
+            loadNhomVatTu();
+            loadWareHouse();
+            loadPackagings();
+            loadTax();
+            loadDonViTinh();
+            loadCustomer();
+            //end 
+
+
+            $scope.pageChanged = function () {
+                var currentPage = $scope.paged.currentPage;
+                var itemsPerPage = $scope.paged.itemsPerPage;
+                if ($scope.target && $scope.target.dataDetails) $scope.paged.totalItems = $scope.target.dataDetails.length;
+                $scope.data = [];
+                if ($scope.target.dataDetails) {
+                    for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
+                        $scope.data.push($scope.target.dataDetails[i]);
                     }
                 }
+            }
+            function filterData() {
+                $scope.isLoading = true;
+                service.getNewInstance().then(function (response) {
+                    if (response && response.status == 200 && response.data) {
+                        $scope.target = response.data;
+                        servicePeriod.getKyKeToan().then(function (response) {
+                            if (response && response.status == 200 && response.data) {
+                                $scope.target.ngayCT = new Date(response.data.toDate);
+                            }
+                        });
+                        $scope.pageChanged();
+                        $scope.isLoading = false;
+                        $scope.$watch('target.vat', function (v, k) {
+                            if (!v) {
+                                $scope.target.tienVat = 0;
+                            } else {
+                                $scope.target.tienVat = $scope.robot.sumVat($scope.tyGia, $scope.target);
+                            }
+                            $scope.target.thanhTienSauVat = $scope.target.thanhTienTruocVat + $scope.target.tienVat - $scope.target.tienChietKhau;
+                        });
+                        $scope.$watch('target.tienChietKhau', function (v, k) {
+                            $scope.target.thanhTienTruocVat = $scope.robot.sum($scope.target.dataDetails, 'thanhTien');
+                            $scope.target.tienVat = $scope.robot.sumVat($scope.tyGia, $scope.target);
+                            $scope.target.thanhTienSauVat = $scope.target.thanhTienTruocVat + $scope.target.tienVat - $scope.target.tienChietKhau;
+                        });
+                        $scope.$watch("target.dataDetails", function (newValue, oldValue) {
+                            if (!$scope.target.tienChietKhau) {
+                                $scope.target.tienChietKhau = 0;
+                            }
+                            $scope.target.thanhTienTruocVat = $scope.robot.sum($scope.target.dataDetails, 'thanhTien');
+                            $scope.target.tienVat = $scope.robot.sumVat($scope.tyGia, $scope.target);
+                            $scope.target.thanhTienSauVat = $scope.target.thanhTienTruocVat + $scope.target.tienVat - $scope.target.tienChietKhau;
+                        }, true);
+                    }
+                });
+                service.getOrder().then(function (response) {
+                    if (response && response.status == 200 && response.data) {
+                        $scope.donHangs = response.data;
+                    }
+                });
+            };
+            filterData();
+            $scope.changeTongTien = function () {
+                $scope.pageChanged();
+            }
+            $scope.addRow = function () {
+                if (!$scope.newItem.soLuong || $scope.newItem.soLuong < 1) {
+                    focus('soluong');
+                    document.getElementById('soluong').focus();
+                    return;
+                }
+                if (($scope.target.dataDetails.length != 0) && ($scope.newItem.tyLeVatVao != $scope.target.dataDetails[0].tyLeVatVao)) {
+                    //load
+                    toaster.pop('error', "Lỗi:", "Các mặt hàng phải cùng loại VAT" + $scope.target.dataDetails[0].tyLeVatVao + "%");
+                    return;
+                }
+                if ($scope.newItem.validateCode == $scope.newItem.maHang) {
+                    var exsist = $scope.target.dataDetails.some(function (element, index, array) {
+                        return $scope.newItem.maHang == element.maHang;
+                    });
+                    if (exsist) {
+                        toaster.pop('success', "Thông báo:", "Mã hàng này bạn đã nhập rồi. Cộng gộp");
+                        angular.forEach($scope.target.dataDetails, function (v, k) {
+                            if (v.maHang == $scope.newItem.maHang) {
+                                $scope.target.dataDetails[k].soLuong = parseInt($scope.newItem.soLuong) + parseInt($scope.target.dataDetails[k].soLuong);
+                                $scope.target.dataDetails[k].soLuongBao = parseInt($scope.newItem.soLuongBao) + parseInt($scope.target.dataDetails[k].soLuongBao);
+                                $scope.target.dataDetails[k].soLuongLe = parseInt($scope.newItem.soLuongLe) + parseInt($scope.target.dataDetails[k].soLuongLe);
+                                $scope.target.dataDetails[k].thanhTien = parseInt($scope.newItem.soLuong) * parseInt($scope.target.dataDetails[k].donGia);
+                                service.robot.changeSoLuongLe($scope.target.dataDetails[k], $scope.target);
+                            }
+                        });
+                    } else {
+                        $scope.target.dataDetails.push($scope.newItem);
+                    }
+                    $scope.isListItemNull = false;
+                } else {
+                    toaster.pop('error', "Lỗi:", "Mã hàng chưa đúng!");
+                }
+                $scope.pageChanged();
+                $scope.newItem = {};
+                focus('mahang');
+                document.getElementById('mahang').focus();
+            };
+
+            $scope.addNewItem = function (strKey) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('htdm/Merchandise', 'selectData'),
+                    controller: 'merchandiseSelectDataController',
+                    windowClass: 'app-modal-window',
+                    resolve: {
+                        serviceSelectData: function () {
+                            return serviceMerchandise;
+                        },
+                        filterObject: function () {
+                            return {
+                                summary: strKey
+                            };
+                        }
+                    }
+                });
+                modalInstance.result.then(function (updatedData) {
+                    if (!updatedData.selected) {
+                        $scope.newItem = updatedData;
+                        service.getMerchandiseForNvByCode(updatedData.maHang, $scope.target.maKhoNhap, unitCode).then(function (response) {
+                            if (response && response.status == 200 && response.data && response.data.status) {
+                                $scope.newItem = response.data.data;
+                                $scope.newItem.donGia = response.data.data.giaVon;
+                                $scope.newItem.giaBanLe = updatedData.giaBanLe;
+                                $scope.newItem.validateCode = updatedData.maHang;
+                                $scope.newItem.giaMuaCoVat = response.data.data.giaVon * (1 + response.data.data.tyLeVatVao / 100);
+                                $scope.newItem.soLuongTon = response.data.data.soLuongTon;
+                                $scope.newItem.giaVon = response.data.data.giaVon;
+                            }
+                            else {
+                                updatedData.donGia = updatedData.giaMua;
+                                $scope.newItem.validateCode = updatedData.maHang;
+                                $scope.newItem.giaBanLe = updatedData.giaBanLe;
+                                $scope.newItem.giaMuaCoVat = updatedData.giaMua * (1 + updatedData.tyLeVatVao / 100);
+                            }
+                        });
+                    }
+                    $scope.pageChanged();
+                }, function () {
+
+                });
+            };
+            $scope.removeItem = function (index) {
+                var currentPage = $scope.paged.currentPage;
+                var itemsPerPage = $scope.paged.itemsPerPage;
+                var currentPageIndex = (currentPage - 1) * itemsPerPage + index;
+                $scope.target.dataDetails.splice(currentPageIndex, 1);
+                if ($scope.target.dataDetails.length == 0) {
+                    $scope.isListItemNull = true;
+                }
+                $scope.pageChanged();
+            };
+
+            //vudq import excel
+            $scope.downloadTemplate = function () {
+                kmComboService.dowloadTemplateExcel('TemplateExcel-KhuyenMaiCombo');
+            };
+            var uploader = $scope.uploader = new FileUploader({
+                url: serviceUrl + '/ImportExcelKhuyenMaiCombo/' + unitCode
             });
-            modalInstance.result.then(function (updatedData) {
-                if (!updatedData.selected) {
-                    $scope.newItem = updatedData;
-                    service.getMerchandiseForNvByCode(updatedData.maHang, $scope.target.maKhoNhap, unitCode).then(function (response) {
+            uploader.filters.push({
+                name: 'syncFilter',
+                fn: function (item, options) {
+                    return this.queue.length < 10;
+                }
+            });
+            uploader.filters.push({
+                name: 'asyncFilter',
+                fn: function (item, options, deferred) {
+                    setTimeout(deferred.resolve, 1e3);
+                }
+            });
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                if (status === 200 && response.data) {
+                    console.log('response kmCombo:', response);
+                    if (response.data.length > 0) {
+                        for (var i = 0; i < response.data.length; i++) {
+                            $scope.target.dataDetails.push(response.data[i]);
+                        }
+                        $scope.pageChanged();
+                    }
+                }
+            };
+            //end vudq import excel
+            $scope.selectedkhachHang = function (item) {
+                $scope.target.maKhachHang = item.value;
+                //service.getOrderByCustomer(item.value).then(function (response) {
+                //    if (response && response && response.data.length > 0) {
+                //        $scope.donHangs = response.data;
+                //    }
+                //});
+                service.getCustomer(item.id).then(function (response) {
+                    if (response && response && response.data) {
+                        $scope.target.maSoThue = response.data.maSoThue;
+                    }
+                });
+                nvCongNoKhachHangService.getAmmountCustomerBorrowed(item.value).then(function (response) {
+                    if (response.status === 200) {
+                        $scope.target.tienNoCu = response.data.thanhTienCanTra;
+                        $scope.target.noiDung = "Nợ cũ " + Math.round(response.data.thanhTienCanTra / 1000) + "k";
+                    }
+                });
+            };
+            $scope.selectedDonDatHang = function (item) {
+                $scope.isLoading = true;
+                service.getOrderById(item.id).then(function (response) {
+                    var donHang = response.data;
+                    $scope.target.dataDetails.clear();
+                    angular.forEach(donHang.dataDetails, function (v, k) {
+                        $scope.target.dataDetails.push(v);
+                    });
+                    if ($scope.target.dataDetails.length > 0) {
+                        $scope.isListItemNull = false;
+                    }
+                    $scope.isLoading = false;
+                    $scope.pageChanged();
+                });
+            }
+            $scope.selectedTkCo = function (item) {
+                $scope.target.tkCo = item.value;
+            };
+            $scope.selectedMaHang = function (code) {
+                if (code) {
+                    service.getMerchandiseForNvByCode(code, $scope.target.maKhoNhap, unitCode).then(function (response) {
                         if (response && response.status == 200 && response.data && response.data.status) {
                             $scope.newItem = response.data.data;
-                            $scope.newItem.donGia = response.data.data.giaVon;
-                            $scope.newItem.giaBanLe = updatedData.giaBanLe;
-                            $scope.newItem.validateCode = updatedData.maHang;
-                            $scope.newItem.giaMuaCoVat = response.data.data.giaVon * (1 + response.data.data.tyLeVatVao / 100);
+                            $scope.newItem.donGia = $scope.newItem.giaMua;
+                            $scope.newItem.validateCode = response.data.data.maHang;
+                            $scope.newItem.giaMuaCoVat = response.data.data.giaMua * (1 + response.data.data.tyLeVatVao / 100);
                             $scope.newItem.soLuongTon = response.data.data.soLuongTon;
                             $scope.newItem.giaVon = response.data.data.giaVon;
                         }
                         else {
-                            updatedData.donGia = updatedData.giaMua;
-                            $scope.newItem.validateCode = updatedData.maHang;
-                            $scope.newItem.giaBanLe = updatedData.giaBanLe;
-                            $scope.newItem.giaMuaCoVat = updatedData.giaMua * (1 + updatedData.tyLeVatVao / 100);
+                            $scope.addNewItem(code);
+
                         }
                     });
                 }
-                $scope.pageChanged();
-            }, function () {
-
-            });
-        };
-        $scope.removeItem = function (index) {
-            var currentPage = $scope.paged.currentPage;
-            var itemsPerPage = $scope.paged.itemsPerPage;
-            var currentPageIndex = (currentPage - 1) * itemsPerPage + index;
-            $scope.target.dataDetails.splice(currentPageIndex, 1);
-            if ($scope.target.dataDetails.length == 0) {
-                $scope.isListItemNull = true;
             }
-            $scope.pageChanged();
-        };
-
-        //vudq import excel
-        $scope.downloadTemplate = function () {
-            kmComboService.dowloadTemplateExcel('TemplateExcel-KhuyenMaiCombo');
-        };
-        var uploader = $scope.uploader = new FileUploader({
-            url: serviceUrl + '/ImportExcelKhuyenMaiCombo/' + unitCode
-        });
-        uploader.filters.push({
-            name: 'syncFilter',
-            fn: function (item, options) {
-                return this.queue.length < 10;
-            }
-        });
-        uploader.filters.push({
-            name: 'asyncFilter',
-            fn: function (item, options, deferred) {
-                setTimeout(deferred.resolve, 1e3);
-            }
-        });
-        uploader.onSuccessItem = function (fileItem, response, status, headers) {
-            if (status === 200 && response.data) {
-                console.log('response kmCombo:', response);
-                if (response.data.length > 0) {
-                    for (var i = 0; i < response.data.length; i++) {
-                        $scope.target.dataDetails.push(response.data[i]);
+            $scope.selectedTax = function (target) {
+                for (var i = 0; i < $scope.tempData('taxs').length; i++) {
+                    var tmp = $scope.tempData('taxs')[i];
+                    if (target.vat == tmp.value) {
+                        $scope.tyGia = tmp.extendValue;
                     }
-                    $scope.pageChanged();
                 }
-            }
-        };
-        //end vudq import excel
-        $scope.selectedkhachHang = function (item) {
-            $scope.target.maKhachHang = item.value;
-            //service.getOrderByCustomer(item.value).then(function (response) {
-            //    if (response && response && response.data.length > 0) {
-            //        $scope.donHangs = response.data;
-            //    }
-            //});
-            service.getCustomer(item.id).then(function (response) {
-                if (response && response && response.data) {
-                    $scope.target.maSoThue = response.data.maSoThue;
-                }
-            });
-            nvCongNoKhachHangService.getAmmountCustomerBorrowed(item.value).then(function (response) {
-                if (response.status === 200) {
-                    $scope.target.tienNoCu = response.data.thanhTienCanTra;
-                    $scope.target.noiDung = "Nợ cũ " + Math.round(response.data.thanhTienCanTra / 1000) + "k";
-                }
-            });
-        };
-        $scope.selectedDonDatHang = function (item) {
-            $scope.isLoading = true;
-            service.getOrderById(item.id).then(function (response) {
-                var donHang = response.data;
-                $scope.target.dataDetails.clear();
-                angular.forEach(donHang.dataDetails, function (v, k) {
-                    $scope.target.dataDetails.push(v);
-                });
-                if ($scope.target.dataDetails.length > 0) {
-                    $scope.isListItemNull = false;
-                }
-                $scope.isLoading = false;
-                $scope.pageChanged();
-            });
-        }
-        $scope.selectedTkCo = function (item) {
-            $scope.target.tkCo = item.value;
-        };
-        $scope.selectedMaHang = function (code) {
-            if (code) {
-                service.getMerchandiseForNvByCode(code, $scope.target.maKhoNhap, unitCode).then(function (response) {
-                    if (response && response.status == 200 && response.data && response.data.status) {
-                        $scope.newItem = response.data.data;
-                        $scope.newItem.donGia = $scope.newItem.giaMua;
-                        $scope.newItem.validateCode = response.data.data.maHang;
-                        $scope.newItem.giaMuaCoVat = response.data.data.giaMua * (1 + response.data.data.tyLeVatVao / 100);
-                        $scope.newItem.soLuongTon = response.data.data.soLuongTon;
-                        $scope.newItem.giaVon = response.data.data.giaVon;
-                    }
-                    else {
-                        $scope.addNewItem(code);
-
+            };
+            $scope.selectedKhoNhap = function (item) {
+                $scope.target.maKhoNhap = item.value;
+                service.getWareHouse(item.id).then(function (response) {
+                    if (response && response.status == 200 && response.data) {
+                        $scope.tkKtKhoNhap = response.taiKhoanKt;
                     }
                 });
             }
-        }
-        $scope.selectedTax = function (target) {
-            for (var i = 0; i < $scope.tempData('taxs').length; i++) {
-                var tmp = $scope.tempData('taxs')[i];
-                if (target.vat == tmp.value) {
-                    $scope.tyGia = tmp.extendValue;
+            $scope.selectedMaBaoBi = function (model, item) {
+                if (!model.soLuongBao) {
+                    model.soLuongBao = 0;
                 }
-            }
-        };
-        $scope.selectedKhoNhap = function (item) {
-            $scope.target.maKhoNhap = item.value;
-            service.getWareHouse(item.id).then(function (response) {
-                if (response && response.status == 200 && response.data) {
-                    $scope.tkKtKhoNhap = response.taiKhoanKt;
+                if (!model.donGia) {
+                    model.donGia = 0;
                 }
-            });
-        }
-        $scope.selectedMaBaoBi = function (model, item) {
-            if (!model.soLuongBao) {
-                model.soLuongBao = 0;
+                if (!model.soLuongLe) {
+                    model.soLuongLe = 0;
+                }
+                model.luongBao = parseFloat(item.extendValue);
+                model.soLuong = model.soLuongBao * model.luongBao + model.soLuongLe;
+                model.thanhTien = model.soLuong * model.donGia;
             }
-            if (!model.donGia) {
-                model.donGia = 0;
-            }
-            if (!model.soLuongLe) {
-                model.soLuongLe = 0;
-            }
-            model.luongBao = parseFloat(item.extendValue);
-            model.soLuong = model.soLuongBao * model.luongBao + model.soLuongLe;
-            model.thanhTien = model.soLuong * model.donGia;
-        }
-        //log2
+            //log2
 
-        $scope.save = function () {
-            if ($scope.data && $scope.data.length > 0 && $scope.target && $scope.target.dataDetails.length > 0) {
-                angular.forEach($scope.data, function (v, k) {
-                    var row = $filter('filter')($scope.target.dataDetails, { maHang: v.maHang }, true);
-                    if (row && row.length === 1) {
-                        if (!v.soLuong) {
-                            row[0].soLuong = 0;
-                        }
-                        if (!v.donGia) {
-                            row[0].donGia = 0;
-                        }
-                        if (!v.maBaoBi) {
-                            row[0].luongBao = 1;
-                        }
-                        if (!v.soLuongBao) {
-                            row[0].soLuongBao = 0;
-                        }
-                        if (!v.soLuongLe) {
-                            row[0].soLuongLe = 0;
-                        }
-                        if (v) {
-                            row[0].soLuong = parseFloat(v.soLuongBao) * parseFloat(v.luongBao) + parseFloat(v.soLuongLe);
-                            row[0].soLuongLe = parseFloat(v.soLuongLe);
-                            row[0].thanhTien = v.soLuong * parseFloat(v.donGia);
-                            row[0].thanhTienVAT = parseFloat(v.thanhTien) * (1 + (v.tyLeVatVao) / 100);
-                            row[0].tienTruocGiamGia = row[0].thanhTien;
-                        }
-                    }
-                });
-            }
-            $scope.target.ngayCT = $filter('date')($scope.target.ngayCT);
-            $scope.target.maNhanVien = currentUser.userName;
-            //index để sắp xếp theo mã hàng lúc thêm
-            if ($scope.target.dataDetails.length > 0) {
-                angular.forEach($scope.target.dataDetails, function (value, index) {
-                    $scope.target.dataDetails.index = index;
-                });
-            }
-            service.post($scope.target).then(function (successRes) {
-                if (successRes && successRes.status === 201 && successRes.data) {
-                    ngNotify.set("Thêm mới thành công", { type: 'success' });
-                    $uibModalInstance.close($scope.target);
-                } else {
-                    console.log('addNew successRes', successRes);
-                    ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
-                }
-            },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-        };
-        $scope.selectedBill = function (target) {
-            phieuXuatBanService.getPhieuByMaPhieu(target).then(function (response) {
-                if (response.status === 200 && response.data != '') {
-                    phieuXuatBanService.getDetails(response.data).then(function (res) {
-                        if (res.status === 200 && res.data != null) {
-                            $scope.target.maHoaDon = res.data.maChungTu;
-                            $scope.target.maKhachHang = res.data.maKhachHang;
-                            $scope.target.dataDetails = angular.copy(res.data.dataDetails);
-                            $scope.pageChanged();
-                        }
-                    });
-                } else {
-                    var modalInstance = $uibModal.open({
-                        backdrop: 'static',
-                        templateUrl: configService.buildUrl('nv/NvXuatBan', 'selectData'),
-                        controller: 'phieuXuatBanSelectedController',
-                        windowClass: 'app-modal-window',
-                        resolve: {
-                            serviceSelectData: function () {
-                                return phieuXuatBanService;
-                            },
-                            filterObject: function () {
-                                return {
-                                    summary: target
-                                };
+            $scope.save = function () {
+                if ($scope.data && $scope.data.length > 0 && $scope.target && $scope.target.dataDetails.length > 0) {
+                    angular.forEach($scope.data, function (v, k) {
+                        var row = $filter('filter')($scope.target.dataDetails, { maHang: v.maHang }, true);
+                        if (row && row.length === 1) {
+                            if (!v.soLuong) {
+                                row[0].soLuong = 0;
+                            }
+                            if (!v.donGia) {
+                                row[0].donGia = 0;
+                            }
+                            if (!v.maBaoBi) {
+                                row[0].luongBao = 1;
+                            }
+                            if (!v.soLuongBao) {
+                                row[0].soLuongBao = 0;
+                            }
+                            if (!v.soLuongLe) {
+                                row[0].soLuongLe = 0;
+                            }
+                            if (v) {
+                                row[0].soLuong = parseFloat(v.soLuongBao) * parseFloat(v.luongBao) + parseFloat(v.soLuongLe);
+                                row[0].soLuongLe = parseFloat(v.soLuongLe);
+                                row[0].thanhTien = v.soLuong * parseFloat(v.donGia);
+                                row[0].thanhTienVAT = parseFloat(v.thanhTien) * (1 + (v.tyLeVatVao) / 100);
+                                row[0].tienTruocGiamGia = row[0].thanhTien;
                             }
                         }
                     });
-                    modalInstance.result.then(function (updatedData) {
-                        phieuXuatBanService.getDetails(updatedData).then(function (res) {
+                }
+                $scope.target.ngayCT = $filter('date')($scope.target.ngayCT);
+                $scope.target.maNhanVien = currentUser.userName;
+                //index để sắp xếp theo mã hàng lúc thêm
+                if ($scope.target.dataDetails.length > 0) {
+                    angular.forEach($scope.target.dataDetails, function (value, index) {
+                        $scope.target.dataDetails.index = index;
+                    });
+                }
+                service.post($scope.target).then(function (successRes) {
+                    if (successRes && successRes.status === 201 && successRes.data) {
+                        ngNotify.set("Thêm mới thành công", { type: 'success' });
+                        $uibModalInstance.close($scope.target);
+                    } else {
+                        console.log('addNew successRes', successRes);
+                        ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
+                    }
+                },
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+            };
+            $scope.selectedBill = function (target) {
+                phieuXuatBanService.getPhieuByMaPhieu(target).then(function (response) {
+                    if (response.status === 200 && response.data != '') {
+                        phieuXuatBanService.getDetails(response.data).then(function (res) {
                             if (res.status === 200 && res.data != null) {
                                 $scope.target.maHoaDon = res.data.maChungTu;
                                 $scope.target.maKhachHang = res.data.maKhachHang;
@@ -1288,18 +1249,44 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                                 $scope.pageChanged();
                             }
                         });
+                    } else {
+                        var modalInstance = $uibModal.open({
+                            backdrop: 'static',
+                            templateUrl: configService.buildUrl('nv/NvXuatBan', 'selectData'),
+                            controller: 'phieuXuatBanSelectedController',
+                            windowClass: 'app-modal-window',
+                            resolve: {
+                                serviceSelectData: function () {
+                                    return phieuXuatBanService;
+                                },
+                                filterObject: function () {
+                                    return {
+                                        summary: target
+                                    };
+                                }
+                            }
+                        });
+                        modalInstance.result.then(function (updatedData) {
+                            phieuXuatBanService.getDetails(updatedData).then(function (res) {
+                                if (res.status === 200 && res.data != null) {
+                                    $scope.target.maHoaDon = res.data.maChungTu;
+                                    $scope.target.maKhachHang = res.data.maKhachHang;
+                                    $scope.target.dataDetails = angular.copy(res.data.dataDetails);
+                                    $scope.pageChanged();
+                                }
+                            });
 
-                    }, function () {
-                    });
-                }
+                        }, function () {
+                        });
+                    }
 
-            });
-        }
-        $scope.cancel = function () {
-            $scope.isListItemNull = true;
-            $uibModalInstance.dismiss('cancel');
-        };
-    }]);
+                });
+            }
+            $scope.cancel = function () {
+                $scope.isListItemNull = true;
+                $uibModalInstance.dismiss('cancel');
+            };
+        }]);
     /* controller Edit */
     app.controller('phieuNhapHangBanTraLaiEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'merchandiseService', 'toaster', 'nvCongNoKhachHangService',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, serviceMerchandise, toaster, nvCongNoKhachHangService) {
@@ -1681,8 +1668,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
         }]);
     /* controller Details */
-    app.controller('phieuNhapHangBanTraLaiDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+    app.controller('phieuNhapHangBanTraLaiDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', '$state',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, $state) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.tempData = tempDataService.tempData;
@@ -1767,8 +1754,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
         }]);
     /* report Phieu Nhap Hang Mua Controller */
-    app.controller('reportPhieuNhapHangBanTraLaiController', ['$scope', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window) {
+    app.controller('reportPhieuNhapHangBanTraLaiController', ['$scope', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', '$state',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, $state) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             $scope.robot = angular.copy(service.robot);
             var id = $stateParams.id;
@@ -1832,8 +1819,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             }
         }]);
     /* print Phieu Nhap Hang Mua Controller */
-    app.controller('printPhieuNhapHangBanTraLaiController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+    app.controller('printPhieuNhapHangBanTraLaiController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', '$state',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, $state) {
             $scope.robot = angular.copy(service.robot);
             $scope.config = angular.copy(configService);
             $scope.targetData = angular.copy(targetData);
@@ -1874,8 +1861,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
         }]);
     /* print Detail Phieu Nhap Hang Mua Controller */
-    app.controller('printDetailPhieuNhapHangBanTraLaiController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+    app.controller('printDetailPhieuNhapHangBanTraLaiController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', '$state',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, $state) {
             $scope.robot = angular.copy(service.robot);
             $scope.config = angular.copy(configService);
             $scope.targetData = angular.copy(targetData);
@@ -1916,8 +1903,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
         }]);
     /* controller export Item bo hang */
-    app.controller('phieuNhapHangBanTraLaiExportItemController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+    app.controller('phieuNhapHangBanTraLaiExportItemController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapHangBanTraLaiService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', '$state',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, $state) {
             $scope.robot = angular.copy(service.robot);
             $scope.config = angular.copy(configService);
             $scope.targetData = angular.copy(targetData);

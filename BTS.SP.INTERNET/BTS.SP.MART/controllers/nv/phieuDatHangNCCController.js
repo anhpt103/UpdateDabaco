@@ -213,283 +213,283 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     ]);
 
     app.controller('phieuDatHangNCCController', ['$mdDialog', '$scope', '$location', '$http', '$state', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', 'AuNguoiDungService', 'AuDonViService',
-    function ($mdDialog, $scope, $location, $http, $state, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, serviceAuNguoiDung, serviceAuDonVi) {
-        $scope.config = angular.copy(configService);
-        $scope.paged = angular.copy(configService.pageDefault);
-        $scope.robot = angular.copy(service.robot);
-        $scope.filtered = angular.copy(configService.filterDefault);
-        $scope.tempData = tempDataService.tempData;
-        $scope.sortType = 'ngay'; // set the default sort type
-        $scope.sortReverse = false; // set the default sort order
-        $scope.accessList = {};
+        function ($mdDialog, $scope, $location, $http, $state, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, serviceAuNguoiDung, serviceAuDonVi) {
+            $scope.config = angular.copy(configService);
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.robot = angular.copy(service.robot);
+            $scope.filtered = angular.copy(configService.filterDefault);
+            $scope.tempData = tempDataService.tempData;
+            $scope.sortType = 'ngay'; // set the default sort type
+            $scope.sortReverse = false; // set the default sort order
+            $scope.accessList = {};
 
-        function loadAccessList() {
-            securityService.getAccessList('nvDatHangNCC').then(function (successRes) {
-                if (successRes && successRes.status == 200) {
-                    $scope.accessList = successRes.data;
+            function loadAccessList() {
+                securityService.getAccessList('nvDatHangNCC').then(function (successRes) {
+                    if (successRes && successRes.status == 200) {
+                        $scope.accessList = successRes.data;
 
-                    if (!$scope.accessList.view) {
+                        if (!$scope.accessList.view) {
+                            toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
+                        } else {
+                            filterData();
+                        }
+                    } else {
                         toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
-                    } else {
-                        filterData();
                     }
-                } else {
+                }, function (errorRes) {
                     toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
+                    $scope.accessList = null;
+                });
+            }
+            loadAccessList();
+
+            function loadSupplier() {
+                if (!tempDataService.tempData('suppliers')) {
+                    serviceSupplier.getAll_Supplier().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('suppliers', successRes.data.data);
+                            $scope.lstSupplier = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.lstSupplier = tempDataService.tempData('suppliers');
                 }
-            }, function (errorRes) {
-                toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
-                $scope.accessList = null;
-            });
-        }
-        loadAccessList();
-
-        function loadSupplier() {
-            if (!tempDataService.tempData('suppliers')) {
-                serviceSupplier.getAll_Supplier().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('suppliers', successRes.data.data);
-                        $scope.lstSupplier = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.lstSupplier = tempDataService.tempData('suppliers');
             }
-        }
 
-        function loadAuDonVi() {
-            if (!tempDataService.tempData('auDonVis')) {
-                serviceAuDonVi.getAll_DonVi().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.length > 0) {
+            function loadAuDonVi() {
+                if (!tempDataService.tempData('auDonVis')) {
+                    serviceAuDonVi.getAll_DonVi().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.length > 0) {
 
-                        tempDataService.putTempData('auDonVis', successRes.data);
-                        $scope.lstDonVi = successRes.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.lstDonVi = tempDataService.tempData('auDonVis');
+                            tempDataService.putTempData('auDonVis', successRes.data);
+                            $scope.lstDonVi = successRes.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.lstDonVi = tempDataService.tempData('auDonVis');
+                }
             }
-        }
 
-        function loadNguoiDung() {
-            if (!tempDataService.tempData('auUsers')) {
-                serviceAuNguoiDung.getAll_NguoiDung().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.length > 0) {
-                        tempDataService.putTempData('auUsers', successRes.data);
-                        $scope.lstNguoiDung = successRes.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.lstNguoiDung = tempDataService.tempData('auUsers');
+            function loadNguoiDung() {
+                if (!tempDataService.tempData('auUsers')) {
+                    serviceAuNguoiDung.getAll_NguoiDung().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.length > 0) {
+                            tempDataService.putTempData('auUsers', successRes.data);
+                            $scope.lstNguoiDung = successRes.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.lstNguoiDung = tempDataService.tempData('auUsers');
+                }
             }
-        }
 
-        function loadWareHouse() {
-            if (!tempDataService.tempData('warehouses')) {
-                serviceWareHouse.getAll_WareHouse().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('warehouses', successRes.data.data);
-                        $scope.warehouses = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.warehouses = tempDataService.tempData('warehouses');
+            function loadWareHouse() {
+                if (!tempDataService.tempData('warehouses')) {
+                    serviceWareHouse.getAll_WareHouse().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('warehouses', successRes.data.data);
+                            $scope.warehouses = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.warehouses = tempDataService.tempData('warehouses');
+                }
             }
-        }
 
-        function loadPackagings() {
-            if (!tempDataService.tempData('packagings')) {
-                servicePackaging.getAll_Packaging().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('packagings', successRes.data.data);
-                        $scope.packagings = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.packagings = tempDataService.tempData('packagings');
+            function loadPackagings() {
+                if (!tempDataService.tempData('packagings')) {
+                    servicePackaging.getAll_Packaging().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('packagings', successRes.data.data);
+                            $scope.packagings = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.packagings = tempDataService.tempData('packagings');
+                }
             }
-        }
 
-        function loadTax() {
-            if (!tempDataService.tempData('taxs')) {
-                serviceTax.getAll_Tax().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('taxs', successRes.data.data);
-                        $scope.taxs = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.taxs = tempDataService.tempData('taxs');
+            function loadTax() {
+                if (!tempDataService.tempData('taxs')) {
+                    serviceTax.getAll_Tax().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('taxs', successRes.data.data);
+                            $scope.taxs = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.taxs = tempDataService.tempData('taxs');
+                }
             }
-        }
 
-        function loadDonViTinh() {
-            if (!tempDataService.tempData('donViTinhs')) {
-                serviceDonViTinh.getAll_DonViTinh().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('donViTinhs', successRes.data.data);
-                        $scope.donViTinhs = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.donViTinhs = tempDataService.tempData('donViTinhs');
+            function loadDonViTinh() {
+                if (!tempDataService.tempData('donViTinhs')) {
+                    serviceDonViTinh.getAll_DonViTinh().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('donViTinhs', successRes.data.data);
+                            $scope.donViTinhs = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.donViTinhs = tempDataService.tempData('donViTinhs');
+                }
             }
-        }
-        loadSupplier();
-        loadAuDonVi();
-        loadNguoiDung();
-        loadWareHouse();
-        loadPackagings();
-        loadTax();
-        loadDonViTinh();
+            loadSupplier();
+            loadAuDonVi();
+            loadNguoiDung();
+            loadWareHouse();
+            loadPackagings();
+            loadTax();
+            loadDonViTinh();
 
-        $scope.setPage = function (pageNo) {
-            $scope.paged.currentPage = pageNo;
-            filterData();
-        };
-        $scope.doSearch = function () {
-            $scope.paged.currentPage = 1;
-            filterData();
-        };
-        $scope.pageChanged = function () {
-            filterData();
-        };
-        $scope.goHome = function () {
-            $state.go('home');
-        };
-        $scope.refresh = function () {
-            $scope.setPage($scope.paged.currentPage);
-        };
-        $scope.title = function () {
-            return 'Phiếu đặt hàng Nhà cung cấp';
-        };
-        $scope.displayHepler = function (code, module) {
-            var data = $filter('filter')($scope.tempData(module), { value: code }, true);
-            if (data && data.length == 1) {
-                return data[0].text;
+            $scope.setPage = function (pageNo) {
+                $scope.paged.currentPage = pageNo;
+                filterData();
             };
-            return "Empty!";
-        }
-
-        $scope.formatLabel = function (model, module, displayModel) {
-            if (!model) return "";
-            var data = $filter('filter')(tempDataService.tempData[module], { value: model }, true);
-            if (data && data.length == 1) {
-                displayModel = data[0].text;
-                return data[0].text;
+            $scope.doSearch = function () {
+                $scope.paged.currentPage = 1;
+                filterData();
+            };
+            $scope.pageChanged = function () {
+                filterData();
+            };
+            $scope.goHome = function () {
+                $state.go('home');
+            };
+            $scope.refresh = function () {
+                $scope.setPage($scope.paged.currentPage);
+            };
+            $scope.title = function () {
+                return 'Phiếu đặt hàng Nhà cung cấp';
+            };
+            $scope.displayHepler = function (code, module) {
+                var data = $filter('filter')($scope.tempData(module), { value: code }, true);
+                if (data && data.length == 1) {
+                    return data[0].text;
+                };
+                return "Empty!";
             }
-            return "Empty!";
-        };
-        $scope.create = function () {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'add-plus'),
-                controller: 'phieuDatHangNCCCreateController',
-                windowClass: 'app-modal-window',
-                resolve: {}
-            });
 
-            modalInstance.result.then(function (updatedData) {
-                $scope.refresh();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
-        $scope.summarize = function () {
-            $state.go('nvSummaryDatHangNCC');
-        };
-
-        $scope.details = function (target) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'details'),
-                controller: 'phieuDatHangNCCDetailsController',
-                windowClass: 'app-modal-window',
-                resolve: {
-                    targetData: function () {
-                        return target;
-                    }
+            $scope.formatLabel = function (model, module, displayModel) {
+                if (!model) return "";
+                var data = $filter('filter')(tempDataService.tempData[module], { value: model }, true);
+                if (data && data.length == 1) {
+                    displayModel = data[0].text;
+                    return data[0].text;
                 }
-            });
-        };
-        $scope.deleteItem = function (event, target) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'delete'),
-                controller: 'phieuDatHangNCCDeleteController',
-                resolve: {
-                    targetData: function () {
-                        return target;
-                    }
-                }
-            });
-            modalInstance.result.then(function (updatedData) {
-                $scope.refresh();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
+                return "Empty!";
+            };
+            $scope.create = function () {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'add-plus'),
+                    controller: 'phieuDatHangNCCCreateController',
+                    windowClass: 'app-modal-window',
+                    resolve: {}
+                });
 
-        $scope.update = function (target) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('nv/nvDatHangNCC', 'update-plus'),
-                controller: 'phieuDatHangNCCEditController',
-                windowClass: 'app-modal-window',
-                resolve: {
-                    targetData: function () {
-                        return target;
-                    }
-                }
-            });
-            modalInstance.result.then(function (updatedData) {
-                $scope.refresh();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
+                modalInstance.result.then(function (updatedData) {
+                    $scope.refresh();
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+            $scope.summarize = function () {
+                $state.go('nvSummaryDatHangNCC');
+            };
 
-        function filterData() {
-            $scope.isLoading = true;
-            var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-            service.postQuery(
-                JSON.stringify(postdata),
-                function (response) {
-                    $scope.isLoading = false;
-                    if (response.status) {
-                        $scope.data = response.data.data;
-                        angular.extend($scope.paged, response.data);
+            $scope.details = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'details'),
+                    controller: 'phieuDatHangNCCDetailsController',
+                    windowClass: 'app-modal-window',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
                     }
                 });
-        };
-    }
+            };
+            $scope.deleteItem = function (event, target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'delete'),
+                    controller: 'phieuDatHangNCCDeleteController',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (updatedData) {
+                    $scope.refresh();
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+            $scope.update = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('nv/nvDatHangNCC', 'update-plus'),
+                    controller: 'phieuDatHangNCCEditController',
+                    windowClass: 'app-modal-window',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (updatedData) {
+                    $scope.refresh();
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+            function filterData() {
+                $scope.isLoading = true;
+                var postdata = { paged: $scope.paged, filtered: $scope.filtered };
+                service.postQuery(
+                    JSON.stringify(postdata),
+                    function (response) {
+                        $scope.isLoading = false;
+                        if (response.status) {
+                            $scope.data = response.data.data;
+                            angular.extend($scope.paged, response.data);
+                        }
+                    });
+            };
+        }
     ]);
     app.controller('phieuDatHangNCCCreateController', [
         '$scope', '$uibModal', '$uibModalInstance', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'merchandiseService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'userService',
@@ -669,10 +669,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
             $scope.operators = [
                 { value: "=", text: "Bằng" },
-				{ value: "<=", text: "Nhỏ hơn hoặc bằng" },
-				{ value: "<", text: "Nhỏ hơn" },
-				{ value: ">", text: "Lớn hơn" },
-				{ value: ">=", text: "Lớn hơn hoặc bằng" }
+                { value: "<=", text: "Nhỏ hơn hoặc bằng" },
+                { value: "<", text: "Nhỏ hơn" },
+                { value: ">", text: "Lớn hơn" },
+                { value: ">=", text: "Lớn hơn hoặc bằng" }
             ];
             $scope.formatLabel = function (model, module) {
                 if (!model) return "";
@@ -1415,11 +1415,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             };
             $rootScope.$on('$locationChangeStart',
-            function (event, next, current) {
-                $scope.tagsCustomers = [];
-                $scope.tagsGroups = [];
-                $scope.tagsTypes = [];
-            })
+                function (event, next, current) {
+                    $scope.tagsCustomers = [];
+                    $scope.tagsGroups = [];
+                    $scope.tagsTypes = [];
+                })
             $scope.filterMerchandise = function () {
                 $scope.isLoading = true;
                 $scope.filtered.isAdvance = true;
@@ -1429,8 +1429,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     if (response && response.status && response.data && response.data.length > 0) {
                         if ($scope.target.dataDetails.length > 0) {
                             angular.forEach($scope.target.dataDetails,
-                                function(value,index) {
-                                    response.data.splice(value,1);
+                                function (value, index) {
+                                    response.data.splice(value, 1);
                                 });
                             angular.forEach(response.data,
                                 function (value, index) {
@@ -1636,24 +1636,24 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     return value.soLuongLe != null;
                 }, false);
                 service.updateCT($scope.target).then(
-                       function (response) {
-                           if (response.status && response.status == 200) {
-                               if (response.data.status) {
-                                   console.log('Update  Successfully!');
-                                   ngNotify.set("Cập nhật thành công", { type: 'success' });
-                                   $uibModalInstance.close($scope.target);
-                               } else {
-                                   ngNotify.set(response.message, { duration: 3000, type: 'error' });
-                               }
-                           } else {
-                               console.log('ERROR: Update failed! ' + response.errorMessage);
-                               ngNotify.set(response.errorMessage, { duration: 3000, type: 'error' });
-                           }
-                       },
-                        function (response) {
-                            console.log('ERROR: Update failed! ' + response);
+                    function (response) {
+                        if (response.status && response.status == 200) {
+                            if (response.data.status) {
+                                console.log('Update  Successfully!');
+                                ngNotify.set("Cập nhật thành công", { type: 'success' });
+                                $uibModalInstance.close($scope.target);
+                            } else {
+                                ngNotify.set(response.message, { duration: 3000, type: 'error' });
+                            }
+                        } else {
+                            console.log('ERROR: Update failed! ' + response.errorMessage);
+                            ngNotify.set(response.errorMessage, { duration: 3000, type: 'error' });
                         }
-                    );
+                    },
+                    function (response) {
+                        console.log('ERROR: Update failed! ' + response);
+                    }
+                );
             };
             function filterData() {
                 $scope.isLoading = true;
@@ -1806,286 +1806,286 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     /* Summary Region*/
     app.controller('phieuDatHangNCCSummaryController', [
         '$scope', '$location', '$http', '$state', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', 'AuNguoiDungService', 'AuDonViService',
-    function ($scope, $location, $http, $state, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, serviceAuNguoiDung, serviceAuDonVi) {
-        $scope.config = angular.copy(configService);
-        $scope.paged = angular.copy(configService.pageDefault);
-        $scope.robot = angular.copy(service.robot);
-        $scope.filtered = angular.copy(configService.filterDefault);
-        $scope.tempData = tempDataService.tempData;
-        $scope.sortType = 'ngay'; // set the default sort type
-        $scope.sortReverse = false; // set the default sort order
-        $scope.accessList = {};
-        function loadAccessList() {
-            securityService.getAccessList('nvDatHangNCC').then(function (successRes) {
-                if (successRes && successRes.status == 200) {
-                    $scope.accessList = successRes.data;
+        function ($scope, $location, $http, $state, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, serviceAuNguoiDung, serviceAuDonVi) {
+            $scope.config = angular.copy(configService);
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.robot = angular.copy(service.robot);
+            $scope.filtered = angular.copy(configService.filterDefault);
+            $scope.tempData = tempDataService.tempData;
+            $scope.sortType = 'ngay'; // set the default sort type
+            $scope.sortReverse = false; // set the default sort order
+            $scope.accessList = {};
+            function loadAccessList() {
+                securityService.getAccessList('nvDatHangNCC').then(function (successRes) {
+                    if (successRes && successRes.status == 200) {
+                        $scope.accessList = successRes.data;
 
-                    if (!$scope.accessList.view) {
+                        if (!$scope.accessList.view) {
+                            toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
+                        } else {
+                            filterData();
+                        }
+                    } else {
                         toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
-                    } else {
-                        filterData();
                     }
-                } else {
+                }, function (errorRes) {
+                    console.log(errorRes);
                     toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
+                    $scope.accessList = null;
+                });
+            }
+            loadAccessList();
+
+            function loadSupplier() {
+                if (!tempDataService.tempData('suppliers')) {
+                    serviceSupplier.getAll_Supplier().then(function (successRes) {
+
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('suppliers', successRes.data.data);
+                            $scope.lstSupplier = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.lstSupplier = tempDataService.tempData('suppliers');
                 }
-            }, function (errorRes) {
-                console.log(errorRes);
-                toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
-                $scope.accessList = null;
-            });
-        }
-        loadAccessList();
-
-        function loadSupplier() {
-            if (!tempDataService.tempData('suppliers')) {
-                serviceSupplier.getAll_Supplier().then(function (successRes) {
-
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('suppliers', successRes.data.data);
-                        $scope.lstSupplier = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.lstSupplier = tempDataService.tempData('suppliers');
             }
-        }
 
-        function loadAuDonVi() {
-            if (!tempDataService.tempData('auDonVis')) {
-                serviceAuDonVi.getAll_DonVi().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.length > 0) {
+            function loadAuDonVi() {
+                if (!tempDataService.tempData('auDonVis')) {
+                    serviceAuDonVi.getAll_DonVi().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.length > 0) {
 
-                        tempDataService.putTempData('auDonVis', successRes.data);
-                        $scope.lstDonVi = successRes.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.lstDonVi = tempDataService.tempData('auDonVis');
+                            tempDataService.putTempData('auDonVis', successRes.data);
+                            $scope.lstDonVi = successRes.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.lstDonVi = tempDataService.tempData('auDonVis');
+                }
             }
-        }
 
-        function loadNguoiDung() {
-            if (!tempDataService.tempData('auUsers')) {
-                serviceAuNguoiDung.getAll_NguoiDung().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.length > 0) {
-                        tempDataService.putTempData('auUsers', successRes.data);
-                        $scope.lstNguoiDung = successRes.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.lstNguoiDung = tempDataService.tempData('auUsers');
+            function loadNguoiDung() {
+                if (!tempDataService.tempData('auUsers')) {
+                    serviceAuNguoiDung.getAll_NguoiDung().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.length > 0) {
+                            tempDataService.putTempData('auUsers', successRes.data);
+                            $scope.lstNguoiDung = successRes.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.lstNguoiDung = tempDataService.tempData('auUsers');
+                }
             }
-        }
 
-        function loadWareHouse() {
-            if (!tempDataService.tempData('warehouses')) {
-                serviceWareHouse.getAll_WareHouse().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('warehouses', successRes.data.data);
-                        $scope.warehouses = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.warehouses = tempDataService.tempData('warehouses');
+            function loadWareHouse() {
+                if (!tempDataService.tempData('warehouses')) {
+                    serviceWareHouse.getAll_WareHouse().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('warehouses', successRes.data.data);
+                            $scope.warehouses = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.warehouses = tempDataService.tempData('warehouses');
+                }
             }
-        }
 
-        function loadPackagings() {
-            if (!tempDataService.tempData('packagings')) {
-                servicePackaging.getAll_Packaging().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('packagings', successRes.data.data);
-                        $scope.packagings = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.packagings = tempDataService.tempData('packagings');
+            function loadPackagings() {
+                if (!tempDataService.tempData('packagings')) {
+                    servicePackaging.getAll_Packaging().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('packagings', successRes.data.data);
+                            $scope.packagings = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.packagings = tempDataService.tempData('packagings');
+                }
             }
-        }
 
-        function loadTax() {
-            if (!tempDataService.tempData('taxs')) {
-                serviceTax.getAll_Tax().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('taxs', successRes.data.data);
-                        $scope.taxs = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.taxs = tempDataService.tempData('taxs');
+            function loadTax() {
+                if (!tempDataService.tempData('taxs')) {
+                    serviceTax.getAll_Tax().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('taxs', successRes.data.data);
+                            $scope.taxs = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.taxs = tempDataService.tempData('taxs');
+                }
             }
-        }
 
-        function loadDonViTinh() {
-            if (!tempDataService.tempData('donViTinhs')) {
-                serviceDonViTinh.getAll_DonViTinh().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('donViTinhs', successRes.data.data);
-                        $scope.donViTinhs = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.donViTinhs = tempDataService.tempData('donViTinhs');
+            function loadDonViTinh() {
+                if (!tempDataService.tempData('donViTinhs')) {
+                    serviceDonViTinh.getAll_DonViTinh().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('donViTinhs', successRes.data.data);
+                            $scope.donViTinhs = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.donViTinhs = tempDataService.tempData('donViTinhs');
+                }
             }
-        }
-        loadSupplier();
-        loadAuDonVi();
-        loadNguoiDung();
-        loadWareHouse();
-        loadPackagings();
-        loadTax();
-        loadDonViTinh();
-        $scope.setPage = function (pageNo) {
-            $scope.paged.currentPage = pageNo;
-            filterData();
-        };
-        $scope.doSearch = function () {
-            $scope.paged.currentPage = 1;
-            filterData();
-        };
-        $scope.pageChanged = function () {
-            filterData();
-        };
-        $scope.goHome = function () {
-            $state.go('nvDatHangNCC');
-        };
-        $scope.refresh = function () {
-            $scope.setPage($scope.paged.currentPage);
-        };
-        $scope.title = function () {
-            return 'Phiếu đặt hàng Nhà cung cấp';
-        };
-        $scope.displayHepler = function (code, module) {
-            var data = $filter('filter')($scope.tempData(module), { value: code }, true);
-            if (data && data.length == 1) {
-                return data[0].text;
+            loadSupplier();
+            loadAuDonVi();
+            loadNguoiDung();
+            loadWareHouse();
+            loadPackagings();
+            loadTax();
+            loadDonViTinh();
+            $scope.setPage = function (pageNo) {
+                $scope.paged.currentPage = pageNo;
+                filterData();
             };
-            return "Empty!";
-        }
-
-        $scope.formatLabel = function (model, module, displayModel) {
-            if (!model) return "";
-            var data = $filter('filter')($scope.tempData(module), { value: model }, true);
-            if (data && data.length == 1) {
-                displayModel = data[0].text;
-                return data[0].text;
+            $scope.doSearch = function () {
+                $scope.paged.currentPage = 1;
+                filterData();
+            };
+            $scope.pageChanged = function () {
+                filterData();
+            };
+            $scope.goHome = function () {
+                $state.go('nvDatHangNCC');
+            };
+            $scope.refresh = function () {
+                $scope.setPage($scope.paged.currentPage);
+            };
+            $scope.title = function () {
+                return 'Phiếu đặt hàng Nhà cung cấp';
+            };
+            $scope.displayHepler = function (code, module) {
+                var data = $filter('filter')($scope.tempData(module), { value: code }, true);
+                if (data && data.length == 1) {
+                    return data[0].text;
+                };
+                return "Empty!";
             }
-            return "Empty!";
-        };
-        $scope.create = function () {
 
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'add-summary'),
-                controller: 'phieuDatHangNCCSummaryCreateController',
-                windowClass: 'app-modal-window',
-                resolve: {}
-            });
+            $scope.formatLabel = function (model, module, displayModel) {
+                if (!model) return "";
+                var data = $filter('filter')($scope.tempData(module), { value: model }, true);
+                if (data && data.length == 1) {
+                    displayModel = data[0].text;
+                    return data[0].text;
+                }
+                return "Empty!";
+            };
+            $scope.create = function () {
 
-            modalInstance.result.then(function (updatedData) {
-                $scope.refresh();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'add-summary'),
+                    controller: 'phieuDatHangNCCSummaryCreateController',
+                    windowClass: 'app-modal-window',
+                    resolve: {}
+                });
 
-        $scope.details = function (target) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'details-summary'),
-                controller: 'phieuDatHangNCCDetailsController',
-                windowClass: 'app-modal-window',
-                resolve: {
-                    targetData: function () {
-                        return target;
-                    }
-                }
-            });
-        };
-        $scope.receive = function (target) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'receive-summary'),
-                controller: 'phieuGiaoNhanController',
-                windowClass: 'app-modal-window',
-                resolve: {
-                    targetData: function () {
-                        return target;
-                    }
-                }
-            });
-        };
-        $scope.deleteItem = function (event, target) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'delete'),
-                controller: 'phieuDatHangNCCSummaryDeleteController',
-                resolve: {
-                    targetData: function () {
-                        return target;
-                    }
-                }
-            });
-            modalInstance.result.then(function (updatedData) {
-                $scope.refresh();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
-        $scope.printChild = function (target) {
-            var modalInstance = $uibModal.open({
-                backdrop: 'static',
-                templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'printChild-summary'),
-                controller: 'printChildDatHangNCCController',
-                resolve: {
-                    targetData: function () {
-                        return target;
-                    }
-                }
-            });
-        };
-        function filterData() {
-            $scope.isLoading = true;
-            var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-            service.postQuerySummary(
-                JSON.stringify(postdata),
-                function (response) {
-                    $scope.isLoading = false;
-                    if (response.status) {
-                        $scope.data = response.data.data;
-                        angular.extend($scope.paged, response.data);
+                modalInstance.result.then(function (updatedData) {
+                    $scope.refresh();
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+            $scope.details = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'details-summary'),
+                    controller: 'phieuDatHangNCCDetailsController',
+                    windowClass: 'app-modal-window',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
                     }
                 });
-        };
-    }
+            };
+            $scope.receive = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'receive-summary'),
+                    controller: 'phieuGiaoNhanController',
+                    windowClass: 'app-modal-window',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+            };
+            $scope.deleteItem = function (event, target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('nv/NvDatHangNCC', 'delete'),
+                    controller: 'phieuDatHangNCCSummaryDeleteController',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (updatedData) {
+                    $scope.refresh();
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+            $scope.printChild = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'printChild-summary'),
+                    controller: 'printChildDatHangNCCController',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+            };
+            function filterData() {
+                $scope.isLoading = true;
+                var postdata = { paged: $scope.paged, filtered: $scope.filtered };
+                service.postQuerySummary(
+                    JSON.stringify(postdata),
+                    function (response) {
+                        $scope.isLoading = false;
+                        if (response.status) {
+                            $scope.data = response.data.data;
+                            angular.extend($scope.paged, response.data);
+                        }
+                    });
+            };
+        }
     ]);
     app.controller('phieuDatHangNCCSummaryCreateController', ['$scope', '$uibModal', '$uibModalInstance', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'merchandiseService', 'userService',
         function ($scope, $uibModal, $uibModalInstance, configService, service, tempDataService, $filter, $log, ngNotify, securityService, $rootScope, toaster, serviceMerchandise, serviceAuthUser) {
@@ -2253,7 +2253,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                             ngNotify.set(response.message, { duration: 3000, type: 'error' });
                         }
                     }
-                    );
+                );
             };
             function filterData() {
                 $scope.isLoading = true;
@@ -2345,277 +2345,280 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }
     ]);
     app.controller('phieuDatHangNCCSummaryDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
-    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
-        $scope.config = angular.copy(configService);
-        $scope.isLoading = false;
-        $scope.target = angular.copy(targetData);
-        $scope.title = function () { return 'Xoá thành phần'; };
-        $scope.save = function () {
-            service.deleteSummary(targetData).then(function (successRes) {
-                if (successRes && successRes.status === 200) {
-                    ngNotify.set("Xóa thành công", { type: 'success' });
-                    $uibModalInstance.close(targetData);
-                } else {
-                    console.log('deleteItem successRes ', successRes);
-                    ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
-                }
-            },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-        };
-        $scope.cancel = function () {
-            $uibModalInstance.close();
-        };
-    }]);
-    app.controller('phieuGiaoNhanController', ['$scope', '$uibModal', '$uibModalInstance', 'configService', 'targetData', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'merchandiseService', '$state',
-    function ($scope, $uibModal, $uibModalInstance, configService, targetData, service, tempDataService, $filter, $log, ngNotify, securityService, $rootScope, toaster, serviceMerchandise, $state) {
-        $scope.config = angular.copy(configService);
-        $scope.paged = angular.copy(configService.pageDefault);
-        $scope.robot = angular.copy(service.robot);
-        $scope.filtered = angular.copy(configService.filterDefault);
-        $scope.tempData = tempDataService.tempData;
-        $scope.target = targetData;
-        $scope.title = function () {
-            return 'Phiếu giao nhận đặt hàng Nhà cung cấp';
-        };
-        $scope.formatLabel = function (model, module) {
-            if (!model) return "";
-            var data = $filter('filter')($scope.tempData(module), { value: model }, true);
-            if (data && data.length == 1) {
-                return data[0].text;
-            }
-            return "Empty!";
-        };
-        function filterData() {
-            $scope.isLoading = true;
-            service.getDetails($scope.target.id, function (response) {
-                if (response.status) {
-                    $scope.target = response.data;
-                    $scope.target.ngay = new Date($scope.target.ngay);
-                }
-                $scope.isLoading = false;
-                $scope.pageChanged();
-            });
-        }
-        filterData();
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-        $scope.save = function () {
-            service.postReceiveSummary(
-                JSON.stringify($scope.target), function (response) {
-                    if (response.status) {
-                        ngNotify.set("Thành công", { type: 'success' });
-                        $scope.target.dataDetails = [];
-                        $uibModalInstance.close(response.data);
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+            $scope.config = angular.copy(configService);
+            $scope.isLoading = false;
+            $scope.target = angular.copy(targetData);
+            $scope.title = function () { return 'Xoá thành phần'; };
+            $scope.save = function () {
+                service.deleteSummary(targetData).then(function (successRes) {
+                    if (successRes && successRes.status === 200) {
+                        ngNotify.set("Xóa thành công", { type: 'success' });
+                        $uibModalInstance.close(targetData);
                     } else {
-                        ngNotify.set(response.message, { duration: 3000, type: 'error' });
+                        console.log('deleteItem successRes ', successRes);
+                        ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
+                    }
+                },
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+            };
+            $scope.cancel = function () {
+                $uibModalInstance.close();
+            };
+        }]);
+    app.controller('phieuGiaoNhanController', ['$scope', '$uibModal', '$uibModalInstance', 'configService', 'targetData', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'merchandiseService', '$state',
+        function ($scope, $uibModal, $uibModalInstance, configService, targetData, service, tempDataService, $filter, $log, ngNotify, securityService, $rootScope, toaster, serviceMerchandise, $state) {
+            $scope.config = angular.copy(configService);
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.robot = angular.copy(service.robot);
+            $scope.filtered = angular.copy(configService.filterDefault);
+            $scope.tempData = tempDataService.tempData;
+            $scope.target = targetData;
+            $scope.title = function () {
+                return 'Phiếu giao nhận đặt hàng Nhà cung cấp';
+            };
+            $scope.formatLabel = function (model, module) {
+                if (!model) return "";
+                var data = $filter('filter')($scope.tempData(module), { value: model }, true);
+                if (data && data.length == 1) {
+                    return data[0].text;
+                }
+                return "Empty!";
+            };
+            function filterData() {
+                $scope.isLoading = true;
+                service.getDetails($scope.target.id, function (response) {
+                    if (response.status) {
+                        $scope.target = response.data;
+                        $scope.target.ngay = new Date($scope.target.ngay);
+                    }
+                    $scope.isLoading = false;
+                    $scope.pageChanged();
+                });
+            }
+            filterData();
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+            $scope.save = function () {
+                service.postReceiveSummary(
+                    JSON.stringify($scope.target), function (response) {
+                        if (response.status) {
+                            ngNotify.set("Thành công", { type: 'success' });
+                            $scope.target.dataDetails = [];
+                            $uibModalInstance.close(response.data);
+                        } else {
+                            ngNotify.set(response.message, { duration: 3000, type: 'error' });
+                        }
+                    }
+                );
+            }
+            $scope.pageChanged = function () {
+                var currentPage = $scope.paged.currentPage;
+                var itemsPerPage = $scope.paged.itemsPerPage;
+                $scope.paged.totalItems = $scope.target.dataDetails.length;
+                $scope.data = [];
+                if ($scope.target.dataDetails) {
+                    for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
+                        $scope.data.push($scope.target.dataDetails[i])
                     }
                 }
-                );
-        }
-        $scope.pageChanged = function () {
-            var currentPage = $scope.paged.currentPage;
-            var itemsPerPage = $scope.paged.itemsPerPage;
-            $scope.paged.totalItems = $scope.target.dataDetails.length;
-            $scope.data = [];
-            if ($scope.target.dataDetails) {
-                for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
-                    $scope.data.push($scope.target.dataDetails[i])
-                }
             }
         }
-    }
     ]);
     app.controller('printChildDatHangNCCController', ['$scope', '$uibModal', '$uibModalInstance', 'configService', 'targetData', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'merchandiseService', '$state',
-function ($scope, $uibModal, $uibModalInstance, configService, targetData, service, tempDataService, $filter, $log, ngNotify, securityService, $rootScope, toaster, serviceMerchandise, $state) {
-    $scope.config = angular.copy(configService);
-    $scope.paged = angular.copy(configService.pageDefault);
-    $scope.robot = angular.copy(service.robot);
-    $scope.filtered = angular.copy(configService.filterDefault);
-    $scope.tempData = tempDataService.tempData;
-    $scope.target = targetData;
-    $scope.title = function () {
-        return 'In phiếu con Đặt hàng Nhà cung cấp';
-    };
-    $scope.formatLabel = function (model, module) {
-        if (!model) return "";
-        var data = $filter('filter')($scope.tempData(module), { value: model }, true);
-        if (data && data.length == 1) {
-            return data[0].text;
-        }
-        return "Empty!";
-    };
-    function filterData() {
-        $scope.isLoading = true;
-        service.getChild($scope.target.id, function (response) {
-            if (response.status) {
-                $scope.target = response.data;
-            }
-            $scope.isLoading = false;
-        });
-    }
-    filterData();
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-
-    $scope.details = function (target) {
-        var modalInstance = $uibModal.open({
-            backdrop: 'static',
-            templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'details-summary'),
-            controller: 'phieuDatHangNCCDetailsController',
-            windowClass: 'app-modal-window',
-            resolve: {
-                targetData: function () {
-                    return target;
+        function ($scope, $uibModal, $uibModalInstance, configService, targetData, service, tempDataService, $filter, $log, ngNotify, securityService, $rootScope, toaster, serviceMerchandise, $state) {
+            $scope.config = angular.copy(configService);
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.robot = angular.copy(service.robot);
+            $scope.filtered = angular.copy(configService.filterDefault);
+            $scope.tempData = tempDataService.tempData;
+            $scope.target = targetData;
+            $scope.title = function () {
+                return 'In phiếu con Đặt hàng Nhà cung cấp';
+            };
+            $scope.formatLabel = function (model, module) {
+                if (!model) return "";
+                var data = $filter('filter')($scope.tempData(module), { value: model }, true);
+                if (data && data.length == 1) {
+                    return data[0].text;
                 }
+                return "Empty!";
+            };
+            function filterData() {
+                $scope.isLoading = true;
+                service.getChild($scope.target.id, function (response) {
+                    if (response.status) {
+                        $scope.target = response.data;
+                    }
+                    $scope.isLoading = false;
+                });
             }
-        });
-    };
-    $scope.receive = function (target) {
-        var modalInstance = $uibModal.open({
-            backdrop: 'static',
-            templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'receive-summary'),
-            controller: 'phieuGiaoNhanController',
-            windowClass: 'app-modal-window',
-            resolve: {
-                targetData: function () {
-                    return target;
-                }
-            }
-        });
-        modalInstance.result.then(function (updatedData) {
             filterData();
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-    };
-}
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+
+            $scope.details = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'details-summary'),
+                    controller: 'phieuDatHangNCCDetailsController',
+                    windowClass: 'app-modal-window',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+            };
+            $scope.receive = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    templateUrl: configService.buildUrl('/nv/NvDatHangNCC', 'receive-summary'),
+                    controller: 'phieuGiaoNhanController',
+                    windowClass: 'app-modal-window',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (updatedData) {
+                    filterData();
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+        }
     ]);
     app.controller('datHangNCCSelectDataController', [
-    '$scope', '$resource', '$rootScope', '$location', '$window', '$uibModal', '$uibModalInstance', '$log', '$state',
-    'phieuDatHangNCCService', 'configService', 'filterObject', '$filter', 'tempDataService',
-    function ($scope, $resource, $rootScope, $location, $window, $uibModal, $uibModalInstance, $log, $state,
-        service, configService, filterObject, $filter, tempDataService) {
-        $scope.config = angular.copy(configService);
-        $scope.paged = angular.copy(configService.pageDefault);
-        $scope.robot = angular.copy(service.robot);
-        $scope.filtered = angular.copy(configService.filterDefault);
-        $scope.tempData = tempDataService.tempData;
-        angular.extend($scope.filtered, filterObject);
-        $scope.isEditable = true;
-        $scope.setPage = function (pageNo) {
-            $scope.paged.currentPage = pageNo;
-            filterData();
-        };
-        $scope.selecteItem = function (item) {
-            $uibModalInstance.close(item);
-        }
-        $scope.selectedDonVi = function () {
-            filterData();
-        }
-        $scope.formatLabel = function (model, module) {
-            if (!model) return "";
-            var data = $filter('filter')($scope.tempData(module), { value: model }, true);
-            if (data && data.length == 1) {
-                return data[0].text;
-            }
-            return "Empty!";
-        };
-        $scope.sortType = 'soPhieu'; // set the default sort type
-        $scope.sortReverse = false;  // set the default sort order
-        $scope.doSearch = function () {
-            $scope.paged.currentPage = 1;
-            filterData();
-        };
-        $scope.pageChanged = function () {
-            filterData();
-        };
-        $scope.refresh = function () {
-            $scope.setPage($scope.paged.currentPage);
-        };
-        $scope.title = function () {
-            return 'Đặt hàng NCC';
-        };
+        '$scope', '$resource', '$rootScope', '$location', '$window', '$uibModal', '$uibModalInstance', '$log', '$state',
+        'phieuDatHangNCCService', 'configService', 'filterObject', '$filter', 'tempDataService',
+        function ($scope, $resource, $rootScope, $location, $window, $uibModal, $uibModalInstance, $log, $state,
+            service, configService, filterObject, $filter, tempDataService) {
+            $scope.config = angular.copy(configService);
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.robot = angular.copy(service.robot);
+            $scope.filtered = angular.copy(configService.filterDefault);
+            $scope.tempData = tempDataService.tempData;
+            angular.extend($scope.filtered, filterObject);
+            $scope.isEditable = true;
+            $scope.all = false;
 
-        $scope.doCheck = function (item) {
-            if (item) {
-                var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                    return element.id == item.id;
-                });
-                if (item.selected) {
-                    if (!isSelected) {
-                        $scope.listSelectedData.push(item);
-                    }
-                } else {
-                    if (isSelected) {
-                        if (item.maNhaCungCap != $scope.filtered.advanceData.maNhaCungCap) {
-                            console.log('err');
-                            ngNotify.set('Vui lòng chọn phiếu của 1 NCC', { duration: 3000, type: 'error' });
-                            return;
-                        }
-                        $scope.listSelectedData.splice(item, 1);
-                    }
+            $scope.setPage = function (pageNo) {
+                $scope.paged.currentPage = pageNo;
+                filterData();
+            };
+            $scope.selecteItem = function (item) {
+                $uibModalInstance.close(item);
+            }
+            $scope.selectedDonVi = function () {
+                filterData();
+            }
+            $scope.formatLabel = function (model, module) {
+                if (!model) return "";
+                var data = $filter('filter')($scope.tempData(module), { value: model }, true);
+                if (data && data.length == 1) {
+                    return data[0].text;
                 }
-            } else {
-                angular.forEach($scope.data, function (v, k) {
-                    $scope.data[k].selected = $scope.all;
+                return "Empty!";
+            };
+            $scope.sortType = 'soPhieu'; // set the default sort type
+            $scope.sortReverse = false;  // set the default sort order
+            $scope.doSearch = function () {
+                $scope.paged.currentPage = 1;
+                filterData();
+            };
+            $scope.pageChanged = function () {
+                filterData();
+            };
+            $scope.refresh = function () {
+                $scope.setPage($scope.paged.currentPage);
+            };
+            $scope.title = function () {
+                return 'Đặt hàng NCC';
+            };
+
+            $scope.doCheck = function (item) {
+                $scope.all = !$scope.all;
+                if (item) {
                     var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                        if (!element) return false;
-                        return element.id == v.id;
+                        return element.id == item.id;
                     });
-                    if ($scope.all) {
+                    if (item.selected) {
                         if (!isSelected) {
-                            if (v.maNhaCungCap != $scope.filtered.advanceData.maNhaCungCap) {
-                                ngNotify.set('Vui lòng chọn phiếu của 1 NCC', { duration: 3000, type: 'error' });
-                                return;
-                            }
-                            $scope.listSelectedData.push($scope.data[k]);
+                            $scope.listSelectedData.push(item);
                         }
                     } else {
                         if (isSelected) {
-                            $scope.listSelectedData.splice($scope.data[k], 1);
+                            if (item.maNhaCungCap != $scope.filtered.advanceData.maNhaCungCap) {
+                                console.log('err');
+                                ngNotify.set('Vui lòng chọn phiếu của 1 NCC', { duration: 3000, type: 'error' });
+                                return;
+                            }
+                            $scope.listSelectedData.splice(item, 1);
                         }
                     }
-                });
-            }
-        }
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-        $scope.save = function () {
-            $uibModalInstance.close($scope.listSelectedData);
-        };
-        filterData();
-        function filterData() {
-            $scope.listSelectedData = service.getSelectData();
-            $scope.isLoading = true;
-            var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-            service.postSelectData(
-                JSON.stringify(postdata),
-                function (response) {
-                    $scope.isLoading = false;
-                    if (response.status) {
-                        $scope.data = response.data.data;
-                        angular.forEach($scope.data, function (v, k) {
-                            var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                                if (!element) return false;
-                                return element.soPhieu == v.soPhieu;
-                            });
-                            if (isSelected) {
-                                $scope.data[k].selected = true;
+                } else {
+                    angular.forEach($scope.data, function (v, k) {
+                        $scope.data[k].selected = $scope.all;
+                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
+                            if (!element) return false;
+                            return element.id == v.id;
+                        });
+                        if ($scope.all) {
+                            if (!isSelected) {
+                                if (v.maNhaCungCap != $scope.filtered.advanceData.maNhaCungCap) {
+                                    ngNotify.set('Vui lòng chọn phiếu của 1 NCC', { duration: 3000, type: 'error' });
+                                    return;
+                                }
+                                $scope.listSelectedData.push($scope.data[k]);
                             }
-                        })
-                        angular.extend($scope.paged, response.data);
-                    }
-                });
-        };
-    }]);
+                        } else {
+                            if (isSelected) {
+                                $scope.listSelectedData.splice($scope.data[k], 1);
+                            }
+                        }
+                    });
+                }
+            }
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+            $scope.save = function () {
+                $uibModalInstance.close($scope.listSelectedData);
+            };
+            filterData();
+            function filterData() {
+                $scope.listSelectedData = service.getSelectData();
+                $scope.isLoading = true;
+                var postdata = { paged: $scope.paged, filtered: $scope.filtered };
+                service.postSelectData(
+                    JSON.stringify(postdata),
+                    function (response) {
+                        $scope.isLoading = false;
+                        if (response.status) {
+                            $scope.data = response.data.data;
+                            angular.forEach($scope.data, function (v, k) {
+                                var isSelected = $scope.listSelectedData.some(function (element, index, array) {
+                                    if (!element) return false;
+                                    return element.soPhieu == v.soPhieu;
+                                });
+                                if (isSelected) {
+                                    $scope.data[k].selected = true;
+                                }
+                            })
+                            angular.extend($scope.paged, response.data);
+                        }
+                    });
+            };
+        }]);
     /* report Phieu DatHangNCC Controller */
-    app.controller('printDonDatHangNCCController', ['$scope', '$location', '$http', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window) {
+    app.controller('printDonDatHangNCCController', ['$scope', '$location', '$http', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', '$state',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, $state) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             $scope.robot = angular.copy(service.robot);
             var id = $stateParams.id;
@@ -2682,75 +2685,75 @@ function ($scope, $uibModal, $uibModalInstance, configService, targetData, servi
                 }
             }
         }]);
-    app.controller('printBienBanNCCController', ['$scope', '$location', '$http', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window',
-    function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window) {
-        var currentUser = serviceAuthUser.GetCurrentUser();
-        $scope.robot = angular.copy(service.robot);
-        var id = $stateParams.id;
-        $scope.target = {};
-        $scope.goIndex = function () {
-            $state.go('nvDatHangNCC');
-        }
-        $scope.tempData = tempDataService.tempData;
-        function filterData() {
-            if (id) {
-                service.getReport(id, function (response) {
-                    if (response && response.status && response.data) {
-                        $scope.target = response.data;
-                    }
-                });
-                $scope.currentUser = currentUser.userName;
+    app.controller('printBienBanNCCController', ['$scope', '$location', '$http', 'configService', 'phieuDatHangNCCService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', '$state',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, $state) {
+            var currentUser = serviceAuthUser.GetCurrentUser();
+            $scope.robot = angular.copy(service.robot);
+            var id = $stateParams.id;
+            $scope.target = {};
+            $scope.goIndex = function () {
+                $state.go('nvDatHangNCC');
             }
-        };
-        filterData();
-        $scope.formatLabel = function (paraValue, moduleName) {
-            var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
-            if (data && data.length === 1) {
-                return data[0].description;
-            } else {
-                return paraValue;
+            $scope.tempData = tempDataService.tempData;
+            function filterData() {
+                if (id) {
+                    service.getReport(id, function (response) {
+                        if (response && response.status && response.data) {
+                            $scope.target = response.data;
+                        }
+                    });
+                    $scope.currentUser = currentUser.userName;
+                }
+            };
+            filterData();
+            $scope.formatLabel = function (paraValue, moduleName) {
+                var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
+                if (data && data.length === 1) {
+                    return data[0].description;
+                } else {
+                    return paraValue;
+                }
             }
-        }
-        $scope.checkDuyet = function () {
-            if ($scope.target.trangThai == 10) {
-                return false;
-            } else {
-                return true;
-            }
-        };
-        $scope.print = function () {
-            var table = document.getElementById('main-report').innerHTML;
-            var myWindow = $window.open('', '', 'width=800, height=600');
-            myWindow.document.write(table);
-            myWindow.document.close();
-            myWindow.focus();
-            myWindow.print();
-            myWindow.close();
+            $scope.checkDuyet = function () {
+                if ($scope.target.trangThai == 10) {
+                    return false;
+                } else {
+                    return true;
+                }
+            };
+            $scope.print = function () {
+                var table = document.getElementById('main-report').innerHTML;
+                var myWindow = $window.open('', '', 'width=800, height=600');
+                myWindow.document.write(table);
+                myWindow.document.close();
+                myWindow.focus();
+                myWindow.print();
+                myWindow.close();
 
 
-        }
-        $scope.printExcel = function () {
-            var data = [document.getElementById('main-report').innerHTML];
-            var fileName = "DonDatHang_ExportData.xls";
-            var filetype = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8";
-            var ieEDGE = navigator.userAgent.match(/Edge/g);
-            var ie = navigator.userAgent.match(/.NET/g); // IE 11+
-            var oldIE = navigator.userAgent.match(/MSIE/g);
-            if (ie || oldIE || ieEDGE) {
-                var blob = new window.Blob(data, { type: filetype });
-                window.navigator.msSaveBlob(blob, fileName);
             }
-            else {
-                var a = $("<a style='display: none;'/>");
-                var url = window.webkitURL.createObjectURL(new Blob(data, { type: filetype }));
-                a.attr("href", url);
-                a.attr("download", fileName);
-                $("body").append(a);
-                a[0].click();
-                window.url.revokeObjectURL(url);
-                a.remove();
+            $scope.printExcel = function () {
+                var data = [document.getElementById('main-report').innerHTML];
+                var fileName = "DonDatHang_ExportData.xls";
+                var filetype = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8";
+                var ieEDGE = navigator.userAgent.match(/Edge/g);
+                var ie = navigator.userAgent.match(/.NET/g); // IE 11+
+                var oldIE = navigator.userAgent.match(/MSIE/g);
+                if (ie || oldIE || ieEDGE) {
+                    var blob = new window.Blob(data, { type: filetype });
+                    window.navigator.msSaveBlob(blob, fileName);
+                }
+                else {
+                    var a = $("<a style='display: none;'/>");
+                    var url = window.webkitURL.createObjectURL(new Blob(data, { type: filetype }));
+                    a.attr("href", url);
+                    a.attr("download", fileName);
+                    $("body").append(a);
+                    a[0].click();
+                    window.url.revokeObjectURL(url);
+                    a.remove();
+                }
             }
-        }
-    }]);
+        }]);
     return app;
 });

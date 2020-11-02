@@ -1,5 +1,5 @@
 ﻿<div class="container">
-    <div class="row">
+    <div class="row layout-report">
         <div class="col-md-12">
             <div class="panel panel-primary" ng-form name="_form">
                 <div class="panel-heading">
@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Từ ngày</label>
-                                    <div class="add-input-zone">
+                                    <div class="add-input-zone report">
                                         <input class="input-border-form" type="text" ng-model="target.fromDate" placeholder="{{config.dateFormat}}"
                                                uib-datepicker-popup="{{config.dateFormat}}" is-open="fromDate" datepicker-localdate datepicker-options="options" required />
                                         <div class="button-calender" ng-click="fromDate = !fromDate; config.delegateEvent($event);">
@@ -44,7 +44,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Đến ngày</label>
-                                    <div class="add-input-zone">
+                                    <div class="add-input-zone report">
                                         <input class="input-border-form" type="text" ng-model="target.toDate" placeholder="{{config.dateFormat}}"
                                                uib-datepicker-popup="{{config.dateFormat}}" is-open="toDate" datepicker-localdate datepicker-options="options" required />
                                         <div class="button-calender" ng-click="toDate = !toDate; config.delegateEvent($event);">

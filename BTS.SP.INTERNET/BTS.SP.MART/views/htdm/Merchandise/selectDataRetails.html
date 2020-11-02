@@ -26,14 +26,14 @@
                     <th class="column-title">#</th>
                     <th class="column-title">Đã chọn</th>
                     <th style="width:9%" class="text-left">
-                        <a class="title" href="#" ng-click="sortType = 'maHang'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'maHang'; sortReverse = !sortReverse">
                             Mã HH/VT
                             <span ng-show="sortType == 'maHang' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'maHang' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
                     <th style="width:20%" class="text-left">
-                        <a class="title" href="#" ng-click="sortType = 'tenHang'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'tenHang'; sortReverse = !sortReverse">
                             Tên
                             <span ng-show="sortType == 'tenHang' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'tenHang' && sortReverse" class="fa fa-caret-up"></span>
@@ -41,14 +41,14 @@
                     </th>
                     <th style="width:5%" class="text-center">ĐVT </th>
                     <th class="column-title">
-                        <a class="title" href="#" ng-click="sortType = 'maLoaiVatTu'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'maLoaiVatTu'; sortReverse = !sortReverse">
                             Loại
                             <span ng-show="sortType == 'maLoaiVatTu' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'maLoaiVatTu' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
                     </th>
                     <th class="column-title">
-                        <a class="title" href="#" ng-click="sortType = 'maNhomVatTu'; sortReverse = !sortReverse">
+                        <a class="title" ng-click="sortType = 'maNhomVatTu'; sortReverse = !sortReverse">
                             Nhóm
                             <span ng-show="sortType == 'maNhomVatTu' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'maNhomVatTu' && sortReverse" class="fa fa-caret-up"></span>
@@ -65,7 +65,7 @@
                     <td colspan="7"><my-loading></my-loading></td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data" ng-dblclick="selecteItem(item)">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td><input disabled type="checkbox" ng-model="item.selected"></td>
                     <td class="text-left">{{item.maHang}}</td>
                     <td class="text-left">{{item.tenHang}}</td>
@@ -91,7 +91,7 @@
     <div class="panel-footer" style="text-align:right;">
         yl
 
-        <!--<button prevent-default type="submit" class="btn btn-primary" ng-click="save()">{{config.label.btnSubmit}}</button>-->
+        <!--<button prevent-default type="submit" class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;{{config.label.btnSubmit}}</button>-->
         <button prevent-default class="btn btn-default" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </div>

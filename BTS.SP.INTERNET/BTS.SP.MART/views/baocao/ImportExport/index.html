@@ -32,7 +32,7 @@
                             <label for="kho">Từ ngày</label>
                         </div>
                         <div class="col-6 col-md-6">
-                            <div class="add-input-zone">
+                            <div class="add-input-zone report">
                                 <input class="form-control" type="text" ng-model="target.fromDate" placeholder="{{config.dateFormat}}"
                                        uib-datepicker-popup="{{config.dateFormat}}" is-open="fromDate" datepicker-localdate datepicker-options="options" required />
                                 <div class="button-calender" ng-click="fromDate = !fromDate; config.delegateEvent($event);">
@@ -46,7 +46,7 @@
                             <label for="kho">Đến ngày</label>
                         </div>
                         <div class="col-6 col-md-6">
-                            <div class="add-input-zone">
+                            <div class="add-input-zone report">
                                 <input class="form-control" type="text" ng-model="target.toDate" placeholder="{{config.dateFormat}}"
                                        uib-datepicker-popup="{{config.dateFormat}}" is-open="toDate" datepicker-localdate datepicker-options="options" required />
                                 <div class="button-calender" ng-click="toDate = !toDate; config.delegateEvent($event);">

@@ -1,11 +1,8 @@
-﻿
-<form></form><!-- KHông hiểu sao để thế này thì nó mới không bị lỗi T_T-->
+﻿<form></form><!-- KHông hiểu sao để thế này thì nó mới không bị lỗi T_T-->
 <div>
     <div class="modal-header" style="padding: 5px 5px">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
+
     </div>
     <div class="modal-body">
         <div class="form-group row">
@@ -14,7 +11,8 @@
                     Ngày hạch toán
                 </div>
                 <div class="md-4-style-input">
-                    <input style="line-height:inherit;width:100%" class="input-border-form" ng-model="target.ngayCT" datepicker-localdate type="date" disabled>
+                    <input style="line-height:inherit;width:100%" class="input-border-form" ng-model="target.ngayCT"
+                        datepicker-localdate type="date" disabled>
                 </div>
             </div>
             <div class="col-md-4">
@@ -23,7 +21,11 @@
                 </div>
                 <div class="md-4-style-input">
                     <div class="add-input-zone">
-                        <input class="input-border-form" disabled name="_makhachHang" type="text" ng-model="target.maKhachHang" typeahead-editable="false" uib-typeahead="opt.value as opt.text for opt in tempData('customers') | filter:$viewValue" typeahead-on-select="selectedkhachHang($item)" typeahead-input-formatter="displayHepler($model, 'customers')" />
+                        <input class="input-border-form" disabled name="_makhachHang" type="text"
+                            ng-model="target.maKhachHang" typeahead-editable="false"
+                            uib-typeahead="opt.value as opt.text for opt in tempData('customers') | filter:$viewValue"
+                            typeahead-on-select="selectedkhachHang($item)"
+                            typeahead-input-formatter="displayHepler($model, 'customers')" />
                         <div class="add-input-able" ng-click="createCustomer(target, 'makhachHang')">
                         </div>
                     </div>
@@ -36,7 +38,8 @@
                     Kho xuất
                 </div>
                 <div class="md-4-style-input">
-                    <select class="input-border-form" disabled style="width:100%;" ng-model="target.maKhoXuat" ng-options="opt.value as opt.text for opt in tempData('wareHouses')">
+                    <select class="input-border-form" disabled style="width:100%;" ng-model="target.maKhoXuat"
+                        ng-options="opt.value as opt.text for opt in tempData('wareHouses')">
                         <option value="">-</option>
                     </select>
                 </div>
@@ -48,7 +51,8 @@
                     Nội dung
                 </div>
                 <div class="md-8-style-input">
-                    <textarea focus="true" disabled class="input-border-form" name="_noidung" style="width:100%;" rows="1" ng-model="target.noiDung" placeholder="Nội dung"></textarea>
+                    <textarea focus="true" disabled class="input-border-form" name="_noidung" style="width:100%;"
+                        rows="1" ng-model="target.noiDung" placeholder="Nội dung"></textarea>
                 </div>
             </div>
         </div>
@@ -58,7 +62,9 @@
                     Chiết khấu toàn đơn
                 </div>
                 <div class="md-4-style-input">
-                    <input type="number" disabled value="0" min="0" max="100" class="input-border-form" style="width:100%;" name="_chietKhau" ng-model="target.chietKhau" ng-change="changeChietKhau(target)">
+                    <input type="number" disabled value="0" min="0" max="100" class="input-border-form"
+                        style="width:100%;" name="_chietKhau" ng-model="target.chietKhau"
+                        ng-change="changeChietKhau(target)">
                     <input ng-model="target.tienChietKhau" disabled hidden>
                 </div>
             </div>
@@ -88,9 +94,11 @@
                         <td>{{item.barcode}}</td>
                         <td>{{item.maHang}}</td>
                         <td>{{item.tenHang}}</td>
-                        <td><input class="input-border-form" disabled type="number" min="0" style="width:100%" ng-change="changeSoLuong(item)" ng-model="item.soLuong"></td>
+                        <td><input class="input-border-form" disabled type="number" min="0" style="width:100%"
+                                ng-change="changeSoLuong(item)" ng-model="item.soLuong"></td>
                         <td>{{item.donGia | number}}</td>
-                        <td><input class="input-border-form" disabled type="number" min="0" max="100" style="width:100%" ng-change="changeGiamGia(item)" ng-model="item.giamGia"></td>
+                        <td><input class="input-border-form" disabled type="number" min="0" max="100" style="width:100%"
+                                ng-change="changeGiamGia(item)" ng-model="item.giamGia"></td>
                         <td>{{item.tienGiamGia | number}}</td>
                         <td>{{item.thanhTien | number}}</td>
                         <td>Mã bó</td>
@@ -104,8 +112,7 @@
             </table>
         </div>
     </div>
-    
+
     <div class="modal-footer">
     </div>
 </div>
-

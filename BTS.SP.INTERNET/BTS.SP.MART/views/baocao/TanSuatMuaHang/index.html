@@ -18,13 +18,12 @@
     </div>
     <div>
         <br>
-
         <div class="form-group">
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="">Từ ngày giao dịch</label>
                     <div>
-                        <div class="add-input-zone">
+                        <div class="add-input-zone report">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.tuNgay" placeholder="{{config.dateFormat}}"
                                    uib-datepicker-popup="{{config.dateFormat}}" is-open="_tuNgay" datepicker-localdate />
                             <div class="button-calender" ng-click="_tuNgay = !_tuNgay; config.delegateEvent($event);">
@@ -37,7 +36,7 @@
                 <div class="form-group">
                     <label for="">Đến ngày giao dịch</label>
                     <div>
-                        <div class="add-input-zone">
+                        <div class="add-input-zone report">
                             <input class="input-border-form" type="text" ng-model="filtered.advanceData.denNgay" placeholder="{{config.dateFormat}}"
                                    uib-datepicker-popup="{{config.dateFormat}}" is-open="_denNgay" datepicker-localdate />
                             <div class="button-calender" ng-click="_denNgay = !_denNgay; config.delegateEvent($event);">
@@ -128,7 +127,7 @@
                     <td colspan="9"><my-loading></my-loading></td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.maKhachHang}}</td>
                     <td>{{item.maDonVi}}</td>
                     <td>{{item.soLan}}</td>

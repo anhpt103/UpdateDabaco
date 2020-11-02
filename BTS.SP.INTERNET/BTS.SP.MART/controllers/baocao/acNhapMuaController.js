@@ -203,42 +203,42 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             ];
             //loại điều chuyển
             $scope.listLoaiDieuChuyens = [
-				{
-				    value: 1,
-				    text: 'Nhận chuyển kho',
-				    extendValue: 'NHANCHUYENKHO'
-				},
-				{
-				    value: 2,
-				    text: 'Nhận siêu thị thành viên',
-				    extendValue: 'NHANSIEUTHITHANHVIEN'
-				}
+                {
+                    value: 1,
+                    text: 'Nhận chuyển kho',
+                    extendValue: 'NHANCHUYENKHO'
+                },
+                {
+                    value: 2,
+                    text: 'Nhận siêu thị thành viên',
+                    extendValue: 'NHANSIEUTHITHANHVIEN'
+                }
             ];
             $scope.listPTNX = [
-				{
-				    value: 0,
-				    text: 'Nhập mua',
-				    name: 'nhapMua',
-				    extendValue: 'NMUA'
-				},
-				{
-				    value: 1,
-				    text: 'Nhập bán buôn trả lại',
-				    name: 'nhapBanBuonTraLai',
-				    extendValue: 'NHBANTL'
-				},
-				{
-				    value: 2,
-				    text: 'Nhập điều chuyển nội bộ',
-				    name: 'nhapDieuChuyenNoiBo',
-				    extendValue: 'DCN'
-				},
-				{
-				    value: 3,
-				    text: 'Nhập khác',
-				    name: 'nhapKhac',
-				    extendValue: 'NKHAC'
-				}
+                {
+                    value: 0,
+                    text: 'Nhập mua',
+                    name: 'nhapMua',
+                    extendValue: 'NMUA'
+                },
+                {
+                    value: 1,
+                    text: 'Nhập bán buôn trả lại',
+                    name: 'nhapBanBuonTraLai',
+                    extendValue: 'NHBANTL'
+                },
+                {
+                    value: 2,
+                    text: 'Nhập điều chuyển nội bộ',
+                    name: 'nhapDieuChuyenNoiBo',
+                    extendValue: 'DCN'
+                },
+                {
+                    value: 3,
+                    text: 'Nhập khác',
+                    name: 'nhapKhac',
+                    extendValue: 'NKHAC'
+                }
             ];
             $scope.chageIsNotPay = function (value) {
                 if ($scope.target.isPay) {
@@ -305,6 +305,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -336,6 +337,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandiseType = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/MerchandiseType', 'selectData'),
                     controller: 'merchandiseTypeSelectDataController',
                     resolve: {
@@ -367,6 +369,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandise = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Merchandise', 'selectDataSimple'),
                     controller: 'merchandiseSimpleSelectDataController',
                     resolve: {
@@ -395,6 +398,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectMerchandiseGroup = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/NhomVatTu', 'selectData'),
                     controller: 'nhomVatTuSelectDataController',
                     resolve: {
@@ -425,6 +429,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectNguoiDung = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('auth/AuNguoiDung', 'selectData'),
                     controller: 'AuNguoiDungSelectDataController',
                     resolve: {
@@ -454,6 +459,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectNhaCungCap = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Supplier', 'selectData'),
                     controller: 'supplierSelectDataController',
                     resolve: {
@@ -544,6 +550,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectTax = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Tax', 'selectData'),
                     controller: 'taxSelectDataController',
                     resolve: {
@@ -718,8 +725,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('suppliers', successRes.data.data);
                             $scope.suppliers = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -735,8 +740,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('merchandiseTypes', successRes.data.data);
                             $scope.merchandiseTypes = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -752,8 +755,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.length > 0) {
                             tempDataService.putTempData('users', successRes.data);
                             $scope.users = successRes.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -769,8 +770,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('nhomVatTus', successRes.data.data);
                             $scope.nhomVatTus = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -786,8 +785,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('wareHouses', successRes.data.data);
                             $scope.wareHouses = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -803,8 +800,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('packagings', successRes.data.data);
                             $scope.packagings = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -820,8 +815,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('taxs', successRes.data.data);
                             $scope.taxs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -837,8 +830,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('donViTinhs', successRes.data.data);
                             $scope.donViTinhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);

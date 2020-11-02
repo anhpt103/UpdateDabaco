@@ -11,7 +11,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     app.controller('tonKhoReportController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'obj',
 	function ($scope, $uibModalInstance, $location, $http, configService, obj) {
 	    $scope.para = angular.copy(obj);
-	    console.log($scope.para);
 	    $scope.cancel = function () {
 	        $uibModalInstance.close();
 	    };
@@ -51,7 +50,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     app.controller('tonKhoDetailsReportController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'obj',
 	function ($scope, $uibModalInstance, $location, $http, configService, obj) {
 	    $scope.para = angular.copy(obj);
-	    console.log($scope.para);
 	    $scope.cancel = function () {
 	        $uibModalInstance.close();
 	    };

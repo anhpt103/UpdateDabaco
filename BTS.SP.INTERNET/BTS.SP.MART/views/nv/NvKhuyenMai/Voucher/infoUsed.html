@@ -1,8 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading" style="border-color:none;">
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+
     </div>
     <div class="panel-body">
         <div id="main-report">
@@ -25,12 +23,12 @@
                     margin-bottom: 30px;
                 }
 
-                    .header-report table,
-                    .infor-report table {
-                        width: 100%;
-                        padding-left: 20px;
-                        border: 0;
-                    }
+                .header-report table,
+                .infor-report table {
+                    width: 100%;
+                    padding-left: 20px;
+                    border: 0;
+                }
 
                 .infor-report {
                     padding-left: 10px;
@@ -42,14 +40,14 @@
                     border-collapse: collapse;
                 }
 
-                    .data-report table thead tr th,
-                    .data-report table tbody.data-detail tr td {
-                        border: 1px solid;
-                    }
+                .data-report table thead tr th,
+                .data-report table tbody.data-detail tr td {
+                    border: 1px solid;
+                }
 
-                    .data-report table tbody.data-detail tr td {
-                        font-size: 13px !important;
-                    }
+                .data-report table tbody.data-detail tr td {
+                    font-size: 13px !important;
+                }
 
                 .infor-report table tr td {
                     position: relative;
@@ -239,7 +237,8 @@
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tổng tiền hóa đơn:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{data.tienVoucher + data.tienThe + data.tienCOD + data.tienMat | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">
+                                {{data.tienVoucher + data.tienThe + data.tienCOD + data.tienMat | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
@@ -249,32 +248,38 @@
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tổng số lượng:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{robot.sum(data.dataDetails, 'soLuong') | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">
+                                {{robot.sum(data.dataDetails, 'soLuong') | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền voucher:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{data.tienVoucher === null ? 0 : data.tienVoucher | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">
+                                {{data.tienVoucher === null ? 0 : data.tienVoucher | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền thẻ:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{data.tienThe === null ? 0 : data.tienThe | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">
+                                {{data.tienThe === null ? 0 : data.tienThe | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền COD:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{data.tienCOD === null ? 0 : data.tienCOD | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">
+                                {{data.tienCOD === null ? 0 : data.tienCOD | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền mặt:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{data.tienMat === null ? 0 : data.tienMat | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">
+                                {{data.tienMat === null ? 0 : data.tienMat | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền thừa</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{data.tienThua === null ? 0 : data.tienThua | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">
+                                {{data.tienThua === null ? 0 : data.tienThua | number}}</td>
                         </tr>
                     </tbody>
                 </table>

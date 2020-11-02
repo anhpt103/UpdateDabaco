@@ -109,7 +109,7 @@
                     <td colspan="12"><my-loading></my-loading></td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>{{formatLabel(item.menu,'menus')}}</td>
                     <td><input type="checkbox" ng-model="item.isView" ng-true-value="1" ng-false-value="0" title="Xem" /></td>
                     <td><input type="checkbox" ng-model="item.isAdd" ng-true-value="1" ng-false-value="0" title="Thêm" /></td>

@@ -96,8 +96,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('hangKhs', successRes.data.data);
                             $scope.hangKhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -112,8 +110,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data && successRes.data.data.length > 0) {
                             tempDataService.putTempData('citys', successRes.data.data);
                             $scope.citys = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -302,8 +298,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('hangKhs', successRes.data.data);
                             $scope.hangKhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -390,8 +384,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('hangKhs', successRes.data.data);
                             $scope.hangKhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -477,8 +469,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('hangKhs', successRes.data.data);
                             $scope.hangKhs = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -548,6 +538,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
         $scope.isLoading = false;
         $scope.sortType = 'makhachhang'; // set the default sort type
         $scope.sortReverse = false;  // set the default sort order
+        $scope.all = false;
+
         function filterData() {
             if (serviceSelectData) {
                 $scope.modeClickOneByOne = false;
@@ -605,6 +597,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
             $scope.setPage($scope.paged.currentPage);
         };
         $scope.doCheck = function (item) {
+            $scope.all = !$scope.all;
             if (item) {
                 var isSelected = $scope.listSelectedData.some(function (element, index, array) {
                     return element.id == item.id;
@@ -833,8 +826,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('hangKhachHangRoot', successRes.data.data);
                             $scope.hangKhachHangRoot = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -908,8 +899,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('hangKhachHangRoot', successRes.data.data);
                             $scope.hangKhachHangRoot = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -955,8 +944,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/hangKhController.js', '/B
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('hangKhachHangRoot', successRes.data.data);
                             $scope.hangKhachHangRoot = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);

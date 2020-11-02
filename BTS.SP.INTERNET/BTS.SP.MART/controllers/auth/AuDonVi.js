@@ -411,6 +411,8 @@ define(['ui-bootstrap'], function () {
             $scope.filtered = angular.extend($scope.filtered, filterObject);
             angular.extend($scope.filtered, filterObject);
             var lstTemp = [];
+            $scope.all = false;
+
             $scope.modeClickOneByOne = true;
             $scope.title = function () { return 'Danh sách đơn vị'; };
             $scope.selecteItem = function (item) {
@@ -475,6 +477,7 @@ define(['ui-bootstrap'], function () {
                 $scope.setPage($scope.paged.currentPage);
             };
             $scope.doCheck = function (item) {
+                $scope.all = !$scope.all;
                 if (item) {
                     var isSelected = $scope.listSelectedData.some(function (element, index, array) {
                         return element.id == item.id;

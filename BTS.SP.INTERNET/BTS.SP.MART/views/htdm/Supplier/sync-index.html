@@ -1,23 +1,27 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
         <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+
     </div>
     <div class="panel-heading">
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <button prevent-default class="btn btn-primary" title="create new item." ng-click="create()"><i class="fa fa-plus"></i>&ensp;{{config.label.btnCreate}}</button>
+                <button prevent-default class="btn btn-primary" title="create new item." ng-click="create()"><i
+                        class="fa fa-plus"></i>&ensp;{{config.label.btnCreate}}</button>
             </div>
             <div class="col-lg-6">
                 <div class="input-group">
-                    <select style="width: 30%" class="form-control" ng-model="target.options" ng-options="opt.value as opt.text for opt in categories"></select>
-                    <input style="width: 70%" type="text" class="form-control" ng-model="filtered.summary" ng-enter="doSearch()">
+                    <select style="width: 30%" class="form-control" ng-model="target.options"
+                        ng-options="opt.value as opt.text for opt in categories"></select>
+                    <input style="width: 70%" type="text" class="form-control" ng-model="filtered.summary"
+                        ng-enter="doSearch()">
                     <div class="input-group-btn">
-                        <button class="btn btn-default" prevent-default title="search" ng-click="doSearch()"><span class="fa fa-search"></span>&ensp;{{config.label.btnSearch}}</button>
-                        <button class="btn btn-default" prevent-default title="refresh page" ng-click="refresh()"><span class="fa fa-retweet"></span>&ensp;{{config.label.btnRefresh}}</button>
-                        <button class="btn btn-default" prevent-default title="refresh page" ng-click="goHome()"><span class="fa fa-undo"></span>&ensp;{{config.label.btnBack}}</button>
+                        <button class="btn btn-default" prevent-default title="search" ng-click="doSearch()"><span
+                                class="fa fa-search"></span>&ensp;{{config.label.btnSearch}}</button>
+                        <button class="btn btn-default" prevent-default title="refresh page" ng-click="refresh()"><span
+                                class="fa fa-retweet"></span>&ensp;{{config.label.btnRefresh}}</button>
+                        <button class="btn btn-default" prevent-default title="refresh page" ng-click="goHome()"><span
+                                class="fa fa-undo"></span>&ensp;{{config.label.btnBack}}</button>
                     </div>
                 </div>
             </div>
@@ -71,15 +75,22 @@
             </thead>
             <tbody>
                 <tr ng-show="isLoading">
-                    <td colspan="8"><my-loading></my-loading></td>
-                </tr>
-                <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
-                    <td class="table-control btn-group">
-                        <a class="fa fa-retweet" ng-click="startSync(item)" ng-show="!item.checked" ng-disabled="asyncing" data-toggle="tooltip" data-placement="top" title="Đồng bộ"></a> &nbsp;&nbsp;&nbsp;
-                        <a class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
-                        <a class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip" data-placement="top" title="Sửa"></a> &nbsp;&nbsp;&nbsp;
+                    <td colspan="8">
+                        <my-loading></my-loading>
                     </td>
-                    <td>{{$index + 1}}</td>
+                </tr>
+                <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse"
+                    ng-dblclick="details(item)">
+                    <td class="table-control btn-group">
+                        <a class="fa fa-retweet" ng-click="startSync(item)" ng-show="!item.checked"
+                            ng-disabled="asyncing" data-toggle="tooltip" data-placement="top" title="Đồng bộ"></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip"
+                            data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
+                        <a class="glyphicon glyphicon-pencil" ng-click="update(item)" data-toggle="tooltip"
+                            data-placement="top" title="Sửa"></a> &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.maNCC}}</td>
                     <td>{{item.tenNCC}}</td>
                     <td>{{item.dienThoai}}</td>
@@ -90,11 +101,10 @@
         </table>
     </div>
     <div class="panel-footer">
-        <uib-pagination class="no-margin-vertical pagination-sm" ng-model="paged.currentPage"
-                        ng-change="pageChanged()"
-                        items-per-page="paged.itemsPerPage" ng-show="paged.totalItems > 0" total-items="paged.totalItems" max-size="paged.pageSize"
-                        boundary-links="true" num-pages="paged.totalPage"
-                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+        <uib-pagination class="no-margin-vertical pagination-sm" ng-model="paged.currentPage" ng-change="pageChanged()"
+            items-per-page="paged.itemsPerPage" ng-show="paged.totalItems > 0" total-items="paged.totalItems"
+            max-size="paged.pageSize" boundary-links="true" num-pages="paged.totalPage" previous-text="&lsaquo;"
+            next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
         </uib-pagination>
     </div>
 </div>

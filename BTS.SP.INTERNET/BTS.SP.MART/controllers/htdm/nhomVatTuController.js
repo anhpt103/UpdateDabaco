@@ -107,8 +107,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('merchandiseTypes', successRes.data.data);
                             $scope.merchandiseTypes = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -247,8 +245,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('merchandiseTypes', successRes.data.data);
                             $scope.merchandiseTypes = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -349,117 +345,68 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController
     /* controller delete */
     app.controller('nhomVatTuSelectDataController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'nhomVatTuService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'filterObject', 'serviceSelectData',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, filterObject, serviceSelectData) {
-            $scope.config = angular.copy(configService);
+            $scope.config = angular.copy(configService);;
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.filtered = angular.copy(configService.filterDefault);
+            $scope.filtered = angular.extend($scope.filtered, filterObject);
             angular.extend($scope.filtered, filterObject);
-            $scope.sortType = 'maNhomVatTu'; // set the default sort type
-            $scope.sortReverse = false;  // set the default sort order
-            $scope.listSelectedData = [];
-            $scope.listSelectedData = service.getSelectData();
-            $scope.modeClickOneByOne = true;
-            var lstTemp = [];
+            $scope.all = false;
+
+            $scope.sortType = 'maNhomVatTu';
+            $scope.sortReverse = false;
+
             function filterData() {
-                if (serviceSelectData) {
-                    $scope.modeClickOneByOne = false;
-                }
-                var postdata = {};
-                if ($scope.modeClickOneByOne) {
-                    $scope.isLoading = true;
-                    postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                    service.postSelectData(postdata).then(function (response) {
-                        $scope.isLoading = false;
-                        if (response && response.status == 200 && response.data && response.data.status) {
-                            $scope.data = response.data.data.data;
-                            angular.extend($scope.paged, response.data);
-                        }
-                    });
-                } else {
-                    $scope.listSelectedData = serviceSelectData.getSelectData();
-                    lstTemp = angular.copy($scope.listSelectedData);
-                    $scope.isLoading = true;
-                    postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                    service.postSelectData(postdata).then(function (response) {
-                        console.log('response', response);
-                        $scope.isLoading = false;
-                        if (response && response.status == 200 && response.data && response.data.status) {
-                            $scope.data = response.data.data.data;
-                            angular.forEach($scope.data, function (v, k) {
-                                var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                                    if (!element) return false;
-                                    if (typeof element === 'string')
-                                        return element == v.value;
-                                    return element.value == v.value;
-                                });
-                                if (isSelected) {
-                                    $scope.data[k].selected = true;
-                                }
-                            });
-                            angular.extend($scope.paged, response.data.data);
-                        }
-                    });
-                }
+                $scope.listSelectedData = serviceSelectData.getSelectData();
+                $scope.isLoading = true;
+                var postdata = { paged: $scope.paged, filtered: $scope.filtered };
+                service.postSelectData(postdata).then(function (response) {
+                    $scope.isLoading = false;
+                    if (response.status) {
+                        $scope.data = response.data.data.data;
+                        $scope.all = configService.filterDataForSelectData($scope.data, $scope.listSelectedData, $scope.all)
+                        angular.extend($scope.paged, response.data.data);
+                    }
+                });
             };
+
             filterData();
             $scope.doSearch = function () {
                 $scope.paged.currentPage = 1;
                 filterData();
             };
+
             $scope.pageChanged = function () {
                 filterData();
             };
+
             $scope.refresh = function () {
                 $scope.setPage($scope.paged.currentPage);
             };
+
             $scope.title = function () {
                 return 'Nhóm hàng hóa';
             };
+
             $scope.setPage = function (pageNo) {
                 $scope.paged.currentPage = pageNo;
                 filterData();
             };
+
             $scope.selecteItem = function (item) {
                 $uibModalInstance.close(item);
             }
-            $scope.doCheck = function (item) {
-                if (item) {
-                    var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                        return element.id == item.id;
-                    });
-                    if (item.selected) {
-                        if (!isSelected) {
-                            $scope.listSelectedData.push(item);
-                        }
-                    } else {
-                        if (isSelected) {
-                            $scope.listSelectedData.splice(item, 1);
-                        }
-                    }
-                } else {
-                    angular.forEach($scope.data, function (v, k) {
-                        $scope.data[k].selected = $scope.all;
-                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                            if (!element) return false;
-                            return element.id == v.id;
-                        });
 
-                        if ($scope.all) {
-                            if (!isSelected) {
-                                $scope.listSelectedData.push($scope.data[k]);
-                            }
-                        } else {
-                            if (isSelected) {
-                                $scope.listSelectedData.splice($scope.data[k], 1);
-                            }
-                        }
-                    });
-                }
+            $scope.doCheck = function (item) {
+                $scope.all = configService.doCheckDataForSelectData(item, $scope.data, $scope.all);
             }
+
             $scope.save = function () {
-                $uibModalInstance.close($scope.listSelectedData);
+                let result = $filter('filter')($scope.data, { selected: true }, true);
+                service.setSelectData(result);
+                $uibModalInstance.close(result);
             };
+
             $scope.cancel = function () {
-                service.setSelectData(lstTemp);
                 $uibModalInstance.close();
             };
         }]);

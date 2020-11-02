@@ -1,22 +1,20 @@
 ﻿using AutoMapper;
 using BTS.API.ENTITY;
 using BTS.API.ENTITY.Md;
+using BTS.API.SERVICE.Authorize.Utils;
 using BTS.API.SERVICE.BuildQuery;
+using BTS.API.SERVICE.BuildQuery.Query.Types;
 using BTS.API.SERVICE.DCL;
 using BTS.API.SERVICE.Helper;
 using BTS.API.SERVICE.MD;
+using BTS.API.SERVICE.NV;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BTS.API.SERVICE.NV;
-using BTS.API.SERVICE.Authorize.Utils;
-using BTS.API.SERVICE.BuildQuery.Query.Types;
 
 namespace BTS.SP.API.Api.MD
 {
@@ -59,8 +57,9 @@ namespace BTS.SP.API.Api.MD
             {
                 return NotFound();
             }
-            
+
         }
+
         [Route("GetSelectData")]
         public IList<ChoiceObj> GetSelectData()
         {
@@ -68,6 +67,7 @@ namespace BTS.SP.API.Api.MD
             var unitCode = _service.GetCurrentUnitCode();
             return data.Where(x => x.UnitCode == unitCode).Select(x => new ChoiceObj { Value = x.Id, Text = x.Name, Id = x.Id }).ToList();
         }
+
         [Route("CheckUnClosingOut")]
         [HttpGet]
         public IHttpActionResult CheckUnClosingOut()
@@ -90,6 +90,7 @@ namespace BTS.SP.API.Api.MD
             }
             return Ok(result);
         }
+
         [Route("GetKyKeToan")]
         public async Task<IHttpActionResult> GetKyKeToan()
         {
@@ -98,7 +99,7 @@ namespace BTS.SP.API.Api.MD
             var periodCollection = _service.Repository.DbSet.Where(x => x.UnitCode == _unitCode && x.TrangThai == (int)ApprovalState.IsComplete);
             if (periodCollection != null)
             {
-                var lastPeriod = periodCollection.OrderByDescending(x => new { x.Year,x.Period }).FirstOrDefault();
+                var lastPeriod = periodCollection.OrderByDescending(x => new { x.Year, x.Period }).FirstOrDefault();
                 if (lastPeriod != null)
                 {
                     result.Status = true;
@@ -146,7 +147,7 @@ namespace BTS.SP.API.Api.MD
             }
             return Ok(result);
         }
-        
+
         [Route("GetNextPeriod")]
         [HttpPost]
         public async Task<IHttpActionResult> GetNextPeriod(MdPeriod instance)
@@ -180,15 +181,15 @@ namespace BTS.SP.API.Api.MD
             List<MdPeriod> listData = new List<MdPeriod>();
             var periods = _service.Repository.DbSet
                 .Where(x => x.UnitCode == unitCode && x.TrangThai == (int)ApprovalState.IsComplete)
-                .OrderByDescending(x => new {x.Year,x.Period});
+                .OrderByDescending(x => new { x.Year, x.Period });
             if (periods.Count() > 0)
             {
                 var currentPeriods = periods.First();
-                DateTime bDay =  currentPeriods.FromDate.AddDays(-6);
+                DateTime bDay = currentPeriods.FromDate.AddDays(-6);
                 DateTime beginDay = new DateTime(bDay.Year, bDay.Month, bDay.Day, 0, 0, 0);
                 DateTime nDay = currentPeriods.FromDate.AddDays(+5);
                 DateTime nowDay = new DateTime(nDay.Year, nDay.Month, nDay.Day, 0, 0, 0);
-                var kyKeToan = _service.Repository.DbSet.Where(x => x.ToDate < nowDay && x.FromDate > beginDay  && x.UnitCode == unitCode).ToList();
+                var kyKeToan = _service.Repository.DbSet.Where(x => x.ToDate < nowDay && x.FromDate > beginDay && x.UnitCode == unitCode).ToList();
                 if (kyKeToan.Count > 0)
                 {
                     listData = kyKeToan;
@@ -294,7 +295,6 @@ namespace BTS.SP.API.Api.MD
         [Route("PostUpdateGiaVon")]
         public async Task<IHttpActionResult> PostUpdateGiaVon(MdPeriod instance)
         {
-
             try
             {
                 var exsist = _service.Find(instance);
@@ -582,7 +582,7 @@ namespace BTS.SP.API.Api.MD
                     {
                         foreach (var data in listOpen)
                         {
-                            data.TrangThai = (int) ProcessState.IsUnClosingOut;
+                            data.TrangThai = (int)ProcessState.IsUnClosingOut;
                             _service.Update(data);
                         }
                         _service.UnitOfWork.SaveAsync();
@@ -599,7 +599,7 @@ namespace BTS.SP.API.Api.MD
                 catch (Exception ex)
                 {
                     result.Status = false;
-                    result.Message = "Lỗi: "+ex;
+                    result.Message = "Lỗi: " + ex;
                 }
             }
             else
@@ -624,10 +624,10 @@ namespace BTS.SP.API.Api.MD
                 //tìm kỳ cuối cùng khóa
                 var unitCode = _service.GetCurrentUnitCode();
                 var periodUnlock =
-                    _service.Repository.DbSet.OrderBy(x=>x.Period).FirstOrDefault(
+                    _service.Repository.DbSet.OrderBy(x => x.Period).FirstOrDefault(
                         x => x.Year == exist.Year && x.UnitCode == unitCode && x.Period < exist.Period &&
-                             (x.TrangThai == (int) ApprovalState.IsNotApproval ||
-                              x.TrangThai == (int) ApprovalState.IsUnClosingOut));
+                             (x.TrangThai == (int)ApprovalState.IsNotApproval ||
+                              x.TrangThai == (int)ApprovalState.IsUnClosingOut));
                 if (periodUnlock != null)
                 {
                     var beforePeriodNotClose = _service.Repository.DbSet.Any(x => x.Year == periodUnlock.Year && x.Period < periodUnlock.Period && x.TrangThai != (int)ApprovalState.IsComplete && x.UnitCode == unitCode);
@@ -641,7 +641,7 @@ namespace BTS.SP.API.Api.MD
                             _service.Repository.DbSet.Where(
                                 x =>
                                     x.FromDate >= periodUnlock.FromDate && x.FromDate <= exist.FromDate &&
-                                    x.UnitCode == unitCode).OrderBy(x=>x.Period).ToList();
+                                    x.UnitCode == unitCode).OrderBy(x => x.Period).ToList();
                         if (listPeriod.Count > 0)
                         {
                             for (int a = 0; a < listPeriod.Count; a++)
@@ -795,7 +795,7 @@ namespace BTS.SP.API.Api.MD
                 {
                     await _service.UnitOfWork.SaveAsync();
                     result.Status = true;
-                    result.Message = "Tạo mới kỳ kế toán năm "+ request.Year +" thành công";
+                    result.Message = "Tạo mới kỳ kế toán năm " + request.Year + " thành công";
                     return Ok(result);
                 }
                 return BadRequest("Kỳ trong năm nay đã được tạo!");
@@ -829,7 +829,7 @@ namespace BTS.SP.API.Api.MD
                     result.Message = "Failed";
                     result.Data = null;
                 }
-                
+
             }
             catch
             {
@@ -853,11 +853,11 @@ namespace BTS.SP.API.Api.MD
                 {
                     MdPeriodVm.ResponseData dataResult = new MdPeriodVm.ResponseData();
                     string tableName = ProcedureCollection.GetTableName(data.Year, data.Period);
-                    var getTonKhoXuat =  string.Format("SELECT TONCUOIKYSL FROM {0} where MAVATTU = '{1}' and MAKHO = '{2}'", tableName , param.MerchandiseCodes.ToUpper() , param.WareHouseCodes);
+                    var getTonKhoXuat = string.Format("SELECT TONCUOIKYSL FROM {0} where MAVATTU = '{1}' and MAKHO = '{2}'", tableName, param.MerchandiseCodes.ToUpper(), param.WareHouseCodes);
                     var getTonKhoNhap = string.Format("SELECT TONCUOIKYSL FROM {0} where MAVATTU = '{1}' and MAKHO = '{2}'", tableName, param.MerchandiseCodes.ToUpper(), param.WareHouseRecieveCode);
                     using (var ctx = new ERPContext())
                     {
-                        decimal soLuongTonKhoXuat = ctx.Database.SqlQuery<decimal> (getTonKhoXuat).SingleOrDefault();
+                        decimal soLuongTonKhoXuat = ctx.Database.SqlQuery<decimal>(getTonKhoXuat).SingleOrDefault();
                         decimal soLuongTonKhoNhap = ctx.Database.SqlQuery<decimal>(getTonKhoNhap).SingleOrDefault();
                         dataResult.SoLuongTonKhoNhap = soLuongTonKhoNhap;
                         dataResult.SoLuongTonKhoXuat = soLuongTonKhoXuat;

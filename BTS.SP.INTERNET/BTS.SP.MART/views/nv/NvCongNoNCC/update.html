@@ -10,18 +10,17 @@
         text-align: center;
         font-weight: bold;
     }
-        .panel-info{
-        text-align:center;
-        font-weight:bold;
+
+    .panel-info {
+        text-align: center;
+        font-weight: bold;
     }
 </style>
 
 <div>
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
+
     </div>
     <div class="modal-body" ng-form name="_form">
         <div class="form-group">
@@ -31,7 +30,8 @@
                         Số chứng từ <span style="color: red">(*)</span>
                     </div>
                     <div class="md-4-style-input">
-                        <input class="input-border-form" type="text" ng-model="target.maChungTu" maxlength="50" name="_maChungTu" required readonly>
+                        <input class="input-border-form" type="text" ng-model="target.maChungTu" maxlength="50"
+                            name="_maChungTu" required readonly>
                         <span style="color: red" ng-show="_form._maChungTu.$dirty && _form._maChungTu.$invalid">
                             <span ng-show="_form._maChungTu.$error.required">Không được để trống</span>
                         </span>
@@ -43,8 +43,9 @@
                     </div>
                     <div class="md-4-style-input">
                         <div class="add-input-zone">
-                            <input class="input-border-form" type="text" ng-model="target.ngayCT" placeholder="{{config.dateFormat}}"
-                                   uib-datepicker-popup="{{config.dateFormat}}" is-open="_ngayct" datepicker-localdate readonly />
+                            <input class="input-border-form" type="text" ng-model="target.ngayCT"
+                                placeholder="{{config.dateFormat}}" uib-datepicker-popup="{{config.dateFormat}}"
+                                is-open="_ngayct" datepicker-localdate readonly />
                             <div class="button-calender" ng-click="_ngayct = !_ngayct; config.delegateEvent($event);">
                             </div>
                         </div>
@@ -60,8 +61,13 @@
                     </div>
                     <div class="md-4-style-input">
                         <div class="add-input-zone">
-                            <input class="input-border-form" name="_maNhaCungCap" type="text" ng-model="target.maNhaCungCap" typeahead-editable="false" uib-typeahead="opt.value as opt.text for opt in tempData('suppliers') | filter:$viewValue | limitTo:5" typeahead-on-select="selectedkhachHang(target.maNhaCungCap)" typeahead-input-formatter="formatLabel($model, 'suppliers')" required />
-                            <span style="color:red" ng-show="_form._maNhaCungCap.$dirty && _form._maNhaCungCap.$invalid">
+                            <input class="input-border-form" name="_maNhaCungCap" type="text"
+                                ng-model="target.maNhaCungCap" typeahead-editable="false"
+                                uib-typeahead="opt.value as opt.text for opt in tempData('suppliers') | filter:$viewValue | limitTo:5"
+                                typeahead-on-select="selectedkhachHang(target.maNhaCungCap)"
+                                typeahead-input-formatter="formatLabel($model, 'suppliers')" required />
+                            <span style="color:red"
+                                ng-show="_form._maNhaCungCap.$dirty && _form._maNhaCungCap.$invalid">
                                 <span ng-show="_form._maNhaCungCap.$error.required">Không được để trống</span>
                             </span>
                         </div>
@@ -72,7 +78,8 @@
                         Ghi chú
                     </div>
                     <div class="md-8-style-input">
-                        <textarea class="input-border-form" style="width: 100%;" ng-model="target.ghiChu" maxlength="300" rows="1"></textarea>
+                        <textarea class="input-border-form" style="width: 100%;" ng-model="target.ghiChu"
+                            maxlength="300" rows="1"></textarea>
                     </div>
                 </div>
             </div>
@@ -85,7 +92,8 @@
                         <h3 class="panel-title">Số tiền Khách trả</h3>
                     </div>
                     <div class="panel-body">
-                        <input class="form-control" name="_SOTIEN" type="text" ng-model="target.thanhTien" awnum="number" />
+                        <input class="form-control" name="_SOTIEN" type="text" ng-model="target.thanhTien"
+                            awnum="number" />
                     </div>
                 </div>
             </div>
@@ -113,8 +121,12 @@
 
     </div>
     <div class="modal-footer">
-        <span ng-show="Loading"><my-loading></my-loading></span>
-        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid" ng-click="save()">{{config.label.btnSubmit}}</button>
-        <button prevent-default class="btn btn-default" ng-disabled="Loading" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
+        <span ng-show="Loading">
+            <my-loading></my-loading>
+        </span>
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid"
+            ng-click="save()">{{config.label.btnSubmit}}</button>
+        <button prevent-default class="btn btn-default" ng-disabled="Loading" ng-click="cancel()"><i
+                class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </div>

@@ -121,8 +121,6 @@ define(['ui-bootstrap'], function () {
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('shelves', successRes.data.data);
                             $scope.shelves = successRes.data.data;
-                        } else {
-                            console.log('successRes', successRes);
                         }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
@@ -182,7 +180,7 @@ define(['ui-bootstrap'], function () {
                     backdrop: 'static',
                     templateUrl: configService.buildUrl('htdm/Shelves', 'updateshelves'),
                     controller: 'shelvesUpdateShelvesController',
-                    size: 'lg',
+                    size: 'md',
                     resolve: {}
                 });
                 modalInstance.result.then(function (updatedData) {
@@ -268,77 +266,77 @@ define(['ui-bootstrap'], function () {
             };
         }]);
     app.controller('shelvesUpdateShelvesController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'shelvesService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'FileUploader',
-       function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, FileUploader) {
-           $scope.tempData = tempDataService.tempData;
-           $scope.target = {};
-           $scope.config = angular.copy(configService);
-           $scope.title = function () { return 'Cập nhật kệ hàng'; };
-           var uploader = $scope.uploader = new FileUploader({
-               url: configService.rootUrlWebApi + '/Md/Shelves/UploadFile'
-           });
-           uploader.filters.push({
-               name: 'syncFilter',
-               fn: function (item, options) {
-                   return this.queue.length < 10;
-               }
-           });
-           uploader.filters.push({
-               name: 'asyncFilter',
-               fn: function (item, options, deferred) {
-                   setTimeout(deferred.resolve, 1e3);
-               }
-           });
-           uploader.onSuccessItem = function (fileItem, response, status, headers) {
-               if (status == 200) {
-                   $scope.lstVatTu = response;
-                   for (var i = 0; i < $scope.lstVatTu.length; i++) {
-                       if ($scope.lstVatTu[i]) {
-                           $scope.lstVatTu[i].maKeHang = $scope.maKe;
-                       }
-                   }
-                   var modalInstance = $uibModal.open({
-                       backdrop: 'static',
-                       templateUrl: configService.buildUrl('htdm/Shelves', 'updateKeHang'),
-                       controller: 'kiemKeUpdateKeController',
-                       size: 'lg',
-                       resolve: {
-                           targetData: function () {
-                               return $scope.lstVatTu;
-                           }
-                       }
-                   });
-               }
-           };
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, FileUploader) {
+            $scope.tempData = tempDataService.tempData;
+            $scope.target = {};
+            $scope.config = angular.copy(configService);
+            $scope.title = function () { return 'Cập nhật kệ hàng'; };
+            var uploader = $scope.uploader = new FileUploader({
+                url: configService.rootUrlWebApi + '/Md/Shelves/UploadFile'
+            });
+            uploader.filters.push({
+                name: 'syncFilter',
+                fn: function (item, options) {
+                    return this.queue.length < 10;
+                }
+            });
+            uploader.filters.push({
+                name: 'asyncFilter',
+                fn: function (item, options, deferred) {
+                    setTimeout(deferred.resolve, 1e3);
+                }
+            });
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                if (status == 200) {
+                    $scope.lstVatTu = response;
+                    for (var i = 0; i < $scope.lstVatTu.length; i++) {
+                        if ($scope.lstVatTu[i]) {
+                            $scope.lstVatTu[i].maKeHang = $scope.maKe;
+                        }
+                    }
+                    var modalInstance = $uibModal.open({
+                        backdrop: 'static',
+                        templateUrl: configService.buildUrl('htdm/Shelves', 'updateKeHang'),
+                        controller: 'kiemKeUpdateKeController',
+                        size: 'lg',
+                        resolve: {
+                            targetData: function () {
+                                return $scope.lstVatTu;
+                            }
+                        }
+                    });
+                }
+            };
 
-           $scope.cancel = function () {
-               $uibModalInstance.dismiss('cancel');
-           };
-       }
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+        }
     ]);
     app.controller('kiemKeUpdateKeController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'shelvesService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'FileUploader', 'targetData',
-       function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, FileUploader, targetData) {
-           $scope.config = angular.copy(configService);
-           $scope.tempData = tempDataService.tempData;
-           $scope.lstHangHoa = targetData;
-           $scope.title = function () { return 'Cập nhật kệ kiểm kê'; };
-           $scope.save = function () {
-               var convertData = $scope.lstHangHoa;
-               service.updateListHangHoa($scope.lstHangHoa).then(
-               function (response) {
-                   if (response && response.status == 200 && response.data) {
-                       ngNotify.set("Thành công", { type: 'success' });
-                       $uibModalInstance.close($scope.target);
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, FileUploader, targetData) {
+            $scope.config = angular.copy(configService);
+            $scope.tempData = tempDataService.tempData;
+            $scope.lstHangHoa = targetData;
+            $scope.title = function () { return 'Cập nhật kệ kiểm kê'; };
+            $scope.save = function () {
+                var convertData = $scope.lstHangHoa;
+                service.updateListHangHoa($scope.lstHangHoa).then(
+                    function (response) {
+                        if (response && response.status == 200 && response.data) {
+                            ngNotify.set("Thành công", { type: 'success' });
+                            $uibModalInstance.close($scope.target);
 
-                   } else {
-                       console.log('ERROR: Update failed! ' + response.errorMessage);
-                       ngNotify.set(response.data.errorMessage, { duration: 3000, type: 'error' });
-                   }
-               });
-           };
-           $scope.cancel = function () {
-               $uibModalInstance.dismiss('cancel');
-           };
-       }
+                        } else {
+                            console.log('ERROR: Update failed! ' + response.errorMessage);
+                            ngNotify.set(response.data.errorMessage, { duration: 3000, type: 'error' });
+                        }
+                    });
+            };
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+        }
     ]);
     /* controller Edit */
     app.controller('shelvesEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'shelvesService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
@@ -395,9 +393,9 @@ define(['ui-bootstrap'], function () {
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.cancel = function () {
                 $uibModalInstance.close();
@@ -413,11 +411,13 @@ define(['ui-bootstrap'], function () {
             $scope.filtered = angular.extend($scope.filtered, filterObject);
             angular.extend($scope.filtered, filterObject);
             $scope.title = function () { return 'Danh sách kho hàng'; };
+            $scope.all = false;
+
             function filterData() {
                 $scope.listSelectedData = serviceSelectData.getSelectData();
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                service.wareHouseCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
+                service.postDataWareHouse(postdata).then(function (response) {
                     $scope.isLoading = false;
                     if (response.status) {
                         $scope.data = response.data.data;
@@ -474,6 +474,7 @@ define(['ui-bootstrap'], function () {
             };
 
             $scope.doCheck = function (item) {
+                $scope.all = !$scope.all;
                 if (item) {
                     var isSelected = $scope.listSelectedData.some(function (element, index, array) {
                         return element.id == item.id;
@@ -523,93 +524,61 @@ define(['ui-bootstrap'], function () {
             $scope.filtered = angular.copy(configService.filterDefault);
             $scope.filtered = angular.extend($scope.filtered, filterObject);
             angular.extend($scope.filtered, filterObject);
-            var lstTemp = [];
-            $scope.modeClickOneByOne = true;
+
             $scope.title = function () { return 'Danh sách kệ hàng'; };
             $scope.selecteItem = function (item) {
                 $uibModalInstance.close(item);
             }
+
             $scope.isLoading = false;
-            $scope.sortType = 'maKeHang'; // set the default sort type
-            $scope.sortReverse = false;  // set the default sort order
+            $scope.sortType = 'maKeHang';
+            $scope.sortReverse = false;
+            $scope.all = false;
+
             function filterData() {
                 $scope.listSelectedData = serviceSelectData.getSelectData();
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
                 service.postSelectData(postdata).then(function (response) {
-                    console.log(response);
                     $scope.isLoading = false;
                     if (response.status) {
                         $scope.data = response.data.data.data;
-                        //console.log($scope.data);
-                        angular.forEach($scope.data, function (v, k) {
-                            var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                                if (!element) return false;
-                                return element.value == v.value;
-                            });
-                            if (isSelected) {
-                                $scope.data[k].selected = true;
-                            }
-                        });
+                        $scope.all = configService.filterDataForSelectData($scope.data, $scope.listSelectedData, $scope.all)
                         angular.extend($scope.paged, response.data.data);
                     }
                 });
             };
             filterData();
+
             $scope.setPage = function (pageNo) {
                 $scope.paged.currentPage = pageNo;
                 filterData();
             };
+
             $scope.doSearch = function () {
                 $scope.paged.currentPage = 1;
                 filterData();
             };
+
             $scope.pageChanged = function () {
                 filterData();
             };
+
             $scope.refresh = function () {
                 $scope.setPage($scope.paged.currentPage);
             };
+
             $scope.doCheck = function (item) {
-                if (item) {
-                    var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                        return element.id == item.id;
-                    });
-                    if (item.selected) {
-                        if (!isSelected) {
-                            $scope.listSelectedData.push(item);
-                        }
-                    } else {
-                        if (isSelected) {
-                            $scope.listSelectedData.splice(item, 1);
-                        }
-                    }
-                } else {
-                    angular.forEach($scope.data, function (v, k) {
-
-                        $scope.data[k].selected = $scope.all;
-                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                            if (!element) return false;
-                            return element.id == v.id;
-                        });
-
-                        if ($scope.all) {
-                            if (!isSelected) {
-                                $scope.listSelectedData.push($scope.data[k]);
-                            }
-                        } else {
-                            if (isSelected) {
-                                $scope.listSelectedData.splice($scope.data[k], 1);
-                            }
-                        }
-                    });
-                }
+                $scope.all = configService.doCheckDataForSelectData(item, $scope.data, $scope.all);
             };
+
             $scope.save = function () {
-                $uibModalInstance.close($scope.listSelectedData);
+                let result = $filter('filter')($scope.data, { selected: true }, true);
+                service.setSelectData(result);
+                $uibModalInstance.close(result);
             };
+
             $scope.cancel = function () {
-                service.setSelectData(lstTemp);
                 $uibModalInstance.close();
             };
         }]);

@@ -320,6 +320,8 @@ define(['ui-bootstrap'], function () {
             angular.extend($scope.filtered, filterObject);
             $scope.modeClickOneByOne = true;
             $scope.title = function () { return 'Danh sách đơn vị tính'; };
+            $scope.all = false;
+
             function filterData() {
                 if (serviceSelectData) {
                     $scope.modeClickOneByOne = false;
@@ -379,6 +381,7 @@ define(['ui-bootstrap'], function () {
                 $scope.setPage($scope.paged.currentPage);
             };
             $scope.doCheck = function (item) {
+                $scope.all = !$scope.all;
                 if (item) {
                     var isSelected = $scope.listSelectedData.some(function (element, index, array) {
                         return element.id == item.id;
@@ -447,6 +450,8 @@ define(['ui-bootstrap'], function () {
             angular.extend($scope.filtered, filterObject);
             $scope.modeClickOneByOne = true;
             $scope.title = function () { return 'Danh sách đơn vị tính'; };
+            $scope.all = false;
+
             function filterData() {
                 if (serviceSelectData) {
                     $scope.modeClickOneByOne = false;
@@ -506,6 +511,7 @@ define(['ui-bootstrap'], function () {
                 $scope.setPage($scope.paged.currentPage);
             };
             $scope.doCheck = function (item) {
+                $scope.all = !$scope.all;
                 if (item) {
                     var isSelected = $scope.listSelectedData.some(function (element, index, array) {
                         return element.id == item.id;

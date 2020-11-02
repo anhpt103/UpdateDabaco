@@ -497,7 +497,6 @@ namespace BTS.SP.API.Api.MD
         [CustomAuthorize(Method = "XEM", State = "merchandise")]
         public async Task<IHttpActionResult> GetDetailByCodeRoot(string code)
         {
-            string unitCode = _service.GetCurrentUnitCode();
             string rootUnitcode = ConfigurationManager.AppSettings["rootUnitCode"];
             TransferObj<MdMerchandiseVm.Dto> result = new TransferObj<MdMerchandiseVm.Dto>();
             try
@@ -720,8 +719,7 @@ namespace BTS.SP.API.Api.MD
             var result = new TransferObj<List<NvPhieuDatHangVm.DtoDetail>>();
             var postData = ((dynamic)jsonData);
             var filtered = ((JObject)postData.filtered).ToObject<FilterObj<MdMerchandiseVm.FilterForDatHang>>();
-            MdMerchandiseVm.FilterQuantity filterQuantity = null;
-            filterQuantity = ((JObject)postData.filterQuantity).ToObject<MdMerchandiseVm.FilterQuantity>();
+            MdMerchandiseVm.FilterQuantity filterQuantity = ((JObject)postData.filterQuantity).ToObject<MdMerchandiseVm.FilterQuantity>();
             var unitCode = _service.GetCurrentUnitCode();
             try
             {
@@ -744,10 +742,8 @@ namespace BTS.SP.API.Api.MD
                 return InternalServerError();
             }
         }
-        /// <summary>
-        /// GET
-        /// </summary>
-        /// <returns></returns>
+       
+
         [Route("GetSelectData")]
         [AllowAnonymous]
         public IList<ChoiceObj> GetSelectData()
@@ -788,7 +784,7 @@ namespace BTS.SP.API.Api.MD
                 return InternalServerError();
             }
         }
-        //logroot
+
         [Route("PostAsyncFromOracleRoot")]
         [HttpPost]
         [CustomAuthorize(Method = "XEM", State = "merchandise")]
@@ -1030,6 +1026,7 @@ namespace BTS.SP.API.Api.MD
             }
             return Ok(result);
         }
+
         ////Phạm Tuấn Anh PostAsyncCompareUpdate -- Update lại mới mã đã đồng bộ rồi
         [Route("PostAsyncCompareUpdate")]
         [HttpPost]
@@ -1759,6 +1756,7 @@ namespace BTS.SP.API.Api.MD
                 return Ok(result);
             }
         }
+
         [Route("UploadAvatar")]
         [AllowAnonymous]
         [HttpPost]
@@ -1778,6 +1776,7 @@ namespace BTS.SP.API.Api.MD
                 return Ok(result);
             }
         }
+
         [ResponseType(typeof(MdMerchandise))]
         [CustomAuthorize(Method = "XOA", State = "mdMerchandise")]
         public async Task<IHttpActionResult> Delete(string id)
@@ -1811,6 +1810,7 @@ namespace BTS.SP.API.Api.MD
                 return InternalServerError();
             }
         }
+
         [Route("GetForNvByCode/{code}/{wareHouseCode}/{unitCode}")]
         public async Task<IHttpActionResult> GetForNvByCode(string code, string wareHouseCode, string unitCode)
         {

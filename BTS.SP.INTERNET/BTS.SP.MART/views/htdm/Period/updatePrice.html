@@ -1,9 +1,6 @@
 ﻿<div>
     <div class="modal-header">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
     </div>
     <div class="modal-header" ng-show="isLoading">
         <my-loading></my-loading>
@@ -18,8 +15,9 @@
                 </div>
                 <div class="col-6 col-md-6">
                     <div class="add-input-zone">
-                        <input class="input-border-form" type="text" ng-model="target.fromDate" placeholder="{{config.dateFormat}}"
-                               uib-datepicker-popup="{{config.dateFormat}}" is-open="fromDate" datepicker-localdate datepicker-options="options" required/>
+                        <input class="input-border-form" type="text" ng-model="target.fromDate"
+                            placeholder="{{config.dateFormat}}" uib-datepicker-popup="{{config.dateFormat}}"
+                            is-open="fromDate" datepicker-localdate datepicker-options="options" required />
                         <div class="button-calender" ng-click="fromDate = !fromDate; config.delegateEvent($event);">
                         </div>
                     </div>
@@ -33,8 +31,9 @@
                 </div>
                 <div class="col-6 col-md-6">
                     <div class="add-input-zone">
-                        <input class="input-border-form" type="text" ng-model="target.toDate" placeholder="{{config.dateFormat}}"
-                               uib-datepicker-popup="{{config.dateFormat}}" is-open="toDate" datepicker-localdate datepicker-options="options" required/>
+                        <input class="input-border-form" type="text" ng-model="target.toDate"
+                            placeholder="{{config.dateFormat}}" uib-datepicker-popup="{{config.dateFormat}}"
+                            is-open="toDate" datepicker-localdate datepicker-options="options" required />
                         <div class="button-calender" ng-click="toDate = !toDate; config.delegateEvent($event);">
                         </div>
                     </div>
@@ -43,7 +42,9 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid" ng-click="update()">&nbsp;&nbsp;Cập nhật</button>
-        <button prevent-default class="btn btn-default" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid"
+            ng-click="update()">&nbsp;&nbsp;Cập nhật</button>
+        <button prevent-default class="btn btn-default" ng-click="cancel()"><i
+                class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </div>

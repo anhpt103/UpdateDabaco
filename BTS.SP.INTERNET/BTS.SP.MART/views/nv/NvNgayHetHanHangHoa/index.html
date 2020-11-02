@@ -68,7 +68,7 @@
                     </td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.maPhieu}}</td>
                     <td>{{item.ngayBaoDate | date : "dd/MM/yyyy"}}</td>
                     <td>{{item.noiDung}}</td>

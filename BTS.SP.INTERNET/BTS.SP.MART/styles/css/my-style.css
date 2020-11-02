@@ -1,4 +1,18 @@
 ﻿/* To Dropdown navbar dropdown on hover */
+.panel.panel-default.selectData {
+    margin-bottom: 0;
+}
+
+.panel-footer.selectData {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+    .panel-footer.selectData > button {
+        margin: 0 1rem;
+    }
 
 #reportViewer1 {
     position: absolute;
@@ -7,6 +21,12 @@
     overflow: hidden;
     clear: both;
     height: 100%;
+}
+
+.row.layout-report {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-telerik {
@@ -447,6 +467,10 @@ table .glyphicon, table .glyphicon:visited {
 .add-input-zone {
     position: relative;
 }
+
+    .add-input-zone.report {
+        float: left;
+    }
 
 .add-input-able, .button-calender {
     width: 35px;

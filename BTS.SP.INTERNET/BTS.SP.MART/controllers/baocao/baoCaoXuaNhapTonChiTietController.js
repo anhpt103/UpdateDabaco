@@ -157,6 +157,7 @@ acModule.controller('baoCaoXuaNhapTonChiTietController', [
         $scope.selectMerchandiseType = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('MdMerchandiseType', 'selectData'),
                 controller: 'merchandiseTypeSelectDataController',
                 resolve: {
@@ -188,6 +189,7 @@ acModule.controller('baoCaoXuaNhapTonChiTietController', [
         $scope.selectMerchandise = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('MdMerchandise', 'selectDataSimple'),
                 controller: 'merchandiseSimpleSelectDataController',
                 resolve: {
@@ -220,6 +222,7 @@ acModule.controller('baoCaoXuaNhapTonChiTietController', [
         $scope.selectMerchandiseGroup = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('MdNhomVatTu', 'selectData'),
                 controller: 'nhomVatTuSelectDataController',
                 resolve: {
@@ -251,6 +254,7 @@ acModule.controller('baoCaoXuaNhapTonChiTietController', [
         $scope.selectNhaCungCap = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('mdCustomer', 'selectData'),
                 controller: 'customerSelectDataController',
                 resolve: {

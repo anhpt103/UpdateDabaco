@@ -2,10 +2,8 @@
 
 <body>
     <div class="modal-header" style="padding: 5px 5px">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-        <div class="button-close" ng-click="cancel()">
-            <i class="fa fa-times-circle"></i>
-        </div>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
+
     </div>
     <div class="modal-body">
         <form role="form" name="_form">
@@ -17,7 +15,8 @@
                             <span style="color:red">(*)</span>
                         </div>
                         <div class="md-4-style-input">
-                            <input class="input-border-form" type="text" name="_maPhieu" ng-model="target.maPhieu" maxlength="50" required disabled />
+                            <input class="input-border-form" type="text" name="_maPhieu" ng-model="target.maPhieu"
+                                maxlength="50" required disabled />
                             <span style="color:red" ng-show="_form._maPhieu.$dirty && _form._maPhieu.$invalid">
                                 <span ng-show="_form._maPhieu.$error.required">Không được để trống</span>
                             </span>
@@ -29,8 +28,9 @@
                         </div>
                         <div class="md-4-style-input">
                             <div class="add-input-zone">
-                                <input class="input-border-form" type="text" ng-model="target.ngayBaoDate" placeholder="{{config.dateFormat}}" uib-datepicker-popup="{{config.dateFormat}}"
-                                       is-open="_ngayBaoDate" disabled datepicker-localdate />
+                                <input class="input-border-form" type="text" ng-model="target.ngayBaoDate"
+                                    placeholder="{{config.dateFormat}}" uib-datepicker-popup="{{config.dateFormat}}"
+                                    is-open="_ngayBaoDate" disabled datepicker-localdate />
                             </div>
                         </div>
                     </div>
@@ -39,8 +39,8 @@
                             Người lập
                         </div>
                         <div class="md-4-style-input">
-                            <input class="input-border-form" type="text" name="_fullName" focus="true" ng-model="fullName" typeahead-editable="false"
-                                   disabled />
+                            <input class="input-border-form" type="text" name="_fullName" focus="true"
+                                ng-model="fullName" typeahead-editable="false" disabled />
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,8 @@
                             Nội dung
                         </div>
                         <div class="md-8-style-input">
-                            <textarea class="input-border-form" focus="true" name="_noidung" style="width:100%;" rows="1" ng-model="target.noiDung" disabled></textarea>
+                            <textarea class="input-border-form" focus="true" name="_noidung" style="width:100%;"
+                                rows="1" ng-model="target.noiDung" disabled></textarea>
                         </div>
                     </div>
                 </div>
@@ -61,7 +62,8 @@
     </div>
     <div class="modal-body">
         <div>
-            <table class="table table-bordered table-hover table-condensed" arrow-selector data-item-target="dataDetails">
+            <table class="table table-bordered table-hover table-condensed" arrow-selector
+                data-item-target="dataDetails">
                 <thead>
                     <tr style="font-weight: bold">
                         <th style="width:1%" class="text-center">STT</th>
@@ -124,14 +126,17 @@
                     </tr>
                 </tbody>
             </table>
-            <uib-pagination class="no-margin-vertical pagination-sm" ng-model="paged.currentPage" ng-change="pageChanged()" items-per-page="paged.itemsPerPage"
-                            ng-show="paged.totalItems > 0" total-items="paged.totalItems" max-size="paged.pageSize" boundary-links="true"
-                            num-pages="paged.totalPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+            <uib-pagination class="no-margin-vertical pagination-sm" ng-model="paged.currentPage"
+                ng-change="pageChanged()" items-per-page="paged.itemsPerPage" ng-show="paged.totalItems > 0"
+                total-items="paged.totalItems" max-size="paged.pageSize" boundary-links="true"
+                num-pages="paged.totalPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                last-text="&raquo;">
             </uib-pagination>
         </div>
     </div>
     <div class="modal-footer">
-        <button prevent-default class="btn btn-default" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
+        <button prevent-default class="btn btn-default" ng-click="cancel()"><i
+                class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </body>
 

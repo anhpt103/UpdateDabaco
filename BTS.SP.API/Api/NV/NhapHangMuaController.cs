@@ -1,36 +1,36 @@
 ﻿using AutoMapper;
 using BTS.API.ENTITY;
+using BTS.API.ENTITY.Authorize;
 using BTS.API.ENTITY.DCL;
+using BTS.API.ENTITY.Md;
 using BTS.API.ENTITY.NV;
+using BTS.API.SERVICE.Authorize.Utils;
 using BTS.API.SERVICE.BuildQuery;
 using BTS.API.SERVICE.BuildQuery.Query.Types;
 using BTS.API.SERVICE.DCL;
 using BTS.API.SERVICE.Helper;
+using BTS.API.SERVICE.MD;
 using BTS.API.SERVICE.NV;
+using BTS.SP.API.Utils;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using BTS.API.ENTITY.Md;
-using System.Web;
-using System.IO;
-using System.Web.Hosting;
-using OfficeOpenXml;
-using System.Text;
-using System.Globalization;
-using System.Drawing;
 using System.Net.Http.Headers;
-using BTS.API.SERVICE.MD;
-using System.Security.Claims;
-using BTS.API.ENTITY.Authorize;
-using BTS.API.SERVICE.Authorize.Utils;
 using System.Runtime.InteropServices;
-using BTS.SP.API.Utils;
-using OfficeOpenXml.Style;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
+using System.Web.Http;
 namespace BTS.SP.API.Api.NV
 {
     [RoutePrefix("api/Nv/NhapHangMua")]
@@ -51,6 +51,7 @@ namespace BTS.SP.API.Api.NV
             _serviceCongNo = serviceCongNo;
             _servicePrice = servicePrice;
         }
+
         #region VUDQ_IMPORT_EXCEL
         [Route("ImportExcelNhapHangMua/{unitCode}")]
         [HttpPost]

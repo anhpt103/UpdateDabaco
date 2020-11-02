@@ -148,6 +148,7 @@ acModule.controller('importExportController', [
         $scope.selectMerchandiseType = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('MdMerchandiseType', 'selectData'),
                 controller: 'merchandiseTypeSelectDataController',
                 resolve: {
@@ -177,6 +178,7 @@ acModule.controller('importExportController', [
         $scope.selectMerchandise = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('MdMerchandise', 'selectDataSimple'),
                 controller: 'merchandiseSimpleSelectDataController',
                 resolve: {
@@ -205,6 +207,7 @@ acModule.controller('importExportController', [
         $scope.selectMerchandiseGroup = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('MdNhomVatTu', 'selectData'),
                 controller: 'nhomVatTuSelectDataController',
                 resolve: {
@@ -234,6 +237,7 @@ acModule.controller('importExportController', [
         $scope.selectNhaCungCap = function () {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
+                size: 'md',
                 templateUrl: mdService.buildUrl('mdCustomer', 'selectData'),
                 controller: 'customerSelectDataController',
                 resolve: {

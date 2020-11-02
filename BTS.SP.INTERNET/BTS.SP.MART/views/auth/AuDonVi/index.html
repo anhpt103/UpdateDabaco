@@ -68,7 +68,7 @@
                     <td colspan="7"><my-loading></my-loading></td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
-                    <td>{{$index + 1}}</td>
+                    <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.maDonVi}}</td>
                     <td>{{item.tenDonVi}}</td>
                     <td>{{item.diaChi}}</td>

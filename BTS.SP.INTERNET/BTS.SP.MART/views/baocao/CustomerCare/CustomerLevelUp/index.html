@@ -26,7 +26,7 @@
                                 Từ Ngày <span style="color:red"></span>
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
                                     <input class="input-border-form" type="text" ng-model="target.fromDate" placeholder="{{config.dateFormat}}"
                                            uib-datepicker-popup="{{config.dateFormat}}" is-open="_fromDate" datepicker-localdate />
                                     <div class="button-calender" ng-click="_fromDate = !_fromDate; config.delegateEvent($event);">
@@ -39,7 +39,7 @@
                                 Đến Ngày <span style="color:red"></span>
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
                                     <input class="input-border-form" type="text" ng-model="target.toDate" placeholder="{{config.dateFormat}}"
                                            uib-datepicker-popup="{{config.dateFormat}}" is-open="_toDate" datepicker-localdate />
                                     <div class="button-calender" ng-click="_toDate = !_toDate; config.delegateEvent($event);">
@@ -70,7 +70,7 @@
                                 Từ số tiền
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
 
                                     <input class="input-border-form" name="_giaTien" type="text" ng-model="target.fromMoney" />
                                 </div>
@@ -81,7 +81,7 @@
                                 Đến số tiền
                             </div>
                             <div class="md-4-style-input">
-                                <div class="add-input-zone">
+                                <div class="add-input-zone report">
 
                                     <input class="input-border-form" name="_giaTien" type="text" ng-model="target.toMoney" />
                                 </div>
@@ -166,7 +166,7 @@
                                 <td colspan="7"><my-loading></my-loading></td>
                             </tr>
                             <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse">
-                                <td>{{$index + 1}}</td>
+                                <td class="text-right">{{$index + 1}}</td>
                                 <td>{{item.makh}}</td>
                                 <td>{{item.tenKH}}</td>
                                 <td>{{item.dienThoai}}</td>

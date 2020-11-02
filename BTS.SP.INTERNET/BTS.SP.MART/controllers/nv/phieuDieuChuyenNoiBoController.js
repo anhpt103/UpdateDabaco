@@ -193,8 +193,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             getNewReciveInstance: function (callback) {
                 $http.get(serviceUrl + '/GetNewReciveInstance').success(callback);
             },
-            getNewInstanceFrom: function (maChungTu, callback) {
-                $http.get(serviceUrl + '/GetNewInstanceFrom/' + maChungTu).success(callback);
+            getNewInstanceFrom: function (maChungTu) {
+                return $http.get(serviceUrl + '/GetNewInstanceFrom/' + maChungTu);
             },
             getDetails: function (id) {
                 return $http.get(serviceUrl + '/GetDetails/' + id);
@@ -1351,11 +1351,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             }
             $scope.loadDataByNhapMua = function (lenhDieuDong) {
                 var dataId = $filter('filter')($scope.nhapMuas, { value: lenhDieuDong }, true);
-                service.getNewInstanceFrom(lenhDieuDong, function (response) {
-                    $scope.target = response;
+                service.getNewInstanceFrom(lenhDieuDong).then(function (response) {
+                    $scope.target = response.data;
                     $scope.pageChanged();
-                    $scope.target.ngayCT = new Date(response.ngayCT);
-                    $scope.target.ngayDieuDong = new Date(response.ngayDieuDong);
+                    $scope.target.ngayCT = new Date(response.data.ngayCT);
+                    $scope.target.ngayDieuDong = new Date(response.data.ngayDieuDong);
 
                 });
                 if (dataId && dataId.length === 1) {
@@ -1405,8 +1405,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         $scope.codePromissoryNote = response.data;
                     }
                 });
-                service.getNewInstanceFrom(maChungTu, function (response) {
-                    $scope.target = response;
+                service.getNewInstanceFrom(maChungTu).then(function (response) {
+                    $scope.target = response.data;
                     if ($scope.target.vat != null) {
                         serviceTax.getTaxByCode($scope.target.vat).then(function (response) {
                             if (response.status == 200) {
@@ -1464,8 +1464,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         $scope.target.maKhoNhap = objectFilter.maKhoNhap;
                     }
                     $scope.pageChanged();
-                    $scope.target.ngayCT = new Date(response.ngayCT);
-                    $scope.target.ngayDieuDong = new Date(response.ngayDieuDong);
+                    $scope.target.ngayCT = new Date(response.data.ngayCT);
+                    $scope.target.ngayDieuDong = new Date(response.data.ngayDieuDong);
                     var data = $filter('filter')($scope.wareHouses, { value: objectFilter.maKhoXuat }, true);
                     if (data && data.length == 1) {
                         $scope.target.maKhoXuat = data[0].value;

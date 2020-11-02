@@ -715,7 +715,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.create = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Merchandise', 'add'),
                     controller: 'merchandiseCreateController',
                     windowClass: 'app-modal-window',

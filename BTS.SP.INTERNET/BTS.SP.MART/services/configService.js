@@ -4,7 +4,7 @@
         var hostname = window.location.hostname;
         var port = window.location.port;
         var rootUrl = 'http://' + hostname + ':' + port;
-        var rootUrlApi = 'http://localhost:33367';
+        var rootUrlApi = 'http://svltt:6868';
         if (!port) rootUrl = 'http://' + hostname;
 
         var result = {

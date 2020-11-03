@@ -60,8 +60,6 @@ define(['angular'], function (angular) {
         $scope.login = function () {
             $scope.msg = null;
             accountService.login($scope.user).then(function (response) {
-                console.log("Login Success");
-            }, function (response) {
                 if (response && response.data) {
                     if (response.data.error) {
                         $scope.msg = response.data.error_description;

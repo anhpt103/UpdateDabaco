@@ -466,6 +466,7 @@
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -740,6 +741,7 @@
                 serviceWareHouse.clearSelectData();
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {

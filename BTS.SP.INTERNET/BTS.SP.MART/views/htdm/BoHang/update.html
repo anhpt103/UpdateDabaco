@@ -104,9 +104,6 @@
                 </tr>
             </tbody>
             <tbody ng-form name="_formDetail">
-                <tr ng-if="isLoading">
-                    <td colspan="13"><my-loading></my-loading></td>
-                </tr>
                 <tr ng-repeat="item in data track by $index" style="height:30px;">
                     <td style="text-align:center;">{{$index + 1}}</td>
                     <td>

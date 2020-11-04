@@ -170,6 +170,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -203,6 +204,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectNguoiDung = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('auth/AuNguoiDung', 'selectData'),
                     controller: 'AuNguoiDungSelectDataController',
                     resolve: {

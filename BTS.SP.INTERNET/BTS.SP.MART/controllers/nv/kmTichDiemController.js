@@ -3,132 +3,132 @@
 
     var app = angular.module('kmTichDiemModule', ['ui.bootstrap', 'authModule', 'periodModule', 'merchandiseModule', 'customerModule', 'merchandiseTypeModule', 'nhomVatTuModule', 'supplierModule', 'wareHouseModule', 'packagingModule', 'taxModule', 'donViTinhModule', 'typeReasonModule', 'AuNguoiDungModule', 'khuyenMaiModule']);
     app.factory('kmTichDiemService', [
-    '$resource', '$http', '$window', 'configService',
-    function ($resource, $http, $window, configService) {
-        var rootUrl = configService.apiServiceBaseUri;
-        var serviceUrl = rootUrl + '/api/Nv/KhuyenMaiTichDiem';
-        var calc = {
-            sum: function (obj, name) {
-                var total = 0
-                if (obj && obj.length > 0) {
-                    angular.forEach(obj, function (v, k) {
-                        var increase = v[name];
-                        if (!increase) {
-                            increase = 0;
-                        }
-                        total += increase;
-                    });
-                }
-                return total;
-            },
-            changeTyLeKhuyenMai: function (item) {
-                if (!item.donGia) {
-                    item.giaTriKhuyenMai = 0;
-                }
-                if (item.tyLeKhuyenMai < 100) {
-                    item.giaTriKhuyenMai = item.donGia - (item.donGia * item.tyLeKhuyenMai / 100);
-                } else {
-                    item.giaTriKhuyenMai = item.donGia - item.tyLeKhuyenMai;
+        '$resource', '$http', '$window', 'configService',
+        function ($resource, $http, $window, configService) {
+            var rootUrl = configService.apiServiceBaseUri;
+            var serviceUrl = rootUrl + '/api/Nv/KhuyenMaiTichDiem';
+            var calc = {
+                sum: function (obj, name) {
+                    var total = 0
+                    if (obj && obj.length > 0) {
+                        angular.forEach(obj, function (v, k) {
+                            var increase = v[name];
+                            if (!increase) {
+                                increase = 0;
+                            }
+                            total += increase;
+                        });
+                    }
+                    return total;
+                },
+                changeTyLeKhuyenMai: function (item) {
+                    if (!item.donGia) {
+                        item.giaTriKhuyenMai = 0;
+                    }
+                    if (item.tyLeKhuyenMai < 100) {
+                        item.giaTriKhuyenMai = item.donGia - (item.donGia * item.tyLeKhuyenMai / 100);
+                    } else {
+                        item.giaTriKhuyenMai = item.donGia - item.tyLeKhuyenMai;
+                    }
                 }
             }
-        }
-        var parameterPrint = {};
-        var selectedMerchandise = [];
+            var parameterPrint = {};
+            var selectedMerchandise = [];
 
-        function getParameterPrint() {
-            return parameterPrint;
-        }
-
-        var result = {
-            robot: calc,
-            setParameterPrint: function (data) {
-                parameterPrint = data;
-            },
-            getParameterPrint: function () {
+            function getParameterPrint() {
                 return parameterPrint;
-            },
-            getAllData: function () {
-                return $http.post(serviceUrl + '/GetAllData');
-            },
-            post: function (data) {
-                return $http.post(serviceUrl + '/Post', data);
-            },
-            postQuery: function (data) {
-                return $http.post(serviceUrl + '/PostQuery', data);
-            },
-            postSelectData: function (data, callback) {
-                $http.post(serviceUrl + '/PostSelectData', data).success(callback);
-            },
-            postPrint: function (callback) {
-                $http.post(serviceUrl + '/PostPrint', getParameterPrint()).success(callback);
-            },
-            postPrintDetail: function (callback) {
-                $http.post(serviceUrl + '/PostPrintDetail', getParameterPrint()).success(callback);
-            },
-            getNewInstance: function (callback) {
-                $http.get(serviceUrl + '/GetNewInstance').success(callback);
-            },
-            getDetails: function (id) {
-                return $http.get(serviceUrl + '/GetDetails/' + id);
-            },
-            update: function (params) {
-                return $http.put(serviceUrl + '/' + params.id, params);
-            },
-            approval: function (params, callback) {
-                return $http.post(serviceUrl + '/PostApproval/' + params.id).success(callback);
-            },
-            unapprove: function (params, callback) {
-                return $http.post(serviceUrl + '/PostUnApprove/' + params.id).success(callback);
-            },
-            getMerchandiseForNvByCode: function (code, callback) {
-                return $http.get(rootUrl + '/api/Md/Merchandise/GetForNvByCode/' + code).success(callback);
-            },
-            getMerchandiseTypeForNvByCode: function (code) {
-                return $http.get(rootUrl + '/api/Md/MerchandiseType/GetForNvByCode/' + code);
-            },
-            getMerchandiseGroupForNvByCode: function (code) {
-                return $http.get(rootUrl + '/api/Md/NhomVatTu/GetForNvByCode/' + code);
-            },
-            getNhaCungCapForNvByCode: function (code) {
-                return $http.get(rootUrl + '/api/Md/Supplier/GetForNvByCode/' + code);
-            },
-            getUnitUsers: function (callback) {
-                $http.get(rootUrl + '/api/Md/UnitUser/GetSelectAll').success(callback);
-            },
-            dowloadTemplateExcel: function (filename) {
-                $http({
-                    url: serviceUrl + '/TemplateExcel_CK_HangHoa',
-                    method: "POST",
-                    data: null, //this is your json data string
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    responseType: 'arraybuffer'
-                }).success(function (data, status, headers, config) {
-                    var a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    var blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-                    var objectUrl = URL.createObjectURL(blob);
-                    a.href = objectUrl;
-                    a.download = filename + ".xlsx";
-                    a.click();
-                    // window.URL.revokeObjectURL(objectUrl);
-                }).error(function (data, status, headers, config) {
-                    //upload failed
-                });
-
-                //$http.post(serviceUrl + '/WriteDataToExcel', data).success(callback);
             }
-        };
-        return result;
-    }
+
+            var result = {
+                robot: calc,
+                setParameterPrint: function (data) {
+                    parameterPrint = data;
+                },
+                getParameterPrint: function () {
+                    return parameterPrint;
+                },
+                getAllData: function () {
+                    return $http.post(serviceUrl + '/GetAllData');
+                },
+                post: function (data) {
+                    return $http.post(serviceUrl + '/Post', data);
+                },
+                postQuery: function (data) {
+                    return $http.post(serviceUrl + '/PostQuery', data);
+                },
+                postSelectData: function (data, callback) {
+                    $http.post(serviceUrl + '/PostSelectData', data).success(callback);
+                },
+                postPrint: function (callback) {
+                    $http.post(serviceUrl + '/PostPrint', getParameterPrint()).success(callback);
+                },
+                postPrintDetail: function (callback) {
+                    $http.post(serviceUrl + '/PostPrintDetail', getParameterPrint()).success(callback);
+                },
+                getNewInstance: function (callback) {
+                    $http.get(serviceUrl + '/GetNewInstance').success(callback);
+                },
+                getDetails: function (id) {
+                    return $http.get(serviceUrl + '/GetDetails/' + id);
+                },
+                update: function (params) {
+                    return $http.put(serviceUrl + '/' + params.id, params);
+                },
+                approval: function (params, callback) {
+                    return $http.post(serviceUrl + '/PostApproval/' + params.id).success(callback);
+                },
+                unapprove: function (params, callback) {
+                    return $http.post(serviceUrl + '/PostUnApprove/' + params.id).success(callback);
+                },
+                getMerchandiseForNvByCode: function (code, callback) {
+                    return $http.get(rootUrl + '/api/Md/Merchandise/GetForNvByCode/' + code).success(callback);
+                },
+                getMerchandiseTypeForNvByCode: function (code) {
+                    return $http.get(rootUrl + '/api/Md/MerchandiseType/GetForNvByCode/' + code);
+                },
+                getMerchandiseGroupForNvByCode: function (code) {
+                    return $http.get(rootUrl + '/api/Md/NhomVatTu/GetForNvByCode/' + code);
+                },
+                getNhaCungCapForNvByCode: function (code) {
+                    return $http.get(rootUrl + '/api/Md/Supplier/GetForNvByCode/' + code);
+                },
+                getUnitUsers: function (callback) {
+                    $http.get(rootUrl + '/api/Md/UnitUser/GetSelectAll').success(callback);
+                },
+                dowloadTemplateExcel: function (filename) {
+                    $http({
+                        url: serviceUrl + '/TemplateExcel_CK_HangHoa',
+                        method: "POST",
+                        data: null, //this is your json data string
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        responseType: 'arraybuffer'
+                    }).success(function (data, status, headers, config) {
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.style = "display: none";
+                        var blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+                        var objectUrl = URL.createObjectURL(blob);
+                        a.href = objectUrl;
+                        a.download = filename + ".xlsx";
+                        a.click();
+                        // window.URL.revokeObjectURL(objectUrl);
+                    }).error(function (data, status, headers, config) {
+                        //upload failed
+                    });
+
+                    //$http.post(serviceUrl + '/WriteDataToExcel', data).success(callback);
+                }
+            };
+            return result;
+        }
     ]);
     app.controller('kmTichDiemController', [
         '$scope', '$rootScope', '$location', '$window', '$uibModal', '$log', '$state', '$filter', '$http',
-		'kmTichDiemService', 'configService', 'ngNotify', 'tempDataService', 'wareHouseService', 'khuyenMaiService',
+        'kmTichDiemService', 'configService', 'ngNotify', 'tempDataService', 'wareHouseService', 'khuyenMaiService',
         function ($scope, $rootScope, $location, $window, $uibModal, $log, $state, $filter, $http,
-        kmTichDiemService, configService, ngNotify, tempDataService, serviceWareHouse, khuyenMaiService) {
+            kmTichDiemService, configService, ngNotify, tempDataService, serviceWareHouse, khuyenMaiService) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.robot = angular.copy(kmTichDiemService.robot);
@@ -296,72 +296,72 @@
             }
         }]);
     app.controller('kmTichDiemDetailsController', [
-    '$scope', '$uibModalInstance', '$rootScope', '$location', '$window', '$uibModal', '$log', '$state', '$filter', '$http',
-     'kmTichDiemService', 'targetData', 'configService', 'tempDataService', 'hangKhService',
-    function ($scope, $uibModalInstance, $rootScope, $location, $window, $uibModal, $log, $state, $filter, $http,
-        kmTichDiemService, targetData, configService, tempDataService, serviceHangKh) {
-        $scope.paged = angular.copy(configService.pageDefault);
-        $scope.targetData = angular.copy(targetData);
-        $scope.config = angular.copy(configService);
-        $scope.target = targetData;
-        $scope.tempData = tempDataService.tempData;
-        $scope.title = function () {
-            return 'Chương trình khuyến mại: Tích điểm';
-        };
-        function loadSupplier() {
-            if (!tempDataService.tempData('hangKhs')) {
-                serviceHangKh.getAll_HangKh().then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
-                        tempDataService.putTempData('hangKhs', successRes.data.data);
-                        $scope.hangKhs = successRes.data.data;
-                    } else {
-                        console.log('successRes', successRes);
-                    }
-                }, function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
-            } else {
-                $scope.hangKhs = tempDataService.tempData('hangKhs');
-            }
-        }
-        loadSupplier();
-        function fillterData() {
-            $scope.isLoading = true;
-            console.log('$scope.target', $scope.target);
-            kmTichDiemService.getDetails($scope.target.id).then(function (response) {
-                if (response.status) {
-                    $scope.target = response.data.data;
-                    $scope.wareHouseCodes = $scope.target.maKhoXuatKhuyenMai;
-                    $scope.target.tuNgay = new Date($scope.target.tuNgay);
-                    $scope.target.denNgay = new Date($scope.target.denNgay);
+        '$scope', '$uibModalInstance', '$rootScope', '$location', '$window', '$uibModal', '$log', '$state', '$filter', '$http',
+        'kmTichDiemService', 'targetData', 'configService', 'tempDataService', 'hangKhService',
+        function ($scope, $uibModalInstance, $rootScope, $location, $window, $uibModal, $log, $state, $filter, $http,
+            kmTichDiemService, targetData, configService, tempDataService, serviceHangKh) {
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.targetData = angular.copy(targetData);
+            $scope.config = angular.copy(configService);
+            $scope.target = targetData;
+            $scope.tempData = tempDataService.tempData;
+            $scope.title = function () {
+                return 'Chương trình khuyến mại: Tích điểm';
+            };
+            function loadSupplier() {
+                if (!tempDataService.tempData('hangKhs')) {
+                    serviceHangKh.getAll_HangKh().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
+                            tempDataService.putTempData('hangKhs', successRes.data.data);
+                            $scope.hangKhs = successRes.data.data;
+                        } else {
+                            console.log('successRes', successRes);
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.hangKhs = tempDataService.tempData('hangKhs');
                 }
+            }
+            loadSupplier();
+            function fillterData() {
+                $scope.isLoading = true;
                 console.log('$scope.target', $scope.target);
-                $scope.isLoading = false;
-                $scope.pageChanged();
-            });
-        }
-        fillterData();
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-        $scope.pageChanged = function () {
-            var currentPage = $scope.paged.currentPage;
-            var itemsPerPage = $scope.paged.itemsPerPage;
-            if ($scope.target.dataDetails) {
-                $scope.paged.totalItems = $scope.target.dataDetails.length;
-                $scope.data = [];
-                for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
-                    $scope.data.push($scope.target.dataDetails[i])
+                kmTichDiemService.getDetails($scope.target.id).then(function (response) {
+                    if (response.status) {
+                        $scope.target = response.data.data;
+                        $scope.wareHouseCodes = $scope.target.maKhoXuatKhuyenMai;
+                        $scope.target.tuNgay = new Date($scope.target.tuNgay);
+                        $scope.target.denNgay = new Date($scope.target.denNgay);
+                    }
+                    console.log('$scope.target', $scope.target);
+                    $scope.isLoading = false;
+                    $scope.pageChanged();
+                });
+            }
+            fillterData();
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+            $scope.pageChanged = function () {
+                var currentPage = $scope.paged.currentPage;
+                var itemsPerPage = $scope.paged.itemsPerPage;
+                if ($scope.target.dataDetails) {
+                    $scope.paged.totalItems = $scope.target.dataDetails.length;
+                    $scope.data = [];
+                    for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
+                        $scope.data.push($scope.target.dataDetails[i])
+                    }
                 }
             }
         }
-    }
     ]);
     app.controller('kmTichDiemEditController', [
         '$scope', '$uibModal', '$uibModalInstance', '$filter', '$state', '$log',
-         'kmTichDiemService', 'tempDataService', 'configService', 'targetData', 'wareHouseService', 'ngNotify', 'hangKhService',
+        'kmTichDiemService', 'tempDataService', 'configService', 'targetData', 'wareHouseService', 'ngNotify', 'hangKhService',
         function ($scope, $uibModal, $uibModalInstance, $filter, $state, $log,
-             kmTichDiemService, tempDataService, configService, targetData, serviceWareHouse, ngNotify, serviceHangKh) {
+            kmTichDiemService, tempDataService, configService, targetData, serviceWareHouse, ngNotify, serviceHangKh) {
             $scope.robot = angular.copy(kmTichDiemService.robot);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.config = angular.copy(configService);
@@ -396,6 +396,7 @@
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -502,7 +503,7 @@
     ]);
     app.controller('kmTichDiemCreateController', [
         '$scope', '$uibModal', '$uibModalInstance', 'ngNotify', '$filter', '$state', '$log',
-         'kmTichDiemService', 'tempDataService', 'configService', 'wareHouseService', 'FileUploader', 'userService', 'merchandiseService', 'hangKhService',
+        'kmTichDiemService', 'tempDataService', 'configService', 'wareHouseService', 'FileUploader', 'userService', 'merchandiseService', 'hangKhService',
         function ($scope, $uibModal, $uibModalInstance, ngNotify, $filter, $state, $log,
             kmTichDiemService, tempDataService, configService, serviceWareHouse, FileUploader, serviceAuthUser, serviceMerchandise, serviceHangKh) {
             $scope.robot = angular.copy(kmTichDiemService.robot);
@@ -544,6 +545,7 @@
                 serviceWareHouse.clearSelectData();
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {

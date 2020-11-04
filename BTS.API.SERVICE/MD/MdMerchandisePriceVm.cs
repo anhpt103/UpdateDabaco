@@ -3,11 +3,7 @@ using BTS.API.SERVICE.BuildQuery;
 using BTS.API.SERVICE.BuildQuery.Query.Types;
 using BTS.API.SERVICE.Helper;
 using BTS.API.SERVICE.Services;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BTS.API.SERVICE.MD
 {
@@ -17,7 +13,7 @@ namespace BTS.API.SERVICE.MD
         {
             public string MaVatTu { get; set; }
             public string MaDonVi { get; set; }
-           
+
 
             public string DefaultOrder
             {
@@ -50,7 +46,7 @@ namespace BTS.API.SERVICE.MD
                         Method = FilterMethod.Like
                     });
                 }
-              
+
 
 
                 return result;

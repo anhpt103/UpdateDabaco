@@ -14,10 +14,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         var rootUrl = configService.apiServiceBaseUri;
         this.parameterPrint = {};
         var calc = {
-            sum: function(obj, name) {
+            sum: function (obj, name) {
                 var total = 0;
                 if (obj && obj.length > 0) {
-                    angular.forEach(obj, function(v, k) {
+                    angular.forEach(obj, function (v, k) {
                         var increase = v[name];
                         if (!increase) {
                             increase = 0;
@@ -101,7 +101,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             loadAccessList();
             //end
 
-            $scope.pageChanged = function() {
+            $scope.pageChanged = function () {
                 var currentPage = $scope.paged.currentPage;
                 var itemsPerPage = $scope.paged.itemsPerPage;
                 $scope.paged.totalItems = $scope.customerCollection.length;
@@ -112,9 +112,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 }
             };
-            $scope.doSearch = function() {
+            $scope.doSearch = function () {
                 $scope.isLoading = true;
-                service.postCustomerLevelUp($scope.target, function(response) {
+                service.postCustomerLevelUp($scope.target, function (response) {
                     if (response.status) {
                         $scope.customerCollection = response.data;
                         $scope.isLoading = false;
@@ -131,13 +131,13 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     return paraValue;
                 }
             };
-            $scope.report = function() {
+            $scope.report = function () {
                 $state.go('customerLevelUpReport', { obj: $scope.target });
             };
-            $scope.takeCareOf = function(item) {
+            $scope.takeCareOf = function (item) {
                 if (item) {
                     service.takeCareOfCustomer(item).then(
-                        function(response) {
+                        function (response) {
                             if (response.status && response.status == 200) {
                                 if (response.data.status) {
                                     $scope.doSearch();
@@ -150,7 +150,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                                 ngNotify.set(response.errorMessage, { duration: 3000, type: 'error' });
                             }
                         },
-                        function(response) {
+                        function (response) {
                             console.log('ERROR: Update failed! ' + response);
                         });
                 }
@@ -314,6 +314,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {

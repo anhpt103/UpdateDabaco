@@ -246,9 +246,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.create = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/BoHang', 'add'),
                     controller: 'boHangCreateController',
-                    size: 'lg',
                     resolve: {}
                 });
                 modalInstance.result.then(function (updatedData) {
@@ -262,9 +262,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.update = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/BoHang', 'update'),
                     controller: 'boHangEditController',
-                    windowClass: 'app-modal-window',
                     resolve: {
                         targetData: function () {
                             return target;
@@ -282,9 +282,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.details = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/BoHang', 'details'),
                     controller: 'boHangDetailsController',
-                    windowClass: 'app-modal-window',
                     resolve: {
                         targetData: function () {
                             return target;
@@ -543,6 +543,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $uibModalInstance.close();
             };
         }]);
+
     /* controller Edit */
     app.controller('boHangEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'boHangService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'merchandiseService', 'toaster', 'userService',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, serviceMerchandise, toaster, serviceAuthUser) {
@@ -578,6 +579,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             function filterData() {
                 $scope.isLoading = true;
                 service.getDetails($scope.target.id).then(function (resgetDetails) {
+                    console.log(resgetDetails);
                     if (resgetDetails && resgetDetails.status == 200 && resgetDetails.data) {
                         $scope.target = resgetDetails.data;
                         $scope.target.ngayCT = new Date($scope.target.ngayCT);

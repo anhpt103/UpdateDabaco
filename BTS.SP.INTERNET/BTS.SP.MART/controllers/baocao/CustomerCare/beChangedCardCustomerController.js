@@ -14,10 +14,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         var rootUrl = configService.apiServiceBaseUri;
         this.parameterPrint = {};
         var calc = {
-            sum: function(obj, name) {
+            sum: function (obj, name) {
                 var total = 0;
                 if (obj && obj.length > 0) {
-                    angular.forEach(obj, function(v, k) {
+                    angular.forEach(obj, function (v, k) {
                         var increase = v[name];
                         if (!increase) {
                             increase = 0;
@@ -44,7 +44,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     }]);
     /* controller list */
     app.controller('beChangedCardCustomerController', [
-        '$scope', '$location', '$http', 'configService', 'beChangedCardCustomerService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService','$state',
+        '$scope', '$location', '$http', 'configService', 'beChangedCardCustomerService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', '$state',
         function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, $state) {
             //end check
             $scope.config = angular.copy(configService);
@@ -97,7 +97,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             loadAccessList();
             //end
             //load danh muc
-            $scope.displayHepler = function(paraValue, moduleName) {
+            $scope.displayHepler = function (paraValue, moduleName) {
                 var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
                 if (data && data.length === 1) {
                     return data[0].text;
@@ -271,6 +271,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -390,36 +391,36 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             }
             $scope.$watch('filtered.advanceData.tagMerchandises', function (newValue, oldValue) {
                 if ($scope.filtered.advanceData.tagMerchandises) {
-                    var values = $scope.filtered.advanceData.tagMerchandises.map(function(element) {
+                    var values = $scope.filtered.advanceData.tagMerchandises.map(function (element) {
                         return element.value;
                     });
                     $scope.filtered.advanceData.merchandiseCodes = values.join();
                 }
             }, true);
             //filter Nhóm hàng
-            $scope.selectMerchandiseGroup = function() {
+            $scope.selectMerchandiseGroup = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     size: 'md',
                     templateUrl: configService.buildUrl('htdm/NhomVatTu', 'selectData'),
                     controller: 'nhomVatTuSelectDataController',
                     resolve: {
-                        serviceSelectData: function() {
+                        serviceSelectData: function () {
                             return serviceNhomVatTu;
                         },
-                        filterObject: function() {
+                        filterObject: function () {
                             return {
 
                             }
                         }
                     }
                 });
-                modalInstance.result.then(function(updatedData) {
-                }, function() {
+                modalInstance.result.then(function (updatedData) {
+                }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
                 });
             };
-            $scope.changewareHouseCodes = function(inputwareHouse) {
+            $scope.changewareHouseCodes = function (inputwareHouse) {
                 if (typeof inputwareHouse != 'undefined' && inputwareHouse !== '') {
                     serviceWareHouse.filterWareHouse(inputwareHouse, function (response) {
                         if (response) {
@@ -435,14 +436,14 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }]);
 
     /* controller reportBeChangedCardCustomerController */
-    app.controller('reportBeChangedCardCustomerController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'beChangedCardCustomerService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', '$rootScope', 'userService','merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', 'periodService','$state',
+    app.controller('reportBeChangedCardCustomerController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'beChangedCardCustomerService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', '$rootScope', 'userService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', 'periodService', '$state',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, $rootScope, serviceAuthUser, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, servicePeriod, $state) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             $scope.tempData = tempDataService.tempData;
             var para = $state.params.obj;
             $scope.robot = angular.copy(service.robot);
             $scope.target = [];
-            $scope.goIndex = function() {
+            $scope.goIndex = function () {
                 $state.go('beChangedCardCustomer');
             };
             if (para) {
@@ -452,7 +453,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 });
             }
-            $scope.print = function() {
+            $scope.print = function () {
                 var table = document.getElementById('main-report').innerHTML;
                 var myWindow = $window.open('', '', 'width=800, height=600');
                 myWindow.document.write(table);

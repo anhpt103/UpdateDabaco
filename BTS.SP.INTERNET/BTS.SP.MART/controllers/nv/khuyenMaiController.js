@@ -1,6 +1,5 @@
 ﻿define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS.SP.MART/controllers/htdm/periodController.js', '/BTS.SP.MART/controllers/htdm/merchandiseController.js', '/BTS.SP.MART/controllers/htdm/customerController.js', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController.js', '/BTS.SP.MART/controllers/htdm/nhomVatTuController.js', '/BTS.SP.MART/controllers/htdm/supplierController.js', '/BTS.SP.MART/controllers/htdm/wareHouseController.js', '/BTS.SP.MART/controllers/htdm/packagingController.js', '/BTS.SP.MART/controllers/htdm/taxController.js', '/BTS.SP.MART/controllers/htdm/donViTinhController.js', '/BTS.SP.MART/controllers/htdm/typeReasonController.js', '/BTS.SP.MART/controllers/auth/AuNguoiDung.js'], function () {
     'use strict';
-
     var app = angular.module('khuyenMaiModule', ['ui.bootstrap', 'authModule', 'periodModule', 'merchandiseModule', 'customerModule', 'merchandiseTypeModule', 'nhomVatTuModule', 'supplierModule', 'wareHouseModule', 'packagingModule', 'taxModule', 'donViTinhModule', 'typeReasonModule', 'AuNguoiDungModule']);
     app.factory('khuyenMaiService', [
         '$resource', '$http', '$window', 'configService',
@@ -65,8 +64,8 @@
                 postPrintDetail: function (callback) {
                     $http.post(serviceUrl + '/PostPrintDetail', getParameterPrint()).success(callback);
                 },
-                getNewInstance: function (callback) {
-                    $http.get(serviceUrl + '/GetNewInstance').success(callback);
+                getNewInstance: function () {
+                    return $http.get(serviceUrl + '/GetNewInstance');
                 },
                 getDetails: function (id) {
                     return $http.get(serviceUrl + '/GetDetails/' + id);
@@ -655,6 +654,7 @@
                 $scope.tagWareHouses = $scope.target.maKhoXuatKhuyenMai.split(',');
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -692,9 +692,6 @@
                             $scope.wareHouseCodes = '';
                             $scope.wareHouseCodes = $scope.data.maKho;
                         }
-                        else {
-                            //$scope.selectWareHouse();
-                        }
                     });
                 }
             }
@@ -715,9 +712,8 @@
                 khuyenMaiService.post(
                     JSON.stringify($scope.target), function (response) {
                         if (response.status) {
-
                             ngNotify.set("Thành công", { type: 'danger' });
-                            khuyenMaiService.getNewInstance(function (response1) {
+                            khuyenMaiService.getNewInstance().then(function (responseNewInstance) {
                                 tempData.soPhieu = expectData.soPhieu;
                                 tempData.ngay = expectData.ngay;
                                 $scope.target = tempData;
@@ -1204,6 +1200,7 @@
                 serviceWareHouse.clearSelectData();
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -1239,9 +1236,6 @@
                             $scope.data = response;
                             $scope.wareHouseCodes = '';
                             $scope.wareHouseCodes = $scope.data.maKho;
-                        }
-                        else {
-                            //$scope.selectWareHouse();
                         }
                     });
                 }
@@ -1466,8 +1460,8 @@
             }
             function filterData() {
                 $scope.isLoading = true;
-                khuyenMaiService.getNewInstance(function (response) {
-                    $scope.target = response;
+                khuyenMaiService.getNewInstance().then(function (response) {
+                    $scope.target = response.data;
                     $scope.pageChanged();
                     $scope.isLoading = false;
                 })

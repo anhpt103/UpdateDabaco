@@ -291,6 +291,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -479,11 +480,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     $scope.pageChanged();
                 });
             };
-            $scope.search = function(code) {
+            $scope.search = function (code) {
                 $scope.lst = [];
                 if ($scope.data.detailData.length > 0) {
                     if (code !== "") {
-                        angular.forEach($scope.data.detailData, function(value, index) {
+                        angular.forEach($scope.data.detailData, function (value, index) {
                             if (value.code.includes(code)) {
                                 $scope.lst.push(value);
                             }
@@ -511,10 +512,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 myWindow.document.write(table);
                 myWindow.print();
             };
-            $scope.printExcel = function() {
+            $scope.printExcel = function () {
                 service.postExportExceltanSuatMuaHangTongHop($scope.data, "BaoCaoTonTongHop");
             };
-            $scope.pageChanged = function() {
+            $scope.pageChanged = function () {
                 var currentPage = $scope.paged.currentPage;
                 var itemsPerPage = $scope.paged.itemsPerPage;
                 $scope.paged.totalItems = $scope.data.detailData.length;

@@ -134,11 +134,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     text: 'Báo cáo xuất, nhập, tồn',
                     name: 'xuatNhapTon'
                 },
-                 {
-                     value: '2',
-                     text: 'Báo cáo xuất, nhập, tồn chi tiết',
-                     name: 'xuatNhapTonChiTiet'
-                 }
+                {
+                    value: '2',
+                    text: 'Báo cáo xuất, nhập, tồn chi tiết',
+                    name: 'xuatNhapTonChiTiet'
+                }
             ];
             $scope.typeValues = [
                 {
@@ -218,9 +218,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
-                    size: 'md',
                     resolve: {
                         serviceSelectData: function () {
                             return serviceWareHouse;

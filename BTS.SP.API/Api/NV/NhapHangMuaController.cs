@@ -481,16 +481,16 @@ namespace BTS.SP.API.Api.NV
                 response.Content = new StreamContent(streamData);
                 switch (para.Option)
                 {
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.nhaCungCap:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.nhaCungCap:
                         response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "XuatNhapTonTongTheoNhaCungCap.xlsx" };
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.loaiHang:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.loaiHang:
                         response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "XuatNhapTonTongTheoLoaiHang.xlsx" };
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.nhomHang:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.nhomHang:
                         response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "XuatNhapTonTongTheoNhomHang.xlsx" };
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.hangHoa:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.hangHoa:
                         response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "XuatNhapTonTongTheoHangHoa.xlsx" };
                         break;
 
@@ -991,23 +991,23 @@ namespace BTS.SP.API.Api.NV
                 response.Content = new StreamContent(streamData);
                 switch (para.Option)
                 {
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.nhaCungCap:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.nhaCungCap:
                         filename = filename + "TheoNhaCungCap";
                         //response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "NhapMuaChiTietTheoNhaCungCap.xlsx" };
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.loaiHang:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.loaiHang:
                         filename = filename + "TheoLoaiHang";
                         //response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "NhapMuaChiTietTheoLoaiHang.xlsx" };
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.nhomHang:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.nhomHang:
                         filename = filename + "TheoNhomHang";
                         //response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "NhapMuaChiTietTheoNhomHang.xlsx" };
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.hangHoa:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.hangHoa:
                         filename = filename + "TheoHangHoa";
                         //response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "NhapMuaChiTietTheoHangHoa.xlsx" };
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.phieu:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.phieu:
                         filename = filename + "TheoPhieu";
                         //response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "NhapMuaChiTietTheoHangHoa.xlsx" };
                         break;
@@ -1029,11 +1029,11 @@ namespace BTS.SP.API.Api.NV
         [Route("PostReportNhapMua")]
         public async Task<IHttpActionResult> PostReportNhapMua(NvNhapHangMuaVm.ParameterNMua para)
         {
-            var result = new TransferObj<BTS.API.SERVICE.NV.NvNhapHangMuaVm.ObjectReportNMUA>();
+            var result = new TransferObj<NvNhapHangMuaVm.ObjectReportNMUA>();
             try
             {
-                var reporter = new BTS.API.SERVICE.NV.NvNhapHangMuaVm.ObjectReportNMUA();
-                var data = new List<BTS.API.SERVICE.NV.NvNhapHangMuaVm.ObjectReportCon>();
+                var reporter = new NvNhapHangMuaVm.ObjectReportNMUA();
+                var data = new List<NvNhapHangMuaVm.ObjectReportCon>();
                 reporter.UnitCode = _servicePeriod.GetCurrentUnitCode();
                 var unitCode = _servicePeriod.GetCurrentUnitCode();
                 reporter.CreateDateNow();
@@ -1070,7 +1070,7 @@ namespace BTS.SP.API.Api.NV
                 }
                 switch (para.Option)
                 {
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.nhaCungCap:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.nhaCungCap:
                         //data = _service.CreateReportInventoryByMerchandiseByNCC(para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         data = _service.CreateReportInventoryByTongHop(para.LoaiChungTu, InventoryGroupBy.MAKHACHHANG.ToString(), para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         reporter.DetailData = data.ToList();
@@ -1078,7 +1078,7 @@ namespace BTS.SP.API.Api.NV
                         reporter.MapUnitUserName(_service.UnitOfWork);
                         reporter.GroupType = "Nhà cung cấp";
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.loaiHang:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.loaiHang:
                         //data = _service.CreateReportInventoryByMerchandiseByML(para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         data = _service.CreateReportInventoryByTongHop(para.LoaiChungTu, InventoryGroupBy.MALOAIVATTU.ToString(), para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         reporter.DetailData = data.ToList();
@@ -1086,7 +1086,7 @@ namespace BTS.SP.API.Api.NV
                         reporter.MapUnitUserName(_service.UnitOfWork);
                         reporter.GroupType = "Loại hàng";
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.nhomHang:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.nhomHang:
                         //data = _service.CreateReportInventoryByMerchandiseByMG(para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         data = _service.CreateReportInventoryByTongHop(para.LoaiChungTu, InventoryGroupBy.MANHOMVATTU.ToString(), para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         reporter.DetailData = data.ToList();
@@ -1094,7 +1094,7 @@ namespace BTS.SP.API.Api.NV
                         reporter.MapUnitUserName(_service.UnitOfWork);
                         reporter.GroupType = "Nhóm hàng";
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.hangHoa:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.hangHoa:
                         //data = _service.CreateReportInventoryByMerchandiseByHang(para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         data = _service.CreateReportInventoryByTongHop(para.LoaiChungTu, InventoryGroupBy.MAVATTU.ToString(), para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         reporter.DetailData = data.ToList();
@@ -1102,7 +1102,7 @@ namespace BTS.SP.API.Api.NV
                         reporter.MapUnitUserName(_service.UnitOfWork);
                         reporter.GroupType = "Hàng hóa";
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.phieu:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.phieu:
                         //data = _service.CreateReportInventoryByMerchandiseByHang(para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         data = _service.CreateReportInventoryByTongHop(para.LoaiChungTu, InventoryGroupBy.PHIEU.ToString(), para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         reporter.DetailData = data.ToList();
@@ -1110,7 +1110,7 @@ namespace BTS.SP.API.Api.NV
                         reporter.MapUnitUserName(_service.UnitOfWork);
                         reporter.GroupType = "Phiếu";
                         break;
-                    case BTS.API.SERVICE.NV.NvNhapHangMuaVm.TypeGroupInventoryNMua.kho:
+                    case NvNhapHangMuaVm.TypeGroupInventoryNMua.kho:
                         //data = _service.CreateReportInventoryByMerchandiseByHang(para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         data = _service.CreateReportInventoryByTongHop(para.LoaiChungTu, InventoryGroupBy.MAKHO.ToString(), para.FromDate, para.ToDate, para.UnitCode, para.WareHouseCodes, para.MerchandiseTypeCodes, para.MerchandiseGroupCodes, para.MerchandiseCodes, para.NhaCungCapCodes);
                         reporter.DetailData = data.ToList();
@@ -1136,7 +1136,7 @@ namespace BTS.SP.API.Api.NV
         }
         //Excel Tong Hop
         [Route("PostExcelReportNhapMua")]
-        public HttpResponseMessage PostExcelReportNhapMua(BTS.API.SERVICE.NV.NvNhapHangMuaVm.ObjectReportNMUA para)
+        public HttpResponseMessage PostExcelReportNhapMua(NvNhapHangMuaVm.ObjectReportNMUA para)
         {
             HttpResponseMessage response = Request.CreateResponse();
             try
@@ -1234,6 +1234,7 @@ namespace BTS.SP.API.Api.NV
             }
             return Ok(reporter);
         }
+
         [Route("PostExportExcelDCNChiTiet")]
         public HttpResponseMessage PostExportExcelDCNChiTiet(NvNhapHangMuaVm.ParameterNMua para)
         {
@@ -1896,7 +1897,7 @@ namespace BTS.SP.API.Api.NV
                 string unitcode = _service.GetCurrentUnitCode();
                 foreach (NvNhapHangMuaVm.DtoDetail dt in temp.DataDetails)
                 {
-                    MdMerchandisePrice sp = _service.UnitOfWork.Repository<MdMerchandisePrice>().DbSet.Where(x => x.MaVatTu.Equals(dt.MaHang) && x.MaDonVi.Equals(unitcode)).FirstOrDefault();
+                    MdMerchandisePrice sp = _service.UnitOfWork.Repository<MdMerchandisePrice>().DbSet.FirstOrDefault(x => x.MaVatTu.Equals(dt.MaHang) && x.MaDonVi.Equals(unitcode));
                     MdMerchandise item = _service.UnitOfWork.Repository<MdMerchandise>().DbSet.FirstOrDefault(x => x.MaVatTu.Equals(dt.MaHang) && x.UnitCode.StartsWith(_ParentUnitCode));
 
                     if (sp != null)
@@ -1914,6 +1915,7 @@ namespace BTS.SP.API.Api.NV
             }
             return NotFound();
         }
+
         [Route("GetNewParameter")]
         public async Task<IHttpActionResult> GetNewParameter()
         {

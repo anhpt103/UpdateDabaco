@@ -3,134 +3,134 @@
 
     var app = angular.module('kmTinhTienModule', ['ui.bootstrap', 'authModule', 'periodModule', 'merchandiseModule', 'customerModule', 'merchandiseTypeModule', 'nhomVatTuModule', 'supplierModule', 'wareHouseModule', 'packagingModule', 'taxModule', 'donViTinhModule', 'typeReasonModule', 'AuNguoiDungModule', 'khuyenMaiModule']);
     app.factory('kmTinhTienService', [
-    '$resource', '$http', '$window', 'configService',
-    function ($resource, $http, $window, configService) {
-        var rootUrl = configService.apiServiceBaseUri;
-        var serviceUrl = rootUrl + '/api/Nv/KhuyenMaiTinhTien';
-        var calc = {
-            sum: function (obj, name) {
-                var total = 0
-                if (obj && obj.length > 0) {
-                    angular.forEach(obj, function (v, k) {
-                        var increase = v[name];
-                        if (!increase) {
-                            increase = 0;
-                        }
-                        total += increase;
+        '$resource', '$http', '$window', 'configService',
+        function ($resource, $http, $window, configService) {
+            var rootUrl = configService.apiServiceBaseUri;
+            var serviceUrl = rootUrl + '/api/Nv/KhuyenMaiTinhTien';
+            var calc = {
+                sum: function (obj, name) {
+                    var total = 0
+                    if (obj && obj.length > 0) {
+                        angular.forEach(obj, function (v, k) {
+                            var increase = v[name];
+                            if (!increase) {
+                                increase = 0;
+                            }
+                            total += increase;
+                        });
+                    }
+                    return total;
+                },
+                changeTyLeKhuyenMai: function (item) {
+                    if (!item.donGia) {
+                        item.giaTriKhuyenMai = 0;
+                    }
+                    if (item.tyLeKhuyenMai < 100) {
+                        item.giaTriKhuyenMai = item.donGia - (item.donGia * item.tyLeKhuyenMai / 100);
+                    } else {
+                        item.giaTriKhuyenMai = item.donGia - item.tyLeKhuyenMai;
+                    }
+                }
+            }
+            var parameterPrint = {};
+            var selectedMerchandise = [];
+
+            function getParameterPrint() {
+                return parameterPrint;
+            }
+
+            var result = {
+                robot: calc,
+                setParameterPrint: function (data) {
+                    parameterPrint = data;
+                },
+                getParameterPrint: function () {
+                    return parameterPrint;
+                },
+                getAllData: function () {
+                    return $http.post(serviceUrl + '/GetAllData');
+                },
+                post: function (data) {
+                    return $http.post(serviceUrl + '/Post', data);
+                },
+                postQuery: function (data) {
+                    return $http.post(serviceUrl + '/PostQuery', data);
+                },
+                postSelectData: function (data, callback) {
+                    $http.post(serviceUrl + '/PostSelectData', data).success(callback);
+                },
+                postPrint: function (callback) {
+                    $http.post(serviceUrl + '/PostPrint', getParameterPrint()).success(callback);
+                },
+                postPrintDetail: function (callback) {
+                    $http.post(serviceUrl + '/PostPrintDetail', getParameterPrint()).success(callback);
+                },
+                getNewInstance: function (callback) {
+                    $http.get(serviceUrl + '/GetNewInstance').success(callback);
+                },
+                getDetails: function (id) {
+                    return $http.get(serviceUrl + '/GetDetails/' + id);
+                },
+                update: function (params) {
+                    return $http.put(serviceUrl + '/' + params.id, params);
+                },
+                approval: function (params, callback) {
+                    return $http.post(serviceUrl + '/PostApproval/' + params.id).success(callback);
+                },
+                unapprove: function (params, callback) {
+                    return $http.post(serviceUrl + '/PostUnApprove/' + params.id).success(callback);
+                },
+                getMerchandiseForNvByCode: function (code, callback) {
+                    return $http.get(rootUrl + '/api/Md/Merchandise/GetForNvByCode/' + code).success(callback);
+                },
+                getMerchandiseTypeForNvByCode: function (code) {
+                    return $http.get(rootUrl + '/api/Md/MerchandiseType/GetForNvByCode/' + code);
+                },
+                getMerchandiseGroupForNvByCode: function (code) {
+                    return $http.get(rootUrl + '/api/Md/NhomVatTu/GetForNvByCode/' + code);
+                },
+                getNhaCungCapForNvByCode: function (code) {
+                    return $http.get(rootUrl + '/api/Md/Supplier/GetForNvByCode/' + code);
+                },
+                getUnitUsers: function (callback) {
+                    $http.get(rootUrl + '/api/Md/UnitUser/GetSelectAll').success(callback);
+                },
+                getSelectMerchandise: function () {
+                    return selectedMerchandise;
+                },
+                setSelectMerchandise: function (array) {
+                    selectedMerchandise = array;
+                },
+                dowloadTemplateExcel: function (filename) {
+                    $http({
+                        url: serviceUrl + '/TemplateExcel-KhuyenMaiTinhTien',
+                        method: "POST",
+                        data: null, //this is your json data string
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        responseType: 'arraybuffer'
+                    }).success(function (data, status, headers, config) {
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.style = "display: none";
+                        var blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+                        var objectUrl = URL.createObjectURL(blob);
+                        a.href = objectUrl;
+                        a.download = filename + ".xlsx";
+                        a.click();
+                    }).error(function (data, status, headers, config) {
                     });
                 }
-                return total;
-            },
-            changeTyLeKhuyenMai: function (item) {
-                if (!item.donGia) {
-                    item.giaTriKhuyenMai = 0;
-                }
-                if (item.tyLeKhuyenMai < 100) {
-                    item.giaTriKhuyenMai = item.donGia - (item.donGia * item.tyLeKhuyenMai / 100);
-                } else {
-                    item.giaTriKhuyenMai = item.donGia - item.tyLeKhuyenMai;
-                }
-            }
+            };
+            return result;
         }
-        var parameterPrint = {};
-        var selectedMerchandise = [];
-
-        function getParameterPrint() {
-            return parameterPrint;
-        }
-
-        var result = {
-            robot: calc,
-            setParameterPrint: function (data) {
-                parameterPrint = data;
-            },
-            getParameterPrint: function () {
-                return parameterPrint;
-            },
-            getAllData: function () {
-                return $http.post(serviceUrl + '/GetAllData');
-            },
-            post: function (data) {
-                return $http.post(serviceUrl + '/Post', data);
-            },
-            postQuery: function (data) {
-                return $http.post(serviceUrl + '/PostQuery', data);
-            },
-            postSelectData: function (data, callback) {
-                $http.post(serviceUrl + '/PostSelectData', data).success(callback);
-            },
-            postPrint: function (callback) {
-                $http.post(serviceUrl + '/PostPrint', getParameterPrint()).success(callback);
-            },
-            postPrintDetail: function (callback) {
-                $http.post(serviceUrl + '/PostPrintDetail', getParameterPrint()).success(callback);
-            },
-            getNewInstance: function (callback) {
-                $http.get(serviceUrl + '/GetNewInstance').success(callback);
-            },
-            getDetails: function (id) {
-                return $http.get(serviceUrl + '/GetDetails/' + id);
-            },
-            update: function (params) {
-                return $http.put(serviceUrl + '/' + params.id, params);
-            },
-            approval: function (params, callback) {
-                return $http.post(serviceUrl + '/PostApproval/' + params.id).success(callback);
-            },
-            unapprove: function (params, callback) {
-                return $http.post(serviceUrl + '/PostUnApprove/' + params.id).success(callback);
-            },
-            getMerchandiseForNvByCode: function (code, callback) {
-                return $http.get(rootUrl + '/api/Md/Merchandise/GetForNvByCode/' + code).success(callback);
-            },
-            getMerchandiseTypeForNvByCode: function (code) {
-                return $http.get(rootUrl + '/api/Md/MerchandiseType/GetForNvByCode/' + code);
-            },
-            getMerchandiseGroupForNvByCode: function (code) {
-                return $http.get(rootUrl + '/api/Md/NhomVatTu/GetForNvByCode/' + code);
-            },
-            getNhaCungCapForNvByCode: function (code) {
-                return $http.get(rootUrl + '/api/Md/Supplier/GetForNvByCode/' + code);
-            },
-            getUnitUsers: function (callback) {
-                $http.get(rootUrl + '/api/Md/UnitUser/GetSelectAll').success(callback);
-            },
-            getSelectMerchandise: function () {
-                return selectedMerchandise;
-            },
-            setSelectMerchandise: function (array) {
-                selectedMerchandise = array;
-            },
-            dowloadTemplateExcel: function (filename) {
-                $http({
-                    url: serviceUrl + '/TemplateExcel-KhuyenMaiTinhTien',
-                    method: "POST",
-                    data: null, //this is your json data string
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    responseType: 'arraybuffer'
-                }).success(function (data, status, headers, config) {
-                    var a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    var blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-                    var objectUrl = URL.createObjectURL(blob);
-                    a.href = objectUrl;
-                    a.download = filename + ".xlsx";
-                    a.click();
-                }).error(function (data, status, headers, config) {
-                });
-            }
-        };
-        return result;
-    }
     ]);
     app.controller('kmTinhTienController', [
         '$scope', '$rootScope', '$location', '$window', '$uibModal', '$log', '$state', '$filter', '$http',
-		'kmTinhTienService', 'configService', 'ngNotify', 'tempDataService', 'wareHouseService', 'khuyenMaiService',
+        'kmTinhTienService', 'configService', 'ngNotify', 'tempDataService', 'wareHouseService', 'khuyenMaiService',
         function ($scope, $rootScope, $location, $window, $uibModal, $log, $state, $filter, $http,
-        kmTinhTienService, configService, ngNotify, tempDataService, serviceWareHouse, khuyenMaiService) {
+            kmTinhTienService, configService, ngNotify, tempDataService, serviceWareHouse, khuyenMaiService) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.robot = angular.copy(kmTinhTienService.robot);
@@ -296,55 +296,55 @@
             }
         }]);
     app.controller('kmTinhTienDetailsController', [
-    '$scope', '$uibModalInstance', '$rootScope', '$location', '$window', '$uibModal', '$log', '$state', '$filter', '$http',
-     'kmTinhTienService', 'targetData', 'configService', 'tempDataService',
-    function ($scope, $uibModalInstance, $rootScope, $location, $window, $uibModal, $log, $state, $filter, $http,
-        kmTinhTienService, targetData, configService, tempDataService) {
-        $scope.paged = angular.copy(configService.pageDefault);
-        $scope.targetData = angular.copy(targetData);
-        $scope.config = angular.copy(configService);
-        $scope.target = targetData;
-        $scope.tempData = tempDataService.tempData;
-        $scope.title = function () {
-            return 'Chương trình khuyến mại: Tịnh tiến';
-        };
+        '$scope', '$uibModalInstance', '$rootScope', '$location', '$window', '$uibModal', '$log', '$state', '$filter', '$http',
+        'kmTinhTienService', 'targetData', 'configService', 'tempDataService',
+        function ($scope, $uibModalInstance, $rootScope, $location, $window, $uibModal, $log, $state, $filter, $http,
+            kmTinhTienService, targetData, configService, tempDataService) {
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.targetData = angular.copy(targetData);
+            $scope.config = angular.copy(configService);
+            $scope.target = targetData;
+            $scope.tempData = tempDataService.tempData;
+            $scope.title = function () {
+                return 'Chương trình khuyến mại: Tịnh tiến';
+            };
 
-        function fillterData() {
-            $scope.isLoading = true;
-            kmTinhTienService.getDetails($scope.target.id).then(function (response) {
-                if (response.status) {
-                    $scope.target = response.data.data;
-                    $scope.wareHouseCodes = $scope.target.maKhoXuatKhuyenMai;
-                    $scope.target.tuNgay = new Date($scope.target.tuNgay);
-                    $scope.target.denNgay = new Date($scope.target.denNgay);
-                }
-                $scope.isLoading = false;
-                $scope.pageChanged();
-            });
-        }
-        fillterData();
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-        $scope.pageChanged = function () {
-            var currentPage = $scope.paged.currentPage;
-            var itemsPerPage = $scope.paged.itemsPerPage;
-            if ($scope.target.dataDetails) {
-                $scope.paged.totalItems = $scope.target.dataDetails.length;
-                $scope.data = [];
-                for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
-                    $scope.data.push($scope.target.dataDetails[i])
-                }
+            function fillterData() {
+                $scope.isLoading = true;
+                kmTinhTienService.getDetails($scope.target.id).then(function (response) {
+                    if (response.status) {
+                        $scope.target = response.data.data;
+                        $scope.wareHouseCodes = $scope.target.maKhoXuatKhuyenMai;
+                        $scope.target.tuNgay = new Date($scope.target.tuNgay);
+                        $scope.target.denNgay = new Date($scope.target.denNgay);
+                    }
+                    $scope.isLoading = false;
+                    $scope.pageChanged();
+                });
             }
-            kmTinhTienService.setSelectMerchandise($scope.data);
+            fillterData();
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+            $scope.pageChanged = function () {
+                var currentPage = $scope.paged.currentPage;
+                var itemsPerPage = $scope.paged.itemsPerPage;
+                if ($scope.target.dataDetails) {
+                    $scope.paged.totalItems = $scope.target.dataDetails.length;
+                    $scope.data = [];
+                    for (var i = (currentPage - 1) * itemsPerPage; i < currentPage * itemsPerPage && i < $scope.target.dataDetails.length; i++) {
+                        $scope.data.push($scope.target.dataDetails[i])
+                    }
+                }
+                kmTinhTienService.setSelectMerchandise($scope.data);
+            }
         }
-    }
     ]);
     app.controller('kmTinhTienEditController', [
         '$scope', '$uibModal', '$uibModalInstance', '$filter', '$state', '$log',
-         'kmTinhTienService', 'tempDataService', 'configService', 'targetData', 'wareHouseService', 'ngNotify', 'merchandiseService',
+        'kmTinhTienService', 'tempDataService', 'configService', 'targetData', 'wareHouseService', 'ngNotify', 'merchandiseService',
         function ($scope, $uibModal, $uibModalInstance, $filter, $state, $log,
-             kmTinhTienService, tempDataService, configService, targetData, serviceWareHouse, ngNotify, serviceMerchandise) {
+            kmTinhTienService, tempDataService, configService, targetData, serviceWareHouse, ngNotify, serviceMerchandise) {
             $scope.robot = angular.copy(kmTinhTienService.robot);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.config = angular.copy(configService);
@@ -380,6 +380,7 @@
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {
@@ -539,7 +540,7 @@
     ]);
     app.controller('kmTinhTienCreateController', [
         '$scope', '$uibModal', '$uibModalInstance', 'ngNotify', '$filter', '$state', '$log',
-         'kmTinhTienService', 'tempDataService', 'configService', 'wareHouseService', 'FileUploader', 'userService', 'merchandiseService',
+        'kmTinhTienService', 'tempDataService', 'configService', 'wareHouseService', 'FileUploader', 'userService', 'merchandiseService',
         function ($scope, $uibModal, $uibModalInstance, ngNotify, $filter, $state, $log,
             kmTinhTienService, tempDataService, configService, serviceWareHouse, FileUploader, serviceAuthUser, serviceMerchandise) {
             $scope.robot = angular.copy(kmTinhTienService.robot);
@@ -603,6 +604,7 @@
                 serviceWareHouse.clearSelectData();
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {

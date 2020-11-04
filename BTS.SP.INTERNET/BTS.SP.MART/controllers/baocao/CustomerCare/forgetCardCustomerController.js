@@ -14,10 +14,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         var rootUrl = configService.apiServiceBaseUri;
         this.parameterPrint = {};
         var calc = {
-            sum: function(obj, name) {
+            sum: function (obj, name) {
                 var total = 0;
                 if (obj && obj.length > 0) {
-                    angular.forEach(obj, function(v, k) {
+                    angular.forEach(obj, function (v, k) {
                         var increase = v[name];
                         if (!increase) {
                             increase = 0;
@@ -292,6 +292,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectWareHouse = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/WareHouse', 'selectData'),
                     controller: 'wareHouseSelectDataController',
                     resolve: {

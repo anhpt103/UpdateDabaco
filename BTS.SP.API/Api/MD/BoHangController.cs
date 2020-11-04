@@ -1,30 +1,25 @@
 ﻿using AutoMapper;
 using BTS.API.ENTITY.Md;
+using BTS.API.SERVICE.Authorize.Utils;
 using BTS.API.SERVICE.BuildQuery;
+using BTS.API.SERVICE.BuildQuery.Query.Types;
 using BTS.API.SERVICE.Helper;
 using BTS.API.SERVICE.MD;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.IO;
-using System.Web.Hosting;
-using OfficeOpenXml;
-using System.Globalization;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Web;
-using BTS.API.SERVICE.BuildQuery.Query.Types;
-using BTS.API.SERVICE.NV;
-using BTS.SP.API.Utils;
-using OfficeOpenXml.Style;
-using BTS.API.SERVICE.Authorize.Utils;
 
 namespace BTS.SP.API.Api.MD
 {
@@ -113,7 +108,7 @@ namespace BTS.SP.API.Api.MD
             var result = new TransferObj<MdBoHang>();
             try
             {
-                
+
                 var item = _service.InsertDto(instance);
                 _service.SaveCode();
                 _service.UnitOfWork.Save();
@@ -133,6 +128,7 @@ namespace BTS.SP.API.Api.MD
         [Route("GetDetails/{id}")]
         public TransferObj<MdBoHangVm.Dto> GetDetails(string id)
         {
+            var unitCode = _service.GetCurrentUnitCode();
             var result = new TransferObj<MdBoHangVm.Dto>();
             var temp = new MdBoHangVm.Dto();
             var boHang = _service.FindById(id);
@@ -141,11 +137,17 @@ namespace BTS.SP.API.Api.MD
             {
                 temp = Mapper.Map<MdBoHang, MdBoHangVm.Dto>(boHang);
                 var chiTietBoHang = chitietBoHang.Where(x => x.MaBoHang == boHang.MaBoHang).ToList();
-                //foreach (var x in chitietBoHang)
-                //{
-                    
-                //}
+
                 temp.DataDetails = Mapper.Map<List<MdBoHangChiTiet>, List<MdBoHangVm.DtoDetail>>(chiTietBoHang);
+                if (temp.DataDetails.Count > 0)
+                {
+                    var merchandisePriceService = _service.UnitOfWork.Repository<MdMerchandisePrice>();
+                    foreach (var a in temp.DataDetails)
+                    {
+                        MdMerchandisePrice merchandisePrice = merchandisePriceService.DbSet.FirstOrDefault(x => x.MaVatTu.Equals(x.MaVatTu) && x.MaDonVi.Equals(unitCode));
+                        if (merchandisePrice != null) a.GiaBanLeVat = merchandisePrice.GiaBanLeVat;
+                    }
+                }
                 result.Data = temp;
                 result.Status = true;
             }
@@ -159,7 +161,7 @@ namespace BTS.SP.API.Api.MD
             code = code.ToUpper();
             var result = new TransferObj<MdBoHangVm.Dto>();
             var temp = new MdBoHangVm.Dto();
-            var boHang = _service.UnitOfWork.Repository<MdBoHang>().DbSet.FirstOrDefault(x=>x.MaBoHang == code);
+            var boHang = _service.UnitOfWork.Repository<MdBoHang>().DbSet.FirstOrDefault(x => x.MaBoHang == code);
             temp = Mapper.Map<MdBoHang, MdBoHangVm.Dto>(boHang);
             if (boHang != null)
             {
@@ -170,7 +172,7 @@ namespace BTS.SP.API.Api.MD
                 foreach (var x in chiTietBoHang)
                 {
                     tongle += (decimal)x.TongBanLe;
-                    tongbuon += (decimal) x.TongBanBuon;
+                    tongbuon += (decimal)x.TongBanBuon;
                 }
                 //temp.DataDetails = Mapper.Map<List<MdBoHangChiTiet>, List<MdBoHangVm.DtoDetail>>(chiTietBoHang);
                 temp.TongLe = tongle;
@@ -226,7 +228,7 @@ namespace BTS.SP.API.Api.MD
                 {
                     string maMoi = instance.DataDetails[i].MaHang;
                     var unitcode = _service.GetCurrentUnitCode();
-                    var sa = _service.UnitOfWork.Repository<MdMerchandisePrice>().DbSet.FirstOrDefault(x => x.MaVatTu == maMoi  && x.MaDonVi == unitcode);
+                    var sa = _service.UnitOfWork.Repository<MdMerchandisePrice>().DbSet.FirstOrDefault(x => x.MaVatTu == maMoi && x.MaDonVi == unitcode);
                     if (sa != null)
                     {
                         instance.DataDetails[i].DonGia = sa.GiaBanLe;
@@ -428,7 +430,7 @@ namespace BTS.SP.API.Api.MD
                     var worksheet = package.Workbook.Worksheets[1];
                     int index = 0;
 
-                    for (int i = 0; i <data.Count; i++)
+                    for (int i = 0; i < data.Count; i++)
                     {
                         for (int j = 0; j < data[i].SoLuong; j++)
                         {

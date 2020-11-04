@@ -1,8 +1,6 @@
 define(['angular', '/BTS.SP.MART/controllers/auth/AuthController.js'], function () {
-    //interceptorService.$inject = ['$q', '$injector', '$location', '$log'];
     var app = angular.module('InterceptorModule', ['authModule']);
     app.factory('interceptorService', ['$q', '$injector', '$location', '$log', 'userService', '$state', function ($q, $injector, $location, $log, userService, $state) {
-
         var arrDate = ['ngayCT', 'ngayHoaDon', 'fromDate', 'toDate', 'ngayDacBiet', 'ngaySinh', 'ngayHetHan', 'ngayCapThe'];
         function convertDate(inputFormat) {
             function pad(s) { return (s < 10) ? '0' + s : s; }
@@ -48,7 +46,6 @@ define(['angular', '/BTS.SP.MART/controllers/auth/AuthController.js'], function 
         }
         var _responseError = function (rejection) {
             if (rejection.status === 401) {
-                console.log('AccessDenied :', rejection);
                 $state.go('login');
             }
             $("body").removeClass("loading");

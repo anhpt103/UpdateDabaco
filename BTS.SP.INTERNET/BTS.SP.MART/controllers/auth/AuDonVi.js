@@ -13,35 +13,35 @@ define(['ui-bootstrap'], function () {
         var serviceUrl = configService.rootUrlWebApi + '/Authorize/AuDonVi';
         var selectedData = [];
         var result = {
-            postQuery: function(data) {
+            postQuery: function (data) {
                 return $http.post(serviceUrl + '/PostQuery', data);
             },
-            post: function(data) {
+            post: function (data) {
                 return $http.post(serviceUrl + '/Post', data);
             },
-            postChild: function(data) {
+            postChild: function (data) {
                 return $http.post(serviceUrl + '/PostChild', data);
             },
-            update: function(params) {
+            update: function (params) {
                 return $http.put(serviceUrl + '/' + params.id, params);
             },
-            deleteItem: function(params) {
+            deleteItem: function (params) {
                 return $http.delete(serviceUrl + '/' + params.id, params);
             },
-            getNewCode: function() {
+            getNewCode: function () {
                 return $http.get(serviceUrl + '/GetNewCode');
             },
-            buildCodeByParent: function(parent) {
+            buildCodeByParent: function (parent) {
                 //tạo mã cửa hàng từ mã đơn vị
                 return $http.get(serviceUrl + '/BuildCodeByParent/' + parent);
             },
-            getAll_DonVi: function() {
+            getAll_DonVi: function () {
                 return $http.get(serviceUrl + '/GetSelectDataByUnitCode');
             },
-            AuDonViCtl_GetSelectDataByUnitCode_page: function(data) {
+            AuDonViCtl_GetSelectDataByUnitCode_page: function (data) {
                 return $http.get(serviceUrl + '/GetSelectData', data);
             },
-            getUnitByUnitCode: function(unitcode) {
+            getUnitByUnitCode: function (unitcode) {
                 return $http.get(serviceUrl + '/getUnitByUnitCode/' + unitcode);
             },
             getSelectData: function () {
@@ -339,9 +339,9 @@ define(['ui-bootstrap'], function () {
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
-                });
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
             };
             $scope.cancel = function () {
                 $uibModalInstance.close();
@@ -403,120 +403,67 @@ define(['ui-bootstrap'], function () {
             };
         }]);
 
-    app.controller('donViSelectDataController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuDonViService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'filterObject', 'serviceSelectData',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, filterObject, serviceSelectData) {
+    app.controller('donViSelectDataController', ['$scope', '$uibModalInstance', 'configService', 'AuDonViService', '$filter', 'filterObject', 'serviceSelectData',
+        function ($scope, $uibModalInstance, configService, service, $filter, filterObject, serviceSelectData) {
             $scope.config = angular.copy(configService);;
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.filtered = angular.copy(configService.filterDefault);
             $scope.filtered = angular.extend($scope.filtered, filterObject);
             angular.extend($scope.filtered, filterObject);
-            var lstTemp = [];
             $scope.all = false;
 
-            $scope.modeClickOneByOne = true;
             $scope.title = function () { return 'Danh sách đơn vị'; };
             $scope.selecteItem = function (item) {
                 $uibModalInstance.close(item);
             }
+
             $scope.isLoading = false;
-            $scope.sortType = 'makhachhang'; // set the default sort type
-            $scope.sortReverse = false;  // set the default sort order
+            $scope.sortType = 'makhachhang';
+            $scope.sortReverse = false;
+
             function filterData() {
-                if (serviceSelectData) {
-                    $scope.modeClickOneByOne = false;
-                }
-                var postdata = {};
-                if ($scope.modeClickOneByOne) {
-                    $scope.isLoading = true;
-                    postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                    service.AuDonViCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
-                        $scope.isLoading = false;
-                        if (response && response.status == 200 && response.data && response.data.status) {
-                            $scope.data = response.data.data.data;
-                            angular.extend($scope.paged, response.data);
-                        }
-                    });
-                } else {
-                    $scope.listSelectedData = serviceSelectData.getSelectData();
-                    lstTemp = angular.copy($scope.listSelectedData);
-                    $scope.isLoading = true;
-                    postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                    service.AuDonViCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
-                        $scope.isLoading = false;
-                        if (response && response.status == 200 && response.data) {
-                            $scope.data = response.data;
-                            angular.forEach($scope.data, function (v, k) {
-                                var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                                    if (!element) return false;
-                                    if (typeof element === 'string')
-                                        return element == v.value;
-                                    return element.value == v.value;
-                                });
-                                if (isSelected) {
-                                    $scope.data[k].selected = true;
-                                }
-                            });
-                            angular.extend($scope.paged, response.data);
-                        }
-                    });
-                }
+                $scope.listSelectedData = serviceSelectData.getSelectData();
+                $scope.isLoading = true;
+                var postdata = { paged: $scope.paged, filtered: $scope.filtered };
+                service.AuDonViCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
+                    $scope.isLoading = false;
+                    if (response.status) {
+                        $scope.data = response.data;
+                        $scope.all = configService.filterDataForSelectData($scope.data, $scope.listSelectedData, $scope.all)
+                    }
+                });
             };
             filterData();
+
             $scope.setPage = function (pageNo) {
                 $scope.paged.currentPage = pageNo;
                 filterData();
             };
+
             $scope.doSearch = function () {
                 $scope.paged.currentPage = 1;
                 filterData();
             };
+
             $scope.pageChanged = function () {
                 filterData();
             };
+
             $scope.refresh = function () {
                 $scope.setPage($scope.paged.currentPage);
             };
+
             $scope.doCheck = function (item) {
-                $scope.all = !$scope.all;
-                if (item) {
-                    var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                        return element.id == item.id;
-                    });
-                    if (item.selected) {
-                        if (!isSelected) {
-                            $scope.listSelectedData.push(item);
-                        }
-                    } else {
-                        if (isSelected) {
-                            $scope.listSelectedData.splice(item, 1);
-                        }
-                    }
-                } else {
-                    angular.forEach($scope.data, function (v, k) {
-
-                        $scope.data[k].selected = $scope.all;
-                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                            if (!element) return false;
-                            return element.id == v.id;
-                        });
-
-                        if ($scope.all) {
-                            if (!isSelected) {
-                                $scope.listSelectedData.push($scope.data[k]);
-                            }
-                        } else {
-                            if (isSelected) {
-                                $scope.listSelectedData.splice($scope.data[k], 1);
-                            }
-                        }
-                    });
-                }
+                $scope.all = configService.doCheckDataForSelectData(item, $scope.data, $scope.all);
             };
+
             $scope.save = function () {
-                $uibModalInstance.close($scope.listSelectedData);
+                let result = $filter('filter')($scope.data, { selected: true }, true);
+                service.setSelectData(result);
+                $uibModalInstance.close(result);
             };
+
             $scope.cancel = function () {
-                service.setSelectData(lstTemp);
                 $uibModalInstance.close();
             };
         }]);

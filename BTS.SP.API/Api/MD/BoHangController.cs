@@ -144,10 +144,19 @@ namespace BTS.SP.API.Api.MD
                     var merchandisePriceService = _service.UnitOfWork.Repository<MdMerchandisePrice>();
                     foreach (var a in temp.DataDetails)
                     {
-                        MdMerchandisePrice merchandisePrice = merchandisePriceService.DbSet.FirstOrDefault(x => x.MaVatTu.Equals(x.MaVatTu) && x.MaDonVi.Equals(unitCode));
-                        if (merchandisePrice != null) a.GiaBanLeVat = merchandisePrice.GiaBanLeVat;
+                        MdMerchandisePrice merchandisePrice = merchandisePriceService.DbSet.FirstOrDefault(x => x.MaVatTu.Equals(a.MaHang) && x.MaDonVi.Equals(unitCode));
+                        if (merchandisePrice != null) { 
+                            a.GiaMua = merchandisePrice.GiaMua;
+                            a.GiaMuaVat = merchandisePrice.GiaMuaVat;
+                            a.GiaBanLe = merchandisePrice.GiaBanLe;
+                            a.GiaBanBuon = merchandisePrice.GiaBanBuon;
+                            a.GiaBanLeVat = merchandisePrice.GiaBanLeVat;
+                            a.GiaBanBuonVat = merchandisePrice.GiaBanBuonVat;
+                            a.DonGia = merchandisePrice.GiaBanLeVat;
+                        }
                     }
                 }
+
                 result.Data = temp;
                 result.Status = true;
             }

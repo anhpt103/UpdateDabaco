@@ -576,10 +576,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 }
             };
+
             function filterData() {
                 $scope.isLoading = true;
                 service.getDetails($scope.target.id).then(function (resgetDetails) {
-                    console.log(resgetDetails);
                     if (resgetDetails && resgetDetails.status == 200 && resgetDetails.data) {
                         $scope.target = resgetDetails.data;
                         $scope.target.ngayCT = new Date($scope.target.ngayCT);

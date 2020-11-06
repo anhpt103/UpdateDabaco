@@ -92,7 +92,12 @@ namespace BTS.API.SERVICE.MD
             public decimal TongBanBuon { get; set; }
             public decimal DonGia { get; set; }
             public string UnitCode { get; set; }
+            public decimal GiaMua { get; set; }
+            public decimal GiaMuaVat { get; set; }
+            public decimal GiaBanLe { get; set; }
+            public decimal GiaBanBuon { get; set; }
             public decimal GiaBanLeVat { get; set; }
+            public decimal GiaBanBuonVat { get; set; }
         }
     }
 }

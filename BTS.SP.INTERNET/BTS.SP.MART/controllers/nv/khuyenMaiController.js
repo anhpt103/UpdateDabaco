@@ -61,8 +61,8 @@
                 postPrint: function (callback) {
                     $http.post(serviceUrl + '/PostPrint', getParameterPrint()).success(callback);
                 },
-                postPrintDetail: function (callback) {
-                    $http.post(serviceUrl + '/PostPrintDetail', getParameterPrint()).success(callback);
+                postPrintDetail: function () {
+                    return $http.post(serviceUrl + '/PostPrintDetail', getParameterPrint());
                 },
                 getNewInstance: function () {
                     return $http.get(serviceUrl + '/GetNewInstance');
@@ -202,10 +202,8 @@
                 $scope.setPage($scope.paged.currentPage);
             };
             $scope.printDetail = function () {
-
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                khuyenMaiService.setParameterPrint(
-                    postdata);
+                khuyenMaiService.setParameterPrint(postdata);
                 $state.go("nvPrintDetailKhuyenMai");
             }
             $scope.title = function () {
@@ -495,17 +493,24 @@
                 };
                 return "Empty!";
             }
-            $scope.info = khuyenMaiService.getParameterPrint().filtered.advanceData;
+
+            $scope.info;
+            if (khuyenMaiService.getParameterPrint() && khuyenMaiService.getParameterPrint().filtered && khuyenMaiService.getParameterPrint().filtered.advanceData) {
+                $scope.info = khuyenMaiService.getParameterPrint().filtered.advanceData;
+            } else $state.go("nvKhuyenMai");
+
             $scope.goIndex = function () {
                 $state.go("nvKhuyenMai");
             }
 
             function filterData() {
-                khuyenMaiService.postPrintDetail(
-                    function (response) {
-                        $scope.printData = response;
-                    });
+                khuyenMaiService.postPrintDetail().then(function (response) {
+                    if (response && response.status == 200) {
+                        $scope.printData = response.data;
+                    }
+                });
             }
+
             $scope.printExcel = function () {
                 var data = [document.getElementById('dataTable').innerHTML];
                 var fileName = "KhuyenMai_ExportData.xls";
@@ -527,12 +532,14 @@
                     a.remove();
                 }
             }
+
             $scope.print = function () {
                 var table = document.getElementById('dataTable').innerHTML;
                 var myWindow = $window.open('', '', 'width=800, height=600');
                 myWindow.document.write(table);
                 myWindow.print();
             }
+
             filterData();
         }
     ]);

@@ -10,7 +10,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     /* controller Nhập mua */
     app.controller('nhapMuaReportController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'obj',
 	function ($scope, $uibModalInstance, $location, $http, configService, obj) {
-	    $scope.para = angular.copy(obj);
+		$scope.para = angular.copy(obj);
 	    $scope.cancel = function () {
 	        $uibModalInstance.close();
 	    };

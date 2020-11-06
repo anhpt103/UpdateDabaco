@@ -38,12 +38,6 @@
                 </tr>
             </tbody>
         </table>
-        <uib-pagination class="no-margin-vertical pagination-sm" ng-model="paged.currentPage"
-                        ng-change="pageChanged()"
-                        items-per-page="paged.itemsPerPage" ng-show="paged.totalItems > 0" total-items="paged.totalItems" max-size="paged.pageSize"
-                        boundary-links="true" num-pages="paged.totalPage"
-                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-        </uib-pagination>
     </div>
     <div class="panel-footer selectData">
         <button prevent-default type="submit" class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;{{config.label.btnSubmit}}</button>

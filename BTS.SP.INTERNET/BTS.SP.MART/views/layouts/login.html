@@ -1,23 +1,211 @@
-﻿<div class="container login-page">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-md-offset-4">
-            <div class="account-wall">
-                <h1 class="text-center login-title">HỆ THỐNG SIÊU THỊ TẬP ĐOÀN DABACO VIỆT NAM</h1>
-                <img class="profile-img" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png?sz=120" alt="">
-                <form class="form-signin" ng-enter="login()">
-                    <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập" ng-model="user.username" required autofocus>
-                    <br />
-                    <input type="password" class="form-control" name="password" placeholder="Mật khẩu" ng-model="user.password" required>
-                    <br />
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">
-                        Đăng nhập
-                    </button>
-                </form>
-                <div class="msg-err">
-                    <span>{{msg}}</span>
+﻿<style>
+    body {
+        background: url("/BTS.SP.MART/img/trung-tam-thuong-mai-dabaco-bac-ninh.jpg") no-repeat fixed center;
+        background-repeat: no-repeat;
+    }
+
+    .container-fluid {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card0 {
+        width: 50%;
+        box-shadow: 0px 4px 8px 0px #757575;
+        border-radius: 0px
+    }
+
+    .card2 {
+        margin: 20px 40px
+    }
+
+    .image {
+        width: 90%;
+        height: 320px;
+    }
+
+    .border-line {
+        border-right: 1px solid #EEEEEE
+    }
+
+    .facebook {
+        background-color: #3b5998;
+        color: #fff;
+        font-size: 18px;
+        padding-top: 5px;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer
+    }
+
+    .twitter {
+        background-color: #1DA1F2;
+        color: #fff;
+        font-size: 18px;
+        padding-top: 5px;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer
+    }
+
+    .linkedin {
+        background-color: #2867B2;
+        color: #fff;
+        font-size: 18px;
+        padding-top: 5px;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer
+    }
+
+    .line {
+        height: 1px;
+        width: 45%;
+        background-color: #E0E0E0;
+        margin-top: 10px
+    }
+
+    .or {
+        width: 10%;
+        font-weight: bold
+    }
+
+    .text-sm {
+        font-size: 14px !important
+    }
+
+    ::placeholder {
+        color: #BDBDBD;
+        opacity: 1;
+        font-weight: 300
+    }
+
+    :-ms-input-placeholder {
+        color: #BDBDBD;
+        font-weight: 300
+    }
+
+    ::-ms-input-placeholder {
+        color: #BDBDBD;
+        font-weight: 300
+    }
+
+    input,
+    textarea {
+        padding: 10px 12px 10px 12px;
+        border: 1px solid lightgrey;
+        border-radius: 2px;
+        margin-bottom: 5px;
+        margin-top: 2px;
+        width: 100%;
+        box-sizing: border-box;
+        color: #2C3E50;
+        font-size: 14px;
+        letter-spacing: 1px
+    }
+
+        input:focus,
+        textarea:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #304FFE;
+            outline-width: 0
+        }
+
+    button:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        outline-width: 0
+    }
+
+    a {
+        color: inherit;
+        cursor: pointer
+    }
+
+    .btn-blue {
+        background-color: #1A237E;
+        width: 150px;
+        color: #fff;
+        border-radius: 2px
+    }
+
+        .btn-blue:hover {
+            background-color: #000;
+            cursor: pointer
+        }
+
+    .bg-blue {
+        height: 50px;
+        color: #fff;
+        background-color: #1A237E;
+        padding: 1rem;
+    }
+
+    @media screen and (max-width: 991px) {
+        .image {
+            width: 300px;
+            height: 220px
+        }
+
+        .border-line {
+            border-right: none
+        }
+
+        .card2 {
+            border-top: 1px solid #EEEEEE !important;
+            margin: 0px 15px
+        }
+    }
+
+    .row.px-3 {
+        text-align: center;
+    }
+
+    .text-footer {
+        font-size: 16px;
+    }
+</style>
+<div class="container-fluid mx-auto">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="https://i.imgur.com/uNGdWHi.png" class="image"> </div>
                 </div>
             </div>
-
+            <div class="col-lg-6">
+                <div class="card2 card border-0 px-4 py-5">
+                    <div class="row mb-4 px-3">
+                        <h4 class="mb-0 mr-4 mt-2">ĐĂNG NHẬP ỨNG DỤNG</h4>
+                    </div>
+                    <hr />
+                    <div class="row px-3">
+                        <label class="mb-1">
+                            <span class="mb-0 text-sm">Tên đăng nhập</span>
+                        </label> <input class="mb-4" type="text" name="email" placeholder="Nhập tên đăng nhập">
+                    </div>
+                    <div class="row px-3">
+                        <label class="mb-1">
+                            <span class="mb-0 text-sm">Mật khẩu</span>
+                        </label> <input type="password" name="password" placeholder="Nhập mật khẩu">
+                    </div>
+                    <hr />
+                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Đăng nhập</button> </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-blue py-4">
+            <div class="row px-3">
+                <span class="ml-4 ml-sm-5 mb-2 text-footer">HỆ THỐNG PHẦN MỀM QUẢN LÝ TRUNG TÂM THƯƠNG MẠI TẬP ĐOÀN DABACO</span>
+            </div>
         </div>
     </div>
 </div>

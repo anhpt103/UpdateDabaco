@@ -63,7 +63,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="even pointer" ng-repeat="item in data" ng-dblclick="selecteItem(item)">
+                <tr class="even pointer" ng-repeat="item in data">
                     <td class="text-right">{{$index + 1}}</td>
                     <td><input disabled type="checkbox" ng-model="item.selected"></td>
                     <td class="text-left">{{item.maHang}}</td>

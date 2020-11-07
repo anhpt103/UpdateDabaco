@@ -1698,6 +1698,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         $scope.target = resgetDetails.data;
                         $scope.target.ngayCT = new Date($scope.target.ngayCT);
                         $scope.target.ngayHoaDon = new Date($scope.target.ngayHoaDon);
+                        console.log($scope.target);
                     }
                     $scope.isLoading = false;
                     $scope.pageChanged();

@@ -38,6 +38,11 @@
     width: 50% !important;
 }
 
+.modal-xmd {
+    width: 85% !important;
+}
+
+
 .login-page {
     height: 100vh;
     background-image: url('/BTS.SP.MART/styles/svg/linear-grey-gradient.svg');

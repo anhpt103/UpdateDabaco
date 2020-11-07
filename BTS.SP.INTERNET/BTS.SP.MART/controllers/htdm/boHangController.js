@@ -246,7 +246,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.create = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    size: 'md',
+                    size: 'xmd',
                     templateUrl: configService.buildUrl('htdm/BoHang', 'add'),
                     controller: 'boHangCreateController',
                     resolve: {}
@@ -262,7 +262,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.update = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    size: 'md',
+                    size: 'xmd',
                     templateUrl: configService.buildUrl('htdm/BoHang', 'update'),
                     controller: 'boHangEditController',
                     resolve: {
@@ -282,7 +282,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.details = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    size: 'md',
+                    size: 'xmd',
                     templateUrl: configService.buildUrl('htdm/BoHang', 'details'),
                     controller: 'boHangDetailsController',
                     resolve: {
@@ -301,9 +301,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.printITemBoHang = function () { // in nhiều bó hàng
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'xmd',
                     templateUrl: configService.buildUrl('htdm/boHang', 'printItemBoHang'),
                     controller: 'boHangExportController',
-                    windowClass: 'app-modal-window',
                     resolve: {}
                 });
                 modalInstance.result.then(function (updatedData) {

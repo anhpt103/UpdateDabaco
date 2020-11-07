@@ -3,9 +3,6 @@
     <div>
         <div class="modal-header" style="padding:5px 5px">
             <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
-            <div class="button-close" ng-click="cancel()">
-                <i class="fa fa-times-circle"></i>
-            </div>
         </div>
         <div class="modal-body" ng-form name="_form">
             <div class="form-group">
@@ -169,6 +166,7 @@
                             <td style="text-align:right; width:20%">
                                 <span style="color:red;font-weight:bold">
                                     <input style="text-align:right; width:100%;" type="text" ng-model="target.thanhTienTruocVat" awnum="number" disabled="" />
+                                    </span>
                             </td>
                         </tr>
                         <tr>
@@ -180,6 +178,7 @@
                             <td nowrap style="text-align:right; width:20%">
                                 <span style="color:red;font-weight:bold">
                                     <input style="text-align:right; width:100%;" type="text" ng-model="target.tienVat" awnum="number" disabled="" />
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -189,6 +188,7 @@
                             <td nowrap style="text-align:right; width:20%">
                                 <span style="color:red;font-weight:bold">
                                     <input style="text-align:right; width:100%;" type="text" ng-model="target.thanhTienSauVat" awnum="number" disabled="" />
+                                </span>
                             </td>
                         </tr>
                     </tbody>
@@ -197,6 +197,7 @@
         </div>
     </div>
     <div class="modal-footer">
+        <button prevent-default class="btn btn-primary" ng-if="target.trangThai != 10" ng-click="approval()">Duyệt</button>
         <button prevent-default class="btn btn-default" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </div>

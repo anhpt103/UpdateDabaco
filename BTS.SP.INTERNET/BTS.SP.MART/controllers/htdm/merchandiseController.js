@@ -233,23 +233,12 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 return $http({
                     url: serviceUrl + '/PostExportExcel',
                     method: "POST",
-                    data: json, //this is your json data string
+                    data: json,
                     headers: {
                         'Content-type': 'application/json'
                     },
                     responseType: 'arraybuffer'
-                }).success(function (data, status, headers, config) {
-                    var a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    var blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-                    var objectUrl = URL.createObjectURL(blob);
-                    a.href = objectUrl;
-                    a.download = "HangHoa.xlsx";
-                    a.click();
-                }).error(function (data, status, headers, config) {
-                    //upload failed
-                });
+                })
             },
             getExcelTemplate: function (data) {
                 return $http({
@@ -866,9 +855,9 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.ketXuatExcel = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('htdm/Merchandise', 'exportExcel'),
                     controller: 'exportExcelController',
-                    windowClass: 'app-modal-window',
                     resolve: {}
                 });
                 modalInstance.result.then(function (updatedData) {
@@ -1215,7 +1204,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('donViTinhs', successRes.data.data);
                             $scope.donViTinhs = successRes.data.data;
-                        } 
+                        }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
                     });
@@ -1230,7 +1219,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('shelves', successRes.data.data);
                             $scope.shelves = successRes.data.data;
-                        } 
+                        }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
                     });
@@ -1244,7 +1233,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('sizes', successRes.data.data);
                             $scope.sizes = successRes.data.data;
-                        } 
+                        }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
                     });
@@ -1259,7 +1248,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('colors', successRes.data.data);
                             $scope.colors = successRes.data.data;
-                        } 
+                        }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
                     });
@@ -2023,7 +2012,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('packagings', successRes.data.data);
                             $scope.packagings = successRes.data.data;
-                        } 
+                        }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
                     });
@@ -2995,7 +2984,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.filtered = angular.copy(configService.filterDefault);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.isLoading = false;
-            $scope.listSelectedData = [];
             $scope.title = function () { return 'Kết xuất excel'; };
             $scope.all = false;
 
@@ -3003,56 +2991,24 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.paged.currentPage = 1;
                 filterData();
             };
+
             $scope.pageChanged = function () {
                 filterData();
             };
+
             $scope.refresh = function () {
                 $scope.setPage($scope.paged.currentPage);
             };
+
             $scope.title = function () {
                 return 'Loại hàng';
             };
+
             $scope.setPage = function (pageNo) {
                 $scope.paged.currentPage = pageNo;
                 filterData();
             };
-            $scope.doCheck = function (item) {
-                $scope.all = !$scope.all;
-                if (item) {
-                    var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                        return element.id == item.id;
-                    });
-                    if (item.selected) {
-                        if (!isSelected) {
-                            $scope.listSelectedData.push(item);
-                        }
-                    } else {
-                        if (isSelected) {
-                            $scope.listSelectedData.splice(item, 1);
-                        }
-                    }
-                    service.setSelectData($scope.listSelectedData);
-                } else {
-                    angular.forEach($scope.data, function (v, k) {
-                        $scope.data[k].selected = $scope.all;
-                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
-                            if (!element) return false;
-                            return element.id == v.id;
-                        });
 
-                        if ($scope.all) {
-                            if (!isSelected) {
-                                $scope.listSelectedData.push($scope.data[k]);
-                            }
-                        } else {
-                            if (isSelected) {
-                                $scope.listSelectedData.splice($scope.data[k], 1);
-                            }
-                        }
-                    });
-                    service.setSelectData($scope.listSelectedData);
-                }
-            }
             function filterData() {
                 var postdata = {};
                 $scope.isLoading = true;
@@ -3061,17 +3017,37 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     $scope.isLoading = false;
                     if (response && response.status == 200 && response.data && response.data.status) {
                         $scope.data = response.data.data.data;
+                        $scope.all = configService.filterDataForSelectData($scope.data, [], $scope.all)
                         angular.extend($scope.paged, response.data.data);
                     }
                 });
             }
 
+            $scope.doCheck = function (item) {
+                $scope.all = configService.doCheckDataForSelectData(item, $scope.data, $scope.all);
+            }
+
             filterData();
+
             $scope.export = function () {
-                service.postExportExcel($scope.listSelectedData);
+                let result = $filter('filter')($scope.data, { selected: true }, true);
+                service.postExportExcel(result).then(function (response) {
+                    if (response && response.status == 200) {
+                        let a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.style = "display: none";
+                        let blob = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+                        let objectUrl = URL.createObjectURL(blob);
+                        a.href = objectUrl;
+                        a.download = "HangHoa.xlsx";
+                        a.click();
+                    }
+                });
+
                 service.clearSelectData();
                 $uibModalInstance.close();
             };
+
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
@@ -3127,7 +3103,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if (successRes && successRes.status === 200 && successRes.data.data.length > 0) {
                             tempDataService.putTempData('taxs', successRes.data.data);
                             $scope.taxs = successRes.data.data;
-                        } 
+                        }
                     }, function (errorRes) {
                         console.log('errorRes', errorRes);
                     });

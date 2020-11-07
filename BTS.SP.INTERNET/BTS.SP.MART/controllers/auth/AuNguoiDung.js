@@ -466,8 +466,7 @@
             $scope.isConfirmPass = true;
             $scope.target.changePassSuccess = false;
             $scope.title = function () { return 'Đổi mật khẩu'; };
-            function filterData() {
-            }
+
             $scope.checkPassOld = function (passOld) {
                 var pass = md5.createHash(passOld);
                 if (pass == $scope.target.password) {

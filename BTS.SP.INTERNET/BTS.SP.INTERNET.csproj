@@ -197,6 +197,7 @@
     <Content Include="BTS.SP.MART\controllers\nv\phieuXuatBanLeController.js" />
     <Content Include="BTS.SP.MART\controllers\nv\phieuXuatKhacController.js" />
     <Content Include="BTS.SP.MART\img\loader.gif" />
+    <Content Include="BTS.SP.MART\img\super-market-backgound.jpg" />
     <Content Include="BTS.SP.MART\lib\angular-animate.min.js" />
     <Content Include="BTS.SP.MART\lib\angular-cache.min.js" />
     <Content Include="BTS.SP.MART\lib\angular-file-upload.min.js" />

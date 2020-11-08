@@ -89,7 +89,7 @@ namespace BTS.API.SERVICE.NV
             {
                 return null;
             }
-          
+
 
 
             public void LoadGeneralParam(string summary)
@@ -170,7 +170,7 @@ namespace BTS.API.SERVICE.NV
             public decimal GiaVon { get; set; }
         }
 
- public class ReportTongHop
+        public class ReportTongHop
         {
             public ReportTongHop()
             {
@@ -265,7 +265,8 @@ namespace BTS.API.SERVICE.NV
         public DateTime MaxDate { get; set; }
 
     }
-    public enum TypeGroupKiemKe{
+    public enum TypeGroupKiemKe
+    {
         WAREHOUSE = 1,
         TYPE = 2,
         GROUP = 3,

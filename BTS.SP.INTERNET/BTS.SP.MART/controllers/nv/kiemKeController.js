@@ -667,6 +667,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.approval = function () {
                 $scope.isDisabled = true;
                 $scope.stateIsRunning = true;
+                console.log($scope.target);
+                return;
                 service.postComplete($scope.target).then(function (response) {
                     if (response && response.status == 200 && response.data) {
                         alert("Duyệt thành công!");
@@ -721,15 +723,15 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.robot = angular.copy(service.robot);
             $scope.config = angular.copy(configService);
             $scope.typeReportKiemKe = [
-             {
-                 value: '1', text: 'Hàng đủ'
-             },
-             {
-                 value: '2', text: "Hàng thừa"
-             },
-             {
-                 value: '3', text: "Hàng thiếu"
-             }
+                {
+                    value: '1', text: 'Hàng đủ'
+                },
+                {
+                    value: '2', text: "Hàng thừa"
+                },
+                {
+                    value: '3', text: "Hàng thiếu"
+                }
 
             ];
             function filterData(option) {
@@ -863,7 +865,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
 
                     }
                 }
-                    );
+                );
             };
             $scope.print = function () {
                 var table = document.getElementById('main-report').innerHTML;

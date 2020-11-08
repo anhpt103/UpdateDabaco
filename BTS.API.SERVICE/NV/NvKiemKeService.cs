@@ -27,7 +27,7 @@ namespace BTS.API.SERVICE.NV
     public interface INvKiemKeService : IDataInfoService<NvKiemKe>
     {
         string BuildCode();
-        bool Approval(NvKiemKeVm.Dto instance, string table, string year, int period);
+        string Approval(NvKiemKeVm.Dto instance, string table, string year, int period);
         NvKiemKe UpdateApproval(NvKiemKeVm.Dto instance);
         NvKiemKe InsertPhieu(NvKiemKeVm.Dto instance);
         NvKiemKe UpdatePhieu(NvKiemKeVm.Dto instance);
@@ -89,45 +89,35 @@ namespace BTS.API.SERVICE.NV
             return true;
         }
 
-        public bool Approval(NvKiemKeVm.Dto instance,string table, string year, int period)
+        public string Approval(NvKiemKeVm.Dto instance, string table, string year, int period)
         {
+            if (string.IsNullOrEmpty(table)) return "Kỳ kế toán " + table + "không tồn tại";
+            if (string.IsNullOrEmpty(instance.Id)) return "Không tìm thấy Id phiếu kiểm kê";
+            if (string.IsNullOrEmpty(year)) return "Tham số Năm trống";
+            if (period <= 0) return "Tham số Kỳ kế toán không đúng";
+
+            var infoPhieu = UnitOfWork.Repository<NvKiemKe>().DbSet.Any(x => x.Id == instance.Id && x.TrangThai != 10);
+            if (!infoPhieu) return "Không tồn tại phiếu kiểm kê hoặc Phiếu này đã được duyệt";
+
             var pTableName = new OracleParameter("pTableName", OracleDbType.NVarchar2, table, ParameterDirection.Input);
             var pYear = new OracleParameter("pYear", OracleDbType.Decimal, year, ParameterDirection.Input);
             var pPeriod = new OracleParameter("period", OracleDbType.Decimal, period, ParameterDirection.Input);
-           
+            var pId = instance.Id;
+
             using (var ctx = new ERPContext())
             {
                 try
                 {
-                    var nhapKiemKe = UnitOfWork.Repository<NvKiemKeChiTiet>()
-                        .DbSet.Where(x => x.MaPhieuKiemKe == instance.MaPhieuKiemKe).ToList();
-                    foreach (var record in nhapKiemKe)
-                    {
-                        string id = record.Id;
-                        //SoLuongChenhLech < 0 -- NHập kiểm kê
-                        if (record.SoLuongChenhLech < 0)
-                        {
-                            var pId = new OracleParameter("pId", OracleDbType.NVarchar2, id, ParameterDirection.Input);
-                            var str = "BEGIN TBNETERP.XNT.XNT_TANGPHIEU_KIEMKE(:pTableName, :year, :period, :pId); END;";
-                            ctx.Database.ExecuteSqlCommand(str, pTableName, pYear, pPeriod, pId);
-                        }
-                        else
-                        {
-                            var pId = new OracleParameter("pId", OracleDbType.NVarchar2, id, ParameterDirection.Input);
-                            var str = "BEGIN TBNETERP.XNT.XNT_GIAMPHIEU_KIEMKE(:pTableName, :year, :period, :pId); END;";
-                            ctx.Database.ExecuteSqlCommand(str, pTableName, pYear, pPeriod, pId);
-                        }
-
-                    }
+                    var str = "BEGIN TBNETERP.XNT.XNT_DUYETPHIEU_KIEMKE(:pTableName, :year, :period, :pId); END;";
+                    ctx.Database.ExecuteSqlCommand(str, pTableName, pYear, pPeriod, pId);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return false;
+                    return ex.Message;
                 }
-                return true;
             }
+            return "";
         }
-
 
         public NvKiemKe InsertPhieu(NvKiemKeVm.Dto instance)
         {
@@ -139,7 +129,8 @@ namespace BTS.API.SERVICE.NV
             var result = Insert(item);
             var detailData = AutoMapper.Mapper.Map<List<NvKiemKeVm.DtoDetails>, List<NvKiemKeChiTiet>>(instance.DataDetails);
 
-            detailData.ForEach(x => {
+            detailData.ForEach(x =>
+            {
                 x.Id = Guid.NewGuid().ToString();
                 x.MaPhieuKiemKe = item.MaPhieuKiemKe;
                 x.SoLuongChenhLech = x.SoLuongTonMay - x.SoLuongKiemKe;
@@ -170,7 +161,7 @@ namespace BTS.API.SERVICE.NV
                 x.Id = Guid.NewGuid().ToString();
                 x.MaPhieuKiemKe = masterData.MaPhieuKiemKe;
                 x.SoLuongChenhLech = x.SoLuongTonMay - x.SoLuongKiemKe;
-                x.TienTonMay = x.SoLuongTonMay*x.GiaVon;
+                x.TienTonMay = x.SoLuongTonMay * x.GiaVon;
                 x.TienKiemKe = x.SoLuongKiemKe * x.GiaVon;
                 x.TienChenhLech = x.TienTonMay - x.TienKiemKe;
                 x.MaDonVi = unitCode;
@@ -310,9 +301,9 @@ namespace BTS.API.SERVICE.NV
                     worksheet.Cells[currentRow, startColumn + 1].Value = item.Ma;
                     worksheet.Cells[currentRow, startColumn + 2].Value = item.Ten;
                     worksheet.Cells[currentRow, startColumn + 3].Value = item.GiaVon; worksheet.Cells[currentRow, 4].Style.Numberformat.Format = "#,##0.00";
-                    worksheet.Cells[currentRow, startColumn + 4].Value = item.SoLuongTonMay; 
-                    worksheet.Cells[currentRow, startColumn + 5].Value = item.SoLuongKiemKe; 
-                    worksheet.Cells[currentRow, startColumn + 6].Value = item.SoLuongThua; 
+                    worksheet.Cells[currentRow, startColumn + 4].Value = item.SoLuongTonMay;
+                    worksheet.Cells[currentRow, startColumn + 5].Value = item.SoLuongKiemKe;
+                    worksheet.Cells[currentRow, startColumn + 6].Value = item.SoLuongThua;
                     worksheet.Cells[currentRow, startColumn + 7].Value = item.GiaTriThua; worksheet.Cells[currentRow, 8].Style.Numberformat.Format = "#,##0.00";
                     worksheet.Cells[currentRow, startColumn + 8].Value = item.SoLuongThieu;
                     worksheet.Cells[currentRow, startColumn + 9].Value = item.GiaTriThieu; worksheet.Cells[currentRow, 10].Style.Numberformat.Format = "#,##0.00";
@@ -329,13 +320,13 @@ namespace BTS.API.SERVICE.NV
                 worksheet.Cells[currentRow, 1, currentRow, startColumn + 2].Merge = true;
                 worksheet.Cells[currentRow, startColumn].Value = "TỔNG CỘNG"; worksheet.Cells[currentRow, startColumn].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 worksheet.Cells[currentRow, startColumn + 3].Value = itemTotal.GiaVon; worksheet.Cells[currentRow, startColumn + 3].Style.Numberformat.Format = "#,##0.00";
-                worksheet.Cells[currentRow, startColumn + 4].Value = itemTotal.SoLuongTonMay; 
-                worksheet.Cells[currentRow, startColumn + 5].Value = itemTotal.SoLuongKiemKe; 
-                worksheet.Cells[currentRow, startColumn + 6].Value = itemTotal.SoLuongThua; 
+                worksheet.Cells[currentRow, startColumn + 4].Value = itemTotal.SoLuongTonMay;
+                worksheet.Cells[currentRow, startColumn + 5].Value = itemTotal.SoLuongKiemKe;
+                worksheet.Cells[currentRow, startColumn + 6].Value = itemTotal.SoLuongThua;
                 worksheet.Cells[currentRow, startColumn + 7].Value = itemTotal.GiaTriThua; worksheet.Cells[currentRow, startColumn + 7].Style.Numberformat.Format = "#,##0.00";
-                worksheet.Cells[currentRow, startColumn + 8].Value = itemTotal.SoLuongThieu; 
+                worksheet.Cells[currentRow, startColumn + 8].Value = itemTotal.SoLuongThieu;
                 worksheet.Cells[currentRow, startColumn + 9].Value = itemTotal.GiaTriThieu; worksheet.Cells[currentRow, startColumn + 9].Style.Numberformat.Format = "#,##0.00";
-                worksheet.Cells[currentRow, 1, currentRow, startColumn +9].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[currentRow, 1, currentRow, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
                 worksheet.Column(1).AutoFit();
                 worksheet.Column(2).AutoFit();
@@ -494,7 +485,7 @@ namespace BTS.API.SERVICE.NV
                         worksheet.Cells[currentRow, startColumn + 7].Value = itemdetails.GiaTriThua; worksheet.Cells[currentRow, 8].Style.Numberformat.Format = "#,##0.00";
                         worksheet.Cells[currentRow, startColumn + 8].Value = itemdetails.SoLuongThieu;
                         worksheet.Cells[currentRow, startColumn + 9].Value = itemdetails.GiaTriThieu; worksheet.Cells[currentRow, 10].Style.Numberformat.Format = "#,##0.00";
-                        worksheet.Cells[currentRow, startColumn + 10].Value = string.Format("{0}/{1}/{2}",itemdetails.NgayKiemKe.Day,itemdetails.NgayKiemKe.Month,itemdetails.NgayKiemKe.Year);
+                        worksheet.Cells[currentRow, startColumn + 10].Value = string.Format("{0}/{1}/{2}", itemdetails.NgayKiemKe.Day, itemdetails.NgayKiemKe.Month, itemdetails.NgayKiemKe.Year);
                         worksheet.Cells[currentRow, startColumn + 11].Value = itemdetails.Barcode;
                         worksheet.Cells[currentRow, 1, currentRow, startColumn + 11].Style.Border.BorderAround(ExcelBorderStyle.Dotted);
                         itemTotal.GiaVon += itemdetails.GiaVon;
@@ -510,13 +501,13 @@ namespace BTS.API.SERVICE.NV
                 worksheet.Cells[currentRow, 1, currentRow, startColumn + 2].Merge = true;
                 worksheet.Cells[currentRow, startColumn].Value = "TỔNG CỘNG"; worksheet.Cells[currentRow, startColumn].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 worksheet.Cells[currentRow, startColumn + 3].Value = itemTotal.GiaVon; worksheet.Cells[currentRow, startColumn + 3].Style.Numberformat.Format = "#,##0.00";
-                worksheet.Cells[currentRow, startColumn + 4].Value = itemTotal.SoLuongTonMay; 
-                worksheet.Cells[currentRow, startColumn + 5].Value = itemTotal.SoLuongKiemKe; 
-                worksheet.Cells[currentRow, startColumn + 6].Value = itemTotal.SoLuongThua; 
+                worksheet.Cells[currentRow, startColumn + 4].Value = itemTotal.SoLuongTonMay;
+                worksheet.Cells[currentRow, startColumn + 5].Value = itemTotal.SoLuongKiemKe;
+                worksheet.Cells[currentRow, startColumn + 6].Value = itemTotal.SoLuongThua;
                 worksheet.Cells[currentRow, startColumn + 7].Value = itemTotal.GiaTriThua; worksheet.Cells[currentRow, startColumn + 7].Style.Numberformat.Format = "#,##0.00";
-                worksheet.Cells[currentRow, startColumn + 8].Value = itemTotal.SoLuongThieu; 
+                worksheet.Cells[currentRow, startColumn + 8].Value = itemTotal.SoLuongThieu;
                 worksheet.Cells[currentRow, startColumn + 9].Value = itemTotal.GiaTriThieu; worksheet.Cells[currentRow, startColumn + 9].Style.Numberformat.Format = "#,##0.00";
-                worksheet.Cells[currentRow, 1, currentRow, startColumn +11].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[currentRow, 1, currentRow, startColumn + 11].Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
                 worksheet.Column(1).AutoFit();
                 worksheet.Column(2).AutoFit();

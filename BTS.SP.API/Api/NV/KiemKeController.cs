@@ -1,8 +1,15 @@
-﻿using BTS.API.ENTITY;
+﻿using AutoMapper;
+using BTS.API.ENTITY;
+using BTS.API.ENTITY.Authorize;
+using BTS.API.ENTITY.Md;
 using BTS.API.ENTITY.NV;
+using BTS.API.SERVICE.Authorize.Utils;
 using BTS.API.SERVICE.BuildQuery;
+using BTS.API.SERVICE.BuildQuery.Query.Types;
 using BTS.API.SERVICE.Helper;
+using BTS.API.SERVICE.MD;
 using BTS.API.SERVICE.NV;
+using BTS.SP.API.Utils;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,19 +17,12 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BTS.API.ENTITY.Authorize;
-using BTS.API.ENTITY.Md;
-using BTS.API.SERVICE.MD;
-using System.Net.Http.Headers;
-using AutoMapper;
-using BTS.API.SERVICE.BuildQuery.Query.Types;
-using BTS.API.SERVICE.Authorize.Utils;
-using BTS.SP.API.Utils;
 
 namespace BTS.SP.API.Api.NV
 {
@@ -310,7 +310,7 @@ namespace BTS.SP.API.Api.NV
             }
         }
 
-        
+
         [Route("ReceiveDataKiemKe/{makho}")]
         [AllowAnonymous]
         [HttpPost]
@@ -347,7 +347,7 @@ namespace BTS.SP.API.Api.NV
                                 }
                                 string[] arrayVatTu = vatTu.ToArray();
                                 string paraVatTu = String.Join(",", arrayVatTu);
-                                lst.DataDetails = ProcedureCollection.GetInventoryForActionInventoryByOne(UNITCODE_GLOBAL, MaKho,paraVatTu);
+                                lst.DataDetails = ProcedureCollection.GetInventoryForActionInventoryByOne(UNITCODE_GLOBAL, MaKho, paraVatTu);
                                 foreach (var value in lst.DataDetails)
                                 {
                                     foreach (string line in lines)
@@ -405,7 +405,7 @@ namespace BTS.SP.API.Api.NV
                 }
                 //lấy những mã không kiểm kê nhưng nằm trong kệ 
                 string maKeHangHoa = returnList.KeKiemKe;
-                var hangTrongKe = ProcedureCollection.LayThongTinHangThuocKe(UNITCODE_GLOBAL, returnList.KhoKiemKe,maKeHangHoa);
+                var hangTrongKe = ProcedureCollection.LayThongTinHangThuocKe(UNITCODE_GLOBAL, returnList.KhoKiemKe, maKeHangHoa);
                 try
                 {
                     if (hangTrongKe != null && hangTrongKe.Count > 0)
@@ -575,31 +575,31 @@ namespace BTS.SP.API.Api.NV
                 response.StatusCode = HttpStatusCode.OK;
                 streamData.Seek(0, SeekOrigin.Begin);
                 response.Content = new StreamContent(streamData);
-                        switch (para.GroupBy)
-                        {
-                            case TypeGroupKiemKe.GROUP:
-                                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoNhomVatTu.xlsx" };
-                                break;
-                            case TypeGroupKiemKe.TYPE:
-                                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoLoaiVatTu.xlsx" };
-                                break;
-                            case TypeGroupKiemKe.NHACUNGCAP:
-                                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoNhaCungCap.xlsx" };
-                                break;
-                            case TypeGroupKiemKe.MERCHANDISE:
-                                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoVatTu.xlsx" };
-                                break;
-                            case TypeGroupKiemKe.WAREHOUSE:
-                                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoKho.xlsx" };
-                                break;
-                           case TypeGroupKiemKe.KEHANG:
-                                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoKe.xlsx" };
-                                break;
-                            default:
-                                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet.xlsx" };
-                                break;
-                        }
-                        
+                switch (para.GroupBy)
+                {
+                    case TypeGroupKiemKe.GROUP:
+                        response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoNhomVatTu.xlsx" };
+                        break;
+                    case TypeGroupKiemKe.TYPE:
+                        response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoLoaiVatTu.xlsx" };
+                        break;
+                    case TypeGroupKiemKe.NHACUNGCAP:
+                        response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoNhaCungCap.xlsx" };
+                        break;
+                    case TypeGroupKiemKe.MERCHANDISE:
+                        response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoVatTu.xlsx" };
+                        break;
+                    case TypeGroupKiemKe.WAREHOUSE:
+                        response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoKho.xlsx" };
+                        break;
+                    case TypeGroupKiemKe.KEHANG:
+                        response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet_TheoKe.xlsx" };
+                        break;
+                    default:
+                        response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline") { FileName = "BCChiTiet.xlsx" };
+                        break;
+                }
+
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                 return response;
             }
@@ -613,7 +613,7 @@ namespace BTS.SP.API.Api.NV
         public async Task<IHttpActionResult> GetMerchandiseByCodeKK(string MaHang)
         {
             var unitCode = _service.GetCurrentUnitCode();
-            string MaKho = unitCode +"-K2";
+            string MaKho = unitCode + "-K2";
             NvKiemKeVm.Dto lst = new NvKiemKeVm.Dto();
             try
             {
@@ -628,94 +628,30 @@ namespace BTS.SP.API.Api.NV
             return Ok(lst);
         }
 
-        //        [Route("PostComplete")]
-        //        [ResponseType(typeof(bool))]
-        //        public async Task<IHttpActionResult> PostComplete(NvKiemKeVm.Dto instance)
-        //        {
-        //            var unitCode = _service.GetCurrentUnitCode();
-        //            var curentDate = CurrentSetting.GetKhoaSo(unitCode);
-        //            var tablleName = curentDate.GetTableName();
-        //            var phieuKiemKe = _serviceKK.FindById(instance.Id);
-        //            if (phieuKiemKe == null || phieuKiemKe.TrangThai == (int)OrderState.IsComplete)
-        //            {
-        //                return NotFound();
-        //            }
-        //            instance.TrangThai = 10;
-        //            var details = _serviceKK.UnitOfWork.Repository<NvKiemKeChiTiet>()
-        //                        .DbSet.Where(x => x.MaPhieuKiemKe == phieuKiemKe.MaPhieuKiemKe).ToList();
-        //            string KhoKiemKe = phieuKiemKe.KhoKiemKe;
-        //            using (var ctx = new ERPContext())
-        //            {
-        //                foreach (var item in instance.DataDetails)
-        //                {
-        //                    var itemNew = details.FirstOrDefault(u => u.Id == item.Id);
-        //                    var getDataXNT = string.Format("SELECT TONCUOIKYSL as TonCuoiKySL, GIAVON as GiaVon FROM {0} WHERE MAVATTU = '{1}' AND MAKHO='{2}' AND NAM='{3}'", tablleName, itemNew.MaVatTu, KhoKiemKe, DateTime.Now.Year);
-        //                    var dataXNT = ctx.Database.SqlQuery<MdMerchandiseVm.DataXNT>(getDataXNT).ToList();
-        //                    decimal TonCuoiKySL_New, TonCuoiKySL, SoLuongChenhLech, GiaVon, TonCuoiKyGiaTri_New = 0;
-        //                    decimal.TryParse(dataXNT[0].TonCuoiKySL.ToString(), out TonCuoiKySL);
-        //                    decimal.TryParse(dataXNT[0].GiaVon.ToString(), out GiaVon);
-        //                    decimal.TryParse(itemNew.SoLuongChenhLech.ToString(), out SoLuongChenhLech);
-        //                    var queryStr = "";
-        //                    if (itemNew.SoLuongChenhLech <= 0)
-        //                    {
-        //                        TonCuoiKySL_New = TonCuoiKySL - SoLuongChenhLech;
-        //                        TonCuoiKyGiaTri_New = TonCuoiKySL_New * GiaVon;
-        //                        queryStr = string.Format(@"UPDATE {0} SET GiaVon = {1},TONCUOIKYSL = {2}, TONCUOIKYGT = {3}    
-        //                                        WHERE MAVATTU = '{4}' AND MAKHO='{5}' AND NAM='{6}'", tablleName, itemNew.GiaVon, TonCuoiKySL_New, TonCuoiKyGiaTri_New, itemNew.MaVatTu, KhoKiemKe, DateTime.Now.Year);
-        //                    }
-        //                    else
-        //                    {
-        //                        TonCuoiKySL_New = TonCuoiKySL - SoLuongChenhLech;
-        //                        TonCuoiKyGiaTri_New = TonCuoiKySL_New * GiaVon;
-        //                        queryStr = string.Format(@"UPDATE {0} SET GiaVon = {1},TONCUOIKYSL = {2}, TONCUOIKYGT = {3}    
-        //                                        WHERE MAVATTU = '{4}' AND MAKHO='{5}' AND NAM='{6}'", tablleName, itemNew.GiaVon, TonCuoiKySL_New, TonCuoiKyGiaTri_New, itemNew.MaVatTu, KhoKiemKe, DateTime.Now.Year);
-        //                    }
-        //                    try
-        //                    {
-        //                        ctx.Database.ExecuteSqlCommand(queryStr);
-        //                    }
-        //                    catch (Exception e)
-        //                    {
-        //                        return InternalServerError();
-        //                    }
-        //                }
-        //            }
-        //            try
-        //            {
-        //                _serviceKK.UpdateApproval(instance);
-        //                _serviceKK.UnitOfWork.Save();
-        //                return Ok(true);
-        //            }
-        //            catch (Exception)
-        //            {
-        //                return InternalServerError();
-        //            }
-        //        }
-
-
         [Route("PostComplete")]
         [ResponseType(typeof(bool))]
         [CustomAuthorize(Method = "DUYET", State = "nvKiemKe")]
-        public async Task<IHttpActionResult> PostComplete(NvKiemKeVm.Dto instance)
+        public IHttpActionResult PostComplete(NvKiemKeVm.Dto instance)
         {
             string unitCode = _service.GetCurrentUnitCode();
             MdPeriod curentDate = CurrentSetting.GetKhoaSo(unitCode);
             int period = curentDate.Period;
             int year = curentDate.Year;
             string tablleName = curentDate.GetTableName();
-            NvKiemKe phieuKiemKe = _serviceKK.FindById(instance.Id);
             instance.NgayDuyetPhieu = curentDate.ToDate;
-            //thực hiện tạo phiếu kiểm kê nhập, kiểm kê xuất
+
             try
             {
-                _serviceKK.Approval(instance, tablleName, year.ToString(), period);
+                string msg = _serviceKK.Approval(instance, tablleName, year.ToString(), period);
+                if (msg.Length > 0) return BadRequest(msg);
+
                 _serviceKK.UpdateApproval(instance);
                 _serviceKK.UnitOfWork.Save();
-                return Ok(true);
+                return Ok(msg);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return InternalServerError();
+                return BadRequest(ex.Message);
             }
         }
 

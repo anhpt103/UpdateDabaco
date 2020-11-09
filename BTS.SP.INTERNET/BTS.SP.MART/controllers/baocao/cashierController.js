@@ -478,7 +478,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
 
             $scope.updatePrice = function () {
-                var modalInstance = $uibModal.open({
+                $uibModal.open({
                     backdrop: 'static',
                     templateUrl: configService.buildUrl('htdm/Period', 'updatePrice'),
                     controller: 'updatePriceController',

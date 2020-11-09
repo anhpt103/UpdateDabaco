@@ -36,10 +36,13 @@ define([
     'ngMaterial',
     'ngAria',
     'angular-md5',
-    'telerikReportViewer'
+    'telerikReportViewer',
+    'moment',
+    'moment-local',
+    'angularMoment'
 ], function (jquery, jqueryui, angular, stateHtdm, stateNv, stateBaoCao, stateAuth) {
     'use strict';
-    var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'ui.tree', 'dynamicNumber', 'toaster', 'ui.grid', 'cp.ngConfirm', 'angularFileUpload', 'ngFileUpload', 'ngTagsInput', 'ngCkeditor', 'ngMaterial', 'ngAria', 'angular-md5']);
+    var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'ui.tree', 'dynamicNumber', 'toaster', 'ui.grid', 'cp.ngConfirm', 'angularFileUpload', 'ngFileUpload', 'ngTagsInput', 'ngCkeditor', 'ngMaterial', 'ngAria', 'angular-md5', 'angularMoment']);
     app.run(['ngTableDefaults', 'ngNotify', function (ngTableDefaults, ngNotify) {
         ngTableDefaults.params.count = 5;
         ngTableDefaults.settings.counts = [];

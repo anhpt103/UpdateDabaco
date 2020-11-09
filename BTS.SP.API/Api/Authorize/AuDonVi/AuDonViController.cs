@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Description;
-using AutoMapper;
+﻿using AutoMapper;
 using BTS.API.ENTITY.Authorize;
 using BTS.API.SERVICE.Authorize.AuDonVi;
 using BTS.API.SERVICE.BuildQuery;
 using BTS.API.SERVICE.BuildQuery.Query.Types;
 using BTS.API.SERVICE.Helper;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
 namespace BTS.SP.API.Api.Authorize.AuDonVi
 {
     [RoutePrefix("api/Authorize/AuDonVi")]
@@ -29,14 +27,14 @@ namespace BTS.SP.API.Api.Authorize.AuDonVi
         public IList<ChoiceObj> GetSelectData()
         {
             var data = _service.Repository.DbSet;
-            return data.Select(x => new ChoiceObj { Value = x.MaDonVi, Text = x.MaDonVi + " | " + x.TenDonVi, Id = x.Id, Description=x.TenDonVi, Parent = x.MaDonViCha,ExtendValue = x.DiaChi,ReferenceDataId = x.SoDienThoai}).ToList();
+            return data.Select(x => new ChoiceObj { Value = x.MaDonVi, Text = x.MaDonVi + " | " + x.TenDonVi, Id = x.Id, Description = x.TenDonVi, Parent = x.MaDonViCha, ExtendValue = x.DiaChi, ReferenceDataId = x.SoDienThoai }).ToList();
         }
         [Route("GetSelectDataByUnitCode")]
         public IList<ChoiceObj> GetSelectDataByUnitCode()
         {
             var maDonVi = _service.GetParentUnitCode();
             var data = _service.Repository.DbSet;
-            return data.Where(x=>x.MaDonVi.StartsWith(maDonVi)).Select(x => new ChoiceObj { Value = x.MaDonVi, Text = x.MaDonVi + " | " + x.TenDonVi, Id = x.Id, Description = x.TenDonVi }).ToList();
+            return data.Where(x => x.MaDonVi.StartsWith(maDonVi)).Select(x => new ChoiceObj { Value = x.MaDonVi, Text = x.MaDonVi + " | " + x.TenDonVi, Id = x.Id, Description = x.TenDonVi }).ToList();
         }
         [Route("GetSelectAll")]
         public IList<ChoiceObj> GetSelectAll()
@@ -83,13 +81,13 @@ namespace BTS.SP.API.Api.Authorize.AuDonVi
         [Route("PostChild")]
         public async Task<IHttpActionResult> PostChild(AuDonViVm.Dto postObj)
         {
-            
+
             var result = new TransferObj<AU_DONVI>();
             try
             {
                 var instance = Mapper.Map<AuDonViVm.Dto, AU_DONVI>(postObj);
                 instance.MaDonVi = _service.SaveCodeByParent(instance.MaDonViCha);
-                var item = _service.Insert(instance,false);
+                var item = _service.Insert(instance, false);
                 _service.UnitOfWork.Save();
                 result.Status = true;
                 result.Message = "Thêm mới thành công";
@@ -101,7 +99,7 @@ namespace BTS.SP.API.Api.Authorize.AuDonVi
                 result.Message = e.Message;
                 return Ok(result);
             }
-            return CreatedAtRoute("DefaultApi", new { controller = this}, result);
+            return CreatedAtRoute("DefaultApi", new { controller = this }, result);
         }
 
         [Route("PostSelectData")]

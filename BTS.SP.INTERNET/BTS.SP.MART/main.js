@@ -38,6 +38,9 @@ require.config({
         'chart-js': 'utils/angular-chart/Chart.min',
         'angular-chart': 'utils/angular-chart/angular-chart.min',
         'bootstrapper': 'bootstrapper',
+        'moment': 'lib/moment.min',
+        'moment-local': 'lib/moment-with-locales.min',
+        'angularMoment': 'lib/angular-moment.min',
     },
     shim: {
         'angular': {

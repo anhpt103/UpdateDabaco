@@ -33,7 +33,7 @@
                         <span style="color: red">(*)</span>
                     </div>
                     <div class="md-4-style-input">
-                        <input class="input-border-form" type="text" ng-model="target.maChungTu" maxlength="50" name="_maChungTu" required disabled>
+                        <input class="input-border-form" type="text" ng-model="target.maChungTu" maxlength="50" name="_maChungTu" required readonly>
                         <span style="color: red" ng-show="_form._maChungTu.$dirty && _form._maChungTu.$invalid">
                             <span ng-show="_form._maChungTu.$error.required">Không được để trống</span>
                         </span>
@@ -46,7 +46,7 @@
                     <div class="md-4-style-input">
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="target.ngayCT" placeholder="{{config.dateFormat}}" uib-datepicker-popup="{{config.dateFormat}}"
-                                   is-open="_ngayct" datepicker-localdate disabled />
+                                   is-open="_ngayct" datepicker-localdate readonly />
                             <div class="button-calender" ng-click="_ngayct = !_ngayct; config.delegateEvent($event);">
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                     <div class="md-4-style-input">
                         <div class="add-input-zone">
                             <input class="input-border-form" type="text" ng-model="target.ngayHoaDon" placeholder="{{config.dateFormat}}" uib-datepicker-popup="{{config.dateFormat}}"
-                                   datepicker-localdate is-open="_ngayHoaDon" disabled />
+                                   datepicker-localdate is-open="_ngayHoaDon" readonly />
                             <div class="button-calender" ng-click="_ngayHoaDon = !_ngayHoaDon; config.delegateEvent($event);">
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                         Số hóa đơn
                     </div>
                     <div class="md-4-style-input">
-                        <input class="input-border-form" type="text" name="_maHoaDon" focus="true" ng-model="target.maHoaDon" maxlength="50" disabled />
+                        <input class="input-border-form" type="text" name="_maHoaDon" focus="true" ng-model="target.maHoaDon" maxlength="50" readonly />
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                             <input class="input-border-form" name="_makhachHang" type="text" ng-model="target.maKhachHang" typeahead-editable="false"
                                    uib-typeahead="opt.value as opt.text for opt in tempData('suppliers') | filter:$viewValue | limitTo:5"
                                    typeahead-on-select="selectedkhachHang($item)" typeahead-input-formatter="displayHepler($model, 'suppliers')"
-                                   required disabled />
+                                   required readonly />
                             <div style="display:none" class="add-input-able" ng-click="createCustomer(target, 'makhachHang')">
                             </div>
                             <span style="color:red" ng-show="_form._makhachHang.$dirty && _form._makhachHang.$invalid">
@@ -101,7 +101,7 @@
                         Mã số thuế
                     </div>
                     <div class="md-4-style-input">
-                        <input class="input-border-form" name="_maSoThue" type="text" ng-model="target.maSoThue" disabled />
+                        <input class="input-border-form" name="_maSoThue" type="text" ng-model="target.maSoThue" readonly />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -110,7 +110,7 @@
                     </div>
                     <div class="md-4-style-input">
                         <input class="input-border-form" name="_sophieudathang" type="text" ng-model="target.soPhieuDatHang" typeahead-editable="false"
-                               uib-typeahead="opt.value as opt.text for opt in donHangs | filter:$viewValue | limitTo:5" typeahead-on-select="selectedDonDatHang($item)" disabled />
+                               uib-typeahead="opt.value as opt.text for opt in donHangs | filter:$viewValue | limitTo:5" typeahead-on-select="selectedDonDatHang($item)" readonly />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -136,7 +136,7 @@
                             </div>
                             <div class="md-4-style-input">
                                 <div class="add-input-zone">
-                                    <input class="input-border-form" name="_khoNhap" type="text" ng-model="target.maKhoNhap" typeahead-editable="false" typeahead-on-select="selectedKhoNhap($item)" uib-typeahead="opt.value as opt.text for opt in tempData('wareHouses') | filter:$viewValue | limitTo:5" typeahead-input-formatter="displayHepler($model, 'wareHouses')" required disabled />
+                                    <input class="input-border-form" name="_khoNhap" type="text" ng-model="target.maKhoNhap" typeahead-editable="false" typeahead-on-select="selectedKhoNhap($item)" uib-typeahead="opt.value as opt.text for opt in tempData('wareHouses') | filter:$viewValue | limitTo:5" typeahead-input-formatter="displayHepler($model, 'wareHouses')" required readonly />
                                 </div>
                                 <span style="color: red" ng-show="_form._khoNhap.$dirty && _form._khoNhap.$invalid">
                                     <span style="color: red">Không được để trống</span>
@@ -150,7 +150,7 @@
                         Nội dung
                     </div>
                     <div class="md-6-style-input">
-                        <textarea class="form-control" rows="3" id="comment" ng-model="target.noiDung" maxlength="300" disabled></textarea>
+                        <textarea class="form-control" rows="3" id="comment" ng-model="target.noiDung" maxlength="300" readonly></textarea>
                     </div>
                 </div>
             </div>
@@ -183,7 +183,7 @@
                 <tr ng-repeat="item in data track by $index" ng-class="item.class" style="font-size:16px;">
                     <td class="text-center">{{$index + 1}}</td>
                     <td>
-                        <input type="text" style="text-align:center; width:100%;" ng-model="item.barcode" disabled>
+                        <input type="text" style="text-align:center; width:100%;" ng-model="item.barcode" readonly>
                     </td>
                     <td style="text-align:center;font-size:18px;">
                         {{item.maHang}}
@@ -191,42 +191,42 @@
                     <td>
                         {{item.tenHang}}
                     <td style="text-align: center;">
-                        <span style="text-align:center;" disabled>{{getNameDVT(item.donViTinh, 'donViTinhs')}}</span>
+                        <span style="text-align:center;" readonly>{{getNameDVT(item.donViTinh, 'donViTinhs')}}</span>
                     </td>
-                    <td style="text-align:center;" disabled>{{item.luongBao}}</td>
+                    <td style="text-align:center;" readonly>{{item.luongBao}}</td>
                     <!--<td>
                         <input type="text" style="text-align:center; width:100%" ng-model="item.soLuongBao" ng-change="robot.changeSoLuongBao(item)"
-                               awnum="number" disabled>
+                               awnum="number" readonly>
                     </td>
                     -->
                     <td>
-                        <input type="text" style="text-align: right; width: 100%" ng-model="item.soLuongLe" ng-change="robot.changeSoLuongLe(item)" awnum="number" disabled />
+                        <input type="text" style="text-align: right; width: 100%" ng-model="item.soLuongLe" ng-change="robot.changeSoLuongLe(item)" awnum="number" readonly />
                     </td>
                     <td style="text-align:right;">{{item.tyLeVatVao}}%</td>
                     <!-- <td> -->
-                    <!-- <input type="text" style="text-align:center; width:100%" ng-model="item.soLuong" awnum="number" disabled> -->
+                    <!-- <input type="text" style="text-align:center; width:100%" ng-model="item.soLuong" awnum="number" readonly> -->
                     <!-- </td> -->
                     <td>
-                        <input style="text-align:right; width:100%;" type="text" ng-model="item.donGia" ng-change="robot.changeDonGia(item)" awnum="number" disabled />
+                        <input style="text-align:right; width:100%;" type="text" ng-model="item.donGia" ng-change="robot.changeDonGia(item)" awnum="number" readonly />
                     </td>
                     <td>
-                        <input type="text" style="text-align:right; width:100%" ng-model="item.giaMuaCoVat" ng-change="robot.changeGiaMuaDonGia(item)" awnum="number" disabled />
+                        <input type="text" style="text-align:right; width:100%" ng-model="item.giaMuaCoVat" ng-change="robot.changeGiaMuaDonGia(item)" awnum="number" readonly />
                     </td>
                     <td>
-                        <div style="text-align:right; width:100%" disabled>{{item.tyLeLaiLe | number}}</div>
+                        <div style="text-align:right; width:100%" readonly>{{item.tyLeLaiLe | number}}</div>
                     </td>
                     <td>
                         <div style="text-align: right">
-                            <input type="text" style="text-align:right; width:100%" ng-model="item.thanhTien" awnum="number" disabled>
+                            <input type="text" style="text-align:right; width:100%" ng-model="item.thanhTien" awnum="number" readonly>
                         </div>
                     </td>
                     <td>
                         <div style="text-align: right">
-                            <input type="text" style="text-align:right; width:100%" ng-model="item.thanhTienVAT" awnum="number" disabled>
+                            <input type="text" style="text-align:right; width:100%" ng-model="item.thanhTienVAT" awnum="number" readonly>
                         </div>
                     </td>
                     <td>
-                        <input type="text" style="text-align: right; width: 100%" ng-model="item.giaBanLeVat" ng-change="robot.changeSoLuongBao(item)" awnum="number" disabled />
+                        <input type="text" style="text-align: right; width: 100%" ng-model="item.giaBanLeVat" ng-change="robot.changeSoLuongBao(item)" awnum="number" readonly />
                     </td>
                     <td style="white-space: nowrap" class="text-center">
                         <!-- form -->
@@ -261,7 +261,7 @@
                         <td nowrap></td>
                         <td style="text-align:right; width:20%">
                             <span style="color:red;font-weight:bold">
-                                <b><input type="text" style="text-align:right; width:100%" ng-model="target.thanhTienTruocVat" awnum="number" disabled></b>
+                                <b><input type="text" style="text-align:right; width:100%" ng-model="target.thanhTienTruocVat" awnum="number" readonly></b>
                             </span>
                         </td>
                     </tr>
@@ -271,10 +271,10 @@
                             <label>Chiết khấu:</label>
                         </td>
                         <td style="width:10%; text-align:right">
-                            <input class="input-border-form" type="text" style="text-align:right; width:100%;border-color:#ababab;" ng-model="target.chietKhau" ng-change="robot.changeChietKhau(target)" awnum="number" disabled />
+                            <input class="input-border-form" type="text" style="text-align:right; width:100%;border-color:#ababab;" ng-model="target.chietKhau" ng-change="robot.changeChietKhau(target)" awnum="number" readonly />
                         </td>
                         <td style="text-align:right">
-                            <input class="input-border-form" type="text" style="text-align:right;border-color:#ababab;" ng-model="target.tienChietKhau" ng-change="robot.changeTienChietKhau(target)" awnum="number" disabled />
+                            <input class="input-border-form" type="text" style="text-align:right;border-color:#ababab;" ng-model="target.tienChietKhau" ng-change="robot.changeTienChietKhau(target)" awnum="number" readonly />
                         </td>
                     </tr>
                     <tr>
@@ -284,11 +284,11 @@
                             <span style="color:red">(*)</span>
                         </td>
                         <td style="width:10%;text-align:right">
-                            <select class="input-border-form" ng-model="target.vat" required name="_tax" style="width:100%" ng-change="selectedTax(target)" ng-options="opt.value as opt.text for opt in tempData('taxs')" disabled></select>
+                            <select class="input-border-form" ng-model="target.vat" required name="_tax" style="width:100%" ng-change="selectedTax(target)" ng-options="opt.value as opt.text for opt in tempData('taxs')" readonly></select>
                         </td>
                         <td nowrap style="text-align:right; width:20%">
                             <span style="color:red;font-weight:bold">
-                                <b><input type="text" style="text-align: right; width: 100%" ng-model="target.tienVat" awnum="number" disabled /></b>
+                                <b><input type="text" style="text-align: right; width: 100%" ng-model="target.tienVat" awnum="number" readonly /></b>
                             </span>
                         </td>
                     </tr>
@@ -301,7 +301,7 @@
 
                         <td nowrap style="text-align:right; width:20%">
                             <span style="color:red;font-weight:bold">
-                                <b><input type="text" style="text-align: right; width: 100%" ng-model="target.thanhTienSauVat" awnum="number" disabled /></b>
+                                <b><input type="text" style="text-align: right; width: 100%" ng-model="target.thanhTienSauVat" awnum="number" readonly /></b>
                             </span>
                         </td>
                     </tr>

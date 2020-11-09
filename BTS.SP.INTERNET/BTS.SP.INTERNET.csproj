@@ -204,6 +204,7 @@
     <Content Include="BTS.SP.MART\lib\angular-file-upload.min.js" />
     <Content Include="BTS.SP.MART\lib\angular-filter.min.js" />
     <Content Include="BTS.SP.MART\lib\angular-local-storage.min.js" />
+    <Content Include="BTS.SP.MART\lib\angular-moment.min.js" />
     <Content Include="BTS.SP.MART\lib\angular-resource.min.js" />
     <Content Include="BTS.SP.MART\lib\angular-sanitize.min.js" />
     <Content Include="BTS.SP.MART\lib\angular-ui-router.min.js" />
@@ -212,6 +213,8 @@
     <Content Include="BTS.SP.MART\lib\angular.min.js" />
     <Content Include="BTS.SP.MART\lib\bootstrap.min.js" />
     <Content Include="BTS.SP.MART\lib\jquery.min.js" />
+    <Content Include="BTS.SP.MART\lib\moment-with-locales.min.js" />
+    <Content Include="BTS.SP.MART\lib\moment.min.js" />
     <Content Include="BTS.SP.MART\lib\ocLazyLoad.require.js" />
     <Content Include="BTS.SP.MART\lib\require.js" />
     <Content Include="BTS.SP.MART\lib\ui-bootstrap-tpls-1.3.3.js" />

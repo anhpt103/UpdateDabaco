@@ -6,9 +6,9 @@
 * Entity: BTS.API.ENTITY -> NV - > NvKiemKe.cs
 * Menu: Nghiệp vụ-> Kiểm kê hàng hóa
 */
-define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS.SP.MART/controllers/htdm/periodController.js', '/BTS.SP.MART/controllers/htdm/merchandiseController.js', '/BTS.SP.MART/controllers/htdm/customerController.js', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController.js', '/BTS.SP.MART/controllers/htdm/nhomVatTuController.js', '/BTS.SP.MART/controllers/htdm/supplierController.js', '/BTS.SP.MART/controllers/htdm/wareHouseController.js', '/BTS.SP.MART/controllers/htdm/packagingController.js', '/BTS.SP.MART/controllers/htdm/taxController.js', '/BTS.SP.MART/controllers/htdm/donViTinhController.js', '/BTS.SP.MART/controllers/htdm/shelvesController.js'], function () {
+define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS.SP.MART/controllers/htdm/periodController.js', '/BTS.SP.MART/controllers/htdm/merchandiseController.js', '/BTS.SP.MART/controllers/htdm/customerController.js', '/BTS.SP.MART/controllers/htdm/merchandiseTypeController.js', '/BTS.SP.MART/controllers/htdm/nhomVatTuController.js', '/BTS.SP.MART/controllers/htdm/supplierController.js', '/BTS.SP.MART/controllers/htdm/wareHouseController.js', '/BTS.SP.MART/controllers/htdm/packagingController.js', '/BTS.SP.MART/controllers/htdm/taxController.js', '/BTS.SP.MART/controllers/htdm/donViTinhController.js', '/BTS.SP.MART/controllers/htdm/shelvesController.js', '/BTS.SP.MART/controllers/auth/AuDonVi.js'], function () {
     'use strict';
-    var app = angular.module('kiemKeModule', ['ui.bootstrap', 'authModule', 'periodModule', 'merchandiseModule', 'customerModule', 'merchandiseTypeModule', 'nhomVatTuModule', 'supplierModule', 'wareHouseModule', 'packagingModule', 'taxModule', 'donViTinhModule', 'shelvesModule']);
+    var app = angular.module('kiemKeModule', ['ui.bootstrap', 'authModule', 'periodModule', 'merchandiseModule', 'customerModule', 'merchandiseTypeModule', 'nhomVatTuModule', 'supplierModule', 'wareHouseModule', 'packagingModule', 'taxModule', 'donViTinhModule', 'shelvesModule', 'AuDonViModule']);
     app.factory('kiemKeService', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/NV/KiemKe';
         var rootUrl = configService.apiServiceBaseUri;
@@ -74,8 +74,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
     }]);
     /* controller list */
     app.controller('kiemKeController', [
-        '$scope', '$location', '$http', 'configService', 'kiemKeService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', 'shelvesService', 'FileUploader', 'userService',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, serviceShelves, FileUploader, serviceAuthUser) {
+        '$scope', '$location', '$http', 'configService', 'kiemKeService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'securityService', '$rootScope', 'toaster', 'periodService', 'merchandiseService', 'customerService', 'merchandiseTypeService', 'nhomVatTuService', 'supplierService', 'wareHouseService', 'packagingService', 'taxService', 'donViTinhService', 'shelvesService', 'FileUploader', 'userService', 'AuDonViService',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, securityService, $rootScope, toaster, servicePeriod, serviceMerchandise, serviceCustomer, serviceMerchandiseType, serviceNhomVatTu, serviceSupplier, serviceWareHouse, servicePackaging, serviceTax, serviceDonViTinh, serviceShelves, FileUploader, serviceAuthUser, serviceAuthDonVi) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             var unitCode = currentUser.unitCode;
             $scope.config = angular.copy(configService);
@@ -266,6 +266,22 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             }
 
+            function loadAuthDonVi() {
+                if (!tempDataService.tempData('auDonVis')) {
+                    serviceAuthDonVi.getAll_DonVi().then(function (successRes) {
+                        if (successRes && successRes.status === 200 && successRes.data.length > 0) {
+                            tempDataService.putTempData('auDonVis', successRes.data);
+                            $scope.auDonVis = successRes.data;
+                        }
+                    }, function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                } else {
+                    $scope.auDonVis = tempDataService.tempData('auDonVis');
+                }
+            }
+
+            loadAuthDonVi();
             loadCustomer();
             loadSupplier();
             loadMerchandiseType();
@@ -476,9 +492,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $uibModalInstance.dismiss('cancel');
             };
         }]);
+
     /* controller Edit */
-    app.controller('kiemKeEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'kiemKeService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'merchandiseService',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, serviceMerchandise) {
+    app.controller('kiemKeEditController', ['$scope', '$uibModalInstance', 'configService', 'kiemKeService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'merchandiseService', 'moment',
+        function ($scope, $uibModalInstance, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, serviceMerchandise, moment) {
             $scope.config = angular.copy(configService);
             $scope.robot = angular.copy(service.robot);
             $scope.paged = angular.copy(configService.pageDefault);
@@ -500,15 +517,19 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 }
             };
+
             function filterData() {
                 service.getDetails(targetData.id).then(function (response) {
                     if (response && response.status === 200 && response.data) {
                         $scope.target = response.data.data;
+                        $scope.target.ngayKiemKe = moment($scope.target.ngayKiemKe).format("DD/MM/YYYY");
                     }
                 });
 
             };
+
             filterData();
+
             $scope.selectedMaHang = function (code) {
                 if (code) {
                     service.getMerchandiseByCode(code).then(function (response) {
@@ -518,6 +539,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     });
                 }
             };
+
             $scope.displayHepler = function (paraValue, moduleName) {
                 var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
                 if (data && data.length === 1) {
@@ -526,6 +548,16 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     return paraValue;
                 }
             }
+
+            $scope.formatLabel = function (paraValue, moduleName) {
+                var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
+                if (data && data.length === 1) {
+                    return data[0].text;
+                } else {
+                    return paraValue;
+                }
+            }
+
             $scope.addRow = function () {
                 var exsist = $scope.target.dataDetails.some(function (element, index, array) {
                     return $scope.newItem.maVatTu === element.maVatTu;
@@ -602,7 +634,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set("Cập nhật thành công", { type: 'success' });
                         $uibModalInstance.close($scope.target);
                     } else {
-                        console.log('update successRes', successRes);
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
@@ -615,19 +646,19 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 $scope.target.dataDetails = [];
                 $uibModalInstance.close();
             };
-
         }]);
 
 
     /* controller Details */
-    app.controller('kiemKeDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'kiemKeService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+    app.controller('kiemKeDetailsController', ['$scope', '$uibModalInstance', 'configService', 'kiemKeService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'moment',
+        function ($scope, $uibModalInstance, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, moment) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.tempData = tempDataService.tempData;
             $scope.target = {};
             $scope.isLoading = false;
             $scope.title = function () { return 'Chi tiết phiếu kiểm kê'; };
+
             $scope.pageChanged = function () {
                 var currentPage = $scope.paged.currentPage;
                 var itemsPerPage = $scope.paged.itemsPerPage;
@@ -644,17 +675,19 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             //note
             function fillterData() {
                 $scope.isLoading = true;
-                service.getDetails(targetData.id).then(function (resgetDetails) {
-                    if (resgetDetails && resgetDetails.status == 200 && resgetDetails.data) {
-                        $scope.target = resgetDetails.data.data;
-                        $scope.target.ngayCT = new Date($scope.target.ngayCT);
-                        $scope.target.ngayHoaDon = new Date($scope.target.ngayHoaDon);
-                        $scope.target.ngayKiemKe = new Date($scope.target.ngayKiemKe);
+                service.getDetails(targetData.id).then(function (response) {
+                    if (response && response.status == 200 && response.data) {
+                        $scope.target = response.data.data;
+                        $scope.target.ngayCT = moment($scope.target.ngayCT);
+                        $scope.target.ngayHoaDon = moment($scope.target.ngayHoaDon);
+                        $scope.target.ngayKiemKe = moment($scope.target.ngayKiemKe).format("DD/MM/YYYY");
+
                     }
                     $scope.isLoading = false;
                     $scope.pageChanged();
                 });
             }
+
             $scope.formatLabel = function (paraValue, moduleName) {
                 var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
                 if (data && data.length === 1) {
@@ -663,14 +696,15 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     return paraValue;
                 }
             }
+
             fillterData();
+
             $scope.approval = function () {
                 $scope.isDisabled = true;
                 $scope.stateIsRunning = true;
-                console.log($scope.target);
-                return;
+                $scope.target.dataDetails = [];
                 service.postComplete($scope.target).then(function (response) {
-                    if (response && response.status == 200 && response.data) {
+                    if (response && response.status == 200 && response.data.length == 0) {
                         alert("Duyệt thành công!");
                         $scope.isDisabled = false;
                         $uibModalInstance.close(response.data);
@@ -680,15 +714,12 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         alert("Thất bại! - Xảy ra lỗi hoặc phiếu này đã duyệt");
                     }
                     $scope.stateIsRunning = false;
-                }).error(function (error) {
-                    $scope.isDisabled = false;
-                    $scope.stateIsRunning = false;
-                });;
+                });
             };
+
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };
-
         }]);
     /* controller delete */
     app.controller('kiemKeDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'kiemKeService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
@@ -704,7 +735,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         ngNotify.set("Xóa thành công", { type: 'success' });
                         $uibModalInstance.close($scope.target);
                     } else {
-                        console.log('deleteItem successRes ', successRes);
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
@@ -752,9 +782,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             };
 
-
             var currentUser = serviceAuthUser.GetCurrentUser();
-            var unitCode = currentUser.unitCode;
             $scope.currentUser = currentUser.userName;
             $scope.target = {};
             var id = $stateParams.id;
@@ -762,10 +790,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.goIndex = function () {
                 $state.go('nvKiemKe');
             }
+
             $scope.selectAction = function (option) {
-                console.log(option);
                 filterData(option);
             };
+
             function sumSoLuongTonMay(lst) {
                 var result = 0;
                 for (var i = 0; i < lst.length; i++) {

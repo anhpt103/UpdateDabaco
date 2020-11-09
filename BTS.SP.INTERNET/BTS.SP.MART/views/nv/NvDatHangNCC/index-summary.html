@@ -1,6 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
         <div class="button-close" ng-click="goHome()">
             <i class="fa fa-times-circle"></i>
         </div>
@@ -153,7 +153,9 @@
                     <td style="width:10%">{{item.ngay | date : "dd/MM/yyyy"}}</td>
                     <td style="width:10%">{{formatLabel(item.maNhaCungCap,'suppliers')}}</td>
                     <td style="width:15%">{{item.noiDung}}</td>
-                    <td style="width:10%" style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
+                    <td style="width: 10%; text-align: right;">
+                        {{item.thanhTienSauVat | number}}
+                    </td>
                     <td style="width:10%">{{formatLabel(item.nguoiLap,'auUsers')}}</td>
                     <td style="width:10%" ng-class="item.trangThai == 30 ? 'is-complete' : 'not-approval-yet'">{{item.trangThai | statusDatHangNCC}}</td>
                     <td>
@@ -165,7 +167,7 @@
                         <a ui-sref="printBienBanNCC({id: item.id})" class="glyphicon glyphicon-tasks" data-toggle="tooltip" data-placement="top"
                            title="In biên bản Giao Nhận"></a> &nbsp;&nbsp;
                         <a class="glyphicon glyphicon-share-alt" ng-click="printChild(item)" data-toggle="tooltip" data-placement="top" title="In phiếu con"></a>
-                        
+
                     </td>
                 </tr>
                 <tr>

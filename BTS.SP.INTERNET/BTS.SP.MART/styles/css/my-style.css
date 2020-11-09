@@ -219,7 +219,6 @@ h3.panel-title {
     margin-bottom: 5px;
     padding: 0px;
     position: relative;
-    background: #F3F3F3;
 }
 
 body {
@@ -343,7 +342,6 @@ table .glyphicon, table .glyphicon:visited {
 
 .modal-footer {
     border-top: 0;
-    background: #F3F3F3;
 }
 
 #s4-bodyContainer {
@@ -895,7 +893,7 @@ input:focus, button:focus {
 }
 
 .item-left:nth-child(even) {
-    background-color: #f5f5f5;
+
 }
 
 .item-left:hover {
@@ -983,7 +981,7 @@ input:focus, button:focus {
     }
 
     .item-payBill:nth-child(even) {
-        background-color: #f5f5f5;
+
     }
 
     .item-payBill:hover {

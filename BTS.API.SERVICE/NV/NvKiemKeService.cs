@@ -99,10 +99,10 @@ namespace BTS.API.SERVICE.NV
             var infoPhieu = UnitOfWork.Repository<NvKiemKe>().DbSet.Any(x => x.Id == instance.Id && x.TrangThai != 10);
             if (!infoPhieu) return "Không tồn tại phiếu kiểm kê hoặc Phiếu này đã được duyệt";
 
-            var pTableName = new OracleParameter("pTableName", OracleDbType.NVarchar2, table, ParameterDirection.Input);
+            var pTableName = new OracleParameter("pTableName", OracleDbType.Varchar2, 50, table, ParameterDirection.Input);
             var pYear = new OracleParameter("pYear", OracleDbType.Decimal, year, ParameterDirection.Input);
             var pPeriod = new OracleParameter("period", OracleDbType.Decimal, period, ParameterDirection.Input);
-            var pId = instance.Id;
+            var pId = new OracleParameter("pId", OracleDbType.Varchar2, 50, instance.Id, ParameterDirection.Input);
 
             using (var ctx = new ERPContext())
             {

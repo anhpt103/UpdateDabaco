@@ -131,11 +131,11 @@
                     <td>{{item.maKhachHang}}</td>
                     <td>{{item.maDonVi}}</td>
                     <td>{{item.soLan}}</td>
-                    <td style="text-align:right;">{{item.tongTien | number}}</td>
+                    <td style="text-align:right;">{{item.tongTien | awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td colspan="5" style="text-align:right; color:red">Tổng tiền</td>
-                    <td colspan="2" style="text-align:right;">{{sum() | number}}</td>
+                    <td colspan="2" style="text-align:right;">{{sum() | awnum:'number'}}</td>
                 </tr>
             </tbody>
         </table>

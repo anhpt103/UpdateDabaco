@@ -52,53 +52,53 @@
             <td>
             <td style="text-align:left;">{{item.tenVatTu}}
             <td>
-            <td>{{item.soLuong | number}}
+            <td>{{item.soLuong | awnum:'number'}}
             <td>
-            <td>{{item.giaBanLeVat | number}}
+            <td>{{item.giaBanLeVat | awnum:'number'}}
             <td>
-            <td>{{item.tienDuocKhuyenMai | number}}({{item.tyLeLaiLe}}%)
+            <td>{{item.tienDuocKhuyenMai | awnum:'number'}}({{item.tyLeLaiLe}}%)
             <td>
-            <td>{{item.tTienCoVat | number}}
+            <td>{{item.tTienCoVat | awnum:'number'}}
             <td>
         </tr>
     </table>
     <table id='bill_kh_payment' cellpadding='0px' style='width:100%;font-size: 10px;'>
         <tr>
             <td>Tổng tiền hóa đơn</td>
-            <td>{{(target.dataDto.tongTien)| number}}</td>
+            <td>{{(target.dataDto.tongTien)| awnum:'number'}}</td>
         </tr>
         <tr>
             <td>Tiền khuyến mại</td>
-            <td>{{target.dataDto.tongTienKhuyenMai | number}}</td>
+            <td>{{target.dataDto.tongTienKhuyenMai | awnum:'number'}}</td>
         </tr>
         <tr>
             <td>Tiền voucher</td>
-            <td>  {{target.dataDto.tienVoucher | number}}</td>
+            <td>  {{target.dataDto.tienVoucher | awnum:'number'}}</td>
         </tr>
         <tr>
             <td style="font-weight:bold;font-size:11px;">Tiền khách phải trả</td>
-            <td> {{target.dataDto.allSumTienHang | number}}</td>
+            <td> {{target.dataDto.allSumTienHang | awnum:'number'}}</td>
         </tr>
 
         <tr>
             <td>Tiền thẻ</td>
-            <td>  {{target.dataDto.tienThe | number}}</td>
+            <td>  {{target.dataDto.tienThe | awnum:'number'}}</td>
         </tr>
         <tr>
             <td>Tiền COD</td>
-            <td>  {{target.dataDto.tienCOD | number}}</td>
+            <td>  {{target.dataDto.tienCOD | awnum:'number'}}</td>
         </tr>
         <tr>
             <td>Tiền mặt</td>
-            <td>  {{target.dataDto.tienMat | number}}</td>
+            <td>  {{target.dataDto.tienMat | awnum:'number'}}</td>
         </tr>
         <tr>
             <td>Khách đưa</td>
-            <td>  {{target.dataDto.tienKhachDua | number}}</td>
+            <td>  {{target.dataDto.tienKhachDua | awnum:'number'}}</td>
         </tr>
         <tr>
             <td>Tiền trả lại</td>
-            <td> {{target.dataDto.tienThua | number}}</td>
+            <td> {{target.dataDto.tienThua | awnum:'number'}}</td>
         </tr>
     </table>
 </div>

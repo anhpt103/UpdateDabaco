@@ -250,22 +250,22 @@
                             <td style="text-align:center">{{$index}}</td>
                             <td>{{item.maNguoiTao}} - {{item.nguoiTao}}</td>
                             <td style="text-align:center;">{{item.maQuayBan}}</td>
-                            <td style="text-align:right;">{{item.tongBan | number}}</td>
-                            <td style="text-align:right;">{{item.tongTraLai | number}}</td>
-                            <td style="text-align:right;">{{item.thucThu | number}}</td>
+                            <td style="text-align:right;">{{item.tongBan | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.tongTraLai | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.thucThu | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="3" style="text-align:right;">
                                 Tổng cộng:
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'tongBan') | number}}
+                                {{robot.sum(target.dataDetails, 'tongBan') | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'tongTraLai') | number}}
+                                {{robot.sum(target.dataDetails, 'tongTraLai') | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'thucThu') | number}}
+                                {{robot.sum(target.dataDetails, 'thucThu') | awnum:'number'}}
                             </td>
 
                         </tr>

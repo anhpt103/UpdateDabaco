@@ -81,7 +81,7 @@
                     </td>
                     <td>{{item.soPhieu}}</td>
                     <td>{{item.ngay | date : "dd/MM/yyyy"}}</td>
-                    <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
+                    <td style="text-align:right;">{{item.thanhTienSauVat | awnum:'number'}}</td>
                     <td>{{item.nguoiLap}}</td>
                     <td ng-class="item.trangThaiTt == 1? 'is-approval':'not-approval-yet'">
                         {{item.trangThaiTt | statusThanhToan }}</td>

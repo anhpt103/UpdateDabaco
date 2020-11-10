@@ -156,7 +156,7 @@
                             </td>
                             <td colspan="2">
                                 <div class="label-info-report">Tổng điểm: </div>
-                                <span>&nbsp;{{data.tongTien | number}}</span>
+                                <span>&nbsp;{{data.tongTien | awnum:'number'}}</span>
                             </td>
                         </tr>
                         <tr>
@@ -166,17 +166,17 @@
                             </td>
                             <td colspan="2">
                                 <div class="label-info-report">Tiền nguyên giá: </div>
-                                <span>&nbsp;{{data.tienNguyenGia | number}}</span>
+                                <span>&nbsp;{{data.tienNguyenGia | awnum:'number'}}</span>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
                                 <div class="label-info-report">Tiền khuyến mại voucher: </div>
-                                <span>&nbsp;{{data.tienVoucher | number}}</span>
+                                <span>&nbsp;{{data.tienVoucher | awnum:'number'}}</span>
                             </td>
                             <td colspan="2">
                                 <div class="label-info-report">Tiền sale: </div>
-                                <span>&nbsp;{{data.tienSale | number}}</span>
+                                <span>&nbsp;{{data.tienSale | awnum:'number'}}</span>
                             </td>
                         </tr>
                         <tr>
@@ -220,16 +220,16 @@
                                 {{item.soLuong}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.giaBanLeCoVat | number}}
+                                {{item.giaBanLeCoVat | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{(item.tyLeVoucher === null ? 0 : item.tyLeVoucher) | number}} %
+                                {{(item.tyLeVoucher === null ? 0 : item.tyLeVoucher) | awnum:'number'}} %
                             </td>
                             <td style="text-align:right;">
-                                {{(item.tienVoucher === null ? 0 : item.tienVoucher) | number}}
+                                {{(item.tienVoucher === null ? 0 : item.tienVoucher) | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.tTienCoVat | number}}
+                                {{item.tTienCoVat | awnum:'number'}}
                             </td>
                         </tr>
                     </tbody>
@@ -238,48 +238,48 @@
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tổng tiền hóa đơn:</td>
                             <td style="text-align:right;" class="value-tong-hop">
-                                {{data.tienVoucher + data.tienThe + data.tienCOD + data.tienMat | number}}</td>
+                                {{data.tienVoucher + data.tienThe + data.tienCOD + data.tienMat | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền phải trả:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{data.tienKhachDua | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{data.tienKhachDua | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tổng số lượng:</td>
                             <td style="text-align:right;" class="value-tong-hop">
-                                {{robot.sum(data.dataDetails, 'soLuong') | number}}</td>
+                                {{robot.sum(data.dataDetails, 'soLuong') | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền voucher:</td>
                             <td style="text-align:right;" class="value-tong-hop">
-                                {{data.tienVoucher === null ? 0 : data.tienVoucher | number}}</td>
+                                {{data.tienVoucher === null ? 0 : data.tienVoucher | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền thẻ:</td>
                             <td style="text-align:right;" class="value-tong-hop">
-                                {{data.tienThe === null ? 0 : data.tienThe | number}}</td>
+                                {{data.tienThe === null ? 0 : data.tienThe | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền COD:</td>
                             <td style="text-align:right;" class="value-tong-hop">
-                                {{data.tienCOD === null ? 0 : data.tienCOD | number}}</td>
+                                {{data.tienCOD === null ? 0 : data.tienCOD | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền mặt:</td>
                             <td style="text-align:right;" class="value-tong-hop">
-                                {{data.tienMat === null ? 0 : data.tienMat | number}}</td>
+                                {{data.tienMat === null ? 0 : data.tienMat | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="1" style="text-align:left;" class="name-tong-hop">Tiền thừa</td>
                             <td style="text-align:right;" class="value-tong-hop">
-                                {{data.tienThua === null ? 0 : data.tienThua | number}}</td>
+                                {{data.tienThua === null ? 0 : data.tienThua | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                 </table>

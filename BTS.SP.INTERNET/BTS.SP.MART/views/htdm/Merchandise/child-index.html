@@ -75,10 +75,10 @@
                         <td class="text-left">{{item.maVatTu}}</td>
                         <td class="text-left">{{item.tenHang}}</td>
                         <td class="text-left">{{item.maKhachHang}}</td>
-                        <td style="text-align:right;">{{item.dataDetails[0].giaMua | number}}</td>
-                        <td style="text-align:right;">{{item.dataDetails[0].giaMuaVat | number}}</td>
-                        <td style="text-align:right;">{{item.dataDetails[0].giaBanLeVat | number}}</td>
-                        <td style="text-align:right;">{{item.dataDetails[0].giaBanBuonVat | number}}</td>
+                        <td style="text-align:right;">{{item.dataDetails[0].giaMua | awnum:'number'}}</td>
+                        <td style="text-align:right;">{{item.dataDetails[0].giaMuaVat | awnum:'number'}}</td>
+                        <td style="text-align:right;">{{item.dataDetails[0].giaBanLeVat | awnum:'number'}}</td>
+                        <td style="text-align:right;">{{item.dataDetails[0].giaBanBuonVat | awnum:'number'}}</td>
                         <td class="text-center">{{getNameVAT(item.maVatRa,'taxs')}}</td>
                         <td class="text-center">{{getNameVAT(item.maVatVao,'taxs')}}</td>
                         <td class="text-left">{{item.barcode}}</td>

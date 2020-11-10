@@ -176,7 +176,7 @@
                             </td>
                             <td>
                                 <div style="text-align:right; width:100%" disabled>
-                                    {{newItem.thanhTienVAT | number}}
+                                    {{newItem.thanhTienVAT | awnum:'number'}}
                                 </div>
                             </td>
                             <td style="white-space: nowrap" class="text-center">
@@ -234,7 +234,7 @@
                             </td>
                             <td>
                                 <div style="text-align:right; width:100%" disabled>
-                                    {{item.thanhTienVAT | number}}
+                                    {{item.thanhTienVAT | awnum:'number'}}
                                 </div>
                             </td>
                             <td style="white-space: nowrap" class="text-center">
@@ -257,11 +257,11 @@
                         <td nowrap style="text-align:right;"><label>Giảm giá:</label></td>
                         <td nowrap style="width:10%"></td>
                         <td style="width:10%; text-align:right;">
-                            <span style="color:red;font-weight:bold"><b>{{target.tongTienGiamGia | number}}</b> </span>
+                            <span style="color:red;font-weight:bold"><b>{{target.tongTienGiamGia | awnum:'number'}}</b> </span>
                         </td>
                         <td nowrap style="text-align:right"><label>Thành tiền:</label></td>
                         <td style="text-align:right; width:20%">
-                            <span style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | number}}</b></span>
+                            <span style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | awnum:'number'}}</b></span>
                         </td>
                     </tr>
                     <tr>
@@ -277,7 +277,7 @@
 
                         <td nowrap style="text-align:right;"><label>Thành tiền sau CK/GG:</label></td>
                         <td style="width:10%; text-align:right;">
-                            <span style="color:red;font-weight:bold" type="number"><b>{{target.thanhTienTruocVatSauCK | number}}</b></span>
+                            <span style="color:red;font-weight:bold" type="number"><b>{{target.thanhTienTruocVatSauCK | awnum:'number'}}</b></span>
                         </td>
                     </tr>
                     <tr>
@@ -286,7 +286,7 @@
                         <td style="width:10%; text-align:right;"></td>
                         <td nowrap style="text-align:right; width:10%"> </span></td>
                         <td nowrap style="text-align:right;"><label>Tổng tiền:</label></td>
-                        <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | number}}</b></span></td>
+                        <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | awnum:'number'}}</b></span></td>
                     </tr>
                 </tbody>
             </table>

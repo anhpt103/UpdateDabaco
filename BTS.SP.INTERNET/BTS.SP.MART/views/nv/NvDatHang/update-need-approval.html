@@ -149,13 +149,13 @@
                                 </td>
                                 <td>
                                     <div style="text-align:right; width:100%" disabled>
-                                        {{item.thanhTien | number}}
+                                        {{item.thanhTien | awnum:'number'}}
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colSpan="15" style="text-align:center; color:red">Tổng tiền</td>
-                                <td style="text-align:right;">{{sum() | number}}</td>
+                                <td style="text-align:right;">{{sum() | awnum:'number'}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Configuration;
 
@@ -352,6 +354,8 @@ namespace BTS.API.SERVICE.MD
         public MdMerchandise UpdateDto(MdMerchandiseVm.MasterDto instance)
         {
             string unitCode = GetCurrentUnitCode();
+            var currentUser = (HttpContext.Current.User as ClaimsPrincipal);
+
             MdMerchandise existItem = FindById(instance.Id);
             MdMerchandise masterData = Mapper.Map<MdMerchandiseVm.MasterDto, MdMerchandise>(instance);
             List<MdMerchandisePrice> detailData = Mapper.Map<List<MdMerchandiseVm.DtoDetail>, List<MdMerchandisePrice>>(instance.DataDetails);
@@ -359,17 +363,15 @@ namespace BTS.API.SERVICE.MD
                 List<MdMerchandisePrice> detail = UnitOfWork.Repository<MdMerchandisePrice>().DbSet.Where(x => x.MaVatTu == masterData.MaVatTu && x.MaDonVi == unitCode).ToList();
                 detail.ForEach(x => x.ObjectState = ObjectState.Deleted);
             }
+            if (detailData.GroupBy(x => x.MaDonVi).Any(x => x.Count() > 1))
+                throw new Exception("Không thể tồn tại nhiều giá trên cùng đơn vị!");
+
+            detailData.ForEach(x =>
             {
-                if (detailData.GroupBy(x => x.MaDonVi).Any(x => x.Count() > 1))
-                    throw new Exception("Không thể tồn tại nhiều giá trên cùng đơn vị!");
-            }
-            {
-                detailData.ForEach(x =>
-                {
-                    x.MaVatTu = masterData.MaVatTu;
-                    x.Id = Guid.NewGuid().ToString();
-                });
-            }
+                x.MaVatTu = masterData.MaVatTu;
+                x.Id = Guid.NewGuid().ToString();
+            });
+
             masterData.PathImage = "/Upload/MerchandiseImage/" + masterData.MaVatTu + "/";
             string path = GetPhysicalPathImage() + masterData.MaVatTu + "\\";
             if (!string.IsNullOrEmpty(instance.AvatarName))
@@ -387,17 +389,52 @@ namespace BTS.API.SERVICE.MD
             masterData.IUpdateDate = DateTime.Now;
             MdMerchandise result = Update(masterData);
             UnitOfWork.Repository<MdMerchandisePrice>().InsertRange(detailData);
+
+            // Update giá hàng hóa bó hàng
+            var existsMatHangBoHang = UnitOfWork.Repository<MdBoHangChiTiet>().DbSet.Any(x => x.MaHang == result.MaVatTu && x.UnitCode == unitCode);
+            if (!existsMatHangBoHang) return result;
+            else
+            {
+                var listBoHangChuaMa = UnitOfWork.Repository<MdBoHangChiTiet>().DbSet.Where(x => x.MaHang == result.MaVatTu && x.UnitCode == unitCode);
+                if (listBoHangChuaMa != null && listBoHangChuaMa.Count() > 0)
+                {
+                    foreach (var item in listBoHangChuaMa)
+                    {
+                        var existsBoHang = UnitOfWork.Repository<MdBoHang>().DbSet.Any(x => x.MaBoHang == item.MaBoHang && x.UnitCode == unitCode && x.TrangThai == 10);
+                        if (existsBoHang)
+                        {
+                            var itemPrice = detailData.FirstOrDefault(x => x.MaVatTu == item.MaHang && x.MaDonVi == item.UnitCode);
+                            if (itemPrice != null)
+                            {
+                                item.DonGia = itemPrice.GiaBanLeVat;
+
+                                var TongBanLe = item.SoLuong * (itemPrice.GiaBanLeVat - (itemPrice.GiaBanLeVat * item.TyLeCKLe / 100));
+                                decimal.TryParse(TongBanLe.ToString(), out decimal TongLe);
+                                item.TongBanLe = Math.Round(TongLe, 2);
+
+                                var TongBanBuon = item.SoLuong * (itemPrice.GiaBanBuonVat - (itemPrice.GiaBanBuonVat * item.TyLeCKBuon / 100));
+                                decimal.TryParse(TongBanBuon.ToString(), out decimal TongBuon);
+                                item.TongBanBuon = Math.Round(TongBuon, 2);
+
+                                item.IUpdateDate = DateTime.Now;
+                                item.IUpdateBy = currentUser.Identity.Name;
+
+                                UnitOfWork.Repository<MdBoHangChiTiet>().Update(item);
+                            }
+                        }
+                    }
+                }
+            }
             return result;
         }
+
         public MdMerchandise InsertFromSql(MdMerchandise instance)
         {
             var strBarcode = isExistBarCode(instance.Barcode);
-            if (!string.IsNullOrEmpty(strBarcode))
-            {
-                throw new Exception("Barcode trùng:" + strBarcode);
-            }
+            if (!string.IsNullOrEmpty(strBarcode)) throw new Exception("Barcode trùng:" + strBarcode);
             return Insert(instance);
         }
+
         public string BuildCodeCanDienTu()
         {
             var type = TypeMasterData.CANDIENTU.ToString();

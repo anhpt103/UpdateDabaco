@@ -144,7 +144,7 @@
                         </td>
                         <td>
                             <div style="text-align:right; width:100%" disabled>
-                                {{newItem.thanhTien | number}}
+                                {{newItem.thanhTien | awnum:'number'}}
                             </div>
                         </td>
                         <td style="white-space: nowrap" class="text-center">
@@ -197,7 +197,7 @@
                         </td>
                         <td>
                             <div style="text-align:right; width:100%" disabled>
-                                {{item.thanhTien | number}}
+                                {{item.thanhTien | awnum:'number'}}
                             </div>
                         </td>
                         <td style="white-space: nowrap" class="text-center">
@@ -208,7 +208,7 @@
                     </tr>
                     <tr>
                         <td colspan="14" style="text-align:center; color:red">Tổng tiền</td>
-                        <td style="text-align:right;">{{robot.sum(data, 'thanhTien') | number}}</td>
+                        <td style="text-align:right;">{{robot.sum(data, 'thanhTien') | awnum:'number'}}</td>
                     </tr>
                 </tbody>
             </table>

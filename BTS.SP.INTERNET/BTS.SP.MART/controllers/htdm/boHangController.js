@@ -71,16 +71,19 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 if (!item.maBaoBi) {
                     item.luongBao = 1;
                 }
-                if (!item.soLuongBao) {
-                    item.soLuongBao = 0;
-                }
+                //if (!item.soLuongBao) {
+                //    item.soLuongBao = 0;
+                //}
                 if (!item.giamGia) {
                     item.giamGia = 0;
                 }
-                item.soLuong = item.soLuongBao * item.luongBao + item.soLuongLe;
-                item.tienTruocGiamGia = item.soLuong * item.donGia;
-                item.tienGiamGia = item.soLuong * item.giamGia;
-                item.thanhTien = item.soLuong * item.donGia - item.tienGiamGia;
+                item.soLuongLe = item.soLuong;
+                //item.soLuong = /*item.soLuongBao * item.luongBao + item.soLuongLe;*/
+                item.tienTruocGiamGia = Math.round((item.soLuong * item.donGia) * 100) / 100;
+                item.tienGiamGia = Math.round((item.soLuong * item.giamGia) * 100) / 100;
+                item.thanhTien = Math.round((item.soLuong * item.donGia - item.tienGiamGia) * 100) / 100;
+                item.tongBanLe = Math.round((item.soLuong * (item.donGia - (item.donGia * item.tyLeCKLe / 100))) * 100) / 100;
+                item.tongBanBuon = Math.round((item.soLuong * (item.giaBanBuon - (item.giaBanBuon * item.tyLeCKBuon / 100))) * 100) / 100;
             },
             changeDonGia: function (item) {
                 if (!item.soLuong) {
@@ -445,7 +448,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                             angular.forEach($scope.target.dataDetails, function (v, k) {
                                 if (v.maHang == $scope.newItem.maHang) {
                                     $scope.target.dataDetails[k].soLuong = getNum($scope.newItem.soLuong) + getNum($scope.target.dataDetails[k].soLuong);
-                                    $scope.target.dataDetails[k].soLuongBao = getNum($scope.newItem.soLuongBao) + getNum($scope.target.dataDetails[k].soLuongBao);
+                                    //$scope.target.dataDetails[k].soLuongBao = getNum($scope.newItem.soLuongBao) + getNum($scope.target.dataDetails[k].soLuongBao);
                                     $scope.target.dataDetails[k].soLuongLe = getNum($scope.newItem.soLuongLe) + getNum($scope.target.dataDetails[k].soLuongLe);
                                     $scope.target.dataDetails[k].thanhTien = getNum($scope.newItem.soLuong) * getNum($scope.target.dataDetails[k].donGia);
                                     service.robot.changeSoLuongLe($scope.target.dataDetails[k]);
@@ -644,7 +647,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                             angular.forEach($scope.target.dataDetails, function (v, k) {
                                 if (v.maHang == $scope.newItem.maHang) {
                                     $scope.target.dataDetails[k].soLuong = getNum($scope.newItem.soLuong) + getNum($scope.target.dataDetails[k].soLuong);
-                                    $scope.target.dataDetails[k].soLuongBao = getNum($scope.newItem.soLuongBao) + getNum($scope.target.dataDetails[k].soLuongBao);
+                                    //$scope.target.dataDetails[k].soLuongBao = getNum($scope.newItem.soLuongBao) + getNum($scope.target.dataDetails[k].soLuongBao);
                                     $scope.target.dataDetails[k].soLuongLe = getNum($scope.newItem.soLuongLe) + getNum($scope.target.dataDetails[k].soLuongLe);
                                     $scope.target.dataDetails[k].thanhTien = getNum($scope.newItem.soLuong) * getNum($scope.target.dataDetails[k].donGia);
                                     service.robot.changeSoLuongLe($scope.target.dataDetails[k]);

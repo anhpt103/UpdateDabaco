@@ -98,7 +98,7 @@
                                     typeahead-editable="false"
                                     uib-typeahead="opt.value as opt.text for opt in tempData('customers') | filter:$viewValue"
                                     typeahead-input-formatter="displayHepler($model, 'customers')" disabled /></td>
-                            <td style="text-align:right">{{item.soTien | number}}</td>
+                            <td style="text-align:right">{{item.soTien | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                 </table>

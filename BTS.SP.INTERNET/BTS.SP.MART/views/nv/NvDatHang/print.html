@@ -65,12 +65,12 @@
                             <td>{{item.ngay | date : "dd/MM/yyyy"}}</td>
                             <td>{{item.noiDung}}</td> 
                             <td>{{item.nguoiLap}}</td>
-                            <td style="text-align:right;">{{item.thanhTien | number}}</td>
+                            <td style="text-align:right;">{{item.thanhTien | awnum:'number'}}</td>
                             <td ng-class="item.trangThai == 10 ? 'is-complete' : item.trangThai == 20 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}}</td>
                         </tr>
                         <tr>
                             <td colSpan="5" style="text-align:center; color:red">Tổng tiền</td>
-                            <td style="text-align:right;">{{robot.sum(printData, 'thanhTien') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(printData, 'thanhTien') | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                 </table>

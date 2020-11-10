@@ -193,7 +193,7 @@
                     </td>
                     <td>
                         <div style="text-align: right;">
-                            {{(item.soLuongCT * item.donGia) | number}}
+                            {{(item.soLuongCT * item.donGia) | awnum:'number'}}
                         </div>
                     </td>
                     <td>
@@ -206,12 +206,12 @@
                     </td>
                     <td>
                         <div style="text-align: center;">
-                            {{item.soLuong | number}}
+                            {{item.soLuong | awnum:'number'}}
                         </div>
                     </td>
                     <td>
                         <div style="text-align: right;">
-                            {{item.thanhTien | number}}
+                            {{item.thanhTien | awnum:'number'}}
                         </div>
                     </td>
                 </tr>
@@ -239,7 +239,7 @@
                     <td nowrap style="text-align:center"><label>Thành tiền:</label></td>
                     <td nowrap></td>
                     <td style="text-align:right; width:20%"><span
-                            style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | number}}</b></span></td>
+                            style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | awnum:'number'}}</b></span></td>
                 </tr>
                 <tr>
                     <td style="width:55%"></td>
@@ -266,14 +266,14 @@
                         <!--<input class="input-border-form" name="_tax" type="text" style="border-color:#ababab;" ng-model="target.vat" typeahead-editable="false" typeahead-on-select="selectedTax(target, $item)" uib-typeahead="opt.value as opt.text for opt in tempData('taxs') | filter:$viewValue | limitTo:5" typeahead-input-formatter="formatLabel($model, 'taxs')" />-->
                     </td>
                     <td nowrap style="text-align:right; width:20%"> <span
-                            style="color:red;font-weight:bold"><b>{{target.tienVat| number}}</b></span></td>
+                            style="color:red;font-weight:bold"><b>{{target.tienVat| awnum:'number'}}</b></span></td>
                 </tr>
                 <tr>
                     <td style="width:55%"></td>
                     <td nowrap style="text-align:center"><label>Tổng tiền:</label></td>
                     <td></td>
                     <td nowrap style="text-align:right; width:20%"> <span
-                            style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | number}}</b></span></td>
+                            style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | awnum:'number'}}</b></span></td>
                 </tr>
             </tbody>
         </table>

@@ -215,20 +215,20 @@
                                 <span>{{item.soLuongKiemKe}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{(item.soLuongKiemKe -  item.soLuongTonMay)| number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{(item.soLuongKiemKe -  item.soLuongTonMay)| awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{(item.soLuongTonMay - item.soLuongKiemKe) | number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{(item.soLuongTonMay - item.soLuongKiemKe) | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;"></td>
                             <td style="text-align:right;">
-                                <span>{{item.giaVon | number}}</span>
+                                <span>{{item.giaVon | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{(item.soLuongKiemKe - item.soLuongTonMay)*item.giaVon | number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{(item.soLuongKiemKe - item.soLuongTonMay)*item.giaVon | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{(item.soLuongTonMay - item.soLuongKiemKe)*item.giaVon | number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{(item.soLuongTonMay - item.soLuongKiemKe)*item.giaVon | awnum:'number'}}</span>
                             </td>
                         </tr>
                         <tr>
@@ -236,26 +236,26 @@
                                 <span>Tổng</span>
                             </td>
                             <td style="text-align:right;">
-                                <span>{{sumSoLuongMay | number}}</span>
+                                <span>{{sumSoLuongMay | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span>{{sumKiemKe | number}}</span>
+                                <span>{{sumKiemKe | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{sumKiemKe - sumSoLuongMay | number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{sumKiemKe - sumSoLuongMay | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{sumSoLuongMay - sumKiemKe | number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{sumSoLuongMay - sumKiemKe | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;"></td>
                             <td style="text-align:right;">
-                                <span>{{sumGiaVon | number}}</span>
+                                <span>{{sumGiaVon | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{thanhTienThua | number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '2'">{{thanhTienThua | awnum:'number'}}</span>
                             </td>
                             <td style="text-align:right;">
-                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{thanhTienThieu | number}}</span>
+                                <span ng-if="lstKiemKe.soPhieuKiemKe == '3'">{{thanhTienThieu | awnum:'number'}}</span>
                             </td>
                         </tr>
                     </tbody>

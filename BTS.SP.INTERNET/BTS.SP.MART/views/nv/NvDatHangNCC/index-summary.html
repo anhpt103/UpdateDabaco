@@ -154,7 +154,7 @@
                     <td style="width:10%">{{formatLabel(item.maNhaCungCap,'suppliers')}}</td>
                     <td style="width:15%">{{item.noiDung}}</td>
                     <td style="width: 10%; text-align: right;">
-                        {{item.thanhTienSauVat | number}}
+                        {{item.thanhTienSauVat | awnum:'number'}}
                     </td>
                     <td style="width:10%">{{formatLabel(item.nguoiLap,'auUsers')}}</td>
                     <td style="width:10%" ng-class="item.trangThai == 30 ? 'is-complete' : 'not-approval-yet'">{{item.trangThai | statusDatHangNCC}}</td>
@@ -172,7 +172,7 @@
                 </tr>
                 <tr>
                     <td colSpan="4" style="text-align:center; color:red">Tổng tiền</td>
-                    <td style="text-align:right;">{{robot.sum(data, 'thanhTienSauVat') | number}}</td>
+                    <td style="text-align:right;">{{robot.sum(data, 'thanhTienSauVat') | awnum:'number'}}</td>
                 </tr>
             </tbody>
         </table>

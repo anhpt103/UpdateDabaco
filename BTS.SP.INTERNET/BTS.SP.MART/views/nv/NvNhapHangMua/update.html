@@ -214,7 +214,7 @@
                         <input type="text" style="text-align:right; width:100%;font-size:16px;" ng-model="newItem.giaMuaCoVat" ng-change="robot.changeGiaMuaDonGia(newItem)" awnum="number" />
                     </td>
                     <td>
-                        <div style="text-align:right; width:100%;font-size:16px;" disabled>{{newItem.tyLeLaiLe | number}}</div>
+                        <div style="text-align:right; width:100%;font-size:16px;" disabled>{{newItem.tyLeLaiLe | awnum:'number'}}</div>
                     </td>
                     <td>
                         <div style="text-align:right; width:100%;font-size:16px;" disabled>
@@ -274,7 +274,7 @@
                         <input type="text" style="text-align:right; width:100%" ng-model="item.giaMuaCoVat" ng-change="robot.changeGiaMuaDonGia(item)" awnum="number" />
                     </td>
                     <td>
-                        <div style="text-align:right; width:100%" disabled>{{item.tyLeLaiLe | number}}</div>
+                        <div style="text-align:right; width:100%" disabled>{{item.tyLeLaiLe | awnum:'number'}}</div>
                     </td>
                     <td>
                         <div style="text-align: right">

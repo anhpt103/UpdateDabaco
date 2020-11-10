@@ -87,48 +87,48 @@
                         {{item.tenVatTu}}
                     </td>
                     <td style="border: 1px solid black;">
-                        {{item.soLuong | number}}
+                        {{item.soLuong | awnum:'number'}}
                     </td>
                     <td style="border: 1px solid black;">
-                        {{item.giaBanLeVat | number}}
+                        {{item.giaBanLeVat | awnum:'number'}}
                     </td>
                     <td style="border: 1px solid black;">
-                        {{item.thanhTien | number}}
+                        {{item.thanhTien | awnum:'number'}}
                     </td>
                 </tr>
             </tbody>
             <tbody style='width:100%;font-size: 10px;'>
                 <tr>
                     <td colspan="6">Tổng tiền hóa đơn</td>
-                    <td>{{(target.dataDto.allSumTienHang)| number}}</td>
+                    <td>{{(target.dataDto.allSumTienHang)| awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td colspan="6">Tiền khuyến mại</td>
-                    <td>{{target.dataDto.allSumTienKhuyenMai | number}}</td>
+                    <td>{{target.dataDto.allSumTienKhuyenMai | awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td colspan="6">Tiền voucher</td>
-                    <td>  {{target.dataDto.tienVoucher | number}}</td>
+                    <td>  {{target.dataDto.tienVoucher | awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold;font-size:11px;" colspan="6">Tiền khách phải trả</td>
-                    <td style="font-weight:bold;">{{(target.dataDto.allSumTienHang - target.dataDto.allSumTienKhuyenMai -target.dataDto.tienVoucher) | number}}</td>
+                    <td style="font-weight:bold;">{{(target.dataDto.allSumTienHang - target.dataDto.allSumTienKhuyenMai -target.dataDto.tienVoucher) | awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td colspan="6">Tiền thẻ</td>
-                    <td>  {{target.dataDto.tienThe | number}}</td>
+                    <td>  {{target.dataDto.tienThe | awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td colspan="6">Tiền COD</td>
-                    <td>  {{target.dataDto.tienCOD | number}}</td>
+                    <td>  {{target.dataDto.tienCOD | awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td colspan="6">Tiền mặt</td>
-                    <td>  {{target.dataDto.tienMat | number}}</td>
+                    <td>  {{target.dataDto.tienMat | awnum:'number'}}</td>
                 </tr>
                 <tr>
                     <td colspan="6">Tiền trả lại</td>
-                    <td> {{target.dataDto.tienThua | number}}</td>
+                    <td> {{target.dataDto.tienThua | awnum:'number'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -173,16 +173,16 @@
                             {{item.tenVatTu}}
                         </td>
                         <td style="text-align:center;">
-                            {{item.soLuong | number}}
+                            {{item.soLuong | awnum:'number'}}
                         </td>
                         <td style="text-align:right;">
-                            {{item.giaBanLeCoVat | number}}
+                            {{item.giaBanLeCoVat | awnum:'number'}}
                         </td>
                         <td style="text-align:center;">
-                            {{item.tienDuocKhuyenMai | number}}
+                            {{item.tienDuocKhuyenMai | awnum:'number'}}
                         </td>
                         <td style="text-align:right">
-                            {{item.thanhTien | number}}
+                            {{item.thanhTien | awnum:'number'}}
                         </td>
                     </tr>
                     <tr class="info">
@@ -191,7 +191,7 @@
                         <td></td>
                         <td>Tổng tiền hóa đơn</td>
                         <td style="text-align:right;">
-                            {{target.dataDto.allSumTienHang | number}}
+                            {{target.dataDto.allSumTienHang | awnum:'number'}}
                         </td>
                     </tr>
                     <tr class="info">
@@ -200,7 +200,7 @@
                         <td></td>
                         <td>Tiền sale off</td>
                         <td style="text-align:right;">
-                            {{target.dataDto.allSumTienKhuyenMai | number}}
+                            {{target.dataDto.allSumTienKhuyenMai | awnum:'number'}}
                         </td>
                     </tr>
                     <tr class="info">
@@ -209,7 +209,7 @@
                         <td></td>
                         <td>Tiền voucher</td>
                         <td style="text-align:right;">
-                            {{target.dataDto.tienVoucher | number}}
+                            {{target.dataDto.tienVoucher | awnum:'number'}}
                         </td>
                     </tr>
                     <tr class="info">
@@ -218,7 +218,7 @@
                         <td></td>
                         <td>Tiền hóa đơn</td>
                         <td style="text-align:right;">
-                            {{target.dataDto.allSumTienHang - target.dataDto.allSumTienKhuyenMai -target.dataDto.tienVoucher | number}}
+                            {{target.dataDto.allSumTienHang - target.dataDto.allSumTienKhuyenMai -target.dataDto.tienVoucher | awnum:'number'}}
                         </td>
                     </tr>
                     <tr class="info">
@@ -227,7 +227,7 @@
                         <td></td>
                         <td>Tiền khách đưa</td>
                         <td style="text-align:right;">
-                            {{target.dataDto.tienMat | number}}
+                            {{target.dataDto.tienMat | awnum:'number'}}
                         </td>
                     </tr>
                     <tr class="info">
@@ -236,7 +236,7 @@
                         <td></td>
                         <td>Tiền trả lại</td>
                         <td style="text-align:right;">
-                            {{target.dataDto.tienThua | number}}
+                            {{target.dataDto.tienThua | awnum:'number'}}
                         </td>
                     </tr>
                     <tr class="danger" ng-enter="payBill();printDiv('reportBill')">

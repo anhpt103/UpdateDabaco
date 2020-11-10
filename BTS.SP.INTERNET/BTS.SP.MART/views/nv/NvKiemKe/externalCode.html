@@ -7,7 +7,7 @@
                 <i class="fa fa-times-circle"></i>
             </div>
         </div>
-        <span>{{target.count | number}} bản ghi</span>
+        <span>{{target.count | awnum:'number'}} bản ghi</span>
         <div class="modal-body" style="font-size: 15px;">
             <uib-tabset active="active">
                 <uib-tab index="0" heading="Chi tiết">
@@ -100,15 +100,15 @@
                                 <td style="text-align:center;">{{item.maNhomVatTu}}</td>
                                 <td style="text-align:center;">{{item.maKhachHang}}</td>
                                 <td style="text-align:center;">{{item.maKho}}</td>
-                                <td style="text-align:right;">{{item.tonDauKySl | number}}</td>
-                                <td style="text-align:right;">{{item.tonDauKyGt | number}}</td>
-                                <td style="text-align:right;">{{item.nhapSl | number}}</td>
-                                <td style="text-align:right;">{{item.nhapGt | number}}</td>
-                                <td style="text-align:right;">{{item.xuatSl | number}}</td>
-                                <td style="text-align:right;">{{item.xuatGt | number}}</td>
-                                <td style="text-align:right;">{{item.tonCuoiKySl | number}}</td>
-                                <td style="text-align:right;">{{item.tonCuoiKyGt | number}}</td>
-                                <td style="text-align:right;">{{item.giaVon | number}}</td>
+                                <td style="text-align:right;">{{item.tonDauKySl | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.tonDauKyGt | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.nhapSl | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.nhapGt | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.xuatSl | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.xuatGt | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.tonCuoiKySl | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.tonCuoiKyGt | awnum:'number'}}</td>
+                                <td style="text-align:right;">{{item.giaVon | awnum:'number'}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -2746,13 +2746,16 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     }
                 }
             }
+
             $scope.selectedMaHang = function (code) {
                 if (code) {
                     service.getMerchandiseForNvByCode(code, null, unitCode).then(function (response) {
                         if (response && response.status == 200 && response.data && response.data.status) {
                             $scope.newItem = response.data.data;
                             $scope.newItem.validateCode = response.data.data.maVatTu;
-                            $scope.newItem.soLuong = 1;
+                            $scope.newItem.soLuong = 0;
+                            document.getElementById('soLuong').focus();
+                            document.getElementById("soLuong").select();
                         } else {
                             $scope.addNewItem(code);
                         }
@@ -2762,6 +2765,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.addRow = function () {
                 if (!$scope.newItem.soLuong || $scope.newItem.soLuong < 1) {
                     document.getElementById('soLuong').focus();
+                    document.getElementById("soLuong").select();
                     var exsist = $scope.target.dataDetails.some(function (element, index, array) {
                         return $scope.newItem.maHang.toUpperCase() == element.maHang;
                     });

@@ -96,17 +96,17 @@
                         <td>{{item.tenHang}}</td>
                         <td><input class="input-border-form" disabled type="number" min="0" style="width:100%"
                                 ng-change="changeSoLuong(item)" ng-model="item.soLuong"></td>
-                        <td>{{item.donGia | number}}</td>
+                        <td>{{item.donGia | awnum:'number'}}</td>
                         <td><input class="input-border-form" disabled type="number" min="0" max="100" style="width:100%"
                                 ng-change="changeGiamGia(item)" ng-model="item.giamGia"></td>
-                        <td>{{item.tienGiamGia | number}}</td>
-                        <td>{{item.thanhTien | number}}</td>
+                        <td>{{item.tienGiamGia | awnum:'number'}}</td>
+                        <td>{{item.thanhTien | awnum:'number'}}</td>
                         <td>Mã bó</td>
                         <td>CTKM</td>
                     </tr>
                     <tr style="text-align:center">
                         <td colspan="7" style="color:red; text-align:center">Tổng</td>
-                        <td>{{robot.sum(target.dataDetails, 'thanhTien') | number}}</td>
+                        <td>{{robot.sum(target.dataDetails, 'thanhTien') | awnum:'number'}}</td>
                     </tr>
                 </tbody>
             </table>

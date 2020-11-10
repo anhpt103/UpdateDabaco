@@ -6,7 +6,7 @@
     <div class="modal-body" style="font-size: 15px;">
         <uib-tabset active="active">
             <uib-tab>
-                <span>Tìm thấy {{data.length | number}} bản ghi</span>
+                <span>Tìm thấy {{data.length | awnum:'number'}} bản ghi</span>
                 <table class="table table-bordered table-hover table-condensed">
                     <thead>
                         <tr style="font-weight: bold">
@@ -39,17 +39,17 @@
                             <td style="text-align:center;">{{item.maNhomVatTu}}</td>
                             <td style="text-align:center;">{{item.tenNhaCungCap}}</td>
                             <td style="text-align:center;">{{item.tyLeVatRa}}</td>
-                            <td style="text-align:right;">{{item.donGia | number}}</td>
-                            <td style="text-align:right;">{{item.soLuong | number}}</td>
-                            <td style="text-align:right;">{{item.thanhTien | number}}</td>
+                            <td style="text-align:right;">{{item.donGia | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.soLuong | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.thanhTien | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                     <tbody class="tong-hop">
                         <tr></tr>
                         <tr>
                             <td colspan="10" right;" class="name-tong-hop">Tổng bán âm từng trang: </td>
-                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(lstVatTu, 'soLuong') | number}}</td>
-                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(lstVatTu,'thanhTien') | number}}</td>
+                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(lstVatTu, 'soLuong') | awnum:'number'}}</td>
+                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(lstVatTu,'thanhTien') | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                     <tbody class="tong-hop">
@@ -57,8 +57,8 @@
                         </tr>
                         <tr>
                             <td colspan="10" right;" class="name-tong-hop">Tổng bán âm toàn phiếu: </td>
-                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(data, 'soLuong') | number}}</td>
-                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(data,'thanhTien') | number}}</td>
+                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(data, 'soLuong') | awnum:'number'}}</td>
+                            <td class="value-tong-hop" style="text-align:right">{{robot.sum(data,'thanhTien') | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                 </table>

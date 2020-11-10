@@ -156,7 +156,7 @@
                     <td>{{item.noiDung}}</td>
                     <td>{{displayHepler(item.maKhachHang, 'customers')}}</td>
                     <td>{{displayHepler(item.maKhoXuat, 'wareHouses')}}</td>
-                    <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
+                    <td style="text-align:right;">{{item.thanhTienSauVat | awnum:'number'}}</td>
                     uV
                     <!--<td ng-class="item.trangThai == 10 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}}</td>-->
                     <td>
@@ -166,7 +166,7 @@
                 </tr>
                 <tr>
                     <td colSpan="6" style="text-align:center; color:red">Tổng tiền</td>
-                    <td style="text-align:right;">{{sum() | number}}</td>
+                    <td style="text-align:right;">{{sum() | awnum:'number'}}</td>
                 </tr>
             </tbody>
         </table>

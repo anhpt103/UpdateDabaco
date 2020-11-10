@@ -210,10 +210,10 @@
                                 {{item.soLuong}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.donGia | number}}
+                                {{item.donGia | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.thanhTien | number}}
+                                {{item.thanhTien | awnum:'number'}}
                             </td>
                         </tr>
 
@@ -221,7 +221,7 @@
                     <tbody class="tong-hop">
                         <tr>
                             <td class="name-tong-hop" colspan="5" style="text-align: center;">Tổng tiền</td>
-                            <td class="value-tong-hop" style="text-align:right;">{{robot.sum(target.dataReportDetails, 'thanhTien') | number}}</td>
+                            <td class="value-tong-hop" style="text-align:right;">{{robot.sum(target.dataReportDetails, 'thanhTien') | awnum:'number'}}</td>
                         </tr>
                     </tbody>
               </table>

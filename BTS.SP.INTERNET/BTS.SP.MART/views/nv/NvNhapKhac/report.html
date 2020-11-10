@@ -238,27 +238,27 @@
                                 {{item.soLuong}}
                             </td>
                             <td style="text-align:center;">
-                                {{item.donGia | number}}
+                                {{item.donGia | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
                                 {{displayHepler(item.vat,'taxRate')}}%
                             </td>
                             <td style="text-align:right;">
-                                {{item.giaMuaCoVat | number}}
+                                {{item.giaMuaCoVat | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.thanhTien | number}}
+                                {{item.thanhTien | awnum:'number'}}
                             </td>
                         </tr>
                     </tbody>
                     <tbody class="tong-hop">
                         <tr>
                             <td colspan="9" right;" class="name-tong-hop">Tổng số lượng: </td>
-                            <td class="value-tong-hop">{{robot.sum(target.dataReportDetails, 'soLuong') | number}}</td>
+                            <td class="value-tong-hop">{{robot.sum(target.dataReportDetails, 'soLuong') | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="9" class="name-tong-hop">Tổng tiền hàng: </td>
-                            <td class="value-tong-hop">{{target.thanhTienTruocVat | number}}</td>
+                            <td class="value-tong-hop">{{target.thanhTienTruocVat | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="9" class="name-tong-hop">Tổng tiền chiết khấu: </td>
@@ -267,7 +267,7 @@
 
                         <tr>
                             <td colspan="9" class="name-tong-hop">Tổng thanh toán: </td>
-                            <td class="value-tong-hop">{{target.thanhTienSauVat | number}}</td>
+                            <td class="value-tong-hop">{{target.thanhTienSauVat | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                 </table>

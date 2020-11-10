@@ -149,7 +149,7 @@
                                 </td>
                                 <td>
                                     <div style="text-align:right; width:100%" disabled>
-                                        {{newItem.thanhTien | number}}
+                                        {{newItem.thanhTien | awnum:'number'}}
                                     </div>
                                 </td>
                                 <td>
@@ -185,7 +185,7 @@
                                 </td>
                                 <td>
                                     <div style="text-align:right; width:100%" disabled>
-                                        {{item.thanhTien | number}}
+                                        {{item.thanhTien | awnum:'number'}}
                                     </div>
                                 </td>
                                 <td>
@@ -199,7 +199,7 @@
                             </tr>
                             <tr>
                                 <td colspan="7" style="text-align:center; color:red">Tổng tiền</td>
-                                <td style="text-align:right;">{{robot.sum(data, 'thanhTien') | number}}</td>
+                                <td style="text-align:right;">{{robot.sum(data, 'thanhTien') | awnum:'number'}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -210,7 +210,7 @@
                                     <td style="width:55%"></td>
                                     <td nowrap style="text-align:center"><label>Thành tiền:</label></td>
                                     <td nowrap></td>
-                                    <td style="text-align:right; width:20%"><span style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | number}}</b></span></td>
+                                    <td style="text-align:right; width:20%"><span style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | awnum:'number'}}</b></span></td>
                                 </tr>
                                 <tr>
                                     <td style="width:55%"></td>
@@ -228,13 +228,13 @@
                                     <td style="width:10%;text-align:right">
                                         <select class="input-border-form" ng-model="target.vat" required name="_tax" style="border-color:#ababab;width:100%" ng-change="selectedTax(target)" ng-options="opt.value as opt.text for opt in tempData('taxs')"></select>
                                     </td>
-                                    <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.tienVat| number}}</b></span></td>
+                                    <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.tienVat| awnum:'number'}}</b></span></td>
                                 </tr>
                                 <tr>
                                     <td style="width:55%"></td>
                                     <td nowrap style="text-align:center"><label>Tổng tiền:</label></td>
                                     <td></td>
-                                    <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | number}}</b></span></td>
+                                    <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | awnum:'number'}}</b></span></td>
                                 </tr>
                             </tbody>
                         </table>

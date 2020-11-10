@@ -59,50 +59,50 @@
                 <td>
                 <td>{{item.tenVatTu}}
                 <td>
-                <td>{{item.soLuong | number}}
+                <td>{{item.soLuong | awnum:'number'}}
                 <td>
-                <td>{{item.giaBanLeVat | number}}
+                <td>{{item.giaBanLeVat | awnum:'number'}}
                 <td>
-                <td ng-if="!item.tyLeChietKhau">{{item.tienDuocKhuyenMai | number}}
-                <td ng-if="item.tyLeChietKhau">{{item.tienDuocKhuyenMai | number}}({{item.tyLeLaiLe}}%)
+                <td ng-if="!item.tyLeChietKhau">{{item.tienDuocKhuyenMai | awnum:'number'}}
+                <td ng-if="item.tyLeChietKhau">{{item.tienDuocKhuyenMai | awnum:'number'}}({{item.tyLeLaiLe}}%)
                 <td>
-                <td>{{item.tTienCoVat | number}}
+                <td>{{item.tTienCoVat | awnum:'number'}}
                 <td>
             </tr>
         </table>
         <table id='bill_kh_payment' cellpadding='0px' style='width:100%;font-size: 10px;'>
             <tr>
                 <td>Tổng tiền hóa đơn</td>
-                <td style="text-align:right;">{{(target.dataDto.tongTien)| number}}</td>
+                <td style="text-align:right;">{{(target.dataDto.tongTien)| awnum:'number'}}</td>
             </tr>
             <tr>
                 <td>Tiền khuyến mại</td>
-                <td style="text-align:right;">{{target.dataDto.tongTienKhuyenMai | number}}</td>
+                <td style="text-align:right;">{{target.dataDto.tongTienKhuyenMai | awnum:'number'}}</td>
             </tr>
             <tr>
                 <td>Tiền voucher</td>
-                <td style="text-align:right;"> {{target.dataDto.tienVoucher | number}}</td>
+                <td style="text-align:right;"> {{target.dataDto.tienVoucher | awnum:'number'}}</td>
             </tr>
             <tr>
                 <td style="font-weight:bold;font-size:11px;">Tiền khách phải trả</td>
-                <td style="text-align:right;font-weight:bold;"> {{target.dataDto.allSumTienHang | number}}</td>
+                <td style="text-align:right;font-weight:bold;"> {{target.dataDto.allSumTienHang | awnum:'number'}}</td>
             </tr>
 
             <tr>
                 <td>Tiền thẻ</td>
-                <td style="text-align:right;"> {{target.dataDto.tienThe | number}}</td>
+                <td style="text-align:right;"> {{target.dataDto.tienThe | awnum:'number'}}</td>
             </tr>
             <tr>
                 <td>Tiền COD</td>
-                <td style="text-align:right;"> {{target.dataDto.tienCOD | number}}</td>
+                <td style="text-align:right;"> {{target.dataDto.tienCOD | awnum:'number'}}</td>
             </tr>
             <tr>
                 <td>Tiền mặt</td>
-                <td style="text-align:right;"> {{target.dataDto.tienMat | number}}</td>
+                <td style="text-align:right;"> {{target.dataDto.tienMat | awnum:'number'}}</td>
             </tr>
             <tr>
                 <td>Tiền trả lại</td>
-                <td style="text-align:right;"> {{target.dataDto.tienThua | number}}</td>
+                <td style="text-align:right;"> {{target.dataDto.tienThua | awnum:'number'}}</td>
             </tr>
         </table>
     </div>

@@ -130,17 +130,17 @@
                         <td>{{item.maHang}}</td>
                         <td>{{item.tenHang}}</td>
                         <td><input class="input-border-form" type="number" min="0" style="width:100%" ng-change="changeSoLuong(item)" ng-model="item.soLuong"></td>
-                        <td>{{item.donGia | number}}</td>
+                        <td>{{item.donGia | awnum:'number'}}</td>
                         <td><input class="input-border-form" type="number" min="0" max="100" style="width:100%" ng-change="changeGiamGia(item)" ng-model="item.giamGia"></td>
-                        <td>{{item.tienGiamGia | number}}</td>
-                        <td>{{item.thanhTien | number}}</td>
+                        <td>{{item.tienGiamGia | awnum:'number'}}</td>
+                        <td>{{item.thanhTien | awnum:'number'}}</td>
                         <td>Mã bó</td>
                         <td>CTKM</td>
                         <td style="text-align:center"><a ng-click="remove($index)"><span class="glyphicon glyphicon-remove" style="color:#ff0000;"></span></a></td>
                     </tr>
                     <tr style="text-align:center">
                         <td colspan="7" style="color:red; text-align:center">Tổng</td>
-                        <td>{{robot.sum(target.dataDetails, 'thanhTien') | number}}</td>
+                        <td>{{robot.sum(target.dataDetails, 'thanhTien') | awnum:'number'}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -331,7 +331,7 @@
                     {{item.donGia}}
                 </td>
                 <td>
-                    {{item.thanhTien | number}}
+                    {{item.thanhTien | awnum:'number'}}
                 </td>
             </tr>
             <tr class="total">
@@ -342,7 +342,7 @@
                     {{target.chietKhau}}%
                 </td>
                 <td>
-                    {{target.tienChietKhau | number}}
+                    {{target.tienChietKhau | awnum:'number'}}
                 </td>
             </tr>
             <tr class="total">
@@ -353,7 +353,7 @@
                     10%
                 </td>
                 <td>
-                    {{target.tienVat | number}}
+                    {{target.tienVat | awnum:'number'}}
                 </td>
             </tr>
             <tr class="total">
@@ -362,7 +362,7 @@
                 </td>
                 <td></td>
                 <td>
-                    {{target.thanhTienSauVat | number}}
+                    {{target.thanhTienSauVat | awnum:'number'}}
                 </td>
             </tr>
         </table>

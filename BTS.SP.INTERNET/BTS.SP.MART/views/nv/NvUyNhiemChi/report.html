@@ -130,7 +130,7 @@
                     <p>Đơn vị nhận tiền : &nbsp;&nbsp;<span class="appear">{{target.khachHang}}</span></p>
                     <p>Số tài khoản đơn vị thụ hưởng :&nbsp;&nbsp;<span class="appear"> {{target.soTaiKhoan}}</span></p>
                     <p>Tại ngân hàng : &nbsp;&nbsp;<span class="appear"> {{target.nganHang}}</span></p>
-                    <p>Số tiền:&nbsp;&nbsp; <span class="appear"> {{target.tongTien | number}}</span> </p>
+                    <p>Số tiền:&nbsp;&nbsp; <span class="appear"> {{target.tongTien | awnum:'number'}}</span> </p>
                     <p>Số tiền bằng chữ.............................{{target.tongTien | jsCurrency}}.....................................................................................................</p>
                 </td>
                 <td colspan="2" class="colmn-title" style="border-left:none">
@@ -149,8 +149,8 @@
             </tr>
             <tr ng-repeat="item in target.dataReportDetails">
                 <td class="colmn-detail">{{item.tenKhachHang}}</td>
-                <td class="colmn-detail">{{item.soTien | number}}</td>
-                <td class="colmn-detail">{{item.soTien | number}}</td>
+                <td class="colmn-detail">{{item.soTien | awnum:'number'}}</td>
+                <td class="colmn-detail">{{item.soTien | awnum:'number'}}</td>
                 <td class="colmn-detail">{{item.tkNo}}</td>
                 <td class="colmn-detail">{{item.tkCo}}</td>
             </tr>

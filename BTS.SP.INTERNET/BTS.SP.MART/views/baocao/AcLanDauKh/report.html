@@ -253,8 +253,8 @@
                         <tr style="font-weight:bold;background-color:yellow;text-align:right;">
                             <th colspan="4">Tổng cộng:</th>
                             <th colspan="4"></th>
-                            <th style="text-align:right;">{{robot.sum(target.dataDetails,'chietKhau') | number}}</th>
-                            <th style="text-align:right;">{{robot.sum(target.dataDetails,'thanhTien') | number}}</th>
+                            <th style="text-align:right;">{{robot.sum(target.dataDetails,'chietKhau') | awnum:'number'}}</th>
+                            <th style="text-align:right;">{{robot.sum(target.dataDetails,'thanhTien') | awnum:'number'}}</th>
                             <th colspan="2"></th>
 
                         </tr>
@@ -270,10 +270,10 @@
                             <td style="text-align:center;">{{item.maGiaoDichQuayPk}}</td>
                             <td style="text-align:center;">{{item.tenKhachHang}}</td>
                             <td style="text-align:center;">{{item.maVatTu}}</td>
-                            <td style="text-align:right;">{{item.soLuong | number}}</td>
-                            <td style="text-align:right;">{{item.donGia | number}}</td>
-                            <td style="text-align:right;">{{item.chietKhau | number}}</td>
-                            <td style="text-align:right;">{{item.thanhTien | number}}</td>
+                            <td style="text-align:right;">{{item.soLuong | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.donGia | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.chietKhau | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.thanhTien | awnum:'number'}}</td>
                             <td style="text-align:center;">{{item.dienThoai}}</td>
                             <td style="text-align:center;">{{item.maKho}}</td>
                         </tr>
@@ -282,10 +282,10 @@
                                 Cộng hóa đơn:
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'chietKhau') | number}}
+                                {{robot.sum(data.dataDetails, 'chietKhau') | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'thanhTien') | number}}
+                                {{robot.sum(data.dataDetails, 'thanhTien') | awnum:'number'}}
                             </td>
                             <td></td>
                             <td></td>

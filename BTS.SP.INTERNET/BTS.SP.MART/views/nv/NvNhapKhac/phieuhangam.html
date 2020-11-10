@@ -144,7 +144,7 @@
                                 </td>
                                 <td>
                                     <div style="text-align:right" disabled>
-                                        {{item.thanhTien | number}}
+                                        {{item.thanhTien | awnum:'number'}}
                                     </div>
                                 </td>
                                 <td>
@@ -152,7 +152,7 @@
                                 </td>
                                 <td>
                                     <div style="text-align:right" disabled>
-                                        {{item.thanhTien*(-1) | number}}
+                                        {{item.thanhTien*(-1) | awnum:'number'}}
                                     </div>
                                 </td>
                                 <td style="white-space: nowrap">
@@ -168,15 +168,15 @@
                         <tbody class="tong-hop">
                             <tr>
                                 <td colspan="5" right;" class="name-tong-hop">Tổng số lượng bán âm: </td>
-                                <td class="value-tong-hop" style="text-align:right">{{robot.sum(dto.dataDetails, 'soLuong') | number}}</td>
+                                <td class="value-tong-hop" style="text-align:right">{{robot.sum(dto.dataDetails, 'soLuong') | awnum:'number'}}</td>
                             </tr>
                             <tr>
                                 <td colspan="5" class="name-tong-hop">Tổng tiền bán âm: </td>
-                                <td class="value-tong-hop" style="text-align:right">{{robot.sum(dto.dataDetails,'thanhTien') | number}}</td>
+                                <td class="value-tong-hop" style="text-align:right">{{robot.sum(dto.dataDetails,'thanhTien') | awnum:'number'}}</td>
                             </tr>
                             <tr>
                                 <td colspan="5" class="name-tong-hop">Tổng tiền xử lý bán âm: </td>
-                                <td class="value-tong-hop" style="text-align:right">{{robot.sum(dto.dataDetails,'thanhTien')*(-1) | number}}</td>
+                                <td class="value-tong-hop" style="text-align:right">{{robot.sum(dto.dataDetails,'thanhTien')*(-1) | awnum:'number'}}</td>
                             </tr>
                         </tbody>
                     </table>

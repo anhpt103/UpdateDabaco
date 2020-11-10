@@ -234,7 +234,7 @@
                                 {{item.soLuong}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.giaBanLeCoVat | number}}
+                                {{item.giaBanLeCoVat | awnum:'number'}}
                             </td>
                             <td style="text-align:center;">
                                 {{item.tyLeVatVao}}
@@ -243,10 +243,10 @@
                                 {{item.vatBan}}
                             </td>
                             <td style="text-align:right;">
-                                {{(item.tienKhuyenMai === null ? 0 : item.tienKhuyenMai) | number}}
+                                {{(item.tienKhuyenMai === null ? 0 : item.tienKhuyenMai) | awnum:'number'}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.tTienCoVat | number}}
+                                {{item.tTienCoVat | awnum:'number'}}
                             </td>
                         </tr>
                     </tbody>
@@ -254,37 +254,37 @@
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="2" style="text-align:left;" class="name-tong-hop">Tiền phải trả:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{target.tTienCoVat | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{target.tTienCoVat | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="2" style="text-align:left;" class="name-tong-hop">Tổng số lượng:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{robot.sum(target.dataDetails, 'soLuong') | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{robot.sum(target.dataDetails, 'soLuong') | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="2" style="text-align:left;" class="name-tong-hop">Tiền voucher:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{target.tienVoucher === null ? 0 : target.tienVoucher | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{target.tienVoucher === null ? 0 : target.tienVoucher | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="2" style="text-align:left;" class="name-tong-hop">Tiền thẻ:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{target.tienThe === null ? 0 : target.tienThe | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{target.tienThe === null ? 0 : target.tienThe | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="2" style="text-align:left;" class="name-tong-hop">Tiền COD:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{target.tienCOD === null ? 0 : target.tienCOD | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{target.tienCOD === null ? 0 : target.tienCOD | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="2" style="text-align:left;" class="name-tong-hop">Tiền mặt:</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{target.tienMat === null ? 0 : target.tienMat | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{target.tienMat === null ? 0 : target.tienMat | awnum:'number'}}</td>
                         </tr>
                         <tr>
                             <td colspan="6"></td>
                             <td colspan="2" style="text-align:left;" class="name-tong-hop">Tiền thừa</td>
-                            <td style="text-align:right;" class="value-tong-hop">{{target.tienThua === null ? 0 : target.tienThua | number}}</td>
+                            <td style="text-align:right;" class="value-tong-hop">{{target.tienThua === null ? 0 : target.tienThua | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -76,8 +76,8 @@
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
                     <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.maChietKhau}}</td>
-                    <td>{{item.tienTu | number}}</td>
-                    <td>{{item.tienDen | number}}</td>
+                    <td>{{item.tienTu | awnum:'number'}}</td>
+                    <td>{{item.tienDen | awnum:'number'}}</td>
                     <td>{{item.tyLeChietKhau}}</td>
                     <td>{{item.trangThai | status}}</td>
                     <td class="table-control btn-group">

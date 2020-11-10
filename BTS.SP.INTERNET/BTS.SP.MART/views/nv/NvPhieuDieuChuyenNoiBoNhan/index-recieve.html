@@ -187,7 +187,7 @@
                     <td>{{item.maChungTu}}</td>
                     <td>{{item.noiDung}}</td>
                     <td>{{item.ngayCT | date : "dd/MM/yyyy"}}</td>
-                    <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
+                    <td style="text-align:right;">{{item.thanhTienSauVat | awnum:'number'}}</td>
                     <td ng-class="item.trangThai == 10 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}}</td>
                     <td>
                         <a ng-if="accessList.view"  class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
@@ -198,7 +198,7 @@
                 </tr>
                 <tr>
                     <td colspan="4" style="text-align:center; color:red">Tổng tiền</td>
-                    <td style="text-align:right;">{{robot.sum(data, 'thanhTienSauVat') | number}}</td>
+                    <td style="text-align:right;">{{robot.sum(data, 'thanhTienSauVat') | awnum:'number'}}</td>
                 </tr>
             </tbody>
         </table>

@@ -193,18 +193,18 @@
                             <td style="text-align:center">{{$index+1}}</td>
                             <td>{{item.code}}</td>
                             <td>{{item.name}}</td>
-                            <td style="text-align:center;">{{item.closingQuantity | number}}</td>
-                            <td style="text-align:right;">{{item.closingValue | number}}</td>
+                            <td style="text-align:center;">{{item.closingQuantity | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.closingValue | awnum:'number'}}</td>
                         </tr>
                         <tr style="font-weight:bold">
                             <td style="text-align:center;" colspan="3">Tổng cộng từng trang</td>
-                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'closingQuantity') | number}}</td>
-                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'closingValue') | number}}</td>
+                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'closingQuantity') | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'closingValue') | awnum:'number'}}</td>
                         </tr>
                         <!-- <tr style="font-weight:bold"> -->
                         <!-- <td style="text-align:center;" colspan="3">Tổng cộng</td> -->
-                        <!-- <td style="text-align:center;">{{robot.sum(data.detailData.dataDetails, 'closingQuantity') | number}}</td> -->
-                        <!-- <td style="text-align:right;">{{robot.sum(data.detailData.dataDetails, 'closingValue') | number}}</td> -->
+                        <!-- <td style="text-align:center;">{{robot.sum(data.detailData.dataDetails, 'closingQuantity') | awnum:'number'}}</td> -->
+                        <!-- <td style="text-align:right;">{{robot.sum(data.detailData.dataDetails, 'closingValue') | awnum:'number'}}</td> -->
                         <!-- </tr> -->
                     </tbody>
                 </table>

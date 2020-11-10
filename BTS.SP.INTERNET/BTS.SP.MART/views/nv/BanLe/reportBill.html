@@ -82,9 +82,9 @@
                                 <td style="border:1px solid;text-align:center;">{{$index + 1}}</td>
                                 <td style="border:1px solid;text-align:center;">{{item.maVatTu}}</td>
                                 <td style="border:1px solid;text-align:center;">{{item.tenDayDu}}</td>
-                                <td style="border:1px solid;text-align:right;">{{item.giaBanLeCoVat | number}}</td>
-                                <td style="border:1px solid;text-align:right;">{{item.soLuong | number}}</td>
-                                <td style="border:1px solid;text-align:right;">{{item.tTienCoVat | number}}</td>
+                                <td style="border:1px solid;text-align:right;">{{item.giaBanLeCoVat | awnum:'number'}}</td>
+                                <td style="border:1px solid;text-align:right;">{{item.soLuong | awnum:'number'}}</td>
+                                <td style="border:1px solid;text-align:right;">{{item.tTienCoVat | awnum:'number'}}</td>
                             </tr>
                             <tr>
                         </tbody>
@@ -95,28 +95,28 @@
                         <tbody>
                             <tr>
                                 <td style="width: 32%">Tổng số lượng:</td>
-                                <td style="width: 18%">{{listHangHoa.tongSoLuong | number}}</td>
+                                <td style="width: 18%">{{listHangHoa.tongSoLuong | awnum:'number'}}</td>
                                 <td style="width: 32%;text-align:right;">Tiền hàng:</td>
-                                <td style="width: 18%;text-align:right !important;">{{listHangHoa.tTienCoVat | number}}</td>
+                                <td style="width: 18%;text-align:right !important;">{{listHangHoa.tTienCoVat | awnum:'number'}}</td>
                             </tr>
                             <tr>
                                 <td>Tổng tiền bằng chữ:</td>
                                 <td></td>
                                 <td style="text-align:right;">Chiết khấu:</td>
-                                <td style="text-align:right !important;">{{listHangHoa.tongTienKhuyenMai | number}}</td>
+                                <td style="text-align:right !important;">{{listHangHoa.tongTienKhuyenMai | awnum:'number'}}</td>
                             </tr>
                             <tr>
                                 <td rowspan="3" colspan="2">{{listHangHoa.tTienCoVat | words }}</td>
                                 <td style="text-align:right;">Tổng tiền:</td>
-                                <td style="text-align:right !important;">{{listHangHoa.tTienCoVat | number}}</td>
+                                <td style="text-align:right !important;">{{listHangHoa.tTienCoVat | awnum:'number'}}</td>
                             </tr>
                             <tr>
                                 <td style="text-align:right;">Tiền khách trả:</td>
-                                <td style="text-align:right !important;">{{listHangHoa.tienKhachTra | number}}</td>
+                                <td style="text-align:right !important;">{{listHangHoa.tienKhachTra | awnum:'number'}}</td>
                             </tr>
                             <tr>
                                 <td style="text-align:right;">Còn lại:</td>
-                                <td style="text-align:right !important;">{{listHangHoa.tienKhachTra - listHangHoa.tTienCoVat | number}}</td>
+                                <td style="text-align:right !important;">{{listHangHoa.tienKhachTra - listHangHoa.tTienCoVat | awnum:'number'}}</td>
                             </tr>
                         </tbody>
                     </table>

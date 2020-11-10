@@ -77,12 +77,12 @@
                                             <td>{{item.ngay | date : "dd/MM/yyyy"}}</td>
                                             <td>{{item.noiDung}}</td>
                                             <td>{{item.nguoiLap}}</td>
-                                            <td style="text-align:right;">{{item.thanhTien | number}}</td>
+                                            <td style="text-align:right;">{{item.thanhTien | awnum:'number'}}</td>
                                             <td ng-class="item.trangThai == 10 ? 'is-complete' : item.trangThai == 20 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}}</td>
                                         </tr>
                                         <tr>
                                             <td colSpan="5" style="text-align:center; color:red">Tổng tiền</td>
-                                            <td style="text-align:right;">{{robot.sum(printData, 'thanhTien') | number}}</td>
+                                            <td style="text-align:right;">{{robot.sum(printData, 'thanhTien') | awnum:'number'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -111,12 +111,12 @@
                                                 {{detail.donGia}}
                                             </td>
                                             <td style="text-align:right;" ng-init="$parent.totalDataDetail = $parent.totalDataDetail + detail.thanhTien">
-                                                {{detail.thanhTien | number}}
+                                                {{detail.thanhTien | awnum:'number'}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="text-center" colspan="4" style="color:red">Tổng tiền</td>
-                                            <td style="text-align:right;">{{totalDataDetail | number}}</td>
+                                            <td style="text-align:right;">{{totalDataDetail | awnum:'number'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -142,7 +142,7 @@
                                         </tr>
                                         <tr>
                                             <td class="text-center" colspan="5" style="color:red">Tổng tiền</td>
-                                            <td style="text-align:right;">{{totalDataClause | number}}</td>
+                                            <td style="text-align:right;">{{totalDataClause | awnum:'number'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -150,7 +150,7 @@
                         </tr>
                         <tr>
                             <td class="text-center" style="color:red">Tổng tiền</td>
-                            <td style="text-align:right;">{{sum() | number}}</td>
+                            <td style="text-align:right;">{{sum() | awnum:'number'}}</td>
                         </tr>
                     </tbody>
                 </table>

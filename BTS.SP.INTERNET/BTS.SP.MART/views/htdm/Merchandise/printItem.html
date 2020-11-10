@@ -23,13 +23,13 @@
             <thead>
                 <tr>
                     <th style="width:3%" class="text-center">STT</th>
-                    <th style="width:10%" class="text-center">Mã hàng</th>
+                    <th style="width:5%" class="text-center">Mã hàng</th>
                     <th style="width:15%" class="text-center">Tên hàng</th>
-                    <th style="width:5%" class="text-center">Barcode</th>
+                    <th style="width:20%" class="text-center">Barcode</th>
                     <th style="width:5%" class="text-center">Đơn giá</th>
                     <th style="width:5%" class="text-center">Nhà cung cấp</th>
-                    <th style="width:10%" class="text-center">Số lượng</th>
-                    <th style="width:5%"></th>
+                    <th style="width:5%" class="text-center">Số lượng</th>
+                    <th style="width:3%">Hành động</th>
                 </tr>
             </thead>
             <tbody ng-form name="_formAddDetail">
@@ -38,23 +38,20 @@
                     <td>
                         <input type="hidden" ng-model="newItem.giaBanLe" />
                         <input type="hidden" ng-model="newItem.giaBanBuon" />
-                        <input type="text" style="width:100%;" name="_maHang" id="mahang" ng-model="newItem.maHang" ng-blur="selectedMaHang(newItem.maHang)" required />
+                        <input type="text" style="width:100%;height:30px;" name="_maHang" id="mahang" ng-model="newItem.maHang" ng-blur="selectedMaHang(newItem.maHang)" required autofocus />
                     </td>
                     <td>
-
                         {{newItem.tenHang}}
                     </td>
-                    <td><input type="text" ng-model="newItem.barcode" disabled /></td>
-                    <td>
+                    <td>{{newItem.barcode}}</td>
+                    <td class="text-right">
                         {{newItem.giaBanLeVat}}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{newItem.maKhachHang}}
                     </td>
-                    <td>
-                        <div class="md-4-style-input">
-                            <input class="input-border-form" id="soLuong" name="_soLuong" type="number" ng-model="newItem.soLuong" maxlength="50">
-                        </div>
+                    <td class="text-right">
+                        <input class="form-control" type="text" awnum="number" id="soLuong" name="_soLuong" ng-model="newItem.soLuong" maxlength="5" style="height: 30px;border-radius: 0;">
                     </td>
                     <td style="white-space: nowrap" class="text-center">
                         <div class="form-buttons form-inline">
@@ -79,18 +76,15 @@
                     <td>
                         {{item.tenHang}}
                     </td>
-                    <td><input type="text" ng-model="item.barcode" disabled /></td>
-                    <td>
+                    <td>{{newItem.barcode}}</td>
+                    <td class="text-right">
                         {{item.giaBanLeVat}}
                     </td>
-                    <td>
+                    <td class="text-right">
                         {{item.maKhachHang}}
                     </td>
-                    <td>
-                        <div class="soLuong ng-binding" style="display: none;">{{item.soLuong}}</div>
-                        <div class="md-4-style-input">
-                            <input class="input-border-form" type="number" ng-model="item.soLuong" maxlength="50">
-                        </div>
+                    <td class="text-right">
+                        <input class="form-control" type="text" awnum="number" ng-model="item.soLuong" maxlength="5" style="height: 30px;border-radius: 0;">
                     </td>
                     <td style="white-space: nowrap" class="text-center">
                         <button prevent-default type="button" style="height: 20px; line-height: 2px;background: rgba(255, 213, 93, 0.61);" ng-click="removeItem($index)" class="btn btn-default btn-sm">
@@ -115,6 +109,7 @@
     <div class="modal-footer">
         <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid || _formDetail.$invalid" ng-click="exportToExcel()">{{config.label.btnExport}}</button>
         <!--<a class="btn btn-primary" ng-href="{{hrefTem}}">Tải xuống </a>-->
+        on
         <button prevent-default class="btn btn-default" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </div>

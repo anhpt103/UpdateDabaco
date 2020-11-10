@@ -150,7 +150,7 @@
                                     </td>
                                     <td>
                                         <div style="text-align:right" disabled>
-                                            {{item.tTienCoVat | number}}
+                                            {{item.tTienCoVat | awnum:'number'}}
                                         </div>
                                     </td>
                                 </tr>
@@ -175,43 +175,43 @@
                             <td style="width:55%"></td>
                             <td nowrap style="text-align:left"><label>Tiền phải trả:</label></td>
                             <td nowrap></td>
-                            <td style="text-align:right; width:20%"><span style="color:red;font-weight:bold"><b>{{target.tTienCoVat | number}}</b></span></td>
+                            <td style="text-align:right; width:20%"><span style="color:red;font-weight:bold"><b>{{target.tTienCoVat | awnum:'number'}}</b></span></td>
                         </tr>
                         <tr>
                             <td style="width: 55%"></td>
                             <td nowrap style="text-align: left"><label>Tiền khuyến mại:</label></td>
                             <td></td>
-                            <td nowrap style="text-align: right; width: 20%"> <span style="color: red; font-style: bold"><b>{{target.tienKhuyenMai === null ? 0 : target.tienKhuyenMai| number}}</b></span></td>
+                            <td nowrap style="text-align: right; width: 20%"> <span style="color: red; font-style: bold"><b>{{target.tienKhuyenMai === null ? 0 : target.tienKhuyenMai| awnum:'number'}}</b></span></td>
                         </tr>
                         <tr>
                             <td style="width: 55%"></td>
                             <td nowrap style="text-align: left;"><label>Tiền voucher:</label></td>
                             <td></td>
-                            <td nowrap style="text-align: right; width: 20%"> <span style="color: red; font-style: bold"><b>{{target.tienVoucher| number}}</b></span></td>
+                            <td nowrap style="text-align: right; width: 20%"> <span style="color: red; font-style: bold"><b>{{target.tienVoucher| awnum:'number'}}</b></span></td>
                         </tr>
                         <tr>
                             <td style="width: 55%"></td>
                             <td nowrap style="text-align: left;"><label>Tiền voucher:</label></td>
                             <td></td>
-                            <td nowrap style="text-align: right; width: 20%"> <span style="color:red; font-style: bold"><b>{{target.tienThe === null ? 0 : target.tienThe | number}}</b></span></td>
+                            <td nowrap style="text-align: right; width: 20%"> <span style="color:red; font-style: bold"><b>{{target.tienThe === null ? 0 : target.tienThe | awnum:'number'}}</b></span></td>
                         </tr>
                         <tr>
                             <td style="width: 55%"></td>
                             <td nowrap style="text-align: left;"><label>Tiền COD:</label></td>
                             <td></td>
-                            <td nowrap style="text-align: right; width: 20%"> <span style="color: red; font-style: bold"><b>{{target.tienCOD === null ? 0 : target.tienCOD | number}}</b></span></td>
+                            <td nowrap style="text-align: right; width: 20%"> <span style="color: red; font-style: bold"><b>{{target.tienCOD === null ? 0 : target.tienCOD | awnum:'number'}}</b></span></td>
                         </tr>
                         <tr>
                             <td style="width:55%"></td>
                             <td nowrap style="text-align:left;"><label>Tiền mặt:</label></td>
                             <td></td>
-                            <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-style:bold"><b>{{target.tienMat === null ? 0 : target.tienMat | number}}</b></span></td>
+                            <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-style:bold"><b>{{target.tienMat === null ? 0 : target.tienMat | awnum:'number'}}</b></span></td>
                         </tr>
                         <tr>
                             <td style="width:55%"></td>
                             <td nowrap style="text-align:left"><label>Tiền trả lại:</label></td>
                             <td></td>
-                            <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-style:bold"><b>{{target.tienThua === null ? 0 : target.tienThua | number}}</b></span></td>
+                            <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-style:bold"><b>{{target.tienThua === null ? 0 : target.tienThua | awnum:'number'}}</b></span></td>
                         </tr>
                     </tbody>
                 </table>

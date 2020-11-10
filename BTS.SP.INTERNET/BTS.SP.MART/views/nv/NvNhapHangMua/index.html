@@ -187,7 +187,7 @@
                     <td>{{item.noiDung}}</td>
                     <td>{{displayHepler(item.maKhachHang, 'suppliers')}}</td>
                     <td>{{displayHeplerName(item.maKhoNhap, 'wareHouses')}}</td>
-                    <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
+                    <td style="text-align:right;">{{item.thanhTienSauVat | awnum:'number'}}</td>
                     <td ng-class="item.trangThai == 10 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}} ({{item.trangThaiThanhToan == 10 ? 'Đã thanh toán' : 'Chưa thanh toán'}})</td>
                     <td>
                         <a style="float:left; margin-right: 1rem;" ng-if="accessList.view" class="glyphicon glyphicon-info-sign" ng-click="details(item)" data-toggle="tooltip" data-placement="top" title="Chi tiết"></a> &nbsp;&nbsp;&nbsp;
@@ -202,7 +202,7 @@
                 </tr>
                 <tr>
                     <td colspan="7" style="text-align:center; color:red">Tổng tiền</td>
-                    <td style="text-align:right;">{{sum() | number}}</td>
+                    <td style="text-align:right;">{{sum() | awnum:'number'}}</td>
                 </tr>
             </tbody>
         </table>

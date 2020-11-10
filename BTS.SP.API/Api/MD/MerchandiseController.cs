@@ -742,7 +742,7 @@ namespace BTS.SP.API.Api.MD
                 return InternalServerError();
             }
         }
-       
+
 
         [Route("GetSelectData")]
         [AllowAnonymous]

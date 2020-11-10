@@ -147,7 +147,7 @@
                     <td>{{item.soPhieu}}</td>
                     <td>{{item.ngay | date : "dd/MM/yyyy"}}</td>
                     <td>{{item.noiDung}}</td>
-                    <td style="text-align:right;">{{item.thanhTienSauVat | number}}</td>
+                    <td style="text-align:right;">{{item.thanhTienSauVat | awnum:'number'}}</td>
                     <td>{{item.nguoiLap}}</td>
                     <td ng-class="item.trangThai == 10 ? 'is-complete' : item.trangThai == 20 ? 'is-approval' :  item.trangThai == 30 ? 'is-recieved' : 'not-approval-yet'">{{item.trangThai | orderstate}}</td>
                     <td>
@@ -161,7 +161,7 @@
                 </tr>
                 <tr>
                     <td colSpan="4" style="text-align:center; color:red">Tổng tiền</td>
-                    <td style="text-align:right;">{{robot.sum(data, 'thanhTienSauVat') | number}}</td>
+                    <td style="text-align:right;">{{robot.sum(data, 'thanhTienSauVat') | awnum:'number'}}</td>
                 </tr>
             </tbody>
         </table>

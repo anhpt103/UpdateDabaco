@@ -16,7 +16,7 @@ namespace BTS.API.SERVICE.MD
     public interface IMdContractService : IDataInfoService<MdContract>
     {
         //Add function here
-       MdContract InsertDto(MdContractVm.Dto instance);
+        MdContract InsertDto(MdContractVm.Dto instance);
         MdContract UpdateDto(MdContractVm.Dto instance);
         MdContractVm.ReportModel CreateReport(string id);
         UserInfo GetDoProfile();
@@ -34,11 +34,12 @@ namespace BTS.API.SERVICE.MD
 
         public MdContract InsertDto(MdContractVm.Dto instance)
         {
-            
+
             var result = Insert(Mapper.Map<MdContractVm.Dto, MdContract>(instance));
             var detail = Mapper.Map<List<MdContractVm.Detail>, List<MdDetailContract>>(instance.DataDetails);
             var merchandiseCollection = UnitOfWork.Repository<MdMerchandise>().DbSet;
-            detail.ForEach(x => {
+            detail.ForEach(x =>
+            {
                 var hang = merchandiseCollection.FirstOrDefault(u => u.MaVatTu == x.MaHang);
                 x.TenHang = hang != null ? hang.TenHang : "";
                 x.Id = Guid.NewGuid().ToString();
@@ -50,7 +51,7 @@ namespace BTS.API.SERVICE.MD
 
         public MdContract UpdateDto(MdContractVm.Dto instance)
         {
-            
+
             MdContract result = null;
             var item = FindById(instance.Id);
             if (item != null)
@@ -63,7 +64,8 @@ namespace BTS.API.SERVICE.MD
                 {//insert data details
                     var merchandiseCollection = UnitOfWork.Repository<MdMerchandise>().DbSet;
                     var detail = Mapper.Map<List<MdContractVm.Detail>, List<MdDetailContract>>(instance.DataDetails);
-                    detail.ForEach(x => {
+                    detail.ForEach(x =>
+                    {
                         var hang = merchandiseCollection.FirstOrDefault(u => u.MaVatTu == x.MaHang);
                         x.Id = Guid.NewGuid().ToString();
                         x.MaHd = result.MaHd;
@@ -97,7 +99,7 @@ namespace BTS.API.SERVICE.MD
         {
             UserInfo info = new UserInfo();
             if (HttpContext.Current != null && HttpContext.Current.User is ClaimsPrincipal)
-            {              
+            {
                 var currentUser = (HttpContext.Current.User as ClaimsPrincipal);
                 var unit = currentUser.Claims.FirstOrDefault(x => x.Type == "unitCode");
                 if (unit != null)
@@ -105,7 +107,7 @@ namespace BTS.API.SERVICE.MD
                     info.MaDonVi = unit.Value;
                 }
                 var name = currentUser.Identity.Name;
-                var userName = UnitOfWork.Repository<AU_NGUOIDUNG>().DbSet.Where(x => x.Username == name).FirstOrDefault();
+                var userName = UnitOfWork.Repository<AU_NGUOIDUNG>().DbSet.FirstOrDefault(x => x.Username == name);
                 if (userName != null)
                 {
                     info.Username = userName.TenNhanVien;
@@ -114,7 +116,7 @@ namespace BTS.API.SERVICE.MD
                 {
                     info.Username = "Administrator";
                 }
-        }
+            }
             return info;
         }
     }

@@ -157,8 +157,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             postRecieveQuery: function (data) {
                 return $http.post(serviceUrl + '/PostRecieveQuery', data);
             },
-            postQueryApproval: function (data, callback) {
-                $http.post(serviceUrl + '/PostQueryApproval', data).success(callback);
+            postQueryApproval: function (data) {
+                return $http.post(serviceUrl + '/PostQueryApproval', data);
             },
             postPrint: function (callback) {
                 $http.post(serviceUrl + '/PostPrint', getParameterPrint()).success(callback);
@@ -175,11 +175,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             postApproval: function (data) {
                 return $http.post(serviceUrl + '/PostApproval', data);
             },
-            postItemInventoryByCode: function (data, callback) {
-                return $http.post(rootUrl + '/api/Md/Merchandise/PostItemInventoryByCode', data).success(callback);
+            postItemInventoryByCode: function (data) {
+                return $http.post(rootUrl + '/api/Md/Merchandise/PostItemInventoryByCode', data);
             },
-            getReport: function (id, callback) {
-                $http.get(serviceUrl + '/GetReport/' + id).success(callback);
+            getReport: function (id) {
+                return $http.get(serviceUrl + '/GetReport/' + id);
             },
             updateCT: function (params) {
                 return $http.put(serviceUrl + '/' + params.id, params);
@@ -187,20 +187,20 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             getReportReceive: function (id) {
                 return $http.get(serviceUrl + '/GetReportReceive/' + id);
             },
-            getNewInstance: function (callback) {
-                $http.get(serviceUrl + '/GetNewInstance').success(callback);
+            getNewInstance: function () {
+                return $http.get(serviceUrl + '/GetNewInstance');
             },
-            getNewReciveInstance: function (callback) {
-                $http.get(serviceUrl + '/GetNewReciveInstance').success(callback);
+            getNewReciveInstance: function () {
+                return $http.get(serviceUrl + '/GetNewReciveInstance');
             },
-            getNewInstanceFrom: function (maChungTu, callback) {
-                $http.get(serviceUrl + '/GetNewInstanceFrom/' + maChungTu).success(callback);
+            getNewInstanceFrom: function (maChungTu) {
+                return $http.get(serviceUrl + '/GetNewInstanceFrom/' + maChungTu);
             },
             getDetails: function (id) {
                 return $http.get(serviceUrl + '/GetDetails/' + id);
             },
-            getCurrentUser: function (callback) {
-                $http.get(rootUrl + '/api/Authorize/AuNguoiDung/GetCurrentUser').success(callback);
+            getCurrentUser: function () {
+                return $http.get(rootUrl + '/api/Authorize/AuNguoiDung/GetCurrentUser');
             },
             getWareHouseByUnit: function (maDonVi) {
                 return $http.get(rootUrl + '/api/Md/WareHouse/GetByUnit/' + maDonVi);
@@ -1151,14 +1151,10 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
             $scope.$watch("target.maDonViXuat", function (newValue, oldValue) {
                 var maDonViXuat = $scope.target.maDonViXuat;
-                service.getCurrentUser(function (response) {
-                    var maDonViNhan = response.unitUser;
-                    if (maDonViXuat === maDonViNhan) {
-                        $scope.isSameUnitUser = true;
-                    }
-                    else {
-                        $scope.isSameUnitUser = false;
-                    }
+                service.getCurrentUser().then(function (response) {
+                    var maDonViNhan = response.data.unitUser;
+                    if (maDonViXuat === maDonViNhan) $scope.isSameUnitUser = true;
+                    else $scope.isSameUnitUser = false;
                 });
             }, true);
             //load danh muc
@@ -1340,8 +1336,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             }
             function getNew(maChungTu) {
-                service.getNewInstanceFrom(maChungTu, function (response) {
-                    $scope.target = response;
+                service.getNewInstanceFrom(maChungTu).then(function (response) {
+                    $scope.target = response.data;
                     $scope.pageChanged();
                     var data = $filter('filter')($scope.khoXuats, { value: objectFilter.maKhoNhap }, true);
                     if (data && data.length == 1) {
@@ -1358,12 +1354,12 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     maChungTu = objectFilter.maChungTu;
                     getNew(maChungTu);
                 } else {
-                    service.getNewReciveInstance(function (response) {
-                        $scope.target = response;
-                        servicePeriod.getKyKeToan().then(function (response) {
-                            if (response && response.status == 200 && response.data) {
-                                $scope.target.ngayCT = new Date(response.data.toDate);
-                                $scope.target.ngayDieuDong = new Date(response.data.toDate);
+                    service.getNewReciveInstance().then(function (response) {
+                        $scope.target = response.data;
+                        servicePeriod.getKyKeToan().then(function (resKyKeToan) {
+                            if (resKyKeToan && resKyKeToan.status == 200 && resKyKeToan.data) {
+                                $scope.target.ngayCT = new Date(resKyKeToan.data.toDate);
+                                $scope.target.ngayDieuDong = new Date(resKyKeToan.data.toDate);
                                 targetObj.fromDate = $filter('date')($scope.target.ngayCT, 'yyyy-MM-dd');
                                 targetObj.toDate = $filter('date')($scope.target.ngayCT, 'yyyy-MM-dd');
                             }
@@ -1404,19 +1400,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     return;
                 }
                 if ($scope.newItem.validateCode === $scope.newItem.maHang) {
-                    service.postItemInventoryByCode({ code: $scope.newItem.maHang, wareHouseCode: $scope.target.maKhoNhap }, function (response) {
-                        $scope.newItem.soLuongTon = response.closingQuantity;
-                        console.log('thành công');
+                    service.postItemInventoryByCode({ code: $scope.newItem.maHang, wareHouseCode: $scope.target.maKhoNhap }).then(function (response) {
+                        $scope.newItem.soLuongTon = response.data.closingQuantity;
                         if (!angular.isUndefined($scope.newItem.maHang)) {
                             $scope.target.dataDetails.push($scope.newItem);
                         }
-                        $scope.pageChanged();
-                        $scope.newItem = {};
-                        focus('mahang');
-                        document.getElementById('mahang').focus();
-                    }).error(function (response) {
-                        console.log('lỗi');
-                        $scope.target.dataDetails.push($scope.newItem);
                         $scope.pageChanged();
                         $scope.newItem = {};
                         focus('mahang');
@@ -1523,7 +1511,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             $scope.selectedMaHang = function (code) {
                 if (code) {
                     service.getByCodeWithGiaVon(code, $scope.target.maKhoXuat, unitCode).then(function (response) {
-                        console.log(response);
                         if (response && response.status == 200 && response.data.status) {
                             $scope.newItem = response.data.data;
                             $scope.newItem.vat = response.data.data.maVatVao;
@@ -2474,7 +2461,6 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             function filterData() {
                 if (id) {
                     service.getReportReceive(id).then(function (response) {
-                        console.log(response);
                         if (response.data.vat != null) {
                             serviceTax.getTaxByCode(response.data.vat).then(function (res) {
                                 if (res.status == 200) {
@@ -2578,11 +2564,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             function filterData() {
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
                 phieuDieuChuyenNoiBoNhanService.postQueryApproval(
-                    JSON.stringify(postdata),
-                    function (response) {
-                        if (response.status) {
-                            $scope.data = response.data.data;
-                            angular.extend($scope.paged, response.data);
+                    JSON.stringify(postdata)).then(function (response) {
+                        console.log(response);
+                        if (response && response.status == 200 && response.data.status && response.data.data) {
+                            $scope.data = response.data.data.data;
+                            angular.extend($scope.paged, response.data.data);
                         }
                     });
             };

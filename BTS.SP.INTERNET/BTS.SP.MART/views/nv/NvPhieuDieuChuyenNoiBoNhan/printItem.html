@@ -38,8 +38,8 @@
                         <td class="text-left">
                             <input type="text" style="text-align: left; width: 100%;" ng-model="item.barcode" disabled>
                         </td>
-                        <td class="text-right">{{item.giaBanLeVat | awnum:'number'}} VND</td><!-- gia buon cos vat-->
-                        <td class="text-right">{{item.giaBanLeVat | awnum:'number'}} VND</td><!-- gia le cos vat-->
+                        <td class="text-right">{{item.giaBanLeVat | number}} VND</td><!-- gia buon cos vat-->
+                        <td class="text-right">{{item.giaBanLeVat | number}} VND</td><!-- gia le cos vat-->
                         <td class="text-center">{{dataHangHoa.maKhachHang}}</td><!-- nha cung cap-->
                         <td class="text-right">
                             <div class="soLuong ng-binding" style="display: none; text-align: right">{{item.soLuong}}

@@ -188,23 +188,23 @@
                             <td>{{item.ma}}</td>
                             <td>{{item.ten}}</td>
                             <!--<td style="text-align:center;">{{item.ngayChungTu  | date:dd/MM/yyyy}}</td>-->
-                            <td style="text-align:right;">{{item.soLuong  | awnum:'number'}}</td>
-                            <!--<td style="text-align:right;">{{item.donGiaNhap | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.giaBan | awnum:'number'}}</td>-->
-                            <td style="text-align:right;">{{item.tienHang | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienChietKhau | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienVat | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tongTien | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.soLuong  | number}}</td>
+                            <!--<td style="text-align:right;">{{item.donGiaNhap | number}}</td>
+                            <td style="text-align:right;">{{item.giaBan | number}}</td>-->
+                            <td style="text-align:right;">{{item.tienHang | number}}</td>
+                            <td style="text-align:right;">{{item.tienChietKhau | number}}</td>
+                            <td style="text-align:right;">{{item.tienVat | number}}</td>
+                            <td style="text-align:right;">{{item.tongTien | number}}</td>
                         </tr>
                         <tr>
                             <td style="text-align:center;" colspan="3">Tổng cộng</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'soLuong') | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'soLuong') | number}}</td>
                             <!--<td style="text-align:right;"> </td>
                             <td style="text-align:right;"> </td>-->
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tienHang') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tienChietKhau') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tienVat') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tongTien') | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tienHang') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tienChietKhau') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tienVat') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'tongTien') | number}}</td>
                         </tr>
                     </tbody>
                 </table>

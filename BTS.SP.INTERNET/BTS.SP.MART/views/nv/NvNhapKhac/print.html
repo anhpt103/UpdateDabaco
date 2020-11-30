@@ -72,12 +72,12 @@
                             <td>{{displayHepler(item.maKhachHang, 'customers')}}</td>
 
                             <td>{{displayHepler(item.maKhoNhap, 'wareHouses')}}</td>
-                            <td style="text-align:right;">{{robot.sum(printData, 'thanhTienSauVat') | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{robot.sum(printData, 'thanhTienSauVat') | number}}</td>
                             <td ng-class="item.trangThai == 10 ? 'is-approval' : 'not-approval-yet' ">{{item.trangThai | approval}}</td>
                         </tr>
                         <tr>
                             <td colSpan="6" style="text-align:center; color:red">Tổng tiền</td>
-                            <td style="text-align:right;">{{sum() | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{sum() | number}}</td>
                         </tr>
                     </tbody>
                 </table>

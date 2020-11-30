@@ -209,20 +209,20 @@
                                 {{item.soLuongKiemKe}}
                             </td>
                             <td style="text-align:center;">
-                                {{(item.soLuongKiemKe -  item.soLuongTonMay)| awnum:'number'}}
+                                {{(item.soLuongKiemKe -  item.soLuongTonMay)| number}}
                             </td>
                             <td style="text-align:right;">
-                                {{(item.soLuongTonMay - item.soLuongKiemKe) | awnum:'number'}}
+                                {{(item.soLuongTonMay - item.soLuongKiemKe) | number}}
                             </td>
                             <td style="text-align:right;"></td>
                             <td style="text-align:right;">
-                                {{item.giaVon | awnum:'number'}}
+                                {{item.giaVon | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{(item.soLuongKiemKe - item.soLuongTonMay)*item.giaVon | awnum:'number'}}
+                                {{(item.soLuongKiemKe - item.soLuongTonMay)*item.giaVon | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{(item.soLuongTonMay - item.soLuongKiemKe)*item.giaVon | awnum:'number'}}
+                                {{(item.soLuongTonMay - item.soLuongKiemKe)*item.giaVon | number}}
                             </td>
                         </tr>
                     </tbody>

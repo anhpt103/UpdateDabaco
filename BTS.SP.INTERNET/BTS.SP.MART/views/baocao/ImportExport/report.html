@@ -205,36 +205,36 @@
                             <td style="text-align:center">{{$index+1}}</td>
                             <td>{{item.code}}</td>
                             <td>{{item.name}}</td>
-                            <td style="text-align:center;">{{item.openingBalanceQuantity  | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.openingBalanceValue  | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{item.increaseQuantity | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.increaseValue | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{item.decreaseQuantity | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.decreaseValue | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{item.closingQuantity | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.closingValue | awnum:'number'}}</td>
+                            <td style="text-align:center;">{{item.openingBalanceQuantity  | number}}</td>
+                            <td style="text-align:right;">{{item.openingBalanceValue  | number}}</td>
+                            <td style="text-align:center;">{{item.increaseQuantity | number}}</td>
+                            <td style="text-align:right;">{{item.increaseValue | number}}</td>
+                            <td style="text-align:center;">{{item.decreaseQuantity | number}}</td>
+                            <td style="text-align:right;">{{item.decreaseValue | number}}</td>
+                            <td style="text-align:center;">{{item.closingQuantity | number}}</td>
+                            <td style="text-align:right;">{{item.closingValue | number}}</td>
                         </tr>
                         <tr>
                             <td style="text-align:center;" colspan="3">Tổng cộng từng trang</td>
-                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'openingBalanceQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'openingBalanceValue') | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'increaseQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'increaseValue') | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'decreaseQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'decreaseValue') | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'closingQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'closingValue') | awnum:'number'}}</td>
+                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'openingBalanceQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'openingBalanceValue') | number}}</td>
+                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'increaseQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'increaseValue') | number}}</td>
+                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'decreaseQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'decreaseValue') | number}}</td>
+                            <td style="text-align:center;">{{robot.sum(obj.dataDetails, 'closingQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(obj.dataDetails, 'closingValue') | number}}</td>
                         </tr>
                         <!--<tr>
                             <td style="text-align:center;" colspan="3">Tổng cộng</td>
-                            <td style="text-align:center;">{{robot.sum(data.detailData, 'openingBalanceQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'openingBalanceValue') | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{robot.sum(data.detailData, 'increaseQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'increaseValue') | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{robot.sum(data.detailData, 'decreaseQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'decreaseValue') | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{robot.sum(data.detailData, 'closingQuantity') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'closingValue') | awnum:'number'}}</td>
+                            <td style="text-align:center;">{{robot.sum(data.detailData, 'openingBalanceQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'openingBalanceValue') | number}}</td>
+                            <td style="text-align:center;">{{robot.sum(data.detailData, 'increaseQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'increaseValue') | number}}</td>
+                            <td style="text-align:center;">{{robot.sum(data.detailData, 'decreaseQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'decreaseValue') | number}}</td>
+                            <td style="text-align:center;">{{robot.sum(data.detailData, 'closingQuantity') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'closingValue') | number}}</td>
                         </tr>-->
                     </tbody>
                 </table>

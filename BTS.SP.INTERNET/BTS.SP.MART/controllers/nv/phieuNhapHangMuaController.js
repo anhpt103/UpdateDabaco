@@ -1889,16 +1889,18 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }]);
 
     /* report Phieu Nhap Hang Mua Controller */
-    app.controller('reportPhieuNhapHangMuaController', ['$scope', '$location', '$http', 'configService', 'phieuNhapHangMuaService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', '$state',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, $state) {
+    app.controller('reportPhieuNhapHangMuaController', ['$scope', 'phieuNhapHangMuaService', 'tempDataService', '$filter', 'userService', '$stateParams', '$window', '$state',
+        function ($scope, service, tempDataService, $filter, serviceAuthUser, $stateParams, $window, $state) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             $scope.tempData = tempDataService.tempData;
             $scope.robot = angular.copy(service.robot);
             var id = $stateParams.id;
             $scope.target = {};
+
             $scope.goIndex = function () {
                 $state.go('nvNhapHangMua');
             }
+
             function filterData() {
                 if (id) {
                     service.getReport(id).then(function (response) {

@@ -259,38 +259,38 @@
                             <td style="text-align:center">{{$index+1}}</td>
                             <td style="text-align:center">{{item.ma}}</td>
                             <td style="text-align:center">{{item.ten}}</td>
-                            <td style="text-align:right;">{{item.giaVon | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{item.soLuongTonMay | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{item.soLuongKiemKe | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{item.soLuongThua | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.giaTriThua | awnum:'number'}}</td>
-                            <td style="text-align:center;">{{item.soLuongThieu | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.giaTriThieu | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.giaVon | number}}</td>
+                            <td style="text-align:center;">{{item.soLuongTonMay | number}}</td>
+                            <td style="text-align:center;">{{item.soLuongKiemKe | number}}</td>
+                            <td style="text-align:center;">{{item.soLuongThua | number}}</td>
+                            <td style="text-align:right;">{{item.giaTriThua | number}}</td>
+                            <td style="text-align:center;">{{item.soLuongThieu | number}}</td>
+                            <td style="text-align:right;">{{item.giaTriThieu | number}}</td>
                         </tr>
                         <tr style="font-weight:bold">
                             <td colspan="3" style="text-align:right;">
                                 Tổng cộng:
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'giaVon') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'giaVon') | number}}
                             </td>
                             <td style="text-align:center;">
-                                {{robot.sum(target.dataDetails, 'soLuongTonMay') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'soLuongTonMay') | number}}
                             </td>
                             <td style="text-align:center;">
-                                {{robot.sum(target.dataDetails, 'soLuongKiemKe') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'soLuongKiemKe') | number}}
                             </td>
                             <td style="text-align:center;">
-                                {{robot.sum(target.dataDetails, 'soLuongThua') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'soLuongThua') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'giaTriThua') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'giaTriThua') | number}}
                             </td>
                             <td style="text-align:center;">
-                                {{robot.sum(target.dataDetails, 'soLuongThieu') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'soLuongThieu') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'giaTriThieu') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'giaTriThieu') | number}}
                             </td>
                         </tr>
                     </tbody>

@@ -253,13 +253,13 @@
                             <td style="text-align:center">{{$index+1}}</td>
                             <td>{{item.maDonVi }}</td>
                             <td style="text-align:right;">
-                                <a title="Xem chi tiết" ng-click="reportDetails($index)">{{item.soKhach | awnum:'number'}}</a>
+                                <a title="Xem chi tiết" ng-click="reportDetails($index)">{{item.soKhach | number}}</a>
                             </td>
-                            <td style="text-align:right;">{{item.soGiaoDich | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.doanhThu | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.traLai | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.chietKhau | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.thucThu | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.soGiaoDich | number}}</td>
+                            <td style="text-align:right;">{{item.doanhThu | number}}</td>
+                            <td style="text-align:right;">{{item.traLai | number}}</td>
+                            <td style="text-align:right;">{{item.chietKhau | number}}</td>
+                            <td style="text-align:right;">{{item.thucThu | number}}</td>
                         </tr>
                     </tbody>
                 </table>

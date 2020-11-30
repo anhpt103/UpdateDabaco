@@ -154,7 +154,7 @@
                             </td>
                             <td>
                                 <div style="text-align:right; width:100%" disabled>
-                                    {{item.thanhTienVAT | awnum:'number'}}
+                                    {{item.thanhTienVAT | number}}
                                 </div>
                             </td>
                         </tr>
@@ -171,11 +171,11 @@
                         <td nowrap style="text-align:right;"><label>Giảm giá:</label></td>
                         <td nowrap style="width:10%"></td>
                         <td style="width:10%; text-align:right;">
-                            <span style="color:red;font-weight:bold"><b>{{target.tongTienGiamGia | awnum:'number'}}</b> </span>
+                            <span style="color:red;font-weight:bold"><b>{{target.tongTienGiamGia | number}}</b> </span>
                         </td>
                         <td nowrap style="text-align:right"><label>Thành tiền:</label></td>
                         <td style="text-align:right; width:20%">
-                            <span style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | awnum:'number'}}</b></span>
+                            <span style="color:red;font-weight:bold"><b>{{target.thanhTienTruocVat | number}}</b></span>
                         </td>
                     </tr>
                     <tr>
@@ -191,7 +191,7 @@
 
 
                         <td nowrap style="text-align:right;"><label>Tổng tiền:</label></td>
-                        <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | awnum:'number'}}</b></span></td>
+                        <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | number}}</b></span></td>
                     </tr>
                     <tr ng-show="false">
                         <td style="width:20%"></td>
@@ -199,9 +199,9 @@
                         <td style="width:10%; text-align:right;">
                             <input class="input-border-form" name="_tax" type="text" ng-model="target.vat" typeahead-editable="false" typeahead-on-select="selectedTax(target, $item)" uib-typeahead="opt.value as opt.text for opt in tempData('taxs') | filter:$viewValue" typeahead-input-formatter="displayHepler($model, 'taxs')" disabled />
                         </td>
-                        <td nowrap style="text-align:right; width:10%"> <span style="color:red;font-weight:bold"><b>{{target.tienVat| awnum:'number'}}</b></span></td>
+                        <td nowrap style="text-align:right; width:10%"> <span style="color:red;font-weight:bold"><b>{{target.tienVat| number}}</b></span></td>
                         <td nowrap style="text-align:right;"><label>Tổng tiền:</label></td>
-                        <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | awnum:'number'}}</b></span></td>
+                        <td nowrap style="text-align:right; width:20%"> <span style="color:red;font-weight:bold"><b>{{target.thanhTienSauVat | number}}</b></span></td>
                     </tr>
                 </tbody>
             </table>

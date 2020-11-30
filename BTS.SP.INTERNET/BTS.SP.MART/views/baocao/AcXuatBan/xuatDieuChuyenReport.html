@@ -256,30 +256,30 @@
                             <td style="text-align:center">{{$index+1}}</td>
                             <td style="text-align:center">{{item.ma}}</td>
                             <td style="text-align:center">{{item.ten}}</td>
-                            <td style="text-align:center;">{{item.soLuongBan | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.doanhThu | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienKhuyenMai | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienThue | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienBan | awnum:'number'}}</td>
+                            <td style="text-align:center;">{{item.soLuongBan | number}}</td>
+                            <td style="text-align:right;">{{item.doanhThu | number}}</td>
+                            <td style="text-align:right;">{{item.tienKhuyenMai | number}}</td>
+                            <td style="text-align:right;">{{item.tienThue | number}}</td>
+                            <td style="text-align:right;">{{item.tienBan | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="3" style="text-align:center;">
                                 Tổng cộng:
                             </td>
                             <td style="text-align:center;">
-                                {{robot.sum(target.dataDetails, 'soLuongBan') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'soLuongBan') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'doanhThu') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'doanhThu') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'tienKhuyenMai') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'tienKhuyenMai') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'tienThue') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'tienThue') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(target.dataDetails, 'tienBan') | awnum:'number'}}
+                                {{robot.sum(target.dataDetails, 'tienBan') | number}}
                             </td>
                         </tr>
                     </tbody>

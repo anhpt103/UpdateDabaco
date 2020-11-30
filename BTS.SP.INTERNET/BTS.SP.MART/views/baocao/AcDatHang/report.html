@@ -190,13 +190,13 @@
                             <td style="text-align:center">{{$index+1}}</td>
                             <td>{{item.code}}</td>
                             <td>{{item.name}}</td>
-                            <td style="text-align:center;">{{item.soLuong | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.thanhTien | awnum:'number'}}</td>
+                            <td style="text-align:center;">{{item.soLuong | number}}</td>
+                            <td style="text-align:right;">{{item.thanhTien | number}}</td>
                         </tr>
                         <tr style="font-weight:bold">
                             <td style="text-align:center;" colspan="3">Tổng cộng</td>
-                            <td style="text-align:center;">{{robot.sum(data.detailData, 'soLuong') | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{robot.sum(data.detailData, 'thanhTien') | awnum:'number'}}</td>
+                            <td style="text-align:center;">{{robot.sum(data.detailData, 'soLuong') | number}}</td>
+                            <td style="text-align:right;">{{robot.sum(data.detailData, 'thanhTien') | number}}</td>
                         </tr>
                     </tbody>
                 </table>

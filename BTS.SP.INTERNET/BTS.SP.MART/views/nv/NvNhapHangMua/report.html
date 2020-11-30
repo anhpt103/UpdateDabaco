@@ -234,27 +234,27 @@
                                 {{getNameDVT(item.donViTinh, 'donViTinhs')}}
                             </td>
                             <td style="text-align:center;">
-                                {{item.luongBao | awnum:'number'}}
+                                {{item.luongBao | number}}
                             </td>
                             <td style="text-align:center;">
                                 {{item.soLuong}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.donGia | awnum:'number'}}
+                                {{item.donGia | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{item.thanhTien | awnum:'number'}}
+                                {{item.thanhTien | number}}
                             </td>
                         </tr>
                     </tbody>
                     <tbody class="tong-hop">
                         <tr>
                             <td class="name-tong-hop" colspan="7">Tổng số lượng:</td>
-                            <td class="value-tong-hop">{{robot.sum(target.dataReportDetails, 'soLuong') | awnum:'number'}}</td>
+                            <td class="value-tong-hop">{{robot.sum(target.dataReportDetails, 'soLuong') | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="7" class="name-tong-hop">Tổng tiền hàng:</td>
-                            <td class="value-tong-hop">{{target.thanhTienTruocVat | awnum:'number'}}</td>
+                            <td class="value-tong-hop">{{target.thanhTienTruocVat | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="7" class="name-tong-hop">Tổng chiết khấu:</td>
@@ -266,7 +266,7 @@
                         </tr>
                         <tr>
                             <td colspan="7" class="name-tong-hop">Tổng thanh toán:</td>
-                            <td class="value-tong-hop">{{target.thanhTienSauVat | awnum:'number'}}</td>
+                            <td class="value-tong-hop">{{target.thanhTienSauVat | number}}</td>
                         </tr>
                     </tbody>
 

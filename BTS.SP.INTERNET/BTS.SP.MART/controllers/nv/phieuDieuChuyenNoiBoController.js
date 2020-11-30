@@ -190,8 +190,8 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             getNewInstance: function () {
                 return $http.get(serviceUrl + '/GetNewInstance');
             },
-            getNewReciveInstance: function (callback) {
-                $http.get(serviceUrl + '/GetNewReciveInstance').success(callback);
+            getNewReciveInstance: function () {
+                return $http.get(serviceUrl + '/GetNewReciveInstance');
             },
             getNewInstanceFrom: function (maChungTu) {
                 return $http.get(serviceUrl + '/GetNewInstanceFrom/' + maChungTu);

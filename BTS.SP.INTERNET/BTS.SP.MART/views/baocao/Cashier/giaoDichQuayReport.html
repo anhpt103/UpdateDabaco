@@ -268,59 +268,59 @@
                             <td style="text-align:center">{{$index}}</td>
                             <td style="text-align:center">{{item.ma}}</td>
                             <td style="text-align:center">{{item.ten}}</td>
-                            <td style="text-align:center;">{{item.soLuongBan | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.vonChuaVat | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.von | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienThue | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.doanhThu | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienBan | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienKhuyenMai | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienVoucher | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienChuyenKhoan | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienMat | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tienCod | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.laiBanLe | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.von==0?0 : (item.laiBanLe/item.von) | awnum:'number'}}</td>
+                            <td style="text-align:center;">{{item.soLuongBan | number}}</td>
+                            <td style="text-align:right;">{{item.vonChuaVat | number}}</td>
+                            <td style="text-align:right;">{{item.von | number}}</td>
+                            <td style="text-align:right;">{{item.tienThue | number}}</td>
+                            <td style="text-align:right;">{{item.doanhThu | number}}</td>
+                            <td style="text-align:right;">{{item.tienBan | number}}</td>
+                            <td style="text-align:right;">{{item.tienKhuyenMai | number}}</td>
+                            <td style="text-align:right;">{{item.tienVoucher | number}}</td>
+                            <td style="text-align:right;">{{item.tienChuyenKhoan | number}}</td>
+                            <td style="text-align:right;">{{item.tienMat | number}}</td>
+                            <td style="text-align:right;">{{item.tienCod | number}}</td>
+                            <td style="text-align:right;">{{item.laiBanLe | number}}</td>
+                            <td style="text-align:right;">{{item.von==0?0 : (item.laiBanLe/item.von) | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="3" style="text-align:right;">
                                 Tổng cộng:
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'soLuongBan') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'soLuongBan') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'vonChuaVat') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'vonChuaVat') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'von') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'von') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tienThue') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tienThue') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'doanhThu') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'doanhThu') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tienBan') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tienBan') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tienKhuyenMai') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tienKhuyenMai') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tienVoucher') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tienVoucher') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tienChuyenKhoan') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tienChuyenKhoan') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tienMat') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tienMat') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tienCod') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tienCod') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'laiBanLe') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'laiBanLe') | number}}
                             </td>
                             <td></td>
                         </tr>

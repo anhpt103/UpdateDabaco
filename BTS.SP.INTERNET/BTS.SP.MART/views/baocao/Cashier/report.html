@@ -254,22 +254,22 @@
                             <td style="text-align:center">{{$index}}</td>
                             <td>{{item.maNguoiTao}} - {{item.nguoiTao}}</td>
                             <td style="text-align:center;">{{item.maQuayBan}}</td>
-                            <td style="text-align:right;">{{item.tongBan | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.tongTraLai | awnum:'number'}}</td>
-                            <td style="text-align:right;">{{item.thucThu | awnum:'number'}}</td>
+                            <td style="text-align:right;">{{item.tongBan | number}}</td>
+                            <td style="text-align:right;">{{item.tongTraLai | number}}</td>
+                            <td style="text-align:right;">{{item.thucThu | number}}</td>
                         </tr>
                         <tr>
                             <td colspan="3" style="text-align:right;">
                                 Tổng cộng:
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tongBan') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tongBan') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'tongTraLai') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'tongTraLai') | number}}
                             </td>
                             <td style="text-align:right;">
-                                {{robot.sum(data.dataDetails, 'thucThu') | awnum:'number'}}
+                                {{robot.sum(data.dataDetails, 'thucThu') | number}}
                             </td>
 
                         </tr>

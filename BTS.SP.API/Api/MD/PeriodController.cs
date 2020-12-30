@@ -798,7 +798,7 @@ namespace BTS.SP.API.Api.MD
                     result.Message = "Tạo mới kỳ kế toán năm " + request.Year + " thành công";
                     return Ok(result);
                 }
-                return BadRequest("Kỳ trong năm nay đã được tạo!");
+                return BadRequest($"Kỳ kế toán năm {request.Year} đã tồn tại!");
             }
             catch (Exception e)
             {

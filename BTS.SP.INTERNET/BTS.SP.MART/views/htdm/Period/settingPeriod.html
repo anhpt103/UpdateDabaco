@@ -1,6 +1,6 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading panel-toolbar">
-      <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
+        <h3 class="modal-title" style="color:blue;">{{title()}}</h3>
         <div class="button-close" ng-click="goHome()">
             <i class="fa fa-times-circle"></i>
         </div>
@@ -126,7 +126,7 @@
                 <tr ng-show="isLoading">
                     <td colspan="7"><my-loading></my-loading></td>
                 </tr>
-                <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse">
+                <tr class="even pointer" ng-repeat="item in data">
                     <td class="text-right">{{$index + 1}}</td>
                     <td> <input type="checkbox" ng-model="item.checked" ng-click="updateSelection($index, data,item,$event)"></td>
                     <td>{{item.period}}</td>

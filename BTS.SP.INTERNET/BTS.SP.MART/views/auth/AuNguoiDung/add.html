@@ -42,15 +42,15 @@
                 </div>
                 <div class="col-lg-6">
                     <label>
-                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="target.level">Quản trị viên
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="target.level">&nbsp;&nbsp;Quản trị viên
                     </label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <label>
-                        <input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="target.level">Thu Ngân
+                        <input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="target.level">&nbsp;&nbsp;Thu Ngân
                     </label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <label>
-                        <input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="target.level">Nhập liệu
+                        <input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="target.level">&nbsp;&nbsp;Nhập liệu
                     </label>
                 </div>
             </div>
@@ -80,7 +80,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button prevent-default type="submit" ng-disabled="_form.$invalid||isExist" class="btn btn-primary" ng-click="save()">{{config.label.btnSubmit}}</button>
+        <button prevent-default type="submit" ng-disabled="_form.$invalid||isExist" class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>&nbsp;&nbsp;{{config.label.btnSubmit}}</button>
         <button prevent-default class="btn btn-default" ng-click="cancel()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{config.label.btnCancel}}</button>
     </div>
 </div>

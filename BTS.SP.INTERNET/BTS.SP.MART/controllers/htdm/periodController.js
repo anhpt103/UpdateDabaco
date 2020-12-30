@@ -150,13 +150,13 @@ define(['ui-bootstrap'], function () {
                     //        $scope.stateIsRunning = true;
                     //    }
                     //});
-                    service.getUpdateGiaVonStatus().then(function (response) {
-                        if (response) {
-                            if (response.state === 20) {
-                                $scope.updateGiaVonIsRunning = true;
-                            }
-                        }
-                    });
+                    //service.getUpdateGiaVonStatus().then(function (response) {
+                    //    if (response) {
+                    //        if (response.state === 20) {
+                    //            $scope.updateGiaVonIsRunning = true;
+                    //        }
+                    //    }
+                    //});
                 }
                 initCollectionYears($scope.target.year);
             };
@@ -261,7 +261,9 @@ define(['ui-bootstrap'], function () {
                     resolve: {}
                 });
                 modalInstance.result.then(function (updatedData) {
-                    $scope.tempData.update('periods');
+                    if ($scope.tempData && $scope.tempData.update) {
+                        $scope.tempData.update('periods');
+                    }
                     $scope.refresh();
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
@@ -343,15 +345,12 @@ define(['ui-bootstrap'], function () {
             $scope.save = function () {
                 $scope.isCreateDisabled = true;
                 service.postCreateNewPeriod(JSON.stringify({ year: $scope.target.year })).then(function (successRes) {
-                    if (successRes && successRes.status === 200 && successRes.data) {
-                        ngNotify.set(successRes.data.message, { type: 'success' });
-                    } else {
-                        ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
-                    }
+                    if (successRes && successRes.status === 200 && successRes.data) ngNotify.set(successRes.data.message, { type: 'success' });
+                    else ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     $scope.isCreateDisabled = false;
-                },
-                function (errorRes) {
-                    console.log('errorRes', errorRes);
+                }, function (errorRes) {
+                    ngNotify.set(errorRes.data.message, { duration: 3000, type: 'error' });
+                    $scope.refresh();
                 });
             };
             $scope.currentPeriod = function () {
@@ -359,7 +358,6 @@ define(['ui-bootstrap'], function () {
                 $scope.sortType = 'period';
                 $scope.sortReverse = false;
                 service.getCurrentPeriod().then(function (response) {
-                    console.log(response);
                     if (response && response.status === 200 && response.data && response.data.status) {
                         $scope.isLoading = false;
                         $scope.data = response.data.data;
@@ -386,12 +384,12 @@ define(['ui-bootstrap'], function () {
                 item.toDate = $filter('date')(item.toDate, 'yyyy-MM-dd');
                 item.fromDate = $filter('date')(item.fromDate, 'yyyy-MM-dd');
                 var confirm = $mdDialog.confirm()
-                .title('Cảnh báo')
-                .textContent('Bạn hãy khóa sổ lại ngay khi đã thao tác xong !, bạn có chắc muốn thực hiện?')
-                .ariaLabel('Lucky day')
-                .targetEvent(ev)
-                .ok('Ok')
-                .cancel('Cancel');
+                    .title('Cảnh báo')
+                    .textContent('Bạn hãy khóa sổ lại ngay khi đã thao tác xong !, bạn có chắc muốn thực hiện?')
+                    .ariaLabel('Lucky day')
+                    .targetEvent(ev)
+                    .ok('Ok')
+                    .cancel('Cancel');
                 $mdDialog.show(confirm).then(function () {
                     service.openApproval(item).then(function (response) {
                         if (response && response.status === 200 && response.data && response.data.data.length > 0) {
@@ -478,11 +476,12 @@ define(['ui-bootstrap'], function () {
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
                 service.postQuery(postdata).then(function (response) {
-                    $scope.isLoading = false;
-                    if (response.status) {
-                        $scope.data = response.data.data;
-                        angular.extend($scope.paged, response.data);
+                    if (response && response.status == 200 && response.data) {
+                        let result = response.data.data;
+                        $scope.data = result.data;
+                        angular.extend($scope.paged, result);
                     }
+                    $scope.isLoading = false;
                 });
             };
             $scope.setPage = function (pageNo) {

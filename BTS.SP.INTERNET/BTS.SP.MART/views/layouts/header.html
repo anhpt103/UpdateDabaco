@@ -68,7 +68,8 @@
     }
 
     .navbar-custom-menu {
-        float: left;
+        float: right;
+        margin-right: 4em;
     }
 
     .showInfo > .infoboard {
@@ -109,10 +110,6 @@
         <div ng-if="currentUser">
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-
-                    <li class="dropdown tasks-menu" title="Tin nhắn đến">
-                        <a ui-sref="tinNhanKhachHang"><i class="fa fa-envelope"><span class="label label-danger" ng-if="countMessage>0">{{countMessage}}</span></i> </a>
-                    </li>
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <div data-toggle="tooltip" data-placement="left" title="Thông tin tài khoản">
@@ -139,9 +136,6 @@
                                 <div class="pull-left"></div>
                             </li>
                         </ul>
-                    </li>
-                    <li class="dropdown tasks-menu">
-                        <a ui-sref="phieuDatHang"><i class="fa fa-ambulance"><span class="label label-danger" ng-if="countOrderNew>0">{{countOrderNew}}</span></i></a>
                     </li>
                     <li ng-show="false" class="dropdown glyphicon glyphicon-download-alt" ng-click="downloadApp();" role="button" tabindex="0" style="margin:  10px 0px;color:  white;" title="Tải phần mềm bán lẻ">
                         <a href="{{linkDownload}}"></a>

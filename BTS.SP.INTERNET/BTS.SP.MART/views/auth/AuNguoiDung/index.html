@@ -46,7 +46,7 @@
                 <tr ng-show="isLoading">
                     <td colspan="12"><my-loading></my-loading></td>
                 </tr>
-                <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
+                <tr class="even pointer" ng-repeat="item in data">
                     <td class="text-right">{{$index + 1}}</td>
                     <td>{{item.username}}</td>
                     <td>{{item.tenNhanVien}}</td>

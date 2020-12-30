@@ -6,20 +6,20 @@
             var serviceUrl = configService.rootUrlWebApi + '/Authorize/AuNguoiDung';
             var selectedData = [];
             var result = {
-                postQuery: function (data, callback) {
-                    $http.post(serviceUrl + '/PostQuery', data).success(callback);
+                postQuery: function (data) {
+                    return $http.post(serviceUrl + '/PostQuery', data);
                 },
                 postSelectData: function (data) {
                     return $http.post(serviceUrl + '/PostSelectData', data);
                 },
-                post: function (data, callback) {
-                    $http.post(serviceUrl + '/Post', data).success(callback);
+                post: function (data) {
+                    return $http.post(serviceUrl + '/Post', data);
                 },
                 getAll_NguoiDung: function () {
                     return $http.get(serviceUrl + '/GetSelectData');
                 },
-                getCurrentUser: function (callback) {
-                    $http.get(serviceUrl + '/GetCurrentUser').success(callback);
+                getCurrentUser: function () {
+                    return $http.get(serviceUrl + '/GetCurrentUser');
                 },
                 update: function (params) {
                     return $http.put(serviceUrl + '/' + params.id, params);
@@ -28,7 +28,7 @@
                     return $http.delete(serviceUrl + '/' + params.id, params);
                 },
                 checkUserNameExist: function (params, callback) {
-                    $http.get(serviceUrl + '/CheckUserNameExist/' + params).success(callback);
+                    return $http.get(serviceUrl + '/CheckUserNameExist/' + params);
                 },
                 getUserByProfile: function (params) {
                     return $http.get(serviceUrl + '/GetUserByProfile/' + params);
@@ -60,16 +60,14 @@
                 if ($scope.accessList.view) {
                     $scope.isLoading = true;
                     var postdata = { paged: $scope.paged, filtered: $scope.filtered };
-                    service.postQuery(
-                        JSON.stringify(postdata),
-                        function (response) {
-                            $scope.isLoading = false;
-                            if (response.status) {
-                                $scope.data = response.data.data;
-                                angular.extend($scope.paged, response.data);
-
-                            }
-                        });
+                    service.postQuery(postdata).then(function (response) {
+                        $scope.isLoading = false;
+                        if (response && response.status && response.data) {
+                            let result = response.data.data;
+                            $scope.data = result.data;
+                            angular.extend($scope.paged, result);
+                        }
+                    });
                 }
             };
 
@@ -115,7 +113,7 @@
             $scope.create = function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    size: 'lg',
+                    size: 'md',
                     templateUrl: configService.buildUrl('auth/AuNguoiDung', 'add'),
                     controller: 'AuNguoiDungCreateController',
                     resolve: {
@@ -132,7 +130,7 @@
             $scope.details = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    size: 'lg',
+                    size: 'md',
                     templateUrl: configService.buildUrl('auth/AuNguoiDung', 'details'),
                     controller: 'AuNguoiDungDetailsController',
                     resolve: {
@@ -145,6 +143,7 @@
             $scope.update = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('auth/AuNguoiDung', 'update'),
                     controller: 'AuNguoiDungEditController',
                     resolve: {
@@ -196,6 +195,7 @@
             $scope.deleteItem = function (event, target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
+                    size: 'md',
                     templateUrl: configService.buildUrl('auth/AuNguoiDung', 'delete'),
                     controller: 'AuNguoiDungDeleteController',
                     resolve: {
@@ -271,32 +271,25 @@
             });
             $scope.enterUserNameProfiles = function (input) {
                 if (input) {
-                    service.checkUserNameExist(input, function (response) {
-                        if (response.status) {
+                    service.checkUserNameExist(input).then(function (response) {
+                        if (response && response.status == 200 && response.data && response.data.status) {
                             ngNotify.set("Đã tồn tại tên người dùng này !", { duration: 3000, type: 'error' });
                             $scope.isExist = true;
-                        } else {
-                            $scope.isExist = false;
-                        }
+                        } else $scope.isExist = false;
                     });
 
                 }
             };
             $scope.save = function () {
-                service.post(
-                    JSON.stringify($scope.target),
-                    function (response) {
-                        //Fix
-                        if (response.status) {
-                            console.log('Create  Successfully!');
-                            ngNotify.set("Thêm mới thành công", { type: 'success' });
-                            $uibModalInstance.close($scope.target);
-
-                        } else {
-                            ngNotify.set(response.message, { duration: 3000, type: 'error' });
-                        }
-                        //End fix
-                    });
+                service.post($scope.target).then(function (response) {
+                    if (response && response.status) {
+                        ngNotify.set("Thêm mới thành công", { type: 'success' });
+                        $uibModalInstance.close($scope.target);
+                    } else {
+                        ngNotify.set(response.message, { duration: 3000, type: 'error' });
+                    }
+                    //End fix
+                });
             };
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
@@ -315,20 +308,19 @@
             $scope.title = function () { return 'Cập nhập người dùng'; };
             $scope.enterUserNameProfiles = function (input) {
                 if (input) {
-                    service.checkUserNameExist(input, function (response) {
-                        if (response.status) {
+                    service.checkUserNameExist(input).then(function (response) {
+                        if (response && response.status == 200 && response.data && response.data.status) {
                             ngNotify.set("Đã tồn tại tên người dùng này !", { duration: 3000, type: 'error' });
-                        } else {
                         }
                     });
                 }
             };
+
             $scope.save = function () {
                 service.update($scope.target).then(
                     function (response) {
                         if (response.status && response.status === 200) {
                             if (response.data.status) {
-                                console.log('Create  Successfully!');
                                 ngNotify.set("Cập nhập thành công", { type: 'success' });
                                 $uibModalInstance.close($scope.target);
                             } else {
@@ -499,7 +491,6 @@
                     function (response) {
                         if (response.status && response.status === 200) {
                             if (response.data.status) {
-                                console.log('Create  Successfully!');
                                 ngNotify.set("Cập nhập thành công", { type: 'success' });
                                 $uibModalInstance.close($scope.target);
                             } else {

@@ -697,11 +697,11 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                 }
             }, true);
             $rootScope.$on('$locationChangeStart',
-            function (event, next, current) {
-                if ($scope.tagsCustomers) {
-                    $scope.tagsCustomers.clear();
-                }
-            });
+                function (event, next, current) {
+                    if ($scope.tagsCustomers) {
+                        $scope.tagsCustomers.clear();
+                    }
+                });
             $scope.tranferFrom = function (item) {
                 var modalInstance = $uibModal.open({
                     templateUrl: configService.buildUrl('nv/NvPhieuDieuChuyenNoiBo', 'add'),
@@ -1032,7 +1032,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                     document.getElementById('soluong').focus();
                     return;
                 }
-                
+
                 if ($scope.newItem.validateCode == $scope.newItem.maHang) {
                     var exsist = $scope.target.dataDetails.some(function (element, index, array) {
                         return $scope.newItem.maHang == element.maHang;
@@ -1280,7 +1280,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
             };
         }]);
     /* controller Edit */
-    app.controller('phieuNhapKhacEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapKhacService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'merchandiseService', 'typeReasonService', 'toaster','taxService',
+    app.controller('phieuNhapKhacEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapKhacService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'merchandiseService', 'typeReasonService', 'toaster', 'taxService',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, serviceMerchandise, serviceTypeReason, toaster, serviceTax) {
             $scope.config = angular.copy(configService);
             $scope.robot = angular.copy(service.robot);
@@ -1321,7 +1321,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
                         if ($scope.target.dataDetails.length > 0) {
                             $scope.isListItemNull = false;
                             $scope.target.dataDetails.forEach(function (obj) {
-                                obj.giaMuaCoVat = obj.donGia * (1 +obj.tyLeVatVao / 100);
+                                obj.giaMuaCoVat = obj.donGia * (1 + obj.tyLeVatVao / 100);
                                 obj.thanhTienVAT = obj.soLuong * obj.giaMuaCoVat;
                             });
                         }
@@ -1683,7 +1683,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }]);
 
     /* controller Details */
-    app.controller('phieuNhapKhacDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapKhacService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'typeReasonService','taxService',
+    app.controller('phieuNhapKhacDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'phieuNhapKhacService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'typeReasonService', 'taxService',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, serviceTypeReason, serviceTax) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
@@ -1804,7 +1804,7 @@ define(['ui-bootstrap', '/BTS.SP.MART/controllers/auth/AuthController.js', '/BTS
         }]);
 
     /* report Phieu Nhap Hang Mua Controller */
-    app.controller('reportPhieuNhapKhacController', ['$scope', '$location', '$http', 'configService', 'phieuNhapKhacService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window','taxService',
+    app.controller('reportPhieuNhapKhacController', ['$scope', '$location', '$http', 'configService', 'phieuNhapKhacService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'userService', '$stateParams', '$window', 'taxService',
         function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, serviceAuthUser, $stateParams, $window, serviceTax) {
             var currentUser = serviceAuthUser.GetCurrentUser();
             $scope.robot = angular.copy(service.robot);

@@ -10,3 +10,7 @@
 /BTS.SP.API/Web.config
 /BTS.SP.INTERNET/BTS.SP.INTERNET.csproj.user
 /.vs
+/BTS.APP.ChangeServer/bin
+/BTS.APP.ChangeServer/obj
+/BTS.SP.BANLE/BTS.SP.BANLE/bin
+/BTS.SP.BANLE/BTS.SP.BANLE/obj

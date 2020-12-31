@@ -1,18 +1,18 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using BTS.SP.BANLE.Dto;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using BTS.SP.BANLE.Common;
-using BTS.SP.BANLE.Dto;
-using Oracle.ManagedDataAccess.Client;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.IO.Ports;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 {
@@ -24,7 +24,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
     public partial class UC_Frame_BanLe : UserControl
     {
         private Keys CurrentKey = new Keys();
-        private bool FlagTangHang = true;private int CurentIndexDgv = 0;
+        private bool FlagTangHang = true;
         private int MethodPrice = 0;
         public static decimal CURRENT_ROW_GIABANLECOVAT = 0;
         public static decimal THANHTOAN_TONGTIEN_THANHTOAN = 0;
@@ -32,7 +32,6 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         public static DataGridView gridDataTemp = new DataGridView();
         public static int LOAIGIAODICH = 1;
         private List<VATTU_DTO> listData_TrungMa = new List<VATTU_DTO>();
-        private bool flagCheck = false;
         private FrmThanhToan frmThanhToan;
         private FrmTimKiemGiaoDich frmSearch;
         private frmSelectVatTu frmSelect;
@@ -42,7 +41,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             InitializeComponent();
             try
             {
-                if (Config.CheckConnectToServer())
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result)
                 {
                     lblNgayPhatSinhPeriod.Text = "TRẠNG THÁI BÁN: ONLINE";
                     lblNgayPhatSinhPeriod.ForeColor = Color.ForestGreen;
@@ -235,7 +237,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 if (beginCharacter.Equals(ConfigurationSettings.AppSettings["KEYMACAN"]) && KEY.Length > 9)
                 {
                     string itemCode = string.Empty; if (!string.IsNullOrEmpty(KEY)) itemCode = KEY.Substring(2, 5);
-                    if (Config.CheckConnectToServer())
+
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return _RESULT; }
+
+                    if (result)
                     {
                         _RESULT = FrmXuatBanLeService.CONVERT_MACAN_TO_MAVATTU_ORACLE(itemCode, Session.Session.CurrentUnitCode);
                     }
@@ -250,14 +256,16 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 }
                 else
                 {
-                    if (Config.CheckConnectToServer())
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return _RESULT; }
+
+                    if (result)
                     {
-                        _RESULT = FrmXuatBanLeService.CONVERT_BARCODE_TO_MAVATTU_ORACLE(KEY,Session.Session.CurrentUnitCode);
+                        _RESULT = FrmXuatBanLeService.CONVERT_BARCODE_TO_MAVATTU_ORACLE(KEY, Session.Session.CurrentUnitCode);
                     }
                     else
                     {
-                        _RESULT = FrmXuatBanLeService.CONVERT_BARCODE_TO_MAVATTU_SQLSERVER(KEY, Session.Session.CurrentUnitCode); 
-                        
+                        _RESULT = FrmXuatBanLeService.CONVERT_BARCODE_TO_MAVATTU_SQLSERVER(KEY, Session.Session.CurrentUnitCode);
                     }
                 }
             }
@@ -387,17 +395,13 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         {
                             NVHANGGDQUAY_ASYNCCLIENT_BILL.MABOPK = MAVATTU;
                             EXTEND_VAT_BOHANG _EXTEND_VAT_BOHANG = new EXTEND_VAT_BOHANG();
-                            if (Config.CheckConnectToServer())
-                            {
-                                _EXTEND_VAT_BOHANG =
-                                    FrmXuatBanLeService.LAYDULIEU_VAT_BOHANG_FROM_DATABASE_ORACLE(
-                                        NVHANGGDQUAY_ASYNCCLIENT_BILL.MABOPK, Session.Session.CurrentUnitCode);
 
-                            }
-                            else
-                            {
-                                _EXTEND_VAT_BOHANG = FrmXuatBanLeService.LAYDULIEU_VAT_BOHANG_FROM_DATABASE_SQLSERVER(NVHANGGDQUAY_ASYNCCLIENT_BILL.MABOPK, Session.Session.CurrentUnitCode);
-                            }
+                            string msg = Config.CheckConnectToServer(out bool result);
+                            if (msg.Length > 0) { MessageBox.Show(msg); return NVGDQUAY_ASYNCCLIENT_BILL; }
+
+                            if (result) _EXTEND_VAT_BOHANG = FrmXuatBanLeService.LAYDULIEU_VAT_BOHANG_FROM_DATABASE_ORACLE(NVHANGGDQUAY_ASYNCCLIENT_BILL.MABOPK, Session.Session.CurrentUnitCode);
+                            else _EXTEND_VAT_BOHANG = FrmXuatBanLeService.LAYDULIEU_VAT_BOHANG_FROM_DATABASE_SQLSERVER(NVHANGGDQUAY_ASYNCCLIENT_BILL.MABOPK, Session.Session.CurrentUnitCode);
+
                             NVHANGGDQUAY_ASYNCCLIENT_BILL.VATBAN = _EXTEND_VAT_BOHANG.TYLEVATRA;
                             NVHANGGDQUAY_ASYNCCLIENT_BILL.MAVAT = _EXTEND_VAT_BOHANG.MAVATRA;
                         }
@@ -406,14 +410,13 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 
                             NVHANGGDQUAY_ASYNCCLIENT_BILL.MABOPK = "BH";
                             EXTEND_VATTU_DTO _EXTEND_VATTU_DTO = new EXTEND_VATTU_DTO();
-                            if (Config.CheckConnectToServer())
-                            {
-                                _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_ORACLE(NVHANGGDQUAY_ASYNCCLIENT_BILL.MAVATTU, Session.Session.CurrentUnitCode);
-                            }
-                            else
-                            {
-                                _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_SQLSERVER(NVHANGGDQUAY_ASYNCCLIENT_BILL.MAVATTU, Session.Session.CurrentUnitCode);
-                            }
+
+                            string msg = Config.CheckConnectToServer(out bool result);
+                            if (msg.Length > 0) { MessageBox.Show(msg); return NVGDQUAY_ASYNCCLIENT_BILL; }
+
+                            if (result) _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_ORACLE(NVHANGGDQUAY_ASYNCCLIENT_BILL.MAVATTU, Session.Session.CurrentUnitCode);
+                            else _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_SQLSERVER(NVHANGGDQUAY_ASYNCCLIENT_BILL.MAVATTU, Session.Session.CurrentUnitCode);
+
                             NVHANGGDQUAY_ASYNCCLIENT_BILL.VATBAN = _EXTEND_VATTU_DTO.TYLEVATRA;
                             NVHANGGDQUAY_ASYNCCLIENT_BILL.MAVAT = _EXTEND_VATTU_DTO.MAVATRA;
                         }
@@ -450,7 +453,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                     {
                         NVHANGGDQUAY_ASYNCCLIENT_BILL.THANHTIENFULL = FormatCurrency.FormatMoney(NVHANGGDQUAY_ASYNCCLIENT_BILL.TTIENCOVAT);
                     }
-                    NVHANGGDQUAY_ASYNCCLIENT_BILL.TTIENCOVAT_CHUA_GIAMGIA = NVHANGGDQUAY_ASYNCCLIENT_BILL.GIABANLECOVAT* NVHANGGDQUAY_ASYNCCLIENT_BILL.SOLUONG;
+                    NVHANGGDQUAY_ASYNCCLIENT_BILL.TTIENCOVAT_CHUA_GIAMGIA = NVHANGGDQUAY_ASYNCCLIENT_BILL.GIABANLECOVAT * NVHANGGDQUAY_ASYNCCLIENT_BILL.SOLUONG;
                     NVGDQUAY_ASYNCCLIENT_BILL.LST_DETAILS.Add(NVHANGGDQUAY_ASYNCCLIENT_BILL);
                 }
             }
@@ -508,15 +511,19 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                             NVHANGGDQUAY_ASYNCCLIENT_DTO.MADONVI = NVGDQUAY_ASYNCCLIENT_DTO.MADONVI;
                             NVHANGGDQUAY_ASYNCCLIENT_DTO.MAVATTU = MAVATTU_MABO;
                             EXTEND_VATTU_DTO _EXTEND_VATTU_DTO = new EXTEND_VATTU_DTO();
-                            if (Config.CheckConnectToServer())
+
+                            string msg = Config.CheckConnectToServer(out bool result);
+                            if (msg.Length > 0) { MessageBox.Show(msg); return NVGDQUAY_ASYNCCLIENT_DTO; }
+
+                            if (result)
                             {
                                 _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_ORACLE(MAVATTU_MABO, NVHANGGDQUAY_ASYNCCLIENT_DTO.MADONVI);
-
                             }
                             else
                             {
                                 _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_SQLSERVER(MAVATTU_MABO, NVHANGGDQUAY_ASYNCCLIENT_DTO.MADONVI);
                             }
+
                             NVHANGGDQUAY_ASYNCCLIENT_DTO.DONVITINH = _EXTEND_VATTU_DTO.DONVITINH;
                             NVHANGGDQUAY_ASYNCCLIENT_DTO.BARCODE = _EXTEND_VATTU_DTO.BARCODE;
                             NVHANGGDQUAY_ASYNCCLIENT_DTO.TENDAYDU = _EXTEND_VATTU_DTO.TENVATTU;
@@ -612,15 +619,18 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         {
                             //LÀ MÃ BÓ HÀNG
                             List<EXTEND_BOHANGCHITIET_DTO> _LST_EXTEND_BOHANGCHITIET_DTO = new List<EXTEND_BOHANGCHITIET_DTO>();
-                            if (Config.CheckConnectToServer())
-                            {
-                                _LST_EXTEND_BOHANGCHITIET_DTO = FrmXuatBanLeService.LAYDULIEU_BOHANGCHITIET_FROM_DATABASE_ORACLE(MAVATTU_MABO,NVGDQUAY_ASYNCCLIENT_DTO.UNITCODE);
+                            string msg = Config.CheckConnectToServer(out bool result);
+                            if (msg.Length > 0) { MessageBox.Show(msg); return NVGDQUAY_ASYNCCLIENT_DTO; }
 
+                            if (result)
+                            {
+                                _LST_EXTEND_BOHANGCHITIET_DTO = FrmXuatBanLeService.LAYDULIEU_BOHANGCHITIET_FROM_DATABASE_ORACLE(MAVATTU_MABO, NVGDQUAY_ASYNCCLIENT_DTO.UNITCODE);
                             }
                             else
                             {
                                 _LST_EXTEND_BOHANGCHITIET_DTO = FrmXuatBanLeService.LAYDULIEU_BOHANGCHITIET_FROM_DATABASE_SQLSERVER(MAVATTU_MABO, NVGDQUAY_ASYNCCLIENT_DTO.UNITCODE);
                             }
+
                             if (_LST_EXTEND_BOHANGCHITIET_DTO.Count > 0)
                             {
                                 foreach (EXTEND_BOHANGCHITIET_DTO rowBoHang in _LST_EXTEND_BOHANGCHITIET_DTO)
@@ -632,12 +642,13 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                     NVHANGGDQUAY_ASYNCCLIENT_DTO.MADONVI = NVGDQUAY_ASYNCCLIENT_DTO.MADONVI;
                                     NVHANGGDQUAY_ASYNCCLIENT_DTO.MAVATTU = rowBoHang.MAHANG;
                                     EXTEND_VATTU_DTO _EXTEND_VATTU_DTO = new EXTEND_VATTU_DTO();
-                                    if (Config.CheckConnectToServer())
-                                    {
-                                        _EXTEND_VATTU_DTO =
-                                            FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_ORACLE(
-                                                rowBoHang.MAHANG, NVHANGGDQUAY_ASYNCCLIENT_DTO.MADONVI);
 
+                                    msg = Config.CheckConnectToServer(out result);
+                                    if (msg.Length > 0) { MessageBox.Show(msg); return NVGDQUAY_ASYNCCLIENT_DTO; }
+
+                                    if (result)
+                                    {
+                                        _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_ORACLE(rowBoHang.MAHANG, NVHANGGDQUAY_ASYNCCLIENT_DTO.MADONVI);
                                     }
                                     else
                                     {
@@ -970,7 +981,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             List<VATTU_DTO> listData = new List<VATTU_DTO>();
             decimal SoLuong = 1, RETURN_TIENKHUYENMAI = 0;
             string MaVatTu = txtMaHang.Text.Trim().ToUpper();
-            if (Config.CheckConnectToServer()) //Nếu có mạng lan
+
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+            if (result) //Nếu có mạng lan
             {
                 listData = FrmXuatBanLeService.GET_DATA_VATTU_FROM_CSDL_ORACLE(MaVatTu, (EnumCommon.MethodGetPrice)MethodPrice);
                 txtSoLuong.Focus();
@@ -1010,7 +1025,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         }
                     }
                     INSERT_DATA(listData[0]);
-                    if(listData[0].LAMACAN)
+                    if (listData[0].LAMACAN)
                     {
                         CURRENT_SOLUONG_MACAN = listData[0].SOLUONG;
                     }
@@ -1041,7 +1056,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 this.dgvDetails_Tab.ClearSelection();
                 this.dgvDetails_Tab.Rows[0].Selected = true;
             }
-            TINHTOAN_TONGTIEN_TOANHOADON(this.dgvDetails_Tab);          
+            TINHTOAN_TONGTIEN_TOANHOADON(this.dgvDetails_Tab);
         }
 
         private void txtMaHang_KeyDown(object sender, KeyEventArgs e)
@@ -1127,7 +1142,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         CURRENT_ROW_TIENKM = FrmXuatBanLeService.TINHTOAN_KHUYENMAI(CURENT_ROW_MAVATTU, (EnumCommon.MethodGetPrice)MethodPrice);
                     }
                     decimal SUM_TONGCHIETKHAU_LE = 0;
-                    
+
                     decimal CURENT_ROW_SOLUONG = 1;
                     decimal CHIETKHAU = 0;
                     decimal CURRENT_ROW_TTIENCOVAT = 0;
@@ -1294,7 +1309,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                     {
                         CURRENT_ROW_SOLUONG_NEW = CURRENT_ROW_SOLUONG - 1;
                     }
-                    
+
                     if (CURRENT_ROW_SOLUONG_NEW > 0)
                     {
                         CURRENT_TIENKHUYENMAI_NEW = (CURRENT_ROW_GIATRI / CURRENT_ROW_SOLUONG) * CURRENT_ROW_SOLUONG_NEW;
@@ -1351,22 +1366,22 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         }
                     }
                     txtSoLuong.Text = CURRENT_ROW_SOLUONG_NEW.ToString();
-                    if(this.dgvDetails_Tab.Rows.Count > 0)
+                    if (this.dgvDetails_Tab.Rows.Count > 0)
                     {
                         HienThiManHinhLCD(dgvDetails_Tab.CurrentRow.Cells["TENVATTU"].Value.ToString(), FormatCurrency.FormatMoney(CURRENT_ROW_SOLUONG_NEW), FormatCurrency.FormatMoney(CURRENT_ROW_GIABANLECOVAT), FormatCurrency.FormatMoney(CURRENT_ROW_SOLUONG_NEW * CURRENT_ROW_GIABANLECOVAT));
                     }
                     else
                     {
-                        HienThiManHinhLCD("","0","0","0");
+                        HienThiManHinhLCD("", "0", "0", "0");
                     }
                     txtMaHang.Text = "";
                 }
-                TINHTOAN_TONGTIEN_TOANHOADON(dgvDetails_Tab);        
+                TINHTOAN_TONGTIEN_TOANHOADON(dgvDetails_Tab);
                 lblChietKhauLe.Text = FormatCurrency.FormatMoney(SUM_TONGCHIETKHAU_LE);
             }
         }
 
-        
+
         /// <summary>
         /// Sự kiện tăng hàng
         /// </summary>
@@ -1901,7 +1916,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         List<BOHANG_DTO> listBoHang = new List<BOHANG_DTO>();
                         while (dataReader.Read())
                         {
-                            decimal GIABANLEVAT, VATBAN, TIENCHIETKHAU, TYLECHIETKHAU, TYLEKHUYENMAI, TIENKHUYENMAI,TTIENCOVAT, SOLUONG = 0;
+                            decimal GIABANLEVAT, VATBAN, TIENCHIETKHAU, TYLECHIETKHAU, TYLEKHUYENMAI, TIENKHUYENMAI, TTIENCOVAT, SOLUONG = 0;
                             NVHANGGDQUAY_ASYNCCLIENT item = new NVHANGGDQUAY_ASYNCCLIENT();
                             string MaBoHangPk = dataReader["MABOPK"].ToString().Trim();
                             if (!string.IsNullOrEmpty(MaBoHangPk) && !MaBoHangPk.Equals("BH"))
@@ -2048,7 +2063,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             string MaGiaoDichQuayPk = BillId.Trim() + "." + Session.Session.CurrentUnitCode.Split('-')[1];
             NVGDQUAY_ASYNCCLIENT_DTO _NVGDQUAY_ASYNCCLIENT_BILL = new NVGDQUAY_ASYNCCLIENT_DTO();
             string MA_TEN_KHACHHANG = "";
-            if (Config.CheckConnectToServer())
+
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+            if (result)
             {
                 _NVGDQUAY_ASYNCCLIENT_BILL = KHOITAO_DULIEU_INLAI_HOADON_FROM_ORACLE(MaGiaoDichQuayPk);
                 MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_ORACLE(_NVGDQUAY_ASYNCCLIENT_BILL.MAKHACHHANG);
@@ -2260,7 +2279,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         {
             try
             {
-                    DisplayLCD20x2(TenVatTu, SoLuong, GiaBanLeVat, ThanhTien);
+                DisplayLCD20x2(TenVatTu, SoLuong, GiaBanLeVat, ThanhTien);
             }
             catch { }
         }
@@ -2290,7 +2309,8 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 _serialPort.Close();
                 _serialPort.Close();
             }
-            catch {
+            catch
+            {
             }
         }
         public static void ClearDisplay()

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Dto;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Configuration;
 using System.Data;
-using BTS.SP.BANLE.Dto;
-using Oracle.ManagedDataAccess.Client;
 
 namespace BTS.SP.BANLE.Session
 {
@@ -23,6 +23,7 @@ namespace BTS.SP.BANLE.Session
         public static string CurrentLoaiGiaoDich;
         public static string CurrentTableNamePeriod;
         public static bool SESSION_OFFLINE = false;
+        public static int? SESSION_ID_CSDL = null;
         /// <summary>
         /// 
         /// </summary>

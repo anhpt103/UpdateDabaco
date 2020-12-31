@@ -1,9 +1,9 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Giaodich.XuatBanLe;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using BTS.SP.BANLE.Giaodich.XuatBanLe;
-using Oracle.ManagedDataAccess.Client;
 
 namespace BTS.SP.BANLE.Common
 {

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using BTS.SP.BANLE.Dto;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Windows.Forms;
-using BTS.SP.BANLE.Common;
-using BTS.SP.BANLE.Dto;
-using Oracle.ManagedDataAccess.Client;
-using EnumCommon = BTS.SP.BANLE.Common.EnumCommon;
 using System.Data.SqlClient;
+using System.Windows.Forms;
+using EnumCommon = BTS.SP.BANLE.Common.EnumCommon;
 
 namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 {
@@ -150,7 +150,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                             "' AND UNITCODE = '" + Session.Session.CurrentUnitCode + "'";
                                         OracleDataReader dataReaderBoHangChiTiet = cmdBoHangChiTiet.ExecuteReader();
                                         EXTEND_VAT_BOHANG _EXTEND_VAT_BOHANG = new EXTEND_VAT_BOHANG();
-                                        if (Config.CheckConnectToServer())
+
+                                        string msg = Config.CheckConnectToServer(out bool result);
+                                        if (msg.Length > 0) { MessageBox.Show(msg); return listDataDto; }
+
+                                        if (result)
                                         {
                                             _EXTEND_VAT_BOHANG = LAYDULIEU_VAT_BOHANG_FROM_DATABASE_ORACLE(dataDto.MAVATTU, Session.Session.CurrentUnitCode);
                                             dataDto.MAVATRA = _EXTEND_VAT_BOHANG.MAVATRA;
@@ -173,13 +177,13 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                                 //dataDto.SOLUONG = SOLUONG;
                                                 OracleCommand cmdVatTu = new OracleCommand();
                                                 cmdVatTu.Connection = connection;
-                                                cmdVatTu.CommandText = "SELECT b.GIAVON,b.TONCUOIKYSL FROM V_VATTU_GIABAN a JOIN " +TABLE_NAME + " b ON a.MAVATTU = b.MAVATTU AND b.MAKHO = '" +Session.Session.CurrentWareHouse +"' WHERE a.MAVATTU = '" +maVatTuBoHang + "' AND a.MADONVI = '" +Session.Session.CurrentUnitCode + "'";
+                                                cmdVatTu.CommandText = "SELECT b.GIAVON,b.TONCUOIKYSL FROM V_VATTU_GIABAN a JOIN " + TABLE_NAME + " b ON a.MAVATTU = b.MAVATTU AND b.MAKHO = '" + Session.Session.CurrentWareHouse + "' WHERE a.MAVATTU = '" + maVatTuBoHang + "' AND a.MADONVI = '" + Session.Session.CurrentUnitCode + "'";
                                                 OracleDataReader dataReaderVatTu = cmdVatTu.ExecuteReader();
                                                 if (dataReaderVatTu.HasRows)
                                                 {
                                                     while (dataReaderVatTu.Read())
                                                     {
-                                                        decimal.TryParse(dataReaderVatTu["GIAVON"].ToString(),out GiaVon);
+                                                        decimal.TryParse(dataReaderVatTu["GIAVON"].ToString(), out GiaVon);
                                                         decimal.TryParse(dataReaderVatTu["TONCUOIKYSL"].ToString(), out TONCUOIKYSL);
                                                     }
                                                     dataDto.GIAVON += GiaVon * SOLUONG;
@@ -187,7 +191,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                                 }
                                             }
                                         }
-                                       
+
                                         if (PhuongThucTinhGia == EnumCommon.MethodGetPrice.GIABANLECOVAT)
                                         {
                                             dataDto.GIABANLEVAT = GIABANLEVAT;
@@ -201,7 +205,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                             else
                                             {
                                                 dataDto.GIABANLEVAT = dataDto.GIAVON * (1 + dataDto.TYLEVATRA / 100);
-                                               
+
                                             }
                                         }
                                         dataDto.GIAVON = dataDto.GIAVON * (1 + dataDto.TYLEVATRA / 100);
@@ -247,7 +251,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                 {
                                     while (dataReader.Read())
                                     {
-                                        decimal GIABANBUONVAT, GIABANLEVAT, GIAVON, TYLEVATRA, TONCUOIKYSL,SOLUONG = 0;
+                                        decimal GIABANBUONVAT, GIABANLEVAT, GIAVON, TYLEVATRA, TONCUOIKYSL, SOLUONG = 0;
                                         VATTU_DTO dataDto = new VATTU_DTO();
                                         dataDto.MAVATTU = dataReader["MAVATTU"].ToString();
                                         dataDto.TENVATTU = dataReader["TENVATTU"].ToString();
@@ -408,8 +412,12 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         {
             decimal TEMP_TIENKHUYENMAI = 0;
             List<KHUYENMAI_DTO> dataKhuyenMai = new List<KHUYENMAI_DTO>();
+
             //GET CHƯƠNG TRÌNH KHUYẾN MÃI
-            if (Config.CheckConnectToServer()) // nếu có mạng lan
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return TEMP_TIENKHUYENMAI; }
+
+            if (result) // nếu có mạng lan
             {
                 dataKhuyenMai = CACULATION_KHUYENMAI_CHIETKHAU_GIAMGIA_CSDL_ORACLE(maVatTu);
             }
@@ -435,8 +443,8 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                     {
                         string[] tugio = dataKhuyenMai[0].TUGIO.Split(':');
                         string[] dengio = dataKhuyenMai[0].DENGIO.Split(':');
-                        int minuteTuGio = Int32.Parse(tugio[0])*60 + Int32.Parse(tugio[1]);
-                        int minuteDenGio = Int32.Parse(dengio[0])*60 + Int32.Parse(dengio[1]);
+                        int minuteTuGio = Int32.Parse(tugio[0]) * 60 + Int32.Parse(tugio[1]);
+                        int minuteDenGio = Int32.Parse(dengio[0]) * 60 + Int32.Parse(dengio[1]);
                         if (minuteTuGio <= getHour && getHour <= minuteDenGio)
                         {
                             //hiện tại chỉ tính theo tiền -- theo cột TYLEKHUYENMAICHILDREN trong VIEW_KHUYENMAI
@@ -576,7 +584,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         WriteLogs.LogError(ex);
                     }
@@ -640,7 +648,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         WriteLogs.LogError(ex);
                     }
@@ -911,7 +919,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                     }
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 WriteLogs.LogError(ex);
                             }
@@ -992,7 +1000,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                     }
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 WriteLogs.LogError(ex);
                             }

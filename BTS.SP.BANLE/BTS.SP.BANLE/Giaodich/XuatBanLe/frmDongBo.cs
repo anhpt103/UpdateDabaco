@@ -26,8 +26,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         }
         private void btnFilter_Click(object sender, EventArgs e)
         {
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
             lstData = GetDataFromSql();
-            if (Config.CheckConnectToServer()) // nếu có mạng lan
+            if (result) // nếu có mạng lan
             {
                 lstDataOracle = GetDataFromOracle();
             }
@@ -40,7 +43,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             int mhMT = 0;
             using (OracleConnection connection = new OracleConnection(ConfigurationManager.ConnectionStrings["TBNETERP_SERVER"].ConnectionString))
             {
-                if (Config.CheckConnectToServer()) // nếu có mạng lan
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result) // nếu có mạng lan
                 {
                     connection.Open();
                     if (connection.State == ConnectionState.Open)
@@ -283,7 +289,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                                 command2.Parameters.Add("MAVAT", SqlDbType.NVarChar, 50).Value = itemData.MAVAT;
                                                 command2.Parameters.Add("VATBAN", SqlDbType.Decimal).Value = itemData.VATBAN;
                                                 command2.Parameters.Add("MACHUONGTRINHKM", SqlDbType.NVarChar, 50).Value = itemData.MACHUONGTRINHKM;
-                                                command2.Parameters.Add("UNITCODE", SqlDbType.NVarChar, 50).Value = itemData.UNITCODE != null? itemData.UNITCODE : ";";
+                                                command2.Parameters.Add("UNITCODE", SqlDbType.NVarChar, 50).Value = itemData.UNITCODE != null ? itemData.UNITCODE : ";";
                                                 try
                                                 {
                                                     command2.ExecuteNonQuery();
@@ -311,7 +317,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                     }
                 }
             }
-            MessageBox.Show("Đã đồng bộ " + hdSV + " hóa đơn trên server với " + mhSV + " mặt hàng \n " + hdMT +" hóa đơn sql với " + mhMT +"mặt hàng");
+            MessageBox.Show("Đã đồng bộ " + hdSV + " hóa đơn trên server với " + mhSV + " mặt hàng \n " + hdMT + " hóa đơn sql với " + mhMT + "mặt hàng");
         }
         private List<NVGDQUAY_ASYNCCLIENT_DTO> GetDataFromSql()
         {
@@ -323,7 +329,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 connection.Open();
                 if (connection.State == ConnectionState.Open)
                 {
-                    int hd = 0 ;
+                    int hd = 0;
                     int mh = 0;
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = connection;

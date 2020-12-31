@@ -1,11 +1,11 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using BTS.SP.BANLE.Dto;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using BTS.SP.BANLE.Common;
-using BTS.SP.BANLE.Dto;
-using Oracle.ManagedDataAccess.Client;
 namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 {
     public partial class FrmThanhToanTraLai : Form
@@ -44,7 +44,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         {
             this.handler = xuLy;
         }
-       
+
         private void btnThanhToan_Exit_Click(object sender, EventArgs e)
         {
             _NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL = new NVGDQUAY_ASYNCCLIENT_DTO();
@@ -295,18 +295,12 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             try
             {
                 int countSave = 0;
-                if (Config.CheckConnectToServer())
-                {
-                    countSave = SAVE_DATA_TO_ORACLE(_NVGDQUAY_ASYNCCLIENT_DTO);
-                }
-                else
-                {
-                    countSave = SAVE_DATA_TO_SQL(_NVGDQUAY_ASYNCCLIENT_DTO);
-                }
-                if (countSave >= 2)
-                {
-                    NotificationLauncher.ShowNotification("Thông báo", "Hoàn thành giao dịch", 1, "0x1", "0x8", "normal");
-                }
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result) countSave = SAVE_DATA_TO_ORACLE(_NVGDQUAY_ASYNCCLIENT_DTO);
+                else countSave = SAVE_DATA_TO_SQL(_NVGDQUAY_ASYNCCLIENT_DTO);
+                if (countSave >= 2) NotificationLauncher.ShowNotification("Thông báo", "Hoàn thành giao dịch", 1, "0x1", "0x8", "normal");
             }
             catch (Exception ex)
             {
@@ -315,7 +309,6 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         }
         private void THANHTOAN_HOADON_BANLE_TRALAI()
         {
-            bool success = false;
             string TONGTIEN_BANGCHU = ConvertSoThanhChu.ChuyenDoiSoThanhChu(_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.TTIENCOVAT);
             try
             {
@@ -328,14 +321,13 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             try
             {
                 string MA_TEN_KHACHHANG = "";
-                if (Config.CheckConnectToServer())
-                {
-                    MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_ORACLE(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
-                }
-                else
-                {
-                    MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_SQLSERVER(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
-                }
+
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result) MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_ORACLE(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
+                else MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_SQLSERVER(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
+
                 using (frmPrintBill_TraLai frmBanTraLai = new frmPrintBill_TraLai())
                 {
                     try
@@ -493,7 +485,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 }
             }
         }
-        
+
         private void INSERT_DATA_HANG_GIAODICHQUAY(NVGDQUAY_ASYNCCLIENT_DTO _NVGDQUAY_ASYNCCLIENT_DTO, ref int countCheckInsertSuccess)
         {
             if (_NVGDQUAY_ASYNCCLIENT_DTO.LST_DETAILS.Count > 0)
@@ -617,7 +609,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                 command.Parameters.Add("MAVAT", SqlDbType.NVarChar, 50).Value = ITEM.MAVAT;
                                 command.Parameters.Add("VATBAN", SqlDbType.Decimal).Value = ITEM.VATBAN;
                                 command.Parameters.Add("MACHUONGTRINHKM", SqlDbType.NVarChar, 50).Value = ITEM.MACHUONGTRINHKM;
-                                command.Parameters.Add("UNITCODE", SqlDbType.NVarChar, 50).Value = ITEM.UNITCODE!=null?ITEM.UNITCODE: Session.Session.CurrentUnitCode;
+                                command.Parameters.Add("UNITCODE", SqlDbType.NVarChar, 50).Value = ITEM.UNITCODE != null ? ITEM.UNITCODE : Session.Session.CurrentUnitCode;
                                 try
                                 {
                                     if (command.ExecuteNonQuery() > 0) countCheckInsertSuccess++;

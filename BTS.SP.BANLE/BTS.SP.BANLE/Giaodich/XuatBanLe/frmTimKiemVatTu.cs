@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using BTS.SP.BANLE.Dto;
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
-using BTS.SP.BANLE.Common;
-using Oracle.ManagedDataAccess.Client;
-using BTS.SP.BANLE.Dto;
-using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 {
@@ -75,7 +75,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         {
             this.searchVatTu = search;
         }
-        public List<TIMKIEM_VATTU_DTO> TIMKIEM_DULIEU_HANGHOA_DATABASE_ORACLE(string DIEUKIENLOC,int SUDUNG_TIMKIEM_ALL,int DIEUKIENCHON,string UNITCODE)
+        public List<TIMKIEM_VATTU_DTO> TIMKIEM_DULIEU_HANGHOA_DATABASE_ORACLE(string DIEUKIENLOC, int SUDUNG_TIMKIEM_ALL, int DIEUKIENCHON, string UNITCODE)
         {
             List<TIMKIEM_VATTU_DTO> LST_TIMKIEM_VATTU_DTO = new List<TIMKIEM_VATTU_DTO>();
             if (!string.IsNullOrEmpty(DIEUKIENLOC))
@@ -157,7 +157,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         WriteLogs.LogError(ex);
                     }
@@ -173,7 +173,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 
         public void BINDING_DATA_TO_GRIDVIEW(List<TIMKIEM_VATTU_DTO> LST_TIMKIEM_VATTU_DTO)
         {
-            if(LST_TIMKIEM_VATTU_DTO.Count > 0)
+            if (LST_TIMKIEM_VATTU_DTO.Count > 0)
             {
                 dgvResultSearch.Rows.Clear();
                 dgvResultSearch.DataSource = null;
@@ -200,19 +200,19 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         }
         private void txtFilterSearch_TextChanged(object sender, EventArgs e)
         {
-            if (Config.CheckConnectToServer()) // nếu có mạng lan
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+            if (result) // nếu có mạng lan
             {
                 int P_DIEUKIEN_TIMKIEM = cboDieuKienTimKiem.SelectedIndex;
-                List<TIMKIEM_VATTU_DTO> LST_TIMKIEM_VATTU_DTO = TIMKIEM_DULIEU_HANGHOA_DATABASE_ORACLE(txtFilterSearch.Text, 0 ,P_DIEUKIEN_TIMKIEM,Session.Session.CurrentUnitCode);
-                if(LST_TIMKIEM_VATTU_DTO.Count > 0)
+                List<TIMKIEM_VATTU_DTO> LST_TIMKIEM_VATTU_DTO = TIMKIEM_DULIEU_HANGHOA_DATABASE_ORACLE(txtFilterSearch.Text, 0, P_DIEUKIEN_TIMKIEM, Session.Session.CurrentUnitCode);
+                if (LST_TIMKIEM_VATTU_DTO.Count > 0)
                 {
                     BINDING_DATA_TO_GRIDVIEW(LST_TIMKIEM_VATTU_DTO);
                 }
             }
-            else
-            {
-                MessageBox.Show("Không có kết nối database !");
-            }
+            else MessageBox.Show("Không có kết nối database !");
         }
 
         private void dgvResultSearch_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -224,18 +224,19 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            if (Config.CheckConnectToServer()) // nếu có mạng lan
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+            if (result) // nếu có mạng lan
             {
                 int P_DIEUKIEN_TIMKIEM = cboDieuKienTimKiem.SelectedIndex;
-                List<TIMKIEM_VATTU_DTO> LST_TIMKIEM_VATTU_DTO = TIMKIEM_DULIEU_HANGHOA_DATABASE_ORACLE(txtFilterSearch.Text, 0 , P_DIEUKIEN_TIMKIEM, Session.Session.CurrentUnitCode);
+                List<TIMKIEM_VATTU_DTO> LST_TIMKIEM_VATTU_DTO = TIMKIEM_DULIEU_HANGHOA_DATABASE_ORACLE(txtFilterSearch.Text, 0, P_DIEUKIEN_TIMKIEM, Session.Session.CurrentUnitCode);
                 if (LST_TIMKIEM_VATTU_DTO.Count > 0)
                 {
                     BINDING_DATA_TO_GRIDVIEW(LST_TIMKIEM_VATTU_DTO);
-                }}
-            else
-            {
-                MessageBox.Show("Không có kết nối database !");
+                }
             }
+            else MessageBox.Show("Không có kết nối database !");
         }
     }
 }

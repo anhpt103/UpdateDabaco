@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BTS.SP.BANLE.ToastNotifications.FormAnimator;
+using System;
 using System.Drawing;
 using System.IO;
-using BTS.SP.BANLE.ToastNotifications.FormAnimator;
 using ToastNotifications;
 
 namespace BTS.SP.BANLE.Common

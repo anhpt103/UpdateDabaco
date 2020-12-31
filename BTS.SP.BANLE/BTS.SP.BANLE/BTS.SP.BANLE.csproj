@@ -62,7 +62,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -137,12 +137,12 @@
   <ItemGroup>
     <Compile Include="Common\Config.cs" />
     <Compile Include="Common\ConvertSoThanhChu.cs" />
+    <Compile Include="Common\DummyData.cs" />
     <Compile Include="Common\EnumTimKiemGiaoDich.cs" />
     <Compile Include="Common\EnumCommon.cs" />
     <Compile Include="Common\FormatCurrency.cs" />
     <Compile Include="Common\NotificationLauncher.cs" />
     <Compile Include="Common\ObjectCopier.cs" />
-    <Compile Include="Common\ReadXML.cs" />
     <Compile Include="Common\SYNCHRONIZE_DATA.cs" />
     <Compile Include="Common\WriteLogs.cs" />
     <Compile Include="ConnectDatabase\ConnectDatabase.cs">
@@ -383,7 +383,6 @@
     <EmbeddedResource Include="Hethong\FrmDoiMatKhau.resx">
       <DependentUpon>FrmDoiMatKhau.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

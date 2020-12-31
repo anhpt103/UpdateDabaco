@@ -1,14 +1,14 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using BTS.SP.BANLE.Danhmuc;
+using BTS.SP.BANLE.Dto;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Windows.Forms;
-using BTS.SP.BANLE.Common;
-using BTS.SP.BANLE.Danhmuc;
-using BTS.SP.BANLE.Dto;
-using Oracle.ManagedDataAccess.Client;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 {
@@ -509,7 +509,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             try
             {
                 int countSave = 0;
-                if (Config.CheckConnectToServer())
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result)
                 {
                     countSave = SAVE_DATA_TO_ORACLE(_NVGDQUAY_ASYNCCLIENT_DTO);
                 }
@@ -531,7 +534,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             {
                 try
                 {
-                    if (Config.CheckConnectToServer())
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                    if (result)
                     {
                         UPDATE_KHACHHANG_TO_ORACLE(_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.MAKHACHHANG, _NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.QUYDOITIEN_THANH_DIEM, _NVGDQUAY_ASYNCCLIENT_DTO.TTIENCOVAT, _NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.HANGKHACHHANG);
                     }
@@ -550,7 +556,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             {
                 if (string.IsNullOrEmpty(MaHangKhachHang) || MaHangKhachHang.Equals(""))
                 {
-                    if (Config.CheckConnectToServer())
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return _HANGKHACHHANG_DTO; }
+
+                    if (result)
                     {
                         _HANGKHACHHANG_DTO = FrmThanhToanService.LAY_QUYDOI_TIEN_THANH_DIEM_HANGKHACHHANG_KHOIDAU_FROM_ORACLE();
                     }
@@ -561,7 +570,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 }
                 else
                 {
-                    if (Config.CheckConnectToServer())
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return _HANGKHACHHANG_DTO; }
+
+                    if (result)
                     {
                         _HANGKHACHHANG_DTO = FrmThanhToanService.LAY_QUYDOI_THEOHANGKH_FROM_ORACLE(MaHangKhachHang.Trim());
                     }
@@ -662,7 +674,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             if (LOG_THANHTOAN)
             {
                 LOG_THANHTOAN = false;
-                txtThanhToan_TienMat.Focus();txtThanhToan_TienMat.SelectAll();
+                txtThanhToan_TienMat.Focus(); txtThanhToan_TienMat.SelectAll();
                 return;
             }
             else
@@ -740,8 +752,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         private void THUCHIEN_IN_HOADON()
         {
             string TONGTIEN_BANGCHU = ConvertSoThanhChu.ChuyenDoiSoThanhChu(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.TTIENCOVAT);
-            string MA_TEN_KHACHHANG = "";
-            if (Config.CheckConnectToServer())
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+            string MA_TEN_KHACHHANG;
+            if (result)
             {
                 MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_ORACLE(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
             }
@@ -1224,7 +1239,8 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             txtThanhToan_TienMat.SelectAll();
             LOG_THANHTOAN = true;
         }
-        private void txtThanhToan_MaKhachHang_KeyDown(object sender, KeyEventArgs e){
+        private void txtThanhToan_MaKhachHang_KeyDown(object sender, KeyEventArgs e)
+        {
             if (e.KeyCode == Keys.Enter)
             {
                 if (!string.IsNullOrEmpty(txtThanhToan_MaKhachHang.Text))
@@ -1357,7 +1373,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         string THANHTOAN_TIENMAT_STRING = txtThanhToan_TienMat.Text;
                         THANHTOAN_TIENMAT_STRING = THANHTOAN_TIENMAT_STRING.Replace(",", "");
                         _NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.TTIENCOVAT = TIEN_PHAITRA;
-                        _NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.TTIENCOVAT = TIEN_PHAITRA;_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.TIENTHE = TIEN_QUYDOI;
+                        _NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.TTIENCOVAT = TIEN_PHAITRA; _NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.TIENTHE = TIEN_QUYDOI;
                         _NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.TIENTHE = TIEN_QUYDOI;
                         decimal TIENMAT_KHACHTRA, TIEN_TRALAI = 0;
 
@@ -1385,7 +1401,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         {
                             DialogResult result = MessageBox.Show("SỐ TIỀN TRẢ LẠI QUÁ LỚN ?", "THAO TÁC SAI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
-                      
+
                         decimal DIEMQUYDOI = 0; if (_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.QUYDOIDIEM_THANH_TIEN != 0)
                         {
                             DIEMQUYDOI = decimal.Round(TIEN_QUYDOI / _NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL.QUYDOIDIEM_THANH_TIEN, 2);

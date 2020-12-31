@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using BTS.SP.BANLE.Dto;
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
-using BTS.SP.BANLE.Common;
-using BTS.SP.BANLE.Dto;
-using Oracle.ManagedDataAccess.Client;
-using System.Collections.Generic;
 
 namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 {
@@ -36,7 +36,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             this.dateTimeDenNgay.Value = DateTime.Now;
             dateTimeTuNgay.Format = DateTimePickerFormat.Custom;
             dateTimeTuNgay.CustomFormat = "dd/MM/yyyy";
-            this.dateTimeTuNgay.Value = DateTime.Now.AddDays(-7);  
+            this.dateTimeTuNgay.Value = DateTime.Now.AddDays(-7);
         }
 
         public FrmTimKiemGiaoDich(bool rePrintBill)
@@ -119,7 +119,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                             int idx = dgvDanhSachGiaoDichChiTiet.Rows.Add();
                             DataGridViewRow rowData = dgvDanhSachGiaoDichChiTiet.Rows[idx];
                             rowData.Cells["MAGIAODICH"].Value = dataReader["MAGIAODICH"];
-                            int.TryParse(dataReader["LOAIGIAODICH"].ToString(),out LOAIGIAODICH);
+                            int.TryParse(dataReader["LOAIGIAODICH"].ToString(), out LOAIGIAODICH);
                             rowData.Cells["LOAIGIAODICH"].Value = LOAIGIAODICH == 1 ? "XBLE" : "TRL";
                             rowData.Cells["NGAYPHATSINH"].Value = dataReader["NGAYPHATSINH"];
                             rowData.Cells["MANGUOITAO"].Value = dataReader["MANGUOITAO"];
@@ -145,7 +145,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             List<NVGDQUAY_ASYNCCLIENT_DTO> listReturn = new List<NVGDQUAY_ASYNCCLIENT_DTO>();
             try
             {
-                using (var connection =new OracleConnection(ConfigurationManager.ConnectionStrings["TBNETERP_SERVER"].ConnectionString))
+                using (var connection = new OracleConnection(ConfigurationManager.ConnectionStrings["TBNETERP_SERVER"].ConnectionString))
                 {
                     connection.OpenAsync();
                     OracleCommand cmd = new OracleCommand();
@@ -212,11 +212,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         }
         private void txtDieuKienTimKiem_TextChanged(object sender, EventArgs e)
         {
-            if(txtDieuKienTimKiem.Text.Length > 3)
+            if (txtDieuKienTimKiem.Text.Length > 3)
             {
                 List<NVGDQUAY_ASYNCCLIENT_DTO> dataReturn = new List<NVGDQUAY_ASYNCCLIENT_DTO>();
-                dataReturn = TIMKIEM_GIAODICHQUAY(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value,dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
-                if(dataReturn.Count > 0)
+                dataReturn = TIMKIEM_GIAODICHQUAY(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
+                if (dataReturn.Count > 0)
                 {
                     dgvDanhSachGiaoDichChiTiet.Rows.Clear();
                     dgvDanhSachGiaoDichChiTiet.Refresh();
@@ -272,17 +272,12 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             if (txtDieuKienTimKiem.Text.Length > 3)
             {
                 List<NVGDQUAY_ASYNCCLIENT_DTO> dataReturn = new List<NVGDQUAY_ASYNCCLIENT_DTO>();
-                if (Config.CheckConnectToServer())
-                {
-                    dataReturn = TIMKIEM_GIAODICHQUAY(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value,
-                        dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
-                    
-                }
-                else
-                {
-                    dataReturn = UC_Frame_TraLai.TIMKIEM_GIAODICHQUAY_FROM_SQL(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value,
-                        dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
-                }
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result) dataReturn = TIMKIEM_GIAODICHQUAY(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
+                else dataReturn = UC_Frame_TraLai.TIMKIEM_GIAODICHQUAY_FROM_SQL(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
+
                 if (dataReturn.Count > 0)
                 {
                     dgvDanhSachGiaoDichChiTiet.Rows.Clear();
@@ -316,16 +311,12 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
         private void StartForm()
         {
             List<NVGDQUAY_ASYNCCLIENT_DTO> dataReturn = new List<NVGDQUAY_ASYNCCLIENT_DTO>();
-            if (Config.CheckConnectToServer())
-            {
-                dataReturn = TIMKIEM_GIAODICHQUAY("", dateTimeTuNgay.Value,
-                    dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
-            }
-            else
-            {
-                dataReturn = UC_Frame_TraLai.TIMKIEM_GIAODICHQUAY_FROM_SQL("", dateTimeTuNgay.Value,
-                    dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
-            }
+            string msg = Config.CheckConnectToServer(out bool result);
+            if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+            if (result) dataReturn = TIMKIEM_GIAODICHQUAY("", dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
+            else dataReturn = UC_Frame_TraLai.TIMKIEM_GIAODICHQUAY_FROM_SQL("", dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
+
             if (dataReturn.Count > 0)
             {
                 dgvDanhSachGiaoDichChiTiet.Rows.Clear();
@@ -360,16 +351,12 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             if (txtDieuKienTimKiem.Text.Length > 3)
             {
                 List<NVGDQUAY_ASYNCCLIENT_DTO> dataReturn = new List<NVGDQUAY_ASYNCCLIENT_DTO>();
-                if (Config.CheckConnectToServer())
-                {
-                    dataReturn = TIMKIEM_GIAODICHQUAY(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value,
-                        dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
-                }
-                else
-                {
-                    dataReturn = UC_Frame_TraLai.TIMKIEM_GIAODICHQUAY_FROM_SQL(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value,
-                        dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
-                }
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result) dataReturn = TIMKIEM_GIAODICHQUAY(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
+                else dataReturn = UC_Frame_TraLai.TIMKIEM_GIAODICHQUAY_FROM_SQL(txtDieuKienTimKiem.Text.Trim(), dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
+
                 if (dataReturn.Count > 0)
                 {
                     dgvDanhSachGiaoDichChiTiet.Rows.Clear();

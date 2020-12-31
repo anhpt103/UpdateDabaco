@@ -348,7 +348,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                                 {
                                     item.MAVATTU = dataReader["MAVATTU"].ToString();
                                     EXTEND_VATTU_DTO _EXTEND_VATTU_DTO = new EXTEND_VATTU_DTO();
-                                    _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_SQLSERVER(item.MAVATTU,GDQUAY_DTO.UNITCODE);
+                                    _EXTEND_VATTU_DTO = FrmXuatBanLeService.LAYDULIEU_HANGHOA_FROM_DATABASE_SQLSERVER(item.MAVATTU, GDQUAY_DTO.UNITCODE);
                                     item.TENDAYDU = _EXTEND_VATTU_DTO.TENVATTU;
                                     decimal.TryParse(dataReader["SOLUONG"].ToString(), out soLuong);
                                     item.SOLUONG = soLuong;
@@ -742,7 +742,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 {
                     try
                     {
-                        if (Config.CheckConnectToServer())
+                        string msg = Config.CheckConnectToServer(out bool result);
+                        if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                        if (result)
                         {
                             data = SEARCH_BY_CODE_PAY_FROM_ORACLE(MaGiaoDichQuay);
                         }
@@ -828,7 +831,11 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 {
                     NVGDQUAY_ASYNCCLIENT_DTO _NVGDQUAY_ASYNCCLIENT_DTO = new NVGDQUAY_ASYNCCLIENT_DTO();
                     NVGDQUAY_ASYNCCLIENT_DTO _NVGDQUAY_ASYNCCLIENT_BILL = new NVGDQUAY_ASYNCCLIENT_DTO();
-                    if (Config.CheckConnectToServer())
+
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return base.ProcessKeyPreview(ref m); }
+
+                    if (result)
                     {
                         _NVGDQUAY_ASYNCCLIENT_DTO = FrmThanhToanTraLaiService.KHOITAO_DULIEU_THANHTOAN_BANTRALAI_FROM_ORACLE(txtTraLai_MaGiaoDich.Text.Trim(), txtTraLai_TongTien.Text, dgvTraLai);
                         _NVGDQUAY_ASYNCCLIENT_BILL = FrmThanhToanTraLaiService.KHOITAO_BILL_THANHTOAN_BANTRALAI_FROM_ORACLE(txtTraLai_MaGiaoDich.Text.Trim(), txtTraLai_TongTien.Text, dgvTraLai);
@@ -1051,7 +1058,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             {
                 if (!string.IsNullOrEmpty(MaGiaoDichTimKiem))
                 {
-                    if (Config.CheckConnectToServer())
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                    if (result)
                     {
                         data = SEARCH_BY_CODE_PAY_FROM_ORACLE(MaGiaoDichTimKiem);
                     }
@@ -1286,7 +1296,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 try
                 {
                     //SỰ KIỆN NHẤN ENTER TÌM KIẾM GIAO DỊCH
-                    if (Config.CheckConnectToServer()) // CÓ MẠNG INTERNET
+                    string msg = Config.CheckConnectToServer(out bool result);
+                    if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                    if (result) // CÓ MẠNG INTERNET
                     {
                         List<NVGDQUAY_ASYNCCLIENT_DTO> listData = TIMKIEM_GIAODICHQUAY(txtKeySearch.Text.Trim(), dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
                         if (listData.Count > 0 && listData.Count == 1)
@@ -1335,7 +1348,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             if (txtKeySearch.Text.Length > 3)
             {
                 //SỰ KIỆN NHẤN ENTER TÌM KIẾM GIAO DỊCH
-                if (Config.CheckConnectToServer()) // CÓ MẠNG INTERNET
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
+                if (result) // CÓ MẠNG INTERNET
                 {
                     List<NVGDQUAY_ASYNCCLIENT_DTO> listData = TIMKIEM_GIAODICHQUAY(txtKeySearch.Text.Trim(), dateTimeTuNgay.Value, dateTimeDenNgay.Value, VALUE_SELECTED_CHANGE);
                     if (listData.Count > 0 && listData.Count == 1)

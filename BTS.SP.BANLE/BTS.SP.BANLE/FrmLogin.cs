@@ -1,15 +1,15 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using BTS.SP.BANLE.ConnectDatabase;
+using BTS.SP.BANLE.Giaodich.XuatBanLe;
+using BTS.SP.BANLE.Hethong;
+using BTS.SP.BANLE.Utils;
+using DevExpress.XtraSplashScreen;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using BTS.SP.BANLE.Common;
-using BTS.SP.BANLE.ConnectDatabase;
-using BTS.SP.BANLE.Giaodich.XuatBanLe;
-using BTS.SP.BANLE.Utils;
-using DevExpress.XtraSplashScreen;
-using Oracle.ManagedDataAccess.Client;
-using BTS.SP.BANLE.Hethong;
 namespace BTS.SP.BANLE
 {
     public partial class FrmLogin : Form
@@ -28,8 +28,11 @@ namespace BTS.SP.BANLE
             //check true false login
             try
             {
+                string msg = Config.CheckConnectToServer(out bool result);
+                if (msg.Length > 0) { MessageBox.Show(msg); return; }
+
                 //BEGIN LOGIN
-                if (Config.CheckConnectToServer()) // nếu có mạng lan
+                if (result) // nếu có mạng lan
                 {
                     using (OracleConnection connection = new OracleConnection(ConfigurationManager.ConnectionStrings["TBNETERP_SERVER"].ConnectionString))
                     {
@@ -92,7 +95,8 @@ namespace BTS.SP.BANLE
                                 {
                                     NotificationLauncher.ShowNotificationWarning("Thông báo", "Thông tin đăng nhập không đúng", 1, "0x1", "0x8", "normal");
                                     txtPassWord.Text = "";
-                                    txtPassWord.Focus();}
+                                    txtPassWord.Focus();
+                                }
                             }
                             catch (Exception ex)
                             {

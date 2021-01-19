@@ -65,7 +65,7 @@ namespace BTS.SP.BANLE.Common
                                                 cmdInsertSa.Transaction = tranSa;
                                                 if (cmdInsertSa.ExecuteNonQuery() > 0)
                                                 {
-                                                    countInsert ++;
+                                                    countInsert++;
                                                 }
                                             }
                                             if (countInsert > 0)
@@ -328,7 +328,7 @@ namespace BTS.SP.BANLE.Common
                                                 if (dataReaderOrcl["TONGTIEN"] != null) decimal.TryParse(dataReaderOrcl["TONGTIEN"].ToString(), out tongTien);
                                                 cmdInsertSa.Parameters.Add("TONGTIEN", SqlDbType.Decimal).Value = tongTien;
 
-                                                DateTime ngayCapThe = DateTime.ParseExact("01-JAN-70", "dd-MMM-yy",System.Globalization.CultureInfo.InvariantCulture);
+                                                DateTime ngayCapThe = DateTime.ParseExact("01-JAN-70", "dd-MMM-yy", System.Globalization.CultureInfo.InvariantCulture);
                                                 if (dataReaderOrcl["NGAYCAPTHE"] != null) DateTime.TryParse(dataReaderOrcl["NGAYCAPTHE"].ToString(), out ngayCapThe);
                                                 cmdInsertSa.Parameters.Add("NGAYCAPTHE", SqlDbType.Date).Value = ngayCapThe;
 
@@ -564,8 +564,8 @@ namespace BTS.SP.BANLE.Common
                 {
                     OracleCommand cmdOrcl = new OracleCommand();
                     cmdOrcl.Connection = connectionOrcl;
-                    string tableName =  FrmXuatBanLeService.GET_TABLE_NAME_NGAYHACHTOAN_CSDL_ORACLE();
-                    cmdOrcl.CommandText = string.Format(@"SELECT a.ID,a.MAVATTU,a.TENVATTU,a.MAKHACHHANG AS MANHACUNGCAP,a.DONVITINH,a.BARCODE,a.GIABANBUONVAT,a.GIABANLEVAT,b.GIAVON,b.TONCUOIKYSL,a.TYLEVATRA,a.TYLELAILE,a.ITEMCODE,a.MAVATRA,a.UNITCODE FROM V_VATTU_GIABAN a LEFT JOIN  " + tableName + " b ON a.MAVATTU = b.MAVATTU AND b.MAKHO = '" + Session.Session.CurrentUnitCode +"-K2' WHERE a.MADONVI = '" + Session.Session.CurrentUnitCode + "' AND a.TRANGTHAI = 10");
+                    string tableName = FrmXuatBanLeService.GET_TABLE_NAME_NGAYHACHTOAN_CSDL_ORACLE();
+                    cmdOrcl.CommandText = string.Format(@"SELECT DISTINCT a.ID,a.MAVATTU,a.TENVATTU,a.MAKHACHHANG AS MANHACUNGCAP,a.DONVITINH,a.BARCODE,a.GIABANBUONVAT,a.GIABANLEVAT, SUM(b.GIAVON) AS GIAVON, SUM(b.TONCUOIKYSL) AS TONCUOIKYSL,a.TYLEVATRA,a.TYLELAILE,a.ITEMCODE,a.MAVATRA,a.UNITCODE FROM V_VATTU_GIABAN a LEFT JOIN  " + tableName + " b ON a.MAVATTU = b.MAVATTU AND b.MAKHO = '" + Session.Session.CurrentUnitCode + "-K2' WHERE a.MADONVI = '" + Session.Session.CurrentUnitCode + "' AND a.TRANGTHAI = 10 GROUP BY A.ID, A.MAVATTU, A.TENVATTU, A.MAKHACHHANG, A.DONVITINH, A.BARCODE, A.GIABANBUONVAT, A.GIABANLEVAT, A.TYLEVATRA, A.TYLELAILE, A.ITEMCODE, A.MAVATRA, A.UNITCODE");
                     OracleDataReader dataReaderOrcl = cmdOrcl.ExecuteReader();
                     if (dataReaderOrcl.HasRows)
                     {
@@ -576,78 +576,73 @@ namespace BTS.SP.BANLE.Common
                                 connectionSa.Open();
                                 if (connectionSa.State == ConnectionState.Open)
                                 {
-                                    using (SqlTransaction tranSa = connectionSa.BeginTransaction())
+                                    try
                                     {
-                                        try
+                                        SqlCommand cmdDeleteSa = new SqlCommand();
+                                        cmdDeleteSa.Connection = connectionSa;
+                                        cmdDeleteSa.CommandText = string.Format(@"TRUNCATE TABLE dbo.DM_VATTU");
+                                        cmdDeleteSa.ExecuteNonQuery();
+
+                                        int countInsert = 0;
+                                        while (dataReaderOrcl.Read())
                                         {
-                                            SqlCommand cmdDeleteSa = new SqlCommand();
-                                            cmdDeleteSa.Connection = connectionSa;
-                                            cmdDeleteSa.CommandText = string.Format(@"TRUNCATE TABLE dbo.DM_VATTU");
-                                            cmdDeleteSa.Transaction = tranSa;
-                                            cmdDeleteSa.ExecuteNonQuery();
-                                            int countInsert = 0;
-                                            while (dataReaderOrcl.Read())
+                                            SqlCommand cmdInsertSa = new SqlCommand();
+                                            cmdInsertSa.Connection = connectionSa;
+
+                                            cmdInsertSa.CommandText = string.Format(@"INSERT INTO dbo.DM_VATTU(ID,MAVATTU,TENVATTU,MANHACUNGCAP,DONVITINH,BARCODE,GIABANBUONVAT,GIABANLEVAT,GIAVON,TONCUOIKYSL,TYLEVATRA,TYLELAILE,ITEMCODE,MAVATRA,UNITCODE) VALUES (@ID,@MAVATTU,@TENVATTU,@MANHACUNGCAP,@DONVITINH,@BARCODE,@GIABANBUONVAT,@GIABANLEVAT,@GIAVON,@TONCUOIKYSL,@TYLEVATRA,@TYLELAILE,@ITEMCODE,@MAVATRA,@UNITCODE)");
+                                            cmdInsertSa.Parameters.Add("ID", SqlDbType.VarChar, 50).Value = Guid.NewGuid().ToString() + countInsert;
+                                            cmdInsertSa.Parameters.Add("MAVATTU", SqlDbType.VarChar, 50).Value = dataReaderOrcl["MAVATTU"] != null ? dataReaderOrcl["MAVATTU"].ToString().Trim() : (object)DBNull.Value;
+                                            cmdInsertSa.Parameters.Add("TENVATTU", SqlDbType.NVarChar, 200).Value = dataReaderOrcl["TENVATTU"] != null ? dataReaderOrcl["TENVATTU"].ToString().Trim() : (object)DBNull.Value;
+                                            cmdInsertSa.Parameters.Add("MANHACUNGCAP", SqlDbType.VarChar, 50).Value = dataReaderOrcl["MANHACUNGCAP"] != null ? dataReaderOrcl["MANHACUNGCAP"].ToString().Trim() : (object)DBNull.Value;
+                                            cmdInsertSa.Parameters.Add("DONVITINH", SqlDbType.VarChar, 50).Value = dataReaderOrcl["DONVITINH"] != null ? dataReaderOrcl["DONVITINH"].ToString().Trim() : (object)DBNull.Value;
+                                            cmdInsertSa.Parameters.Add("BARCODE", SqlDbType.VarChar, 50).Value = dataReaderOrcl["BARCODE"] != null ? dataReaderOrcl["BARCODE"].ToString().Trim() : (object)DBNull.Value;
+                                            decimal giaBanBuonVat = 0;
+                                            if (dataReaderOrcl["GIABANBUONVAT"] != null) decimal.TryParse(dataReaderOrcl["GIABANBUONVAT"].ToString(), out giaBanBuonVat);
+                                            cmdInsertSa.Parameters.Add("GIABANBUONVAT", SqlDbType.Decimal).Value = giaBanBuonVat;
+                                            decimal giaBanLeVat = 0;
+                                            if (dataReaderOrcl["GIABANLEVAT"] != null) decimal.TryParse(dataReaderOrcl["GIABANLEVAT"].ToString(), out giaBanLeVat);
+                                            cmdInsertSa.Parameters.Add("GIABANLEVAT", SqlDbType.Decimal).Value = giaBanLeVat;
+                                            decimal giaVon = 0;
+                                            if (dataReaderOrcl["GIAVON"] != null) decimal.TryParse(dataReaderOrcl["GIAVON"].ToString(), out giaVon);
+                                            cmdInsertSa.Parameters.Add("GIAVON", SqlDbType.Decimal).Value = giaVon;
+                                            decimal tonCuoiKySoLuong = 0;
+                                            if (dataReaderOrcl["TONCUOIKYSL"] != null) decimal.TryParse(dataReaderOrcl["TONCUOIKYSL"].ToString(), out tonCuoiKySoLuong);
+                                            cmdInsertSa.Parameters.Add("TONCUOIKYSL", SqlDbType.Decimal).Value = tonCuoiKySoLuong;
+                                            decimal tyLeVatRa = 0;
+                                            if (dataReaderOrcl["TYLEVATRA"] != null) decimal.TryParse(dataReaderOrcl["TYLEVATRA"].ToString(), out tyLeVatRa);
+                                            cmdInsertSa.Parameters.Add("TYLEVATRA", SqlDbType.Decimal).Value = tyLeVatRa;
+                                            decimal tyLeLaiLe = 0;
+                                            if (dataReaderOrcl["TYLELAILE"] != null) decimal.TryParse(dataReaderOrcl["TYLELAILE"].ToString(), out tyLeLaiLe);
+                                            cmdInsertSa.Parameters.Add("TYLELAILE", SqlDbType.Decimal).Value = tyLeLaiLe;
+                                            cmdInsertSa.Parameters.Add("ITEMCODE", SqlDbType.VarChar, 50).Value = dataReaderOrcl["ITEMCODE"] != null ? dataReaderOrcl["ITEMCODE"].ToString().Trim() : (object)DBNull.Value;
+                                            cmdInsertSa.Parameters.Add("MAVATRA", SqlDbType.VarChar, 50).Value = dataReaderOrcl["MAVATRA"] != null ? dataReaderOrcl["MAVATRA"].ToString().Trim() : (object)DBNull.Value;
+                                            cmdInsertSa.Parameters.Add("UNITCODE", SqlDbType.VarChar, 50).Value =
+                                                dataReaderOrcl["UNITCODE"] != null ? dataReaderOrcl["UNITCODE"].ToString().Trim() : (object)DBNull.Value;
+
+                                            if (cmdInsertSa.ExecuteNonQuery() > 0)
                                             {
-                                                SqlCommand cmdInsertSa = new SqlCommand();
-                                                cmdInsertSa.Connection = connectionSa;
-                                                cmdInsertSa.CommandText = string.Format(@"INSERT INTO dbo.DM_VATTU(ID,MAVATTU,TENVATTU,MANHACUNGCAP,DONVITINH,BARCODE,GIABANBUONVAT,GIABANLEVAT,GIAVON,TONCUOIKYSL,TYLEVATRA,TYLELAILE,ITEMCODE,MAVATRA,UNITCODE) VALUES (@ID,@MAVATTU,@TENVATTU,@MANHACUNGCAP,@DONVITINH,@BARCODE,@GIABANBUONVAT,@GIABANLEVAT,@GIAVON,@TONCUOIKYSL,@TYLEVATRA,@TYLELAILE,@ITEMCODE,@MAVATRA,@UNITCODE)");
-                                                cmdInsertSa.Parameters.Add("ID", SqlDbType.VarChar, 50).Value = dataReaderOrcl["ID"] != null ? dataReaderOrcl["ID"].ToString().Trim() : Guid.NewGuid().ToString();
-                                                cmdInsertSa.Parameters.Add("MAVATTU", SqlDbType.VarChar, 50).Value = dataReaderOrcl["MAVATTU"] != null ? dataReaderOrcl["MAVATTU"].ToString().Trim() : (object)DBNull.Value;
-                                                cmdInsertSa.Parameters.Add("TENVATTU", SqlDbType.NVarChar, 200).Value = dataReaderOrcl["TENVATTU"] != null ? dataReaderOrcl["TENVATTU"].ToString().Trim() : (object)DBNull.Value;
-                                                cmdInsertSa.Parameters.Add("MANHACUNGCAP", SqlDbType.VarChar, 50).Value = dataReaderOrcl["MANHACUNGCAP"] != null ? dataReaderOrcl["MANHACUNGCAP"].ToString().Trim() : (object)DBNull.Value;
-                                                cmdInsertSa.Parameters.Add("DONVITINH", SqlDbType.VarChar, 50).Value = dataReaderOrcl["DONVITINH"] != null ? dataReaderOrcl["DONVITINH"].ToString().Trim() : (object)DBNull.Value;
-                                                cmdInsertSa.Parameters.Add("BARCODE", SqlDbType.VarChar, 50).Value = dataReaderOrcl["BARCODE"] != null ? dataReaderOrcl["BARCODE"].ToString().Trim() : (object)DBNull.Value;
-                                                decimal giaBanBuonVat = 0;
-                                                if (dataReaderOrcl["GIABANBUONVAT"] != null) decimal.TryParse(dataReaderOrcl["GIABANBUONVAT"].ToString(), out giaBanBuonVat);
-                                                cmdInsertSa.Parameters.Add("GIABANBUONVAT", SqlDbType.Decimal).Value = giaBanBuonVat;
-                                                decimal giaBanLeVat = 0;
-                                                if (dataReaderOrcl["GIABANLEVAT"] != null) decimal.TryParse(dataReaderOrcl["GIABANLEVAT"].ToString(), out giaBanLeVat);
-                                                cmdInsertSa.Parameters.Add("GIABANLEVAT", SqlDbType.Decimal).Value = giaBanLeVat;
-                                                decimal giaVon = 0;
-                                                if (dataReaderOrcl["GIAVON"] != null) decimal.TryParse(dataReaderOrcl["GIAVON"].ToString(), out giaVon);
-                                                cmdInsertSa.Parameters.Add("GIAVON", SqlDbType.Decimal).Value = giaVon;
-                                                decimal tonCuoiKySoLuong = 0;
-                                                if (dataReaderOrcl["TONCUOIKYSL"] != null) decimal.TryParse(dataReaderOrcl["TONCUOIKYSL"].ToString(), out tonCuoiKySoLuong);
-                                                cmdInsertSa.Parameters.Add("TONCUOIKYSL", SqlDbType.Decimal).Value = tonCuoiKySoLuong;
-                                                decimal tyLeVatRa = 0;
-                                                if (dataReaderOrcl["TYLEVATRA"] != null) decimal.TryParse(dataReaderOrcl["TYLEVATRA"].ToString(), out tyLeVatRa);
-                                                cmdInsertSa.Parameters.Add("TYLEVATRA", SqlDbType.Decimal).Value = tyLeVatRa;
-                                                decimal tyLeLaiLe = 0;
-                                                if (dataReaderOrcl["TYLELAILE"] != null) decimal.TryParse(dataReaderOrcl["TYLELAILE"].ToString(), out tyLeLaiLe);
-                                                cmdInsertSa.Parameters.Add("TYLELAILE", SqlDbType.Decimal).Value = tyLeLaiLe;
-                                                cmdInsertSa.Parameters.Add("ITEMCODE", SqlDbType.VarChar, 50).Value = dataReaderOrcl["ITEMCODE"] != null ? dataReaderOrcl["ITEMCODE"].ToString().Trim() : (object)DBNull.Value;
-                                                cmdInsertSa.Parameters.Add("MAVATRA", SqlDbType.VarChar, 50).Value = dataReaderOrcl["MAVATRA"] != null ? dataReaderOrcl["MAVATRA"].ToString().Trim() : (object)DBNull.Value;
-                                                cmdInsertSa.Parameters.Add("UNITCODE", SqlDbType.VarChar, 50).Value =
-                                                    dataReaderOrcl["UNITCODE"] != null ? dataReaderOrcl["UNITCODE"].ToString().Trim() : (object)DBNull.Value;
-                                                cmdInsertSa.Transaction = tranSa;
-                                                if (cmdInsertSa.ExecuteNonQuery() > 0)
-                                                {
-                                                    countInsert++;
-                                                }
-                                            }
-                                            if (countInsert > 0)
-                                            {
-                                                tranSa.Commit();
+                                                countInsert++;
                                             }
                                         }
-                                        catch (Exception ex)
-                                        {
-                                            tranSa.Rollback();
-                                            WriteLogs.LogError(ex);
-                                        }
-                                        finally
-                                        {
-                                            connectionSa.Close();
-                                            connectionSa.Dispose();
-                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        WriteLogs.LogError(ex);
+                                    }
+                                    finally
+                                    {
+                                        connectionSa.Dispose();
                                     }
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            connectionOrcl.Close();
                             WriteLogs.LogError(ex);
+                        }
+                        finally
+                        {
+                            connectionOrcl.Close();
                         }
                     }
                     //Mở thì đóng
@@ -665,7 +660,7 @@ namespace BTS.SP.BANLE.Common
                 {
                     OracleCommand cmdOrcl = new OracleCommand();
                     cmdOrcl.Connection = connectionOrcl;
-                    cmdOrcl.CommandText = string.Format(@"SELECT ID,MADONVI,MADONVICHA,TENDONVI,SODIENTHOAI,DIACHI,TRANGTHAI,MACUAHANG,TENCUAHANG,UNITCODE FROM AU_DONVI WHERE MADONVI = '" +Session.Session.CurrentUnitCode+ "'");
+                    cmdOrcl.CommandText = string.Format(@"SELECT ID,MADONVI,MADONVICHA,TENDONVI,SODIENTHOAI,DIACHI,TRANGTHAI,MACUAHANG,TENCUAHANG,UNITCODE FROM AU_DONVI WHERE MADONVI = '" + Session.Session.CurrentUnitCode + "'");
                     OracleDataReader dataReaderOrcl = cmdOrcl.ExecuteReader();
                     if (dataReaderOrcl.HasRows)
                     {
@@ -737,7 +732,8 @@ namespace BTS.SP.BANLE.Common
                     //Mở thì đóng
                     connectionOrcl.Close();
                 }
-            }}
+            }
+        }
 
 
         public static void SYNCHRONIZE_DM_HANGKHACHHANG()

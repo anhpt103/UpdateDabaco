@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BTS.SP.BANLE.Common;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using BTS.SP.BANLE.Common;
-using Oracle.ManagedDataAccess.Client;
 namespace BTS.SP.BANLE.ConnectDatabase
 {
     public partial class FrmConnectDatabase : Form
@@ -83,7 +83,6 @@ namespace BTS.SP.BANLE.ConnectDatabase
                     {
                         NotificationLauncher.ShowNotification("Thông báo", "Kết nối thành công với cơ sở dữ liệu Oracle", 1,
                             "0x1", "0x8", "normal");
-                        this.Close();
                         this.Dispose();
                     }
                     else
@@ -99,7 +98,6 @@ namespace BTS.SP.BANLE.ConnectDatabase
                 }
                 finally
                 {
-                    connection.Close();
                     connection.Dispose();
                 }
             }
@@ -125,19 +123,18 @@ namespace BTS.SP.BANLE.ConnectDatabase
                         "0x1", "0x8", "normal");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                NotificationLauncher.ShowNotificationError("Thông báo", "Lỗi không kết nối được với cơ sở dữ liệu", 1,
+                NotificationLauncher.ShowNotificationError("Thông báo", $"Lỗi không kết nối được với cơ sở dữ liệu Oracle: {ex.Message}", 1,
                          "0x1", "0x8", "normal");
             }
             finally
             {
-                connection.Close();
                 connection.Dispose();
             }
         }
-      
-        
+
+
         private void btnCreateConnectSql_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtDatabaseNameSql.Text) || string.IsNullOrEmpty(txtPasswordSql.Text) ||
@@ -170,7 +167,7 @@ namespace BTS.SP.BANLE.ConnectDatabase
                     if (connection.State == ConnectionState.Open)
                     {
                         //khởi tạo cấu trúc db
-                        string SqlCreateDbQuery = string.Format("SELECT DATABASE_ID FROM SYS.DATABASES WHERE NAME = '{0}'", "TBNETERP");;
+                        string SqlCreateDbQuery = string.Format("SELECT DATABASE_ID FROM SYS.DATABASES WHERE NAME = '{0}'", "TBNETERP");
                         using (SqlCommand sqlCmd = new SqlCommand(SqlCreateDbQuery, connection))
                         {
                             object resultObj = sqlCmd.ExecuteScalar();
@@ -181,9 +178,9 @@ namespace BTS.SP.BANLE.ConnectDatabase
                                 cmdCreateDb.Connection = connection;
                                 cmdCreateDb.CommandText = string.Format(@"CREATE DATABASE TBNETERP");
                                 int i = cmdCreateDb.ExecuteNonQuery();
-                                if(i > 0)
+                                if (i > 0)
                                 {
-                                   
+
                                 }
                             }
                             else
@@ -197,8 +194,6 @@ namespace BTS.SP.BANLE.ConnectDatabase
                         NotificationLauncher.ShowNotification("Thông báo", "Kết nối thành công với cơ sở dữ liệu SQL", 1,
                             "0x1", "0x8", "normal");
 
-
-                        this.Close();
                         this.Dispose();
                     }
                     else
@@ -214,7 +209,6 @@ namespace BTS.SP.BANLE.ConnectDatabase
                 }
                 finally
                 {
-                    connection.Close();
                     connection.Dispose();
                 }
             }
@@ -229,9 +223,8 @@ namespace BTS.SP.BANLE.ConnectDatabase
                 connection.Open();
                 if (connection.State == ConnectionState.Open)
                 {
-                    NotificationLauncher.ShowNotification("Thông báo", "Kết nối thành công với cơ sở dữ liệu SQL", 1,
+                    NotificationLauncher.ShowNotification("Thông báo", "Kết nối thành công với cơ sở dữ liệu SQL SERVER", 1,
                         "0x1", "0x8", "normal");
-                    this.Close();
                     this.Dispose();
                 }
                 else
@@ -240,14 +233,13 @@ namespace BTS.SP.BANLE.ConnectDatabase
                         "0x1", "0x8", "normal");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                NotificationLauncher.ShowNotificationError("Thông báo", "Lỗi không kết nối được với cơ sở dữ liệu SQL", 1,
+                NotificationLauncher.ShowNotificationError("Thông báo", $"Lỗi không kết nối được với cơ sở dữ liệu SQL: {ex.Message}", 1,
                          "0x1", "0x8", "normal");
             }
             finally
             {
-                connection.Close();
                 connection.Dispose();
             }
         }

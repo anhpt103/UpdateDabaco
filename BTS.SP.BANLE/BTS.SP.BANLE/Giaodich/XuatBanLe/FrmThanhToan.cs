@@ -52,7 +52,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             txtThanhToan_TienThanhToan.Text = FormatCurrency.FormatMoney(UC_Frame_BanLe.THANHTOAN_TONGTIEN_THANHTOAN);
             txtThanhToan_TienMat.Text = FormatCurrency.FormatMoney(UC_Frame_BanLe.THANHTOAN_TONGTIEN_THANHTOAN);
             txtThanhToan_TienQuyDoiDiem.Text = "0";
-            txtThanhToan_TienPhaiTra.Text = FormatCurrency.FormatMoney(UC_Frame_BanLe.THANHTOAN_TONGTIEN_THANHTOAN); ;
+            txtThanhToan_TienPhaiTra.Text = FormatCurrency.FormatMoney(UC_Frame_BanLe.THANHTOAN_TONGTIEN_THANHTOAN);
             LOAIGD = UC_Frame_BanLe.LOAIGIAODICH;
             txtThanhToan_TienMat.Focus();
             this.ActiveControl = txtThanhToan_TienMat;
@@ -1052,7 +1052,6 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                         }
                         finally
                         {
-                            connection.Close();
                             connection.Dispose();
                         }
                     }

@@ -30,6 +30,8 @@ namespace BTS.SP.BANLE
             string msg = CheckDatabaseExists(out bool result);
             if (msg.Length > 0) { MessageBox.Show(msg); return; }
 
+            InitializeConnectDatabase();
+
             if (result) Application.Run(new FrmLogin());
             else
             {
@@ -50,7 +52,7 @@ namespace BTS.SP.BANLE
                 }
             }
 
-            InitializeConnectDatabase();
+            
         }
 
         private static string CreateDirectory()

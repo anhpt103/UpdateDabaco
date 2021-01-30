@@ -76,6 +76,7 @@ namespace BTS.SP.BANLE
                                         Session.Session.CurrentTableNamePeriod = FrmXuatBanLeService.GET_TABLE_NAME_NGAYHACHTOAN_CSDL_ORACLE();
                                         Session.Session.CurrentWareHouse = (Session.Session.CurrentUnitCode + "-K2").ToUpper().Trim();
                                         SplashScreenManager.ShowForm(typeof(WaitForm1));
+
                                         SYNCHRONIZE_DATA.SYNCHRONIZE_AU_NGUOIDUNG();
                                         SYNCHRONIZE_DATA.SYNCHRONIZE_DM_BOHANG();
                                         SYNCHRONIZE_DATA.SYNCHRONIZE_DM_BOHANGCHITIET();
@@ -85,6 +86,7 @@ namespace BTS.SP.BANLE
                                         SYNCHRONIZE_DATA.SYNCHRONIZE_AU_DONVI();
                                         SYNCHRONIZE_DATA.SYNCHRONIZE_DM_VATTU();
                                         SYNCHRONIZE_DATA.SYNCHRONIZE_DM_HANGKHACHHANG();
+
                                         SplashScreenManager.CloseForm();
                                         FrmMain frmMain = new FrmMain();
                                         frmMain.ShowDialog();

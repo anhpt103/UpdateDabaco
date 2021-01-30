@@ -1699,7 +1699,12 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                     }
                     OracleCommand cmdChildren = new OracleCommand();
                     cmdChildren.Connection = connection;
-                    cmdChildren.CommandText = string.Format(@"SELECT * FROM NVHANGGDQUAY_ASYNCCLIENT WHERE MAGDQUAYPK = :MAGDQUAYPK AND MADONVI = :MADONVI");
+                    cmdChildren.CommandText = string.Format(@"SELECT a.ID, A.MAGDQUAYPK, A.MAKHOHANG, A.MAVATTU, B.TENVATTU AS TENDAYDU, B.BARCODE, 
+                                                            A.MABOPK, A.NGAYTAO, A.NGAYPHATSINH, A.SOLUONG, A.GIABANLECOVAT, A.VATBAN, A.TTIENCOVAT,
+                                                            A.MAKHACHHANG, A.LOAIKHUYENMAI, A.TIENCHIETKHAU, A.TYLECHIETKHAU, A.TYLEKHUYENMAI, A.TIENKHUYENMAI,
+                                                            A.TYLEVOUCHER, A.TIENVOUCHER, A.TYLELAILE, A.GIAVON, A.MAVAT
+                                                            FROM NVHANGGDQUAY_ASYNCCLIENT a INNER JOIN DM_VATTU b ON A.MAVATTU = B.MAVATTU AND A.MADONVI = B.UNITCODE
+                                                            WHERE MAGDQUAYPK = :MAGDQUAYPK AND MADONVI = :MADONVI");
                     cmdChildren.CommandType = CommandType.Text;
                     cmdChildren.Parameters.Add("MAGDQUAYPK", OracleDbType.NVarchar2, 50).Value = MAGIAODICHQUAYPK;
                     cmdChildren.Parameters.Add("MADONVI", OracleDbType.NVarchar2, 50).Value = Session.Session.CurrentUnitCode;
@@ -1831,9 +1836,9 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                WriteLogs.LogError(ex);
             }
             finally
             {

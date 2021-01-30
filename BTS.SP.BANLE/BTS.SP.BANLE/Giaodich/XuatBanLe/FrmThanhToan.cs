@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BTS.SP.BANLE.Giaodich.XuatBanLe
@@ -214,7 +215,6 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 }
             }
         }
-
 
         private void TANG_HANG_KHACHHANG(string MAKHACHHANG, string HANG_HIENTAI, string HANG_MOI)
         {
@@ -671,6 +671,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
 
         private void THANHTOAN_HOADON_BANLE()
         {
+            List<Thread> ListT = new List<Thread>();
             if (LOG_THANHTOAN)
             {
                 LOG_THANHTOAN = false;
@@ -733,7 +734,10 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                             }
                         }
                     }
-                    LUU_DULIEU(_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL);
+                    ListT.Add(new Thread(() =>
+                    {
+                        LUU_DULIEU(_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL);
+                    }));
                 }
                 catch
                 {
@@ -741,12 +745,17 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 }
                 try
                 {
-                    THUCHIEN_IN_HOADON();
+                    ListT.Add(new Thread(() =>
+                    {
+                        THUCHIEN_IN_HOADON();
+                    }));
                 }
                 catch (Exception ex)
                 {
                     WriteLogs.LogError(ex);
                 }
+
+                foreach (var t in ListT) t.Start();
             }
         }
         private void THUCHIEN_IN_HOADON()

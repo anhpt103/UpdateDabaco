@@ -91,17 +91,6 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             this.lblTongSoLuong = new DevExpress.XtraEditors.LabelControl();
             this.gridSplitContainerXuatBanLe = new DevExpress.XtraGrid.GridSplitContainer();
             this.printDialog = new System.Windows.Forms.PrintDialog();
-            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MAVATTU = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TENVATTU = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DONVITINH = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GIABANLECOVAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SOLUONG = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GIAVON = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TIENKM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CHIETKHAU = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TTIENCOVAT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LAMACAN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TONCUOIKYSL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelHeader.SuspendLayout();
             this.panelContent.SuspendLayout();

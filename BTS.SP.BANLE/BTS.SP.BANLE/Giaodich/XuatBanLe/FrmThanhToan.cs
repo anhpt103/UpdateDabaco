@@ -734,30 +734,18 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                             }
                         }
                     }
-                    ListT.Add(new Thread(() =>
-                    {
-                        LUU_DULIEU(_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL);
-                    }));
-                }
-                catch
-                {
-                    MessageBox.Show("CẢNH BÁO ! XẢY RA LỖI KHI LƯU HÓA ĐƠN NÀY, HÃY LƯU LẠI HÓA ĐƠN ĐỂ KIỂM TRA ! XIN CẢM ƠN ");
-                }
-                try
-                {
-                    ListT.Add(new Thread(() =>
-                    {
-                        THUCHIEN_IN_HOADON();
-                    }));
+
+                    THUCHIEN_IN_HOADON();
+                    LUU_DULIEU(_NVGDQUAY_ASYNCCLIENT_DTO_GLOBAL);
                 }
                 catch (Exception ex)
                 {
                     WriteLogs.LogError(ex);
+                    MessageBox.Show("CẢNH BÁO ! XẢY RA LỖI KHI LƯU HÓA ĐƠN NÀY, HÃY LƯU LẠI HÓA ĐƠN ĐỂ KIỂM TRA ! XIN CẢM ƠN ");
                 }
-
-                foreach (var t in ListT) t.Start();
             }
         }
+
         private void THUCHIEN_IN_HOADON()
         {
             string TONGTIEN_BANGCHU = ConvertSoThanhChu.ChuyenDoiSoThanhChu(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.TTIENCOVAT);
@@ -765,14 +753,9 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
             if (msg.Length > 0) { MessageBox.Show(msg); return; }
 
             string MA_TEN_KHACHHANG;
-            if (result)
-            {
-                MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_ORACLE(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
-            }
-            else
-            {
-                MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_SQLSERVER(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
-            }
+            if (result) MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_ORACLE(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
+            else MA_TEN_KHACHHANG = FrmThanhToanService.LAY_MA_TEN_KHACHHANG_FROM_SQLSERVER(_NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL.MAKHACHHANG);
+
             using (frmPrintBill frm = new frmPrintBill())
             {
                 try
@@ -792,8 +775,9 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                     };
                     frm.PrintInvoice_BanLe(infoBill, _NVGDQUAY_ASYNCCLIENT_BILL_GLOBAL);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    WriteLogs.LogError(ex);
                 }
                 finally
                 {
@@ -804,6 +788,7 @@ namespace BTS.SP.BANLE.Giaodich.XuatBanLe
                 }
             }
         }
+
         private const int WM_KEYDOWN = 256;
         private const int WM_KEYDOWN_2 = 260;
         protected override bool ProcessKeyPreview(ref Message m)
